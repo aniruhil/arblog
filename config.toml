@@ -226,14 +226,13 @@ defaultContentLanguageInSubdir = false
 
   [[params.social]]
     icon = "linkedin"
-    icon_pack = "ai"
-    link = "https://www.linkedin.com/in/aniruhil"
+    icon_pack = "fa"
+    link = "https://www.linkedin.com/in/aniruhil/"
 
   [[params.social]]
     icon = "github"
     icon_pack = "fa"
     link = "//github.com/aniruhil"
-
 
 # Navigation Links
 #   To link a homepage widget, specify the URL as a hash `#` followed by the filename of the
