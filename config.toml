@@ -227,7 +227,7 @@ defaultContentLanguageInSubdir = false
   [[params.social]]
     icon = "linkedin"
     icon_pack = "ai"
-    link = "https://linkedin.com/aniruhil"
+    link = "https://www.linkedin.com/aniruhil"
 
   [[params.social]]
     icon = "github"
