@@ -3,14 +3,14 @@
 
 # The URL of your website.
 # End your URL with a `/` trailing slash, e.g. `https://example.com/`.
-baseurl = "/"
+baseurl = "https://aniruhil.github.io"
 
 # Title of your site
-title = "Academic"
+title = "Ani Ruhil"
 
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
-copyright = "&copy; 2018"
+copyright = "&copy; 2018 Ani Ruhil"
 
 theme = "hugo-academic"
 enableEmoji = true
@@ -50,20 +50,20 @@ defaultContentLanguageInSubdir = false
   font = "default"
 
   # Your details.
-  name = "Lena Smith"
-  role = "Professor of Artificial Intelligence"
+  name = "Ani Ruhil"
+  role = "Professor"
 
   # Organizations/Affiliations.
   #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
-  organizations = [ { name = "Stanford University", url = "" } ]
+  organizations = [ { name = "Ohio University", url = "" } ]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
-  avatar = "portrait.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
-  email = "test@example.org"
-  address = "Building 1 Room 1, Stanford University, California, 90210, USA"
-  office_hours = "Monday 10:00 to 13:00 or email for appointment"
-  phone = "888 888 88 88"
-  skype = "echo123"
+  avatar = "aniruhil.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
+  email = "ruhil@ohio.edy"
+  address = ""
+  office_hours = ""
+  phone = ""
+  skype = ""
   telegram = ""
 
   # Enable Keybase in Contact widget by entering your keybase.io username.
@@ -153,7 +153,7 @@ defaultContentLanguageInSubdir = false
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  custom_css = []
+  custom_css = ["green.css"]
   custom_js  = []
 
   # Publication types.
@@ -217,22 +217,22 @@ defaultContentLanguageInSubdir = false
   [[params.social]]
     icon = "envelope"
     icon_pack = "fa"
-    link = "mailto:test@example.org"
+    link = "mailto:ruhil@ohio.edu"
 
   [[params.social]]
     icon = "twitter"
     icon_pack = "fa"
-    link = "//twitter.com/GeorgeCushen"
+    link = "//twitter.com/aruhil"
 
   [[params.social]]
-    icon = "google-scholar"
+    icon = "linkedin"
     icon_pack = "ai"
-    link = "https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ"
+    link = "https://linkedin.com/aniruhil"
 
   [[params.social]]
     icon = "github"
     icon_pack = "fa"
-    link = "//github.com/gcushen"
+    link = "//github.com/aniruhil"
 
 
 # Navigation Links
@@ -249,8 +249,8 @@ defaultContentLanguageInSubdir = false
   weight = 1
 
 [[menu.main]]
-  name = "Publications"
-  url = "#publications_selected"
+  name = "Projects"
+  url = "#projects"
   weight = 2
 
 [[menu.main]]
@@ -259,8 +259,8 @@ defaultContentLanguageInSubdir = false
   weight = 3
 
 [[menu.main]]
-  name = "Projects"
-  url = "#projects"
+  name = "Publications"
+  url = "#publications_selected"
   weight = 4
 
 [[menu.main]]

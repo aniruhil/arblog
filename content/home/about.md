@@ -10,31 +10,31 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "Artificial Intelligence",
-    "Computational Linguistics",
-    "Information Retrieval"
+    "data analytics and visualization",
+    "Program evaluation",
+    "Public health",
+    "Education",
+    "R"
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
-  year = 2012
+  course = "PhD in Political Science"
+  institution = "Ohio University"
+  year = 1999
 
 [[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
+  course = "MA in Economics"
+  institution = "University of New Hampshire"
+  year = 1993
 
 [[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
+  course = "BA in Economics"
+  institution = "University of Mumbai"
+  year = 1989
  
 +++
 
-# Biography
+# About me
 
-Lena Smith is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+I am a professor of leadership and public affairs at Ohio Universty's Voinovich School of Leadership and Public Affairs. I work on grant-funded and contracted research in the domains of public health, education, and social services, for the most part. I teach introductory and advanced data analytics in our Master of Public Administration (MPA) programs (in all three formats the MPA is offered in), and have taught undergraduate and graduate statistics courses for Plant Biology, Economics, and Commmunication Studies.  
