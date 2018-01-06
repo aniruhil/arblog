@@ -11,18 +11,14 @@ title = "Teaching"
 subtitle = ""
 
 # Order that this section will appear in.
-weight = 60
+weight = 20
 
 +++
 
-This is an example of using the *custom* widget to create your own homepage section.
+I teach the following courses at Ohio University: 
 
-I am a teaching instructor for the following courses at University X:
-
-- CS101: An intro to computer science
-- CS102: An intro to computer science
-- CS103: An intro to computer science
-- CS104: An intro to computer science
-- CS105: An intro to computer science
-- CS106: An intro to computer science
-- CS107: An intro to computer science
+- MPA 6010 1000: Research Methods in Leadership and Public Affairs (on campus) 
+- MPA 6010 1001: Research Methods in Leadership and Public Affairs (Executive MPA) 
+- MPA 6010 1002: Research Methods in Leadership and Public Affairs (Online MPA) 
+- MPA 6020 1000: Advanced Research Methods in Leadership and Public Affairs (on campus) 
+- MPA wxzy 1002: Data Analysitics for Public Affairs (Online MPA)  
