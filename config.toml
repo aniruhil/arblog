@@ -8,7 +8,7 @@ baseurl = "https://aniruhil.github.io"
 # Title of your site
 title = "Ani Ruhil"
 
-publishDir = "../aniruhil.github.io"
+# publishDir = "../aniruhil.github.io"
 
 
 relativeurls = true
