@@ -10,9 +10,11 @@ tags:
   - PLWHA
   - Needs Assessment
   - Ohio
+image_preview: "plwha.jpg"
+summary = "Understanding the needs (gaps in barriers to prevention/care services) of people living with HIV/AIDS (PLWHA) and high-risk people is critical to improving the health of Ohioans and reducing the transmission of HIV"
 header:
   caption: 'Ohio Cares'
-  image: 'plwha.jpg'
+  image: ''
 ---
 
 Understanding the needs (gaps in barriers to prevention/care services) of people living with HIV/AIDS (PLWHA) and high-risk people is critical to improving the health of Ohioans and reducing the transmission of HIV. The Centers for Disease Control (CDC) and Health Resources and Services Administration (HRSA) recognized this need and required joint planning among HIV programs funded in 2016. The joint planning process includes collecting data on the needs of Ohio’s PLWHA. Since the requirement for needs assessments is on an agency-by-agency basis, ODH’s Integrated HIV Prevention and Care Plan steering committee needed to collect multiple needs assessments from multiple agencies.
