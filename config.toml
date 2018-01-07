@@ -8,6 +8,8 @@ baseurl = "https://aniruhil.github.io"
 # Title of your site
 title = "Ani Ruhil"
 
+relativeURLs = true
+
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
 copyright = "&copy; 2018 Ani Ruhil"
