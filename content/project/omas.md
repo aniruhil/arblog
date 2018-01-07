@@ -9,7 +9,7 @@ image_preview = "omas.png"
 
 tags = ["Health"]
 
-external_link = ""amos
+external_link = ""
 
 math = false
 
