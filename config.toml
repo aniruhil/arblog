@@ -5,13 +5,15 @@
 # End your URL with a `/` trailing slash, e.g. `https://example.com/`.
 baseurl = "https://aniruhil.github.io"
 
+canonifyURLs = true
+
 # Title of your site
 title = "Ani Ruhil"
 
 # publishDir = "../aniruhil.github.io"
 
 
-relativeurls = true
+# relativeurls = true
 
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
