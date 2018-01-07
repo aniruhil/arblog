@@ -1,6 +1,5 @@
 +++
-title = "Inter-jurisdictional Competition for Sales Tax Revenues: A Natural Exper-
-iment of Destination Retail Outlets"
+title = "Inter-jurisdictional Competition for Sales Tax Revenues: A Natural Experiment of Destination Retail Outlets"
 date = "2015"
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
