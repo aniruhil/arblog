@@ -21,7 +21,11 @@ library(viridis)
 ggplot(diamonds, aes(x = carat, y = price)) + geom_hex() + scale_fill_viridis()
 ```
 
-So here we are, two days and progress but slow going. I should have remembered that the Hilary Step had broken :smile:
+So here we are, two days and progress but slow going. I should have remembered that the Hilary Step had broken. 
+
+`Edited on January 7, 2018`: But no! At last, it is fine and dandy. Time to `r emo::ji("party")`
+
+
 
 
 
