@@ -5,7 +5,7 @@ title = "The Medicaid and Appalachian Health, SES, and Ecological OMAS Assessmen
 
 summary = "The Ohio Medicaid Assessment Survey (OMAS) is an Ohio-specific assessment that provides health care access, utilization, and health status information about residential Ohioans at the state, regional and local levels, with a concentration on Ohio’s Medicaid, Medicaid-eligible, and non-Medicaid populations."
 
-image_preview = "bubbles.jpg"
+image_preview = "omas.png"
 
 tags = ["Health"]
 
