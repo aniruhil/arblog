@@ -6,7 +6,8 @@
 baseurl = "https://aniruhil.github.io"
 
 canonifyURLs = true
-relativeURLs = true
+
+relativeurls = true
 
 # Title of your site
 title = "Ani Ruhil"
