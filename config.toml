@@ -15,8 +15,6 @@ title = "Ani Ruhil"
 # publishDir = "../aniruhil.github.io"
 
 
-
-
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
 copyright = "&copy; 2018 Ani Ruhil"
@@ -38,8 +36,8 @@ googleAnalytics = "UA-71608489-2"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
-[permalinks]
-  post = "/:year/:month/:day/:slug/"
+# [permalinks]
+#  post = "/:year/:month/:day/:slug/"
 
 [outputs]
   home = [ "HTML", "CSS", "RSS" ]
