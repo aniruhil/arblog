@@ -36,3 +36,8 @@ pie(
   init.angle = -50, border = NA
 )
 ```
+
+
+```{r}
+plot(mtcars$mpg)
+```
