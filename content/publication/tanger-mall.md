@@ -1,6 +1,6 @@
 +++
 title = "Inter-jurisdictional Competition for Sales Tax Revenues: A Natural Experiment of Destination Retail Outlets"
-date = "2015"
+date = "2015-06-01"
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["G. J. Jolley", "Anirudh V. S. Ruhil", "Aleksey Kolpakov", "Stephen Kleinschmidt"]

@@ -1,6 +1,6 @@
 +++
 title = "Associations between preoperative physical therapy and post-acute care utilization patterns and cost in total joint replacement"
-date = "2014"
+date = "2014-06-15"
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Richard Snow", "Jaymes Granata", "Anirudh V. S. Ruhil", "Karen Vogel", "Michael Shane", "Ray Wasielewski"]

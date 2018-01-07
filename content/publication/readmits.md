@@ -1,6 +1,6 @@
 +++
 title = "Cardiac rehabilitation participation reduces 90-day hospital readmissions after acute myocardial infarction or percutaneous coronary intervention"
-date = "2013"
+date = "2013-06-01"
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Daniel W. Mudrick", "Lynn Shaffer", "Michelle Lalonde", "Anirudh V.S. Ruhil", "Greg Lam", "Jesse Hickerson", "Teresa Caulin-Glaser", "Richard Snow"]
