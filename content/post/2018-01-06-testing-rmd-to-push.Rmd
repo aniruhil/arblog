@@ -15,7 +15,7 @@ East is east and west is west and never the twain shall meet!
 
 Nah, that might happen sooner than I can get this working. 
 
-```{r, fig.align='center'}
+```{r diamonds, fig.align='center'}
 library(ggplot2)
 library(viridis)
 ggplot(diamonds, aes(x = carat, y = price)) + geom_hex() + scale_fill_viridis()
