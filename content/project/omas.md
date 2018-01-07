@@ -9,7 +9,7 @@ image_preview = "omas.png"
 
 tags = ["Health"]
 
-external_link = ""
+external_link = ""amos
 
 math = false
 
@@ -27,5 +27,5 @@ The Medicaid and Appalachian Health, SES, and Ecological OMAS Assessment paper w
 (b)	SES indicators such as employment, poverty, medical and other debt, education, health burdens, etc.; and 
 (c)	Ecological factors such as employment-base (e.g., manufacturing-base, etc.), housing stock, family composition (e.g., children in family/household, divorce, etc.), select other health demographics, and community security. 
 
-The study will combine quantitative data analysis with qualitative data gathered from nine semi-structured interviews/focus-groups conducted in select locations (counties) in Appalachian Ohio. 
+The study will combine longitudinal quantitative data with thicker descriptions gathered from nine semi-structured interviews/focus-groups conducted in select locations (counties) in Appalachian Ohio. Expected completion date is June 30, 2018, so watch this spoace!  
 
