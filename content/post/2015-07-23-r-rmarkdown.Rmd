@@ -39,5 +39,5 @@ pie(
 
 
 ```{r}
-plot(mtcars$mpg)
+plot(mtcars$mpg, mtcars$qsec)
 ```
