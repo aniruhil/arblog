@@ -6,6 +6,7 @@
 baseurl = "https://aniruhil.github.io"
 
 canonifyURLs = true
+relativeURLs = true
 
 # Title of your site
 title = "Ani Ruhil"
@@ -13,7 +14,7 @@ title = "Ani Ruhil"
 # publishDir = "../aniruhil.github.io"
 
 
-# relativeurls = true
+
 
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
