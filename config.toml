@@ -3,11 +3,17 @@
 
 # The URL of your website.
 # End your URL with a `/` trailing slash, e.g. `https://example.com/`.
-baseurl = "https://aniruhil.github.io/"
 
+contentDir = "content"
+layoutDir = "layouts"
+publishDir = "public"
+buildDrafts = false
 canonifyURLs = true
 
-relativeurls = true
+# baseurl = "https://aniruhil.github.io/"
+baseurl = "/"
+
+# relativeurls = true
 
 # Title of your site
 title = "Ani Ruhil"
