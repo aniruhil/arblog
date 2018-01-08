@@ -4,7 +4,7 @@ widget = "projects"
 active = true
 date = "2016-04-20T00:00:00"
 
-title = "Projects"
+title = "Selected Projects"
 subtitle = ""
 
 
@@ -33,20 +33,21 @@ filter_default = 0
   tag = "*"
 
 [[filter]]
-  name = "Health"
-  tag = ".health"
-
-[[filter]]
   name = "Education"
   tag = ".education"
+
+[[filter]]
+  name = "Foster Care"
+  tag = ".foster"
+
+[[filter]]
+  name = "Health"
+  tag = ".health"
 
 [[filter]]
   name = "Other"
   tag = ".other"
 
-[[filter]]
-  name = "Foster Care"
-  tag = ".foster"
   
 +++
 

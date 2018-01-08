@@ -7,7 +7,7 @@ summary = "In March 2016, the Ohio Commission on Infant Mortality issued a repor
 
 image_preview = "infant.jpg"
 
-tags = [".health"]
+tags = ["health"]
 
 categories = ["Health"]
 
