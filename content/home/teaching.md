@@ -16,7 +16,7 @@ weight = 20
 
 I teach the following courses at Ohio University: 
 
-- MPA 6010 1000: Research Methods in Leadership and Public Affairs 
-- MPA 6020 1000: Advanced Research Methods in Leadership and Public Affairs 
-- MPA wxzy 1002: Data Analysitics for Public Affairs 
+- MPA 6010: Research Methods in Leadership and Public Affairs (on-campus/hybrid/online)
+- MPA 6020: Advanced Research Methods in Leadership and Public Affairs (on-campus) 
+- MPA 5830: Data Analytics for Public and Non-profit Managers (online)
 
