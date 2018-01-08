@@ -4,9 +4,9 @@ title = "HIV Needs Assessment (Ohio)"
 image_preview = "plwha.jpg"
 summary = "Understanding the needs (gaps in barriers to prevention/care services) of people living with HIV/AIDS (PLWHA) and high-risk people is critical to improving the health of Ohioans and reducing the transmission of HIV"
 
-tags = [".health"]
+tags = ["health"]
 
-categories = ["Health"]
+# categories = ["Health"]
 
 +++
 

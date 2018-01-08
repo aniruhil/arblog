@@ -7,7 +7,7 @@ summary = "This study sheds light on how student growth measures are being imple
 
 image_preview = "sgm.jpg"
 
-tags = [".education", "*"]
+tags = ["education", "*"]
 
 # categories = ["Education"]
 
