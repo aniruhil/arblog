@@ -37,4 +37,4 @@ weight = 5
 
 # About me
 
-I am a professor of leadership and public affairs at Ohio Universty's Voinovich School of Leadership and Public Affairs. I work on grant-funded and contracted research in the domains of public health, education, and social services, for the most part. I teach introductory and advanced data analytics in our Master of Public Administration (MPA) programs (in all three formats the MPA is offered in), and have taught undergraduate and graduate statistics courses for Plant Biology, Economics, and Commmunication Studies.  
+I am a professor of leadership and public affairs at Ohio Universty's Voinovich School of Leadership and Public Affairs. I work on grant-funded and contracted research in the domains of public health, education, and social services, for the most part. I teach introductory and advanced data analytics in our Master of Public Administration (MPA) programs (in all three formats the MPA is offered in), and have taught undergraduate and graduate statistics courses for Plant Biology, Economics, and Commmunication Studies. My cv can be  [found here](https://app.box.com/s/fnr79ytruzwetst1d3ac73rcftqlat73)  
