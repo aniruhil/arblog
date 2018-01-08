@@ -7,6 +7,8 @@ date = "2016-04-20T00:00:00"
 title = "Projects"
 subtitle = ""
 
+categories = ["Health"]
+
 # Order that this section will appear in.
 weight = 10
 
@@ -41,5 +43,10 @@ filter_default = 0
 [[filter]]
   name = "Other"
   tag = ".other"
+
+[[filter]]
+  name = "Foster Care"
+  tag = ".foster"
+  
 +++
 

@@ -7,7 +7,9 @@ summary = "This study sheds light on how student growth measures are being imple
 
 image_preview = "sgm.jpg"
 
-tags = ["Education"]
+tags = [".education"]
+
+categories = ["Education"]
 
 external_link = "http://oerc.osu.edu/index.php/ohios-student-growth-measures-a-study-of-policy-and-practice-in-ohio/"
 

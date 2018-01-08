@@ -7,7 +7,9 @@ summary = "This study sheds light on how student growth measures are being imple
 
 image_preview = ""
 
-tags = ["Foster Care"]
+tags = [".foster"]
+
+categories = ["Foster Care"]
 
 external_link = ""
 

@@ -7,7 +7,9 @@ summary = "The Ohio Medicaid Assessment Survey (OMAS) is an Ohio-specific assess
 
 image_preview = "omas.png"
 
-tags = ["Health"]
+tags = [".health"]
+
+categories = ["Health"]
 
 external_link = ""
 

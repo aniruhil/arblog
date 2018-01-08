@@ -7,7 +7,9 @@ summary = "In March 2016, the Ohio Commission on Infant Mortality issued a repor
 
 image_preview = "infant.jpg"
 
-tags = ["Health"]
+tags = [".health"]
+
+categories = ["Health"]
 
 external_link = "http://www.healthpolicyohio.org/social-determinants-of-infant-mortality-advisory-group/"
 
