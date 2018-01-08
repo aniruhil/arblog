@@ -3,13 +3,13 @@ date = "2018-01-07"
 
 title = "OACCA Outcomes Project"
 
-summary = "The Ohio Association of Child Caring Agencies (OACCA) contracted with us to built an automated report-generation system for their member agencies. The goal was to compare each agency's performance again all other agencies serving "similar" children, but to build the system at low-cost and in an open-source environment. A combination of R and LaTeX did the trick and with ease!"
+summary = "The Ohio Association of Child Caring Agencies (OACCA) contracted with us to built an automated report-generation system for their member agencies. The goal was to compare each agency's performance again all other agencies serving 'similar' children, but to build the system at low-cost and in an open-source environment. A combination of R and LaTeX did the trick and with ease."
 
 image_preview = ""
 
 tags = ["foster"]
 
-categories = ["foster"]
+categories = ["Foster Care"]
 
 external_link = "http://www.oacca.org/wp-content/uploads/2012/02/OACCA_Pilot-Report_Years23_rvd_060710.pdf"
 
