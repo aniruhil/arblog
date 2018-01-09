@@ -3,7 +3,7 @@ date = "2018-01-07"
 
 title = "Student Growth Measures (SGM) Mini‐Grant Program for Extended Value‐Added Testing"
 
-summary = ""
+summary = "During	the	2011‐13	academic years,	81	of	Ohio’s	Local	Educational	Agencies	(LEAs)	 received	mini‐grants	to	implement	extended	testing	and	received value‐added	data	in	selected	grades	and	content	areas	not	covered	by	the	Ohio	Achievement	Assessments. An	OERC	research	team	developed	a	two	year	research	plan	to	evaluate	specific aspects of the implementation of these mini-grants."
 
 image_preview = "sgm.jpg"
 
