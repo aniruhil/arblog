@@ -20,3 +20,4 @@ I teach the following courses at Ohio University:
 - MPA 6020: Advanced Research Methods in Leadership and Public Affairs (on-campus) 
 - MPA 5830: Data Analytics for Public and Non-profit Managers (online)
 
+On occasion I have also taught undergraduate statistics for the departments of Plant Biology and Economics, and graduate statistics courses for the department of Plant Biology and the School of Communication Studies. In addition, I have taught workshops in statistics for Fulbright students and for our staff and students. 
