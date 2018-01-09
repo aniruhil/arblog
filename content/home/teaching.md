@@ -12,6 +12,12 @@ subtitle = ""
 
 # Order that this section will appear in.
 weight = 20
+
+# Content.
+# Display content from the following folder.
+# For example, `folder = "project"` displays content from `content/project/`.
+folder = "teaching"
+
 +++
 
 I teach the following courses at Ohio University: 
