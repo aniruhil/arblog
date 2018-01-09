@@ -1,7 +1,7 @@
 ---
 title: 'MPA 6010: Research Methods for Leadership & Public Affairs'
 author: Ani Ruhil
-date: []
+date: ["2017-08-01"]
 slug: mpa-6010-research-methods-for-leadership-public-affairs
 categories:
   - Teaching
