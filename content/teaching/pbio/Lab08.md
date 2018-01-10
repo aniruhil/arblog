@@ -1,0 +1,117 @@
+---
+title: 'Lab 8: The t-test'
+author: "Ruhil"
+date: '2018-01-10'
+output:
+  html_document:
+    fig_height: 6
+    fig_width: 8
+    highlight: monochrome
+    keep_md: yes
+    theme: readable
+    toc: yes
+    toc_depth: 6
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+
+
+For each of the tests that follow we know that random samples are assumed. However, we always have to test for (a) normality, and (b) equal variances (in the case of two-sample t-tests). These tests are not foolproof of course but they tend to be fairly robust, and are used by most disciplines.  
+
+* __Normality__ -- use box-plots and quantile-quantile plots to look for skewed distributions and outliers. Supplement these visual explorations of the data with the Shapiro-Wilk test if sample sizes are not too large or then with the Anderson-Darling test if your sample is pretty large.  
+* __Equal variances__ -- use the F-test if normality appears to hold, or then Levene's test if normality is violated. Don't forget that you can switch the `center = mean` to `center = median` in Levene's test, with the latter specification being more robust with badly skewed  distributions. 
+
+
+# One-Sample t-tests
+## Problem 17
+Male koalas bellow during the mating season but do females pay attention? Researchers measured responses of estrous female koalas to playbacks of bellows that had been modified to simulate male callers of different body sizes. Females were placed one at a time into an enclosure while loudspeakers played bellows simulating a larger male on one side (randomly chosen) and a smaller male on the other side. Male bellows were played repeatedly, alternating between sides, over 10 minutes. Females often turned to look in the direction of a loudspeaker (invisible to her). The data given below measure the preference of each of 15 females for the simulated sound of the "larger" male. Preference was calculated as the number of looks toward the larger-male side minus the number of looks toward the smaller-male side. Preference is positive if the female looked more often toward the larger-male side and negative if she looked more often toward the smaller-male side. 
+
+Do females pay attention to body size cues in simulated male sounds? 
+
+
+```r
+koalas = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter11/chap11q17KoalaBellows.csv")
+names(koalas)
+```
+
+```
+## [1] "femalePreference"
+```
+
+### Visual Exploration of Normality
+
+```r
+boxplot(koalas$femalePreference, horizontal = TRUE, xlab = "Female Preference")
+```
+
+![](Lab08_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+```r
+qqnorm(koalas$femalePreference)
+qqline(koalas$femalePreference)
+```
+
+![](Lab08_files/figure-html/unnamed-chunk-2-2.png)<!-- -->
+
+### Shapiro-Wilk Test of Normality
+
+```r
+shapiro.test(koalas$femalePreference)
+```
+
+```
+## 
+## 	Shapiro-Wilk normality test
+## 
+## data:  koalas$femalePreference
+## W = 0.94937, p-value = 0.5146
+```
+### Hypothesis test
+H0: No preference ($\mu = 0$)  
+HA: Have a preference ($\mu \neq 0$)  
+
+
+```r
+t.test(koalas$femalePreference, mu = 0, alternative = "two.sided", conf.level = 0.95)
+```
+
+```
+## 
+## 	One Sample t-test
+## 
+## data:  koalas$femalePreference
+## t = 2.3743, df = 14, p-value = 0.03242
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  0.3028752 5.9637914
+## sample estimates:
+## mean of x 
+##  3.133333
+```
+
+## Problem 24
+Without external cues such as the sun, people attempting to walk in a straight line tend to walk in circles. One idea is that most individuals have a tendency to turn in one direction because of internal physiological asymmetries, or because of differences between legs in length or strength. Researchers blindfolded 15 participants in a large field and had them walk in a straight line. The data reflect the median change in direction (turning angle) of each participant, measured in degrees per second. A negative angle refers to a left turn while a positive angle refers to a right turn. 
+
+http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter11/chap11q24WalkingInCircles.csv
+
+
+
+# Paired and Two-Sample t-tests
+## Problem 10 
+In most election years since 1960, a televised debate between the leading candidates for president has been influential in determining the outcome of the U.S. election. One analysis of the transcripts of these debates looked at the number of times that each candidate used the words "will," "shall," or "going to" as an indication of how many promises the candidate made. Also recorded was whether the candidate won the popular vote. This was not always the same candidate who won the election. Was the winner or loser significantly more likely to make promises, as measured by this index? 
+
+http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12q10WillsPresidents.csv
+
+
+## Problem 16
+Mosquitoes find their victims in part by odor, so it makes sense to wonder whether what we eat or drink influences our attractiveness to mosquitoes. A research team in West Africa wondered whether drinking the local beer attracted mosquitoes. They opened a container carrying 50 mosquitoes next to each of 25 alcohol-free participants and measured "activation" -- the proportion of mosquitoes that flew toward the participants. They repeated this experiment 15 minutes after each participant had consumed a liter of beer. This experiment was also carried out on another set of 18 participants who drank water instead of beer. The change in activation is given for both groups. Test for a difference between mean changes in activation between the beer-drinking and water-drinking groups.  
+
+http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter12/chap12q16BeerAndMosquitoes.csv
+
+
+
+
+
+

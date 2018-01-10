@@ -1,0 +1,215 @@
+---
+title: 'Lab 7: The Standard Normal (z) Distrbution'
+author: "Ruhil"
+date: '2018-01-10'
+output:
+  html_document:
+    highlight: pygments
+    keep_md: yes
+    mathjax: http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+    theme: flatly
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+
+
+## Calculating Area above/below/between z-scores
+The key command here is `pnorm()`, with the switch `lower.tail = FALSE` if we are calculating the area **above** the specified z-score, and `lower.tail = TRUE` if we are calculating the area **below** the specified z-score. 
+
+
+```r
+pnorm(1.31, lower.tail = FALSE)  # above z = 1.31
+```
+
+```
+## [1] 0.09509792
+```
+
+```r
+pnorm(2.79, lower.tail = TRUE)  # below z = 2.79
+```
+
+```
+## [1] 0.9973646
+```
+
+```r
+pnorm(1.31, lower.tail = TRUE) - pnorm(-1.31, lower.tail = TRUE)  # -1.31 <= z <= 1.31
+```
+
+```
+## [1] 0.8098042
+```
+
+## Calculating z-scores given an area
+The key command here is `qnorm()`, with the switch `lower.tail = FALSE` if we are calculating the area **above** the specified z-score, and `lower.tail = TRUE` if we are calculating the area **below** the specified z-score. 
+
+
+```r
+qnorm(0.5, lower.tail = FALSE)  # area above z is 0.5
+```
+
+```
+## [1] 0
+```
+
+```r
+qnorm(0.75, lower.tail = TRUE)  # area below z is 0.75
+```
+
+```
+## [1] 0.6744898
+```
+
+```r
+qnorm(0.75, lower.tail = FALSE)  # area above z is 0.75
+```
+
+```
+## [1] -0.6744898
+```
+
+## Tackling Substantive Questions 
+When we don't have sample data we can work with the population parameters, calculating $z = \dfrac{Y - \mu}{\sigma}$. If we have a sample to work with then we first calculate the standard error via $\left(\sigma_{\bar{Y}} = \dfrac{\sigma}{\sqrt{n}}\right)$ and then we calculate $z = \dfrac{Y - \mu}{\sigma_{\bar{Y}}}$
+
+Babies born in singleton births in the United States have birth weights (in kilograms) that are $\sim N(3.296; 0.560)$.
+
+> (a) What is the probability of a baby weighing more than 5 kg at birth?
+
+
+```r
+mu = 3.296
+sd = 0.56
+x = 5
+baby.z = (x - mu)/sd
+round(baby.z, digits = 2)
+```
+
+```
+## [1] 3.04
+```
+
+```r
+pnorm(3.04, lower.tail = FALSE)
+```
+
+```
+## [1] 0.001182891
+```
+
+About 0.1182% of babies will be born with birth weights greater than 5 kg.
+
+> (b) What is the probability of the baby weighing betwen 3 and 4 kg? 
+
+
+```r
+z.3 = (3 - mu)/sd
+z.4 = (4 - mu)/sd
+p.value = pnorm(z.3, lower.tail = FALSE) - pnorm(z.4, lower.tail = FALSE)
+p.value
+```
+
+```
+## [1] 0.5970977
+```
+
+About 59.70% of babies will fall within these limits.
+
+> (c) What fraction of babies is more than 1.5 standard deviations from the mean in either direction?
+
+In essence they are asking about the area above/below $z=\pm 1.5$.  
+
+```r
+pnorm(1.5, lower.tail = FALSE) + pnorm(-1.5, lower.tail = TRUE)
+```
+
+```
+## [1] 0.1336144
+```
+
+Some 13.36% of babies will have birth weights more than 1.5 standard deviation units either side of the mean.
+
+> (d) What fraction of the babies is more than 1.5 kg from the mean in either direction?
+
+
+```r
+z.1.5 = 1.5/sd
+z.1.5
+```
+
+```
+## [1] 2.678571
+```
+
+```r
+pnorm(z.1.5, lower.tail = FALSE) + pnorm(-z.1.5, lower.tail = TRUE)
+```
+
+```
+## [1] 0.007393696
+```
+
+So 0.73% of babies will weigh more than 1.5 kg from the mean in either direction.
+
+> (e) If you took a random sample of 10 babies, what is the probability that their mean weight $(\bar{Y})$ would be greater than 3.5 kg? 
+
+Now we'll have to work with the standard error so let us calculate it first.
+
+
+```r
+n = 10
+se = sd/sqrt(n)
+se  # for use in calculating the z-score
+```
+
+```
+## [1] 0.1770875
+```
+
+```r
+z = (3.5 - mu)/se
+z
+```
+
+```
+## [1] 1.151973
+```
+
+```r
+pnorm(z, lower.tail = FALSE)
+```
+
+```
+## [1] 0.1246662
+```
+
+In a sample of 10 babies the probability of their birth weight  exceeding 3.5 kg is 0.1246.  
+
+## Your Turn
+
+#### Problem 3
+Calculate the following areas:
+
+(a) p(z > 1.34)  
+(b) p(z < 2.15)  
+(c) p(0.52 < z < 2.34)  
+(d) p(z < -0.93)  
+(e) p(-1.57 < z < -0.32)  
+
+
+#### Problem 11
+A survey of European mitochondrial DBA variation has found that the most common haplotype (genotype), known as "H", occurs in 40% of people. If we sampled 400 Europeans, what is the probability that
+
+(a) At least 180 are haplotype H?  
+(b) At least 130 are haplotype H?  
+(c) Between 115 and 170 (inclusive) are haplotype H?  
+
+
+#### Example 10.4
+NASA excludes anyone under 62 inches in height and anyone over 75 inches in height from being an astronaut pilot. In metric units these cutoffs are 157.5 cm and 190.5 cm, respectively. Assume that heights are distributed with means and standard deviations of 177.6 cm and 9.7 cm for 20-29 year-old men, and 163.2 cm and 10.1 cm for 20-29 year-old women. What proportion of men and women in these age groups would be excluded from being NASA astronaut pilots?   
+
+
+
+

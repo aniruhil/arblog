@@ -1,0 +1,262 @@
+---
+title: "Lab 1"
+author: "Ani Ruhil"
+date: "January 15, 2016"
+output:
+  html_document:
+    toc: yes
+  fontsize: 10
+  word_document:
+    highlight: tango
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Installing and Loading packages
+You can either use the "Tools" menu to select "Install Packages..." and enter the package name(s) or run a command as shown below:
+
+```{r}
+packs = c("epitools", "psych", "lattice", "binom", "car", "multcomp", "ggplot2", "ggmap", "plotly")
+# install.packages(packs, dependencies = TRUE, repos="https://cran.rstudio.com")
+```
+
+Note: "repos="" is short for the URL of the repository from which packages should be downloaded. "dependencies = TRUE" tells R to also download any other packages that are linked to the package you want to install.
+
+If any of these packages is updated by its author I will let you know how to update them. 
+
+Once a package has been installed, we can disable the R command "install.packages()" by adding a "#" symbol before the command. This way the next time you run this file to create a Word document RStudio can skip re-installing of the packages. Note also that using the "#"" symbol before any R command disables it so you could use this trick most generally. 
+
+We can load installed packages with the following command:
+```{r}
+library(lattice)
+```
+
+Note: 
+
+* Watch the important way to separate plain vanilla text from R commands ... __all R commands must be inserted in a block__. 
+* lattice is one of the two major graphics packages in R. You can find plenty of examples with code on the web, and the author's website is [here](http://lmdvr.r-forge.r-project.org/figures/figures.html)
+
+
+# Reading Data into R 
+R is very flexible and can read data in Excel formats (.xls, .xlsx), text formats (.txt), CSV (comma separated variable) formats (.csv), etc. 
+
+Let us start with a simple data set -- serotonin levels in the central nervous system of desert locusts that were experimentally crowded for 0 (the control group), 1, and 2 hours. Presumably locusts are shy and solitary as a rule but become gregarious and social in a drought or when they see/smell other locusts, and hence the locust swarms. See [here](http://www.npr.org/templates/story/story.php?storyId=100020125) for an NPR story on this line of research.  
+
+```{r}
+locusts = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02f1_2locustSerotonin.csv")
+```
+
+Now look at the upper-right window ... you see the __locusts__ data you just read-in. If you click the "play" button you'll see the contents of the data-set. If you click the data-set you will open it up in the form of a spreadsheet. Do this now and notice you have the first column containing each locust's serotonin level (titled "serotoninLevel" and measured in pmoles) and the treatment it was assigned to (titled "treatmentTime"). 
+
+* You can use the up/down buttons above each column to sort the data in an ascending/descending order, in case you want to eyeball your data. You can also use the "Filter" button to select subsets of your data. For example, if you only wanted to eyeball the treatmentTime = 2 group, you could do so by setting the filter in the treatmentTime column to 2. 
+
+Quick Check: 
+
+* What kind of a variable is serotoninLevel? 
+* What about treatmentTime? 
+
+We can label the values of treatmentTime (see below): 
+
+```{r}
+locusts$treatmentTime = factor(locusts$treatmentTime, levels = c(0, 1, 2), labels = c("Control", "1 Hour", "2 Hours"))
+```
+
+Watch how treatmentTime is now showing up as a "Factor" ... R-speak for a categorical variable. R also tells you how many unique groups you have and the label each group carries.  
+
+Now that we have some data to work with, how should we describe it visually? Well, if we have a numeric variable then it is appropriate to use a Histogram to depict the variable's distribution. Here we have three groups (treatmentTime = 0, =1, =2) so we will have to setup a Histogram for each group. 
+
+```{r}
+histogram( ~ serotoninLevel | treatmentTime, data=locusts, layout=c(1,3))
+```
+
+Note the key commands here. The "~ serotoninLevel" piece tells R to use serotoninLevel as the variable of interest. "| treatmentTime" tells R to construct a histogram for each unique group is finds in a variable called treatmentTime. We also indicate the data we wish to use via "data = locusts". The "layout=c(1,3)" tells R to squeeze the histograms into 1 column and 3 rows. 
+
+We could have also run the same plot as shown below; either way would be fine. 
+
+```{r}
+histogram( ~ locusts$serotoninLevel | locusts$treatmentTime, layout=c(1,3))
+```
+
+We may not like the default number of bins. Instead, we may want to specify the width of each groups. How should we set the bin-width? One way to do this would be to see the minimum and maximum values. We do this (below) with the "summary()" command and find Min = 3.20 and Max = 21.30. The gap (Max - Min) is 21.30 - 3.20 = 18.10. If we want to break a distribution that has a range of 18.10 into 10 groups, that would mean each group would be about 18.10 divided by 10 = 1.81 pmoles wide. So let us set this as the bin-width.
+
+```{r}
+summary(locusts)
+
+histogram(~ serotoninLevel | treatmentTime, data=locusts, breaks=seq(3.20, 21.30, by=1.81), layout=c(1,3))
+```
+
+We have some new commands here. The "breaks=seq(3.20, 21.30, by=1.81)" segment tells R to start making the groups from a minimum value of 3.20 to a maximum value of 21.30, and to make each group 1.81 units (here pmoles) wide. 
+
+What if we wanted only 5 groups? That would mean a bin-width of 18.10/5 = 3.62 pmoles. What would this distribution look like?
+
+```{r}
+histogram(~ serotoninLevel | treatmentTime, data=locusts, breaks=seq(3.20, 21.30, by=3.62), layout=c(1,3))
+```
+
+Hmm, too much compression of the data here. So we would have to figure out some happy medium between 5 and 10 groups but we'll leave it for now.  
+
+
+## Hemoglobin Concentration Example
+```{r}
+hemoglobinData = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02e3cHumanHemoglobinElevation.csv")
+
+histogram(~ hemoglobin | population, data=hemoglobinData)
+
+histogram(~ hemoglobin | population, data=hemoglobinData, breaks=seq(10, 26, by=1), layout=c(1,4))
+
+histogram(~ hemoglobin | population, data=hemoglobinData, breaks=seq(10, 26, by=1), layout=c(1,4), col="firebrick")
+```
+
+We have four groups; hence "layout=c(1,4)". We also colored the bars with col="xyz". You can see the various color options available in R [here](http://research.stowers-institute.org/efg/R/Color/Chart/ColorChart.pdf).
+
+
+# Frequency Tables and Bar-charts 
+Bar-charts are appropriate for categorical (nominal/ordinal) variables. What if we wanted to calculate how many adults we have in each population group? Easy, let us first construct a frequency table.
+
+```{r}
+tab.1 = table(hemoglobinData$population)
+tab.1
+```
+
+How about calculating relative Frequencies as proportions and percentages? 
+
+```{r}
+tab.2 = prop.table(tab.1) # Flip tab.1 into a table of proportions
+tab.2
+
+tab.3 = tab.2 * 100 # Take tab.2 and multiply each proportion by 100
+tab.3
+```
+
+Now we can move on to creating a bar-chart from the frequency table.
+
+```{r}
+barplot(tab.1, ylim=c(0, 2000))
+barplot(tab.2, ylim=c(0, 1))
+barplot(tab.3, ylim=c(0, 100))
+```
+
+Note how simple it is to toss your frequency table into a bar-chart. What if we wanted to order the bars, maybe for tab.3 (which has the counts as percentages), and then plot these ordered values?
+
+```{r}
+tab.4 = sort(tab.3, decreasing=TRUE)
+
+barplot(tab.4, ylim=c(0, 100), col="salmon") # coloring the bars
+
+barplot(tab.4, ylim=c(0, 100), col=c("salmon", "cornflowerblue", "navajowhite", "gray"), xlab="Population", ylab="Relative Frequency (%)") # setting unique bar colors and labeling the x-axis and y-axis
+```
+
+Note: "decreasing=TRUE" says sort the table in descending order of the counts. 
+
+# Contingency Table and Mosaic Plots
+Here we need a data-set that has two categorical variables. Might as well stick with the reproduction and Malaria example since we know the context and have seen what we should expect. 
+
+Let us load the data first, then construct the contingency table and finally render the plot.
+
+```{r}
+malaria = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02e3aBirdMalaria.csv")
+
+tab.5 = table(malaria$response, malaria$treatment)
+tab.5
+
+tab.6 = prop.table(tab.5) # Proportions of full sample
+tab.6
+
+tab.6a = prop.table(tab.5, 1) # Row proportions
+tab.6a
+
+tab.6b = prop.table(tab.5, 2) # Column proportions
+tab.6b
+
+barplot(tab.5, beside=TRUE, ylim=c(0,30))
+
+mosaicplot(tab.5)
+```
+
+Notice that the preceding contingency tables lack totals. This can be fixed as shown below for tab.5 :
+```{r}
+Total = sum
+tab.7a = addmargins(tab.5, margin = c(1,2), FUN = Total, quiet = TRUE)
+
+tab.7a
+```
+
+
+# Two Numeric Variables?
+This would call for a scatter-plot, as in the case of the guppy data. 
+```{r}
+guppies = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02e3bGuppyFatherSonAttractiveness.csv")
+
+plot(sonAttractiveness ~ fatherOrnamentation, data=guppies, col="purple", xlab="Father's Ornamentation", ylab="Son's Attractiveness", main="Scatterplot with the Guppy Data")
+```
+
+Note how we created the plot. The basic structure of the command is "plot(y ~ x, data)" and we asked for the son's attractiveness to be plotted on the y-axis while the father's ornamentation should go up on the x-axis, and that the data=gupipes. We also added some other elements ... "xlab=" to give us a cleaner label for the x-axis and similarly one for the y-axis via "ylab=". We also added a plot-title via "main=". And of course changing the color of the points.
+
+# Line Charts
+These would be ideal for time-series data, whether for a single group or multiple groups. 
+```{r}
+measles = read.csv("http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02e4aMeaslesOutbreaks.csv")
+
+plot(confirmedCases ~ yearByQuarter, data=measles, type="l")
+
+plot(confirmedCases ~ yearByQuarter, data=measles, type="b", col="red", ylab="Confirmed Number of Cases", xlab="Year (by Quarter)")
+```
+
+
+# Purely for demonstration purposes ...
+Now a much more modern, interactive graph of the same data:
+
+```{r, eval=FALSE}
+library(plotly)
+plot_ly(data = measles, x=yearByQuarter, y=confirmedCases)
+```
+
+
+What if we had multiple time-series to plot? A good example would be stock prices (see below). 
+
+Source: [Joseph Rickert](http://blog.revolutionanalytics.com/2015/08/plotting-time-series-in-r.html)
+
+```{r, eval=FALSE}
+library(ggplot2)
+library(xts)
+library(dygraphs)
+ 
+# Get IBM and Linkedin stock data from Yahoo Finance
+ibm_url = "http://real-chart.finance.yahoo.com/table.csv?s=IBM&a=07&b=24&c=2010&d=07&e=24&f=2015&g=d&ignore=.csv"
+lnkd_url = "http://real-chart.finance.yahoo.com/table.csv?s=LNKD&a=07&b=24&c=2010&d=07&e=24&f=2015&g=d&ignore=.csv"
+ 
+yahoo.read = function(url){
+   dat = read.table(url,header=TRUE,sep=",")
+   df = dat[,c(1,5)]
+   df$Date = as.Date(as.character(df$Date))
+   return(df)}
+ 
+ibm  = yahoo.read(ibm_url)
+lnkd = yahoo.read(lnkd_url)
+
+ggplot(ibm,aes(Date,Close)) + 
+  geom_line(aes(color="ibm")) +
+  geom_line(data=lnkd,aes(color="lnkd")) +
+  labs(color="Legend") +
+  scale_colour_manual("", breaks = c("ibm", "lnkd"),
+                          values = c("blue", "brown")) +
+  ggtitle("Closing Stock Prices: IBM & Linkedin") + 
+  theme(plot.title = element_text(lineheight=.7, face="bold"))
+
+# dygraph() needs xts time series objects
+ibm_xts = xts(ibm$Close,order.by=ibm$Date,frequency=365)
+lnkd_xts = xts(lnkd$Close,order.by=lnkd$Date,frequency=365)
+stocks = cbind(ibm_xts,lnkd_xts)
+dygraph(stocks,ylab="Close", 
+        main="IBM and Linkedin Closing Stock Prices") %>%
+  dySeries("..1",label="IBM") %>%
+  dySeries("..2",label="LNKD") %>%
+  dyOptions(colors = c("blue","brown")) %>%
+  dyRangeSelector()
+```
+
+
+
