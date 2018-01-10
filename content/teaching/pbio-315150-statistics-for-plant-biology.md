@@ -14,8 +14,8 @@ tags = ["Teaching"]
 - [Syllabus (Spring 2016)](https://aniruhil.org/teaching/pbio/syllabus2016.pdf) 
 - Note: Lab files do not necessarily correspond to each chapter so be warned.
 
-| Slides                           | Knit files     | Lab                                |
-| -------------------------------- | -------------  | ----------------                   |
+| Slides   | Knit files   | Lab  |
+| ------   | ------       | ---  |
 | [Chapter 1](https://aniruhil.org/teaching/pbio/slides/ch1.pdf)  | none  | [lab 1](https://aniruhil.org/teaching/pbio/labs/Lab01.html) |
 | [Chapter 2](https://aniruhil.org/teaching/pbio/slides/ch2.pdf)  | [html](https://aniruhil.org/teaching/pbio/knits/Chapter02.html) | [lab 2](https://aniruhil.org/teaching/pbio/labs/Lab02.html) |
 | [Chapter 3](https://aniruhil.org/teaching/pbio/slides/ch3.pdf)  | [html](https://aniruhil.org/teaching/pbio/knits/Chapter03.html) | [lab 3](https://aniruhil.org/teaching/pbio/labs/Lab03.html) |
