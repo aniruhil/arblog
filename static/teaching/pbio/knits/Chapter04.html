@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="ani" />
+
+<meta name="date" content="2015-01-15" />
+
+<title>R Script for Chapter 4</title>
+
+<script src="Chapter04_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Chapter04_files/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="Chapter04_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="Chapter04_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="Chapter04_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code > span.dt { color: #204a87; } /* DataType */
+code > span.dv { color: #0000cf; } /* DecVal */
+code > span.bn { color: #0000cf; } /* BaseN */
+code > span.fl { color: #0000cf; } /* Float */
+code > span.ch { color: #4e9a06; } /* Char */
+code > span.st { color: #4e9a06; } /* String */
+code > span.co { color: #8f5902; font-style: italic; } /* Comment */
+code > span.ot { color: #8f5902; } /* Other */
+code > span.al { color: #ef2929; } /* Alert */
+code > span.fu { color: #000000; } /* Function */
+code > span.er { color: #a40000; font-weight: bold; } /* Error */
+code > span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #000000; } /* SpecialChar */
+code > span.vs { color: #4e9a06; } /* VerbatimString */
+code > span.ss { color: #4e9a06; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #000000; } /* Variable */
+code > span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code > span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code > span.ex { } /* Extension */
+code > span.at { color: #c4a000; } /* Attribute */
+code > span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code > span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link rel="stylesheet" href="https://aniruhil.github.io/avsr/stylesheets/stylesheet2.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">R Script for Chapter 4</h1>
+<h4 class="author"><em>ani</em></h4>
+<h4 class="date"><em>January 15, 2015</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#estimating-with-uncertainty"><span class="toc-section-number">1</span> - Estimating with Uncertainty</a></li>
+<li><a href="#drawing-random-samples-from-the-population"><span class="toc-section-number">2</span> - Drawing Random Samples from the Population</a></li>
+<li><a href="#the-sampling-distribution"><span class="toc-section-number">3</span> - The Sampling Distribution</a></li>
+<li><a href="#the-confidence-interval-a-demonstration"><span class="toc-section-number">4</span> - The Confidence Interval (A Demonstration)</a></li>
+<li><a href="#error-bars"><span class="toc-section-number">5</span> - Error Bars</a></li>
+<li><a href="#some-worked-practice-problems"><span class="toc-section-number">6</span> - Some Worked Practice Problems</a><ul>
+<li><a href="#problem-1"><span class="toc-section-number">6.1</span> - Problem #1</a></li>
+<li><a href="#problem-7"><span class="toc-section-number">6.2</span> - Problem #7</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="estimating-with-uncertainty" class="section level1">
+<h1><span class="header-section-number">1</span> - Estimating with Uncertainty</h1>
+<p>We know that pretty much everything we do with data involves flying blind in the sense that all we have is a sample to go by but our goal is to generalize from the sample to the unseen population. Before we can do so however we need to understand not only the pitfalls of working with samples but also how we may leverage statistical theory to help us build a bridge from our sample to the population it purportedly represents. We’ll start by working with what is the closest thing to a population we may have in our hands … the population of human gene lengths (<a href="%22http://www.genome.gov/10001772%22">see the Human Genome Project</a> for details if you are unfamiliar with this monumental effort).</p>
+<p>We begin by reading in the human gene length data, treating it as a <strong>known population of human gene lengths</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">humanGeneLengths =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter04/chap04e1HumanGeneLengths.csv&quot;</span>))
+<span class="kw">head</span>(humanGeneLengths)</code></pre></div>
+<pre><code>##   geneLength
+## 1       2069
+## 2       1303
+## 3       1067
+## 4       2849
+## 5       3378
+## 6       2391</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(humanGeneLengths)</code></pre></div>
+<pre><code>##    geneLength   
+##  Min.   :   60  
+##  1st Qu.: 1312  
+##  Median : 2226  
+##  Mean   : 2622  
+##  3rd Qu.: 3444  
+##  Max.   :99631</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">HGL.N =<span class="st"> </span><span class="kw">nrow</span>(humanGeneLengths)
+HGL.mean =<span class="st"> </span><span class="kw">mean</span>(humanGeneLengths$geneLength)
+HGL.mean</code></pre></div>
+<pre><code>## [1] 2622.027</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">HGL.var =<span class="st"> </span><span class="kw">sum</span>((humanGeneLengths$geneLength -<span class="st"> </span>HGL.mean)^<span class="dv">2</span>) /<span class="st"> </span>HGL.N
+HGL.var</code></pre></div>
+<pre><code>## [1] 4149031</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">HGL.sd =<span class="st"> </span><span class="kw">sqrt</span>(HGL.var)
+HGL.sd</code></pre></div>
+<pre><code>## [1] 2036.917</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data.frame</span>(<span class="dt">Parameter =</span> <span class="kw">c</span>(<span class="st">&quot;Mean&quot;</span>, <span class="st">&quot;Standard deviation&quot;</span>), 
+  <span class="dt">Value =</span> <span class="kw">c</span>(HGL.mean, HGL.sd))</code></pre></div>
+<pre><code>##            Parameter    Value
+## 1               Mean 2622.027
+## 2 Standard deviation 2036.917</code></pre>
+<p>Pay close attention to the results of the <code>summary()</code> command. Note, in particular, the mean length of the human gene <span class="math inline">\((=2,622.0274)\)</span>. Note also the rest of the code you see. Since we are treating these data as a population this code manually calculates the mean (<code>HGL.Mean</code>), the population size (<code>HGL.N</code>), variance (<code>HGL.var</code>), and standard deviation (<code>HGL.sd</code>).</p>
+<p>Let us map the distribution via a histogram and a box-plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(humanGeneLengths$geneLength, <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100000</span>, <span class="dt">by =</span> <span class="dv">500</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">3000</span>), <span class="dt">xlab=</span><span class="st">&quot;Gene Length&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Histogram of Human Gene Length&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-2-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(humanGeneLengths$geneLength, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Human Gene Length&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-2-2.png" /><!-- --></p>
+<p>Both plots show a severely right-skewed distribution; the bulk of the lengths are clustering at the lower ends of the distribution. Below you see the authors’ code for subsetting the data by selecting only those observations that have gene lengths of 15,000 nucleotides or less.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">geneLengthsUpTo15K =<span class="st"> </span><span class="kw">subset</span>(humanGeneLengths, geneLength &lt;=<span class="st"> </span><span class="dv">15000</span>)
+<span class="kw">hist</span>(geneLengthsUpTo15K$geneLength, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">15000</span>, <span class="dv">500</span>), <span class="dt">xlab =</span> <span class="st">&quot;Gene length (Number of nucleotides)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Frequency&quot;</span>,  <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">right =</span> <span class="ot">FALSE</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">3000</span>))</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-3-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(geneLengthsUpTo15K$geneLength, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">xlab=</span><span class="st">&quot;Gene length (Number of nucleotides)&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-3-2.png" /><!-- --></p>
+</div>
+<div id="drawing-random-samples-from-the-population" class="section level1">
+<h1><span class="header-section-number">2</span> - Drawing Random Samples from the Population</h1>
+<p>We will begin with ONE random sample of size 100 (i.e., <span class="math inline">\(n=100\)</span>). The code below accomplishes this for us. You will also see the code for constructing a histogram and box-plot for the sample, and the mean and standard deviation of the sample.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gene.sample =<span class="st"> </span><span class="kw">sample</span>(humanGeneLengths$geneLength, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+<span class="co">#gene.sample = as.data.frame(gene.sample)</span>
+<span class="kw">summary</span>(gene.sample)</code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     291    1520    2648    2722    3398    9460</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gs.mean =<span class="st"> </span><span class="kw">mean</span>(gene.sample)
+gs.mean</code></pre></div>
+<pre><code>## [1] 2722.46</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gs.sd =<span class="st"> </span><span class="kw">sd</span>(gene.sample)
+gs.sd</code></pre></div>
+<pre><code>## [1] 1661.444</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(gene.sample, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">35</span>),
+     <span class="dt">xlab=</span><span class="st">&quot;Gene Length (number of nucleotides)&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;Random Sample of Gene Length (n=100)&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-4-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(gene.sample, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">xlab=</span><span class="st">&quot;Gene Length (number of nucleotides)&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-4-2.png" /><!-- --></p>
+<p>Calculating the standard error of this sample is straight forward (see below). The <code>length()</code> command is calculating the total number of observations in the sample (just for the sake of demonstration, since we knowingly set it to 100 so there is no need to calculate it!).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gs.n =<span class="st"> </span><span class="kw">length</span>(gene.sample)
+gs.n</code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gs.se =<span class="st"> </span>gs.sd /<span class="st"> </span><span class="kw">sqrt</span>(gs.n)
+gs.se</code></pre></div>
+<pre><code>## [1] 166.1444</code></pre>
+<p>Now, before we go any farther note that your sample mean 2722.46 is quite some distance from the population mean 2622.0274027</p>
+</div>
+<div id="the-sampling-distribution" class="section level1">
+<h1><span class="header-section-number">3</span> - The Sampling Distribution</h1>
+<p>We will now run some nifty code to draw an increasing number of random samples, each with exactly 100 observations (i.e., <span class="math inline">\(n=100\)</span> for each sample). For each sample we’ll calculate the sample mean, save this estimate for subsequent use, and then we will plot a histogram and a box-plot of the distribution of all sample means so estimated.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Drawing 100 random samples of n=100
+population =<span class="st"> </span>humanGeneLengths
+means =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">100</span>)
+for(i in <span class="dv">1</span>:<span class="dv">100</span>) {
+  temp.sample =<span class="st"> </span><span class="kw">sample</span>(population$geneLength, <span class="dv">1000</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  means[i] =<span class="st"> </span><span class="kw">mean</span>(temp.sample)
+}
+means =<span class="st"> </span><span class="kw">as.data.frame</span>(means)
+means.dat =<span class="st"> </span><span class="kw">unlist</span>(means)
+<span class="kw">mean</span>(means.dat)</code></pre></div>
+<pre><code>## [1] 2618.418</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(means.dat, <span class="dt">main=</span><span class="st">&quot;100 Random Samples of n = 100&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(means.dat, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;100 Random Samples of n = 100&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-6-2.png" /><!-- --></p>
+<p><strong>Note:</strong> Be careful!! The histogram and box-plot are for 100 sample means and not for 100 gene lengths. The perpendicular red line flags the Population mean (<span class="math inline">\(= 2622.02\)</span>)</p>
+<p>I will now expand the size of each random sample drawn from 100 to 10,000. I will then repeat the preceding sampling and plotting sequence.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Drawing 100 random samples of n=10,000
+population =<span class="st"> </span>humanGeneLengths
+means =<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">100</span>)
+for(i in <span class="dv">1</span>:<span class="dv">100</span>) {
+  temp.sample =<span class="st"> </span><span class="kw">sample</span>(population$geneLength, <span class="dv">10000</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  means[i] =<span class="st"> </span><span class="kw">mean</span>(temp.sample)
+}
+means =<span class="st"> </span><span class="kw">as.data.frame</span>(means)
+means.dat =<span class="st"> </span><span class="kw">unlist</span>(means)
+<span class="kw">mean</span>(means.dat)</code></pre></div>
+<pre><code>## [1] 2618.536</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(means.dat, <span class="dt">main=</span><span class="st">&quot;100 Random Samples of n = 10,000&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(means.dat, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;100 Random Samples of n = 100&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-7-2.png" /><!-- --></p>
+<p>Now I’ll draw many random samples of size = 100 from the population.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drawing a large number of random samples of n=100</span>
+population =<span class="st"> </span>humanGeneLengths
+means=<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">20290</span>)
+
+for(i in <span class="dv">1</span>:<span class="dv">20290</span>) {
+  temp.sample=<span class="kw">sample</span>(population$geneLength, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  means[i]=<span class="kw">mean</span>(temp.sample)
+}
+
+means =<span class="st"> </span><span class="kw">as.data.frame</span>(means)
+means.dat =<span class="st"> </span><span class="kw">unlist</span>(means)
+<span class="kw">mean</span>(means.dat)</code></pre></div>
+<pre><code>## [1] 2622.556</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(means.dat, <span class="dt">main=</span><span class="st">&quot;Many Random Samples of n = 100&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">5000</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">2000</span>,<span class="dv">4500</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;white&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
+<p>And now a large number of possible samples of size = 10,000</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Drawing a large number of random samples of n=10,000</span>
+population =<span class="st"> </span>humanGeneLengths
+means=<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">20290</span>)
+
+for(i in <span class="dv">1</span>:<span class="dv">20290</span>) {
+  temp.sample=<span class="kw">sample</span>(population$geneLength, <span class="dt">size=</span><span class="dv">10000</span>, <span class="dt">replace=</span><span class="ot">TRUE</span>)
+  means[i]=<span class="kw">mean</span>(temp.sample)
+}
+
+means =<span class="st"> </span><span class="kw">as.data.frame</span>(means)
+means.dat =<span class="st"> </span><span class="kw">unlist</span>(means)
+<span class="kw">mean</span>(means.dat)</code></pre></div>
+<pre><code>## [1] 2622.019</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(means.dat, <span class="dt">main=</span><span class="st">&quot;Many Random Samples of n = 10000&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Sample Mean&quot;</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">2525</span>,<span class="dv">2725</span>))
+<span class="kw">abline</span>(<span class="dt">v=</span><span class="fl">2622.0274</span>, <span class="dt">col=</span><span class="st">&quot;white&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-9-1.png" /><!-- --></p>
+<p>The commands below will allow us to visually compare the sampling distribution of the mean for different sample sizes … <span class="math inline">\(n=20\)</span>; <span class="math inline">\(n=100\)</span>, and; <span class="math inline">\(n=500\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results20 =<span class="st"> </span><span class="kw">vector</span>()
+for(i in <span class="dv">1</span>:<span class="dv">10000</span>){
+    tmpSample =<span class="st"> </span><span class="kw">sample</span>(humanGeneLengths$geneLength, <span class="dt">size =</span> <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+    results20[i] =<span class="st"> </span><span class="kw">mean</span>(tmpSample)
+    }
+results100 =<span class="st"> </span><span class="kw">vector</span>()
+for(i in <span class="dv">1</span>:<span class="dv">10000</span>){
+    tmpSample =<span class="st"> </span><span class="kw">sample</span>(humanGeneLengths$geneLength, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+    results100[i] =<span class="st"> </span><span class="kw">mean</span>(tmpSample)
+    }
+results500 =<span class="st"> </span><span class="kw">vector</span>()
+for(i in <span class="dv">1</span>:<span class="dv">10000</span>){
+    tmpSample =<span class="st"> </span><span class="kw">sample</span>(humanGeneLengths$geneLength, <span class="dt">size =</span> <span class="dv">500</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)
+    results500[i] =<span class="st"> </span><span class="kw">mean</span>(tmpSample)
+    }
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))  <span class="co"># put 3 plots on the same page in 3 rows, 1 column</span>
+<span class="kw">hist</span>(results20, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">right =</span> <span class="ot">FALSE</span>, <span class="dt">xlim =</span> <span class="kw">range</span>(results20),
+    <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;n = 20&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>)
+<span class="kw">hist</span>(results100, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">right =</span> <span class="ot">FALSE</span>, <span class="dt">xlim =</span> <span class="kw">range</span>(results20),
+    <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;n = 100&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>)
+<span class="kw">hist</span>(results500, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">right =</span> <span class="ot">FALSE</span>, <span class="dt">xlim =</span> <span class="kw">range</span>(results20),
+    <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;n = 500&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))  <span class="co"># change layout back to 1 plot per page</span></code></pre></div>
+</div>
+<div id="the-confidence-interval-a-demonstration" class="section level1">
+<h1><span class="header-section-number">4</span> - The Confidence Interval (A Demonstration)</h1>
+<p><span class="math display">\[\text{Approximate 95% CI: } \bar{Y} \pm (2)\left(\dfrac{s}{\sqrt{n}}\right) = \bar{Y} \pm (2)\left(SE_{\bar{Y}}\right)\]</span> Recall the notion of the confidence interval. In brief, if we were to take all possible random samples of size <span class="math inline">\(=n\)</span>, calculate the 95% confidence interval for the sample mean in each of these samples, then 95% of the resulting confidence intervals would trap the population mean.</p>
+<p>We could try and do this for samples of size <span class="math inline">\(=n\)</span> drawn from the <code>humanGeneLengths</code> data but that would overwhelm the computer. So instead we’ll look at two simple examples that hopefully get two key points across. The first one below will plot 20 confidence intervals calculated with 20 random samples, each of size <span class="math inline">\(=100\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results100 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mean =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">20</span>), <span class="dt">lower =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">20</span>), <span class="dt">upper =</span> <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">20</span>))
+index =<span class="st"> </span><span class="dv">1</span>:<span class="dv">20</span>
+for(i in index){
+  tmpSample =<span class="st"> </span><span class="kw">sample</span>(humanGeneLengths$geneLength, <span class="dt">size =</span> <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+t =<span class="st"> </span><span class="kw">t.test</span>(tmpSample)
+results100$mean[i] =<span class="st"> </span>t$estimate
+results100$lower[i] =<span class="st"> </span>t$conf.int[<span class="dv">1</span>]
+results100$upper[i] =<span class="st"> </span>t$conf.int[<span class="dv">2</span>]
+}
+<span class="kw">plot</span>(index ~<span class="st"> </span>mean, <span class="dt">data =</span> results100, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">yaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(results100$lower), <span class="kw">max</span>(results100$upper)), <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Gene length (number of nucleotides)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Sample Index&quot;</span>)
+<span class="kw">lines</span>(<span class="kw">c</span>(<span class="fl">2622.0274</span>, <span class="fl">2622.0274</span>), <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20</span>), <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">segments</span>(results100$lower, index, results100$upper, index)
+<span class="kw">segments</span>(results100$lower, index -<span class="st"> </span><span class="fl">0.25</span>, results100$lower, index +<span class="st"> </span><span class="fl">0.25</span>)
+<span class="kw">segments</span>(results100$upper, index -<span class="st"> </span><span class="fl">0.25</span>, results100$upper, index +<span class="st"> </span><span class="fl">0.25</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
+<p>What is obvious is how the sample means fluctuate. The example below extends the point a bit by emphasizing the fact that some confidence intervals will miss the population mean altogether. Here the number of randomly drawn samples has been pushed up to 100.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.draw =<span class="st"> </span><span class="dv">100</span>
+mu =<span class="st"> </span><span class="kw">mean</span>(humanGeneLengths$geneLength)
+n =<span class="st"> </span><span class="dv">100</span>
+SD =<span class="st"> </span><span class="kw">sd</span>(humanGeneLengths$geneLength)
+draws =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n.draw *<span class="st"> </span>n, mu, SD), n)
+get.conf.int =<span class="st"> </span>function(x) <span class="kw">t.test</span>(x)$conf.int
+conf.int =<span class="st"> </span><span class="kw">apply</span>(draws, <span class="dv">2</span>, get.conf.int)
+trap.n =<span class="st"> </span><span class="kw">sum</span>(conf.int[<span class="dv">1</span>, ] &lt;=<span class="st"> </span>mu &amp;<span class="st"> </span>conf.int[<span class="dv">2</span>, ] &gt;=<span class="st"> </span>mu)
+trap.n</code></pre></div>
+<pre><code>## [1] 95</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">bg =</span> <span class="st">&quot;ghostwhite&quot;</span>)
+<span class="kw">plot</span>(<span class="kw">range</span>(conf.int), <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span> +<span class="st"> </span>n.draw), <span class="dt">type =</span> <span class="st">&quot;n&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Gene Length (in mm)&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Sample Run&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;95% Confidence Intervals (100 Sample Runs)&quot;</span>,
+     <span class="dt">cex.main =</span>  <span class="dv">1</span>, <span class="dt">cex.lab =</span> <span class="dv">1</span>)
+for (i in <span class="dv">1</span>:n.draw) 
+  <span class="kw">lines</span>(conf.int[, i], 
+  <span class="kw">rep</span>(i, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">v =</span> <span class="fl">2622.0274</span>, <span class="dt">lwd =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;firebrick2&quot;</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
+<p>Now you see 95 confidence intervals trapping the population mean (flagged by the red dashed line at <span class="math inline">\(2622.0274\)</span>). Of course, in practice you would typically work with a single sample and try to do the best you can. However, henceforth you should recognize the fact that your answers could be way off-base, and you may not even know it! Hence a golden rule-of-thumb is to pay attention to … * Sampling – don’t use the wrong sampling design or sample incorrectly * Sample Size – get as large a sample as you can without violating the appropriate sampling protocols * Standard Error – pay attention to the standard errors of your estimates; large standard errors should lead you to be more cautious with your generalizations</p>
+</div>
+<div id="error-bars" class="section level1">
+<h1><span class="header-section-number">5</span> - Error Bars</h1>
+<p>We’ll first draw a strip chart and then the standard error bars for the locust serotonin data used in Chapter 02.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">locustData =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter02/chap02f1_2locustSerotonin.csv&quot;</span>))
+<span class="kw">head</span>(locustData)</code></pre></div>
+<pre><code>##   serotoninLevel treatmentTime
+## 1            5.3             0
+## 2            4.6             0
+## 3            4.5             0
+## 4            4.3             0
+## 5            4.2             0
+## 6            3.6             0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stripchart</span>(serotoninLevel ~<span class="st"> </span>treatmentTime, <span class="dt">data =</span> locustData, 
+<span class="dt">method =</span> <span class="st">&quot;jitter&quot;</span>, <span class="dt">vertical =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-13-1.png" /><!-- --></p>
+<p>We need the mean and the standard to superimpose on the strip charts. We used the <code>dplyr</code> and the <code>psych</code> packages in Chapter 03 to get mean, median, etc. for each group. Will these work for also calcualting the standard error?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">locustData$groups =<span class="st"> </span><span class="kw">factor</span>(locustData$treatmentTime, <span class="dt">levels=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;0 Hours&quot;</span>, <span class="st">&quot;1 Hour&quot;</span>, <span class="st">&quot;2 Hours&quot;</span>))
+
+<span class="kw">library</span>(dplyr)
+
+grouped =<span class="st"> </span><span class="kw">group_by</span>(locustData, groups)
+
+tab.A =<span class="st"> </span><span class="kw">summarise</span>(grouped, 
+  <span class="dt">Mean =</span> <span class="kw">mean</span>(serotoninLevel, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">Std.Dev =</span> <span class="kw">sd</span>(serotoninLevel, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">n =</span> <span class="kw">n</span>(),
+  <span class="dt">Std.Error =</span> (Std.Dev /<span class="st"> </span><span class="kw">sqrt</span>(n))
+                    )
+
+tab.A</code></pre></div>
+<pre><code>## Source: local data frame [3 x 5]
+## 
+##    groups  Mean  Std.Dev     n Std.Error
+##    (fctr) (dbl)    (dbl) (int)     (dbl)
+## 1 0 Hours  6.36 4.819912    10  1.524190
+## 2  1 Hour  8.04 4.963690    10  1.569657
+## 3 2 Hours 10.82 5.327664    10  1.684755</code></pre>
+<p>Now the code for the finished plot. This code looks complicated but we’ve done it before so the only new element is the addition of the standard error.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">offsetAmount =<span class="st"> </span><span class="fl">0.2</span>
+<span class="kw">par</span>(<span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>) 
+
+<span class="kw">stripchart</span>(serotoninLevel ~<span class="st"> </span>groups, <span class="dt">data =</span> locustData, <span class="dt">vertical =</span> <span class="ot">TRUE</span>, <span class="dt">method =</span> <span class="st">&quot;jitter&quot;</span>, <span class="dt">jitter =</span> <span class="fl">0.1</span>, <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">xlab =</span> <span class="st">&quot;Treatment time (hours)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Serotonin (pmoles)&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">cex =</span> <span class="dv">1</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(locustData$serotoninLevel)))
+
+<span class="kw">points</span>(tab.A$Mean ~<span class="st"> </span><span class="kw">c</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) +<span class="st"> </span>offsetAmount), <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">cex =</span> <span class="fl">1.2</span>)
+
+<span class="kw">arrows</span>( <span class="kw">c</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) +<span class="st"> </span>offsetAmount), tab.A$Mean -<span class="st"> </span>tab.A$Std.Error, <span class="kw">c</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) +<span class="st"> </span>offsetAmount), tab.A$Mean +<span class="st"> </span>tab.A$Std.Error,  <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">code =</span> <span class="dv">3</span>, <span class="dt">length =</span> <span class="fl">0.1</span>)</code></pre></div>
+<p><img src="Chapter04_files/figure-html/unnamed-chunk-15-1.png" /><!-- --></p>
+<p><strong>Note:</strong> You will often see bar-charts drawn with error bars. This is a terrible idea as tersely summarized here <a href="http://biostat.mc.vanderbilt.edu/wiki/Main/DynamitePlots">“Beware of Dynamite”</a></p>
+</div>
+<div id="some-worked-practice-problems" class="section level1">
+<h1><span class="header-section-number">6</span> - Some Worked Practice Problems</h1>
+<div id="problem-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> - Problem #1</h2>
+<p>Let us enter the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">112</span>, <span class="dv">128</span>, <span class="dv">108</span>, <span class="dv">129</span>, <span class="dv">125</span>, <span class="dv">153</span>, <span class="dv">155</span>, <span class="dv">132</span>, <span class="dv">137</span>)</code></pre></div>
+<p>Now we can calculate everything needed to respond to the questions.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean.Y =<span class="st"> </span><span class="kw">mean</span>(Y)
+mean.Y</code></pre></div>
+<pre><code>## [1] 131</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd.Y =<span class="st"> </span><span class="kw">sd</span>(Y)
+sd.Y</code></pre></div>
+<pre><code>## [1] 15.95306</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.Y =<span class="st"> </span><span class="kw">length</span>(Y)
+n.Y</code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">se.Y =<span class="st"> </span>sd.Y /<span class="st"> </span><span class="kw">sqrt</span>(n.Y)
+se.Y </code></pre></div>
+<pre><code>## [1] 5.317685</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">approx.CI =<span class="st"> </span><span class="kw">c</span>(mean.Y -<span class="st"> </span><span class="dv">2</span>*se.Y, mean.Y +<span class="st"> </span><span class="dv">2</span>*se.Y)
+approx.CI</code></pre></div>
+<pre><code>## [1] 120.3646 141.6354</code></pre>
+<p>So, the standard deviation is 15.9530561, the sample size (<span class="math inline">\(n\)</span>) is 9, the standard error of the mean is 5.3176854, and the approximate 95% confidence interval for the mean is 120.3646292, 141.6353708</p>
+</div>
+<div id="problem-7" class="section level2">
+<h2><span class="header-section-number">6.2</span> - Problem #7</h2>
+<p>We could enter the raw data but why do that when the data-set is available.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fireflies =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter04/chap04q07FireflyFlash.csv&quot;</span>))
+<span class="kw">head</span>(fireflies)</code></pre></div>
+<pre><code>##   flash
+## 1    79
+## 2    80
+## 3    82
+## 4    83
+## 5    86
+## 6    85</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fireflies)</code></pre></div>
+<pre><code>##      flash       
+##  Min.   : 79.00  
+##  1st Qu.: 87.50  
+##  Median : 95.00  
+##  Mean   : 95.94  
+##  3rd Qu.:102.00  
+##  Max.   :119.00</code></pre>
+<p>and now the calculations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mean.flash =<span class="st"> </span><span class="kw">mean</span>(fireflies$flash)
+mean.flash</code></pre></div>
+<pre><code>## [1] 95.94286</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd.flash =<span class="st"> </span><span class="kw">sd</span>(fireflies$flash)
+sd.flash</code></pre></div>
+<pre><code>## [1] 10.9945</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n.flash =<span class="st"> </span><span class="kw">length</span>(fireflies$flash)
+n.flash</code></pre></div>
+<pre><code>## [1] 35</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">se.flash =<span class="st"> </span>sd.flash /<span class="st"> </span><span class="kw">sqrt</span>(n.flash)
+se.flash</code></pre></div>
+<pre><code>## [1] 1.858409</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">approx.CI =<span class="st"> </span><span class="kw">c</span>(mean.flash -<span class="st"> </span><span class="dv">2</span>*se.flash, mean.flash +<span class="st"> </span><span class="dv">2</span>*se.flash)
+approx.CI</code></pre></div>
+<pre><code>## [1] 92.22604 99.65968</code></pre>
+<ol style="list-style-type: lower-alpha">
+<li>The estimated sample mean is 95.9428571. This quantity estimates the average flash duration in the population of male fireflies (i.e., it estimates the population mean)</li>
+<li>It will rarely equal the population mean because of sampling variability.</li>
+<li>The standard error is 1.8584094</li>
+<li>The standard error tells us how dispersed the sampling distribution of sample means is likely to be</li>
+<li>The approximate 95% confidence interval is 92.2260384, 99.6596759.</li>
+<li>It tells us the plausible range of values of the population mean. Technically, it tells us that if we drew all possible random samples of this size <span class="math inline">\((i.e., n=35)\)</span> and calculated 95% confidence intervals for each sample, 95% of the resulting 95% confidence intervals will include the population mean.</li>
+</ol>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

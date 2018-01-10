@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="ruhil" />
+
+
+<title>R Script for Chapter 8</title>
+
+<script src="Chapter08_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Chapter08_files/bootstrap-3.3.1/css/flatly.min.css" rel="stylesheet" />
+<script src="Chapter08_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="Chapter08_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="Chapter08_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">R Script for Chapter 8</h1>
+<h4 class="author"><em>ruhil</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#the-chi2-distribution">- The <span class="math inline">\(\chi^2\)</span> Distribution</a></li>
+<li><a href="#the-goodness-of-fit-test-for-a-single-variable">- The Goodness-of-Fit Test for a single variable</a></li>
+<li><a href="#an-example">- An Example</a></li>
+<li><a href="#another-example-births-on-a-given-day-of-the-week">Another Example: Births on a Given Day of the Week</a><ul>
+<li><a href="#some-useful-commands">- Some Useful Commands</a></li>
+<li><a href="#what-if-the-categorical-variable-was-not-multinomial-but-instead-had-only-two-categories-i.e.-was-binomial">- What if the categorical variable was not Multinomial but instead had only two categories (i.e., was Binomial)?</a></li>
+<li><a href="#another-example-two-child-families">Another Example: Two-child Families</a></li>
+</ul></li>
+<li><a href="#some-worked-examples">- Some Worked Examples</a><ul>
+<li><a href="#problem-10">- Problem #10</a></li>
+<li><a href="#problem-6">- Problem #6</a></li>
+<li><a href="#the-steps-for-goodness-of-fit-testing">- The Steps for goodness-of-fit testing …</a></li>
+</ul></li>
+<li><a href="#the-poisson-distribution">- The Poisson Distribution</a><ul>
+<li><a href="#key-assumptions">Key Assumptions</a></li>
+<li><a href="#visualizing-poisson-distributions">- Visualizing Poisson Distributions</a></li>
+</ul></li>
+<li><a href="#only-for-instructional-purposes-calculating-probabilities-of-poisson-outcomes">- ONLY For Instructional Purposes: Calculating Probabilities of Poisson Outcomes</a><ul>
+<li><a href="#a-worked-example-do-mass-extinctions-occur-randomly-in-time">- A Worked Example: Do mass extinctions occur randomly in time?</a></li>
+</ul></li>
+<li><a href="#the-steps">- The Steps …</a></li>
+<li><a href="#some-worked-problems">- Some Worked Problems</a><ul>
+<li><a href="#problem-2">- Problem 2</a></li>
+<li><a href="#problem-15">- Problem #15</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="the-chi2-distribution" class="section level1">
+<h1>- The <span class="math inline">\(\chi^2\)</span> Distribution</h1>
+<p>The <span class="math inline">\(\chi^2\)</span> distribution is used with multinomial data (i.e., when the categorical variable has more than two categories) to test whether observed frequency counts differ from expected frequency counts.</p>
+</div>
+<div id="the-goodness-of-fit-test-for-a-single-variable" class="section level1">
+<h1>- The Goodness-of-Fit Test for a single variable</h1>
+<p><span class="math inline">\(H_0\)</span>: Proportions are all the same</p>
+<p><span class="math inline">\(H_A\)</span>: Proportions are  all the same</p>
+<p><span class="math display">\[\chi^{2} = \displaystyle\sum\limits_{i}\dfrac{\left(Observed_i - Expected_i \right)^2}{Expected_i}\]</span></p>
+<p><span class="math inline">\(\chi^2\)</span> distributed with <span class="math inline">\(\left( \text{no. of categories}-1 \right)\)</span> degrees of freedom <span class="math inline">\((\textit{df})\)</span></p>
+<p>Reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(P-value \leq \alpha\)</span>; Do not reject <span class="math inline">\(H_0\)</span> otherwise</p>
+<p>As <span class="math inline">\(df \to \infty\)</span> you need a larger <span class="math inline">\(\chi^2\)</span> to Reject <span class="math inline">\(H_0\)</span> at the same <span class="math inline">\(\alpha\)</span></p>
+<p><strong>Note:</strong> The plot below shows how the theoretical <span class="math inline">\(\chi^2\)</span> distribution varies with the degrees of freedom. As the distribution shifts right the degrees of freedom are getting smaller. The first<br />
+is for 3 degrees of freedom, which means we have a total of 4 categories, then we have 4 degrees of freedom (so 5 categories), then 5 degrees of freedom (so 6 categories), and finally 6 degrees of freedom (i.e., 7 categories). Note what happens; The more the degrees of freedom, the larger the <span class="math inline">\(\chi^2\)</span> value needed to reject <span class="math inline">\(H_0\)</span> with <span class="math inline">\(\alpha=0.05\)</span> or <span class="math inline">\(\alpha=0.01\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;goldenrod&quot;</span>, <span class="dt">lwd=</span><span class="dv">1</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, 
+     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span>),
+     <span class="dt">xlab=</span><span class="kw">expression</span>(chi^<span class="dv">2</span>), 
+     <span class="dt">ylab=</span><span class="st">&quot;Probability&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;The Chi-square distribution with df=(3, 4, 5, and 6)&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.05</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">6</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.01</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x1), <span class="dt">col=</span><span class="st">&quot;pink&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x2), <span class="dt">col=</span><span class="st">&quot;brown&quot;</span>, <span class="dt">lty=</span><span class="dv">1</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x3), <span class="dt">col=</span><span class="st">&quot;dodgerblue4&quot;</span>, <span class="dt">lty=</span><span class="dv">5</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/unnamed-chunk-1-1.png" /><!-- --></p>
+<p>The test is built on two assumptions:</p>
+<ol style="list-style-type: decimal">
+<li>No category has expected frequencies <span class="math inline">\(&lt; 1\)</span></li>
+<li>No more than 20% of the categories should have expected frequencies <span class="math inline">\(&lt; 5\)</span></li>
+</ol>
+</div>
+<div id="an-example" class="section level1">
+<h1>- An Example</h1>
+<p>Assume that there are four gourmet meats placed before 100 subjects. In a blind taste test each subject is asked to pick the item they liked the most. Do subjects exhibit indifference between the four items? If they do, then we would expect about 25% to pick item A, 25% to pick item B, 25% to pick item C, and 25% to pick item D. If <span class="math inline">\(H_0\)</span> were true then expected frequencies would be as follows for A, B, C, and D:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span><span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">25</span>)</code></pre></div>
+<p>Now assume that the 100 subjects actually indicated the following preferences for A, B, C, and D:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">observed =<span class="st"> </span><span class="kw">c</span>(<span class="dv">30</span>, <span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">20</span>)</code></pre></div>
+<p>Notice that we see the <code>observed frequencies</code> differing from what we expected to see <strong>if <span class="math inline">\(H_0\)</span> were true (i.e., there were no clear preferences)</strong>. Of course, some of this <em>drift</em> between expected and observed frequencies could be by chance. Therefore we would need to test and see whether the overall difference is enough to suggest that this could not happen by chance very often or if it could happen very often. In other words, do the data suggest that subjects <em>do prefer some items over the others</em>. We will set <span class="math inline">\(\alpha = 0.05\)</span> and then conduct the test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab<span class="fl">.0</span> =<span class="st"> </span><span class="kw">cbind</span>(observed, expected) <span class="co"># binds observed &amp; expected</span>
+tab<span class="fl">.0</span> </code></pre></div>
+<pre><code>##      observed expected
+## [1,]       30       25
+## [2,]       10       25
+## [3,]       40       25
+## [4,]       20       25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq =<span class="st"> </span><span class="kw">chisq.test</span>(observed, <span class="dt">p=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>))
+Xsq</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  observed
+## X-squared = 20, df = 3, p-value = 0.0001697</code></pre>
+<p>Given that the <span class="math inline">\(P-value\)</span> is less than <span class="math inline">\(\alpha=0.05\)</span> we can reject the <span class="math inline">\(H_0\)</span> that the items are equally preferred. That is, the data suggest that some items are preferable to others. Before we walk away though, let us see if any of the two assumptions are violated.</p>
+<ol style="list-style-type: decimal">
+<li>Do any categories have expected frequencies <span class="math inline">\(&lt; 1\)</span>?</li>
+<li>Do more than 20% of the categories have expected frequencies <span class="math inline">\(&lt; 5\)</span>?</li>
+</ol>
+<p>The answer is no to both since we saw the expected frequencies were 30, 10, 40, and 20. So no assumptions are being violated.</p>
+<p>What if the observed preferences were instead more like the ones below?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span><span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">25</span>)
+observed =<span class="st"> </span><span class="kw">c</span>(<span class="dv">22</span>, <span class="dv">28</span>, <span class="dv">20</span>, <span class="dv">30</span>)
+tab<span class="fl">.1</span> =<span class="st"> </span><span class="kw">cbind</span>(observed, expected)
+tab<span class="fl">.1</span></code></pre></div>
+<pre><code>##      observed expected
+## [1,]       22       25
+## [2,]       28       25
+## [3,]       20       25
+## [4,]       30       25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq<span class="fl">.2</span> =<span class="st"> </span><span class="kw">chisq.test</span>(observed, <span class="dt">p=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>))
+Xsq<span class="fl">.2</span></code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  observed
+## X-squared = 2.72, df = 3, p-value = 0.4368</code></pre>
+<p>In this case we would be unable to reject <span class="math inline">\(H_0\)</span>  since the p-value is 0.4368, not <span class="math inline">\(\leq 0.05\)</span>. Why did this happen? Because the total difference between expected and observed frequencies was not drastic enough to yield a large <span class="math inline">\(\chi^2\)</span> value that would have been associated with a small probability of occurrence by chance.</p>
+</div>
+<div id="another-example-births-on-a-given-day-of-the-week" class="section level1">
+<h1>Another Example: Births on a Given Day of the Week</h1>
+<p>We will work with the data on births per day of the week in 1999 and conduct the goodness-of-fit test. The substantive question here is whether the proportion of births is distributed equally across the seven days of the week. Let us read in the data to begin with.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">births =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08e1DayOfBirth.csv&quot;</span>))
+tab.A =<span class="st"> </span><span class="kw">table</span>(births); tab.A</code></pre></div>
+<pre><code>## births
+##    Friday    Monday  Saturday    Sunday  Thursday   Tuesday Wednesday 
+##        56        41        47        33        47        63        63</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.B =<span class="st"> </span><span class="kw">prop.table</span>(tab.A); tab.B</code></pre></div>
+<pre><code>## births
+##     Friday     Monday   Saturday     Sunday   Thursday    Tuesday 
+## 0.16000000 0.11714286 0.13428571 0.09428571 0.13428571 0.18000000 
+##  Wednesday 
+## 0.18000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Table =<span class="st"> </span><span class="kw">cbind</span>(tab.A, tab.B); Table</code></pre></div>
+<pre><code>##           tab.A      tab.B
+## Friday       56 0.16000000
+## Monday       41 0.11714286
+## Saturday     47 0.13428571
+## Sunday       33 0.09428571
+## Thursday     47 0.13428571
+## Tuesday      63 0.18000000
+## Wednesday    63 0.18000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(tab.A, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">70</span>), <span class="dt">xlab=</span><span class="st">&quot;Day of the Week&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Bar Chart of the day of the week for 350 births in the U.S. (1999)&quot;</span>, <span class="dt">cex.names=</span><span class="fl">0.8</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/1-1.png" /><!-- --></p>
+<p><code>Table</code> shows us how many births occurred on a given day of the week. Note that both the <code>Table</code> and the barplot ignore the order of the days of the week. We can fix this and have the days ordered in terms of Sunday through Saturday:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">births$day =<span class="st"> </span><span class="kw">factor</span>(births$day, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Sunday&quot;</span>, <span class="st">&quot;Monday&quot;</span>, <span class="st">&quot;Tuesday&quot;</span>, <span class="st">&quot;Wednesday&quot;</span>, <span class="st">&quot;Thursday&quot;</span>, <span class="st">&quot;Friday&quot;</span>, <span class="st">&quot;Saturday&quot;</span>))
+tab.A =<span class="st"> </span><span class="kw">table</span>(births); tab.A</code></pre></div>
+<pre><code>## births
+##    Sunday    Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
+##        33        41        63        63        47        56        47</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.B =<span class="st"> </span><span class="kw">prop.table</span>(tab.A); tab.B</code></pre></div>
+<pre><code>## births
+##     Sunday     Monday    Tuesday  Wednesday   Thursday     Friday 
+## 0.09428571 0.11714286 0.18000000 0.18000000 0.13428571 0.16000000 
+##   Saturday 
+## 0.13428571</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Table =<span class="st"> </span><span class="kw">cbind</span>(tab.A, tab.B); Table</code></pre></div>
+<pre><code>##           tab.A      tab.B
+## Sunday       33 0.09428571
+## Monday       41 0.11714286
+## Tuesday      63 0.18000000
+## Wednesday    63 0.18000000
+## Thursday     47 0.13428571
+## Friday       56 0.16000000
+## Saturday     47 0.13428571</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(tab.A, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">70</span>), <span class="dt">xlab=</span><span class="st">&quot;Day of the Week&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>, <span class="dt">main=</span><span class="st">&quot;Bar Chart of the day of the week for 350 births in the U.S. (1999)&quot;</span>, <span class="dt">cex.names=</span><span class="fl">0.8</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/2-1.png" /><!-- --></p>
+<p>Before we go any farther, we’ll have to ask: In 1999, did Sundays occur as often as Mondays or Tuesdays, etc.? Turns out there were 365 days in 1999, with 53 Fridays and 52 Sundays, 52 Mondays, 52 Tuesdays, 52 Wednesdays, 52 Thursdays, and 52 Saturdays. By chance alone, then, we should have expected to see, of the 350 births in that week, <span class="math display">\[\frac{53}{365} \times 350 =50.82192\]</span></p>
+<p>births on Friday. This logic then dictates that we would have expected to see <span class="math display">\[\frac{52}{365} \times 350=49.86301\]</span> births on Sunday, Monday, Tuesday, Wednesday, Thursday, and Saturday, each.</p>
+<p>We can go through the manual calculations for the discrepancy between observed and expected births on each day but we will lean on R’s built-in functions to do this for us. First we setup the hypotheses and the decision rule.</p>
+<p><span class="math inline">\(H_0: \text{ The probability of a birth is the same on every day of the week}\)</span></p>
+<p><span class="math inline">\(H_A: \text{ The probability of a birth is not the same on every day of the week}\)</span></p>
+<p><span class="math inline">\(\alpha=0.05\)</span></p>
+<p><span class="math inline">\(\text{Reject } H_0 \text{ if } P-value \leq \alpha; \text{Do not reject } H_0 \text{ otherwise}\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq =<span class="st"> </span><span class="kw">chisq.test</span>(tab.A, <span class="dt">p=</span><span class="kw">c</span>(<span class="dv">52</span>/<span class="dv">365</span>, <span class="dv">52</span>/<span class="dv">365</span>, <span class="dv">52</span>/<span class="dv">365</span>, <span class="dv">52</span>/<span class="dv">365</span>, <span class="dv">52</span>/<span class="dv">365</span>, <span class="dv">53</span>/<span class="dv">365</span>, <span class="dv">52</span>/<span class="dv">365</span>))
+Xsq</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tab.A
+## X-squared = 15.057, df = 6, p-value = 0.01982</code></pre>
+<p>Notice what we did here. We specified the probabilities of seeing a birth on each day of the week (as calculated earlier). Otherwise R will assume that the probability is just 1/7 on each day, and that would be incorrect.</p>
+<p>Note: You could have also specified the expected proportions via <code>chisq.test(tab.A, p = c(52,52,52,52,52,53,52)/365))</code></p>
+<p>The calculated <span class="math inline">\(\chi^{2}[df=6]=15.057\)</span> and has a <span class="math inline">\(P-value=0.01982\)</span> so we reject <span class="math inline">\(H_0\)</span>; the data provide sufficient evidence to conclude that the probability of a birth is not the same on every day of the week. Note what would have happened had we chosen a decision rule with <span class="math inline">\(\alpha=0.01\)</span> … we would have been unable to reject <span class="math inline">\(H_0\)</span> because the p-value of 0.01982 would be greater than <span class="math inline">\(\alpha=0.01\)</span></p>
+<div id="some-useful-commands" class="section level3">
+<h3>- Some Useful Commands</h3>
+<p>I am showing you a couple of things that can be extracted from the test we just ran in R.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">objects</span>(Xsq)</code></pre></div>
+<pre><code>## [1] &quot;data.name&quot; &quot;expected&quot;  &quot;method&quot;    &quot;observed&quot;  &quot;p.value&quot;   &quot;parameter&quot;
+## [7] &quot;residuals&quot; &quot;statistic&quot; &quot;stdres&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq$expected</code></pre></div>
+<pre><code>##    Sunday    Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
+##  49.86301  49.86301  49.86301  49.86301  49.86301  50.82192  49.86301</code></pre>
+<p><code>Xsq$expected</code> shows the expected frequencies calculated for the test.</p>
+</div>
+<div id="what-if-the-categorical-variable-was-not-multinomial-but-instead-had-only-two-categories-i.e.-was-binomial" class="section level2">
+<h2>- What if the categorical variable was not Multinomial but instead had only two categories (i.e., was Binomial)?</h2>
+<p>In that case you could run the <span class="math inline">\(\chi^2\)</span> test but it will be less precise than using the Binomial test for proportions. Below I skip the usual hypotheses and decision rules in favor of a quick comparative demonstration of the binomial test versus the <span class="math inline">\(\chi^2\)</span> test for a two-category variable. The example we are using is of the percentage of human genes on the X chromosome which, if <span class="math inline">\(H_0\)</span> is true, should be 0.052 (i.e., 5.2%).</p>
+<p>First the binomial test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08e4XGeneContent.csv&quot;</span>))
+<span class="kw">head</span>(genes)</code></pre></div>
+<pre><code>##   chromosome
+## 1          X
+## 2          X
+## 3          X
+## 4          X
+## 5          X
+## 6          X</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab<span class="fl">.1</span> =<span class="st"> </span><span class="kw">table</span>(genes); tab<span class="fl">.1</span></code></pre></div>
+<pre><code>## genes
+##  NotX     X 
+## 19509   781</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">binom.test</span>(<span class="dv">781</span>, <span class="dv">20290</span>, <span class="dt">p=</span><span class="fl">0.052</span>, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</code></pre></div>
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  781 and 20290
+## number of successes = 781, number of trials = 20290, p-value &lt;
+## 2.2e-16
+## alternative hypothesis: true probability of success is not equal to 0.052
+## 95 percent confidence interval:
+##  0.03588645 0.04123056
+## sample estimates:
+## probability of success 
+##             0.03849187</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(binom)
+<span class="kw">binom.confint</span>(<span class="dv">781</span>, <span class="dt">n =</span> <span class="dv">20290</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>, <span class="dt">method =</span> <span class="st">&quot;ac&quot;</span>)</code></pre></div>
+<pre><code>##          method   x     n       mean      lower      upper
+## 1 agresti-coull 781 20290 0.03849187 0.03592951 0.04122894</code></pre>
+<p>Note that we rejected <span class="math inline">\(H_0\)</span> because <span class="math inline">\(p-value \leq 0.05\)</span>. Obviously the 95% confidence interval does not include <span class="math inline">\(p_0 = 0.052\)</span>; the hypothesis test and the confidence interval are, again, symmetric in that sense.</p>
+<p>Now the <span class="math inline">\(\chi^2\)</span> test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.H0 =<span class="st"> </span><span class="fl">0.052</span>
+p.HA =<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="fl">0.052</span>
+xsq =<span class="st"> </span><span class="kw">chisq.test</span>(tab<span class="fl">.1</span>, <span class="dt">p=</span><span class="kw">c</span>(p.HA, p.H0)); xsq</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tab.1
+## X-squared = 75.104, df = 1, p-value &lt; 2.2e-16</code></pre>
+<p>The inefficient way to do the same test would be via the <span class="math inline">\(\chi^2\)</span> test. In the end it does not matter since here too we end up soundly rejecting <span class="math inline">\(H_0\)</span>. However, we will always default to the binomial test if we have only two outcomes. If we have more than two outcomes (i.e., a multinomial outcome) we will settle for the <span class="math inline">\(\chi^2\)</span> test.</p>
+</div>
+<div id="another-example-two-child-families" class="section level2">
+<h2>Another Example: Two-child Families</h2>
+<p>Is the sex of consecutive children independent in humans? Does having one boy change the probability of the next child also being a boy? We looked at this with decision trees in Chapter 5. Here we use data compiled by Rodgers and Doughty (2011) to test for independence – whether the sex of the first child influences (or not) the sex of the second child.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">families =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08e5NumberOfBoys.csv&quot;</span>))
+<span class="kw">head</span>(families)</code></pre></div>
+<pre><code>##   numberOfBoys
+## 1            0
+## 2            0
+## 3            0
+## 4            0
+## 5            0
+## 6            0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab<span class="fl">.2</span> =<span class="st"> </span><span class="kw">table</span>(families); tab<span class="fl">.2</span></code></pre></div>
+<pre><code>## families
+##    0    1    2 
+##  530 1332  582</code></pre>
+<p>We can think of any birth as a “trial”, with some probability of a boy being born and its complement being the probability of a girl being born. Here we ask, if I track two-child families, and count how many boys these families have, how often am I going to see no boys, 1 boy, or two boys? The hypotheses will be structured as follows:</p>
+<p><span class="math inline">\(H_0: \text{ No. of Boys in two-child families follows the binomial distribution}\)</span></p>
+<p><span class="math inline">\(H_A: \text{ No. of Boys in two-child families does not follow the binomial distribution}\)</span></p>
+<p>How many children do we have here? Think carefully … There are 2444 two-child families so the total number of children in the sample has to be 4888. How many boys do we have? <span class="math inline">\(1332 + \left(2 \times 582\right)=\)</span> <code>2496</code>. As a result we know that the probability of randomly drawing a boy out of 4888 children from two-child families must be <span class="math inline">\(\frac{2496}{4888}=\)</span> <code>0.5106383</code>. If this were the true probability of seeing a boy in any randomly chosen birth, how often would we see 0 boys, 1 boy, 2 boys? The binomial distribution can tell us:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dt">by=</span><span class="dv">1</span>) <span class="co"># create a sequence that goes from 0 boys to 1 boy to 2 boys</span>
+p.boy =<span class="st"> </span><span class="dv">2496</span>/<span class="dv">4888</span> <span class="co"># probability of a boy being born</span>
+y =<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">2</span>, <span class="dt">p =</span> p.boy) <span class="co"># </span>
+y </code></pre></div>
+<pre><code>## [1] 0.2394749 0.4997737 0.2607515</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(y) </code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(tab<span class="fl">.2</span>, <span class="dt">p=</span>y)</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tab.2
+## X-squared = 20.021, df = 2, p-value = 4.492e-05</code></pre>
+<p>We have a slight problem though: We had to estimate the probability of seeing a boy being born from the sample. Because we snooped at the data, got this probability, and then used it to generate the expected frequencies, we have to pay the price by reducing the degrees of freedom by 1. This forces us to not use the p-value from the <code>chisq.test()</code> result but instead calculate it manually:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pchisq</span>(<span class="fl">20.021</span>, <span class="dt">df=</span><span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] 7.659634e-06</code></pre>
+<p>Since our calculated <span class="math inline">\(\chi^2\)</span> has a very low <span class="math inline">\(p-value\)</span> we can reject <span class="math inline">\(H_0\)</span>. The data provide sufficient evidence to conclude that the distribution of the number of boys and girls in two-child families does not follow the binomial distribution. What does this mean? This means that somehow the probability of having a son or daughter appears to vary across families, maybe having a boy does influence the chance of having another boy or a girl, or something else is going on here that violates one of the the assumptions of the binomial distribution – that what happens in one trial has no bearing on what happens in the next trial.</p>
+<div id="what-if-we-knew-pboy0.512" class="section level4">
+<h4>What if we knew <span class="math inline">\(p(boy=0.512)\)</span>?</h4>
+<p>In this case we could just use this probability to generate expected number of families with 0, 1, or 2 boys, and that would obviate any need to adjust the degrees of freedom.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dt">by=</span><span class="dv">1</span>) <span class="co"># create a sequence that goes from 0 boys to 1 boy to 2 boys</span>
+p.boy =<span class="st"> </span><span class="fl">0.512</span> <span class="co"># probability of a boy being born</span>
+y =<span class="st"> </span><span class="kw">dbinom</span>(x, <span class="dv">2</span>, <span class="dt">p =</span> p.boy) <span class="co"># </span>
+y </code></pre></div>
+<pre><code>## [1] 0.238144 0.499712 0.262144</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(y) </code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(tab<span class="fl">.2</span>, <span class="dt">p=</span>y)</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  tab.2
+## X-squared = 20.059, df = 2, p-value = 4.407e-05</code></pre>
+<p>The conclusion is the same; we soundly reject <span class="math inline">\(H_0\)</span> and conclude that the number of boys in two-child families does not follow the binomial distribution.</p>
+</div>
+<div id="critical-values" class="section level4">
+<h4>Critical Values</h4>
+<p>In passing, note that we can always calculate what is the <strong>Critical <span class="math inline">\(\chi^2\)</span> value</strong> we need to pass in order to reject the <span class="math inline">\(H_0\)</span> with a given <span class="math inline">\(df\)</span> and at a set <span class="math inline">\(\alpha\)</span>. A good way to think about this critical value is that if our calculated <span class="math inline">\(\chi^2\)</span> equals or exceeds the critical value then the p-value must be</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qchisq</span>(<span class="fl">0.95</span>, <span class="dt">df=</span><span class="dv">1</span>) </code></pre></div>
+<pre><code>## [1] 3.841459</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qchisq</span>(<span class="fl">0.95</span>, <span class="dt">df=</span><span class="dv">3</span>) </code></pre></div>
+<pre><code>## [1] 7.814728</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qchisq</span>(<span class="fl">0.95</span>, <span class="dt">df=</span><span class="dv">6</span>) </code></pre></div>
+<pre><code>## [1] 12.59159</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qchisq</span>(<span class="fl">0.99</span>, <span class="dt">df=</span><span class="dv">3</span>)</code></pre></div>
+<pre><code>## [1] 11.34487</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qchisq</span>(<span class="fl">0.99</span>, <span class="dt">df=</span><span class="dv">6</span>)</code></pre></div>
+<pre><code>## [1] 16.81189</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">density</span>(x), <span class="dt">col=</span><span class="st">&quot;goldenrod&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, 
+     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.35</span>),
+     <span class="dt">xlab=</span><span class="kw">expression</span>(chi^<span class="dv">2</span>), 
+     <span class="dt">ylab=</span><span class="st">&quot;Probability&quot;</span>,
+     <span class="dt">main=</span><span class="st">&quot;The Chi-square distribution with df=(3, 4, 5, and 6)&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.05</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">6</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.01</span>, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lty=</span><span class="dv">3</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x1), <span class="dt">col=</span><span class="st">&quot;pink&quot;</span>, <span class="dt">lty=</span><span class="dv">2</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x2), <span class="dt">col=</span><span class="st">&quot;darkgreen&quot;</span>, <span class="dt">lty=</span><span class="dv">4</span>)
+<span class="kw">par</span>(<span class="dt">new=</span><span class="ot">TRUE</span>)
+<span class="kw">lines</span>(<span class="kw">density</span>(x3), <span class="dt">col=</span><span class="st">&quot;dodgerblue4&quot;</span>, <span class="dt">lty=</span><span class="dv">5</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
+</div>
+</div>
+</div>
+<div id="some-worked-examples" class="section level1">
+<h1>- Some Worked Examples</h1>
+<div id="problem-10" class="section level2">
+<h2>- Problem #10</h2>
+<p>A common perception is that people suffering from chronic illnesses may be able to delay their deaths until after a special event, like Christmas. Out of 12,028 deaths from cancer in either week before or after Christmas, 6052 happened in the week before Christmas. Use these data to <em>test whether the holiday affects death rates</em>.</p>
+<p>First some basic calculations to create the vector of observed frequencies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">death.before =<span class="st"> </span><span class="dv">6052</span>
+death.after =<span class="st"> </span><span class="dv">12028</span> -<span class="st"> </span><span class="dv">6052</span>
+observed =<span class="st"> </span><span class="kw">rbind</span>(death.before, death.after)
+observed</code></pre></div>
+<pre><code>##              [,1]
+## death.before 6052
+## death.after  5976</code></pre>
+<p>Let us assume that deaths before and deaths after are identically distributed. The hypotheses will then be as follows:</p>
+<p><span class="math inline">\(H0:\)</span> Proportion of deaths before and after major holidays (like Christmas) are the same</p>
+<p><span class="math inline">\(HA:\)</span> Proportion of deaths before and after major holidays (like Christmas) are NOT the same</p>
+<p>Let us also set <span class="math inline">\(\alpha = 0.01\)</span></p>
+<p>Now, if <span class="math inline">\(H_0\)</span> is true, what number of deaths would we have expected to see before and after Christmas? Well that would be one-half of 12028 each … i.e., 6014 deaths before and 6014 deaths after Christmas, respectively … that is, with probabilities of <span class="math inline">\(0.5\)</span> and <span class="math inline">\(0.5\)</span>, each.</p>
+<p>Now we can use the chi-square test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">chisq.test</span>(observed, <span class="dt">p=</span><span class="kw">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>))</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  observed
+## X-squared = 0.48021, df = 1, p-value = 0.4883</code></pre>
+<p>Given a p-value of 0.48021 we cannot reject <span class="math inline">\(H_0\)</span>; the data provide insufficient evidence to conclude that holidays affect death rates.</p>
+</div>
+<div id="problem-6" class="section level2">
+<h2>- Problem #6</h2>
+<p>One thousand coins are flipped eight times and the number of heads recorded for each coin. Does the resulting distribution of heads match that expected from a binomial distribution with all fair coins?</p>
+<p>Assuming all the coins are fair implies equal probabilities of seeing a Heads or a Tails on any given flip.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">coins =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08q6CoinFlipping.csv&quot;</span>))
+<span class="kw">head</span>(coins)</code></pre></div>
+<pre><code>##   numberOfHeads
+## 1             0
+## 2             0
+## 3             0
+## 4             0
+## 5             0
+## 6             0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(coins)</code></pre></div>
+<pre><code>## [1] &quot;numberOfHeads&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab<span class="fl">.1</span> =<span class="st"> </span><span class="kw">table</span>(coins); tab<span class="fl">.1</span></code></pre></div>
+<pre><code>## coins
+##   0   1   2   3   4   5   6   7   8 
+##   6  32 105 186 236 201  98  33 103</code></pre>
+<p>In a binomial distribution what would we expect to see?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">8</span>; n</code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num.heads =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="dv">1</span>); num.heads</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6 7 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span><span class="kw">dbinom</span>(num.heads, n, <span class="dt">p=</span><span class="fl">0.5</span>); y</code></pre></div>
+<pre><code>## [1] 0.00390625 0.03125000 0.10937500 0.21875000 0.27343750 0.21875000
+## [7] 0.10937500 0.03125000 0.00390625</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span><span class="kw">round</span>(y *<span class="st"> </span><span class="dv">1000</span>, <span class="dt">digits=</span><span class="dv">0</span>); expected</code></pre></div>
+<pre><code>## [1]   4  31 109 219 273 219 109  31   4</code></pre>
+<p>Two of the nine cells (i.e., 22.22% of the cells) have expected frequencies <span class="math inline">\(&lt; 5\)</span> … for 0 heads and for 8 heads. This means we will need to regroup the data so as not to violate one of the assumptions of the <span class="math inline">\(\chi^2\)</span> test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.heads =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="dv">1</span>); new.heads</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6 7 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.coins =<span class="st"> </span><span class="kw">c</span>( <span class="kw">sum</span>(tab<span class="fl">.1</span>[<span class="dv">1</span>:<span class="dv">2</span>]), 
+                tab<span class="fl">.1</span>[<span class="dv">3</span>:<span class="dv">7</span>],
+                <span class="kw">sum</span>(tab<span class="fl">.1</span>[<span class="dv">8</span>:<span class="dv">9</span>]) )
+<span class="kw">names</span>(new.coins) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;0 or 1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>, <span class="st">&quot;7 or more&quot;</span>)  
+new.coins</code></pre></div>
+<pre><code>##    0 or 1         2         3         4         5         6 7 or more 
+##        38       105       186       236       201        98       136</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">8</span>
+y =<span class="st"> </span><span class="kw">dbinom</span>(new.heads, n, <span class="dt">p=</span><span class="fl">0.5</span>); y</code></pre></div>
+<pre><code>## [1] 0.00390625 0.03125000 0.10937500 0.21875000 0.27343750 0.21875000
+## [7] 0.10937500 0.03125000 0.00390625</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob<span class="fl">.1</span> =<span class="st"> </span><span class="kw">sum</span>(y[<span class="dv">1</span>:<span class="dv">2</span>]) 
+prob<span class="fl">.2</span> =<span class="st"> </span>y[<span class="dv">3</span>:<span class="dv">7</span>] 
+prob<span class="fl">.3</span> =<span class="st"> </span><span class="kw">sum</span>(y[<span class="dv">8</span>:<span class="dv">9</span>]) 
+probs =<span class="st"> </span><span class="kw">c</span>(prob<span class="fl">.1</span>, prob<span class="fl">.2</span>, prob<span class="fl">.3</span>); probs</code></pre></div>
+<pre><code>## [1] 0.03515625 0.10937500 0.21875000 0.27343750 0.21875000 0.10937500
+## [7] 0.03515625</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xsq =<span class="st"> </span><span class="kw">chisq.test</span>(new.coins, <span class="dt">p=</span>probs)
+xsq</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  new.coins
+## X-squared = 302.32, df = 6, p-value &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pchisq</span>(<span class="fl">302.3219</span>, <span class="dt">df=</span><span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>The <span class="math inline">\(p-value\)</span> is practically <span class="math inline">\(0\)</span> so we can safely reject <span class="math inline">\(H_0\)</span>; the distribution of these coin flips does not follow the binomial distribution.</p>
+<p>How do the expected counts differ from the observed counts? Look at the plots that follow and compare the observed number of heads versus expected number of heads. Where do you see discrepancies?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="dv">1</span>)
+<span class="kw">plot</span>(tab<span class="fl">.1</span>, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, 
+      <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;darkred&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;Number of Heads&quot;</span>,
+     <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">P</span>(X==x)),
+     <span class="dt">main=</span><span class="st">&quot;Observed&quot;</span>)
+<span class="kw">plot</span>(expected, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, 
+      <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;darkblue&quot;</span>,
+     <span class="dt">xlab=</span><span class="st">&quot;Number of Heads&quot;</span>,
+     <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">P</span>(X==x)),
+     <span class="dt">main=</span><span class="st">&quot;Expected&quot;</span>, <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>)
+<span class="kw">axis</span>(<span class="dt">side=</span><span class="dv">1</span>, <span class="dt">at=</span>x)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/16d-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p>We ended up with some 103 instances of 8 heads. With fair coins this should have only happened 4 times (… this is what was originally calculated as the expected frequency). As such we may have had <span class="math inline">\(103 - 4 =99\)</span> two-headed coins</p>
+</div>
+<div id="the-steps-for-goodness-of-fit-testing" class="section level2">
+<h2>- The Steps for goodness-of-fit testing …</h2>
+<ol style="list-style-type: decimal">
+<li>Setup <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_A\)</span></li>
+<li>Setup <span class="math inline">\(\alpha\)</span> and the Decision-Rule</li>
+<li>Calculate expected probabilities if these are not given</li>
+<li>See if <span class="math inline">\(\chi^2\)</span> assumptions are violated
+<ol style="list-style-type: lower-alpha">
+<li>No category has expected frequencies <span class="math inline">\(&lt; 1\)</span></li>
+<li>No more than 20% of the categories should have expected frequencies <span class="math inline">\(&lt; 5\)</span></li>
+</ol></li>
+<li>If either assumption is violated then you will need to collapse the categories and start again from Step (3)</li>
+<li>Conduct the test</li>
+<li>Adjust for having estimated <span class="math inline">\(P(X)\)</span> from the data by using <span class="math inline">\(df= n - 1 - 1 = n-2\)</span></li>
+<li>State your conclusion (in words)</li>
+</ol>
+</div>
+</div>
+<div id="the-poisson-distribution" class="section level1">
+<h1>- The Poisson Distribution</h1>
+<p>The Poisson distribution describes the number of successes that will occur in space or time if the number of successes are independent across consecutive space or time and occur with equal probability in each space or time. It is a useful distribution if our goal is to test whether or not events occur randomly in space and/or time because if they do, then the Poisson distribution would characterize these events quite well.</p>
+<p><span class="math display">\[P(X) = \dfrac{e^{-\mu} \mu^{X}}{X!}; \text{where } X=0,1,2,3,\ldots, n; \text{and Mean }= \text{Variance } = \mu\]</span></p>
+<p>where <span class="math inline">\(X=\)</span> the number of events in a given time interval or space; <span class="math inline">\(\mu=\)</span> the mean number of events per time interval or space; and <span class="math inline">\(P(X)=\)</span> the probability of observing exactly <span class="math inline">\(X\)</span> events in a given interval.</p>
+<p>For example: Hospital births occur on average at 1.8 births per hour. What is <span class="math inline">\(P(X=4)\)</span>?</p>
+<p><span class="math display">\[P(X=4) = \dfrac{e^{-1.8}(1.8)^4}{4!} = 0.0723\]</span></p>
+<div id="key-assumptions" class="section level2">
+<h2>Key Assumptions</h2>
+<ol style="list-style-type: decimal">
+<li>The probability of observing a single event over a small time interval (or space) is approximately proportional to the size of that time interval (or space) .</li>
+<li>The probability of two events occurring in the same narrow time interval (or space) is negligible.</li>
+<li>The probability of an event within a certain time interval (or space) does not change across different time intervals (or space) .</li>
+<li>The probability of an event in one time interval (or space) is independent of the probability of an event in any other non-overlapping time interval (or space) .</li>
+</ol>
+<p>In terms of a concrete context, if I am monitoring the Richland Avenue roundabout,</p>
+<ol style="list-style-type: decimal">
+<li>The probability of a car arriving from the West in a given time interval is proportional to the length of time.</li>
+<li>The probability of having more than one car arriving from the West in a very short time interval is essentially zero.</li>
+<li>The probability of a car arriving from the West in a given interval is constant across time</li>
+<li>The numbers of cars arriving from the West in non-overlapping time intervals are independent of one another.</li>
+</ol>
+<p>Successes may be <strong>clumped</strong> – in that success in one space or time increases the chance of seeing a success in the subsequent space or time or <strong>dispersed</strong> – in that success in one space or time decreases the chance of seeing a success in the subsequent space or time.<br />
++ An example of clumping may be where a highway fatality increases the chances of other highway fatalities occurring shortly after the first fatality. Most likely the case when the <span class="math inline">\(variance &gt; mean\)</span><br />
++ An example of dispersion may be where a highway fatality decreases the chances of seeing other highway fatalities shortly after the first fatality. Most likely the case when the <span class="math inline">\(variance &lt; mean\)</span></p>
+</div>
+<div id="visualizing-poisson-distributions" class="section level2">
+<h2>- Visualizing Poisson Distributions</h2>
+<p>The distribution shown below is for 100 randomly drawn values from a Poisson distribution with <span class="math inline">\(\lambda=3\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">124</span>) 
+pois =<span class="st"> </span><span class="kw">rpois</span>(<span class="dv">100</span>, <span class="dt">lambda =</span> <span class="dv">3</span>) 
+<span class="kw">mean</span>(pois)</code></pre></div>
+<pre><code>## [1] 2.83</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(pois)</code></pre></div>
+<pre><code>## [1] 2.344545</code></pre>
+<p>The code below is purely for demonstrating some properties of the Poisson distribution. Various Poisson distributions follow. Note how the distributions shift to the right as <span class="math inline">\(\lambda\)</span> increases.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">1</span>)
+<span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(x, <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">1</span>), 
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;tomato2&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">P</span>(X==x)), 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Events (x)&quot;</span>,
+     <span class="dt">main =</span> <span class="kw">expression</span>(mu==<span class="dv">1</span>),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))
+<span class="kw">plot</span>(x, <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">3</span>), 
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;tomato2&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">P</span>(X==x)), 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Events (x)&quot;</span>,
+     <span class="dt">main =</span> <span class="kw">expression</span>(mu==<span class="dv">3</span>),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))
+<span class="kw">plot</span>(x, <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">5</span>), 
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;tomato2&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">P</span>(X==x)), 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Events (x)&quot;</span>,
+     <span class="dt">main =</span> <span class="kw">expression</span>(mu==<span class="dv">5</span>),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))
+<span class="kw">plot</span>(x, <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">8</span>), 
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;tomato2&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">P</span>(X==x)), 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Events (x)&quot;</span>,
+     <span class="dt">main =</span> <span class="kw">expression</span>(mu==<span class="dv">8</span>),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.4</span>))</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7b-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p><strong>Note:</strong> The binomial distribution tends towards the Poisson distribution as sample size <span class="math inline">\((n)\)</span> increases and probability of success <span class="math inline">\(p()\)</span> decreases</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>))
+<span class="kw">barplot</span>(<span class="kw">dbinom</span>(<span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">size=</span> <span class="dv">5</span>, <span class="dt">prob=</span><span class="dv">3</span>/<span class="dv">5</span>), 
+        <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">5</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>p==<span class="fl">0.6</span>)))
+<span class="kw">barplot</span>(<span class="kw">dbinom</span>(<span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">size=</span><span class="dv">10</span>, <span class="dt">prob=</span><span class="dv">1</span>/<span class="dv">5</span>), 
+        <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">10</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>p==<span class="fl">0.2</span>)))
+<span class="kw">barplot</span>(<span class="kw">dbinom</span>(<span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">size=</span><span class="dv">20</span>, <span class="dt">prob=</span><span class="dv">1</span>/<span class="dv">10</span>),
+         <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">20</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>p==<span class="fl">0.1</span>)))
+<span class="kw">barplot</span>(<span class="kw">dbinom</span>(<span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">size=</span><span class="dv">40</span>, <span class="dt">prob=</span><span class="dv">1</span>/<span class="dv">10</span>),
+        <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>),
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">40</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>p==<span class="fl">0.1</span>)))
+<span class="kw">barplot</span>(<span class="kw">dpois</span>(<span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">lambda=</span><span class="dv">2</span>), 
+        <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">20</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>), 
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">20</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>mu==<span class="dv">2</span>)))
+<span class="kw">barplot</span>(<span class="kw">dpois</span>(<span class="dv">0</span>:<span class="dv">40</span>, <span class="dt">lambda=</span><span class="dv">4</span>), 
+        <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">40</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>), 
+        <span class="dt">main=</span><span class="kw">expression</span>(<span class="kw">paste</span>(n==<span class="dv">40</span> ~<span class="st"> </span><span class="er">~</span><span class="st"> </span>mu==<span class="dv">4</span>)))</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7c-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p><strong>Note:</strong> The Poisson distribution tends towards the Normal distribution as the mean increases</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+x=<span class="kw">rpois</span>(<span class="dv">10000</span>, <span class="dv">1</span>)
+<span class="kw">hist</span>(x, <span class="dt">col=</span><span class="st">&quot;cornflowerblue&quot;</span>, 
+     <span class="dt">xlab=</span><span class="kw">expression</span>(X==x),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),
+     <span class="dt">main=</span><span class="kw">expression</span>(mu==<span class="dv">1</span>))
+x=<span class="kw">rpois</span>(<span class="dv">10000</span>, <span class="dv">5</span>)
+<span class="kw">hist</span>(x, <span class="dt">col=</span><span class="st">&quot;cornflowerblue&quot;</span>, 
+     <span class="dt">xlab=</span><span class="kw">expression</span>(X==x),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),
+     <span class="dt">main=</span><span class="kw">expression</span>(mu==<span class="dv">5</span>))
+x=<span class="kw">rpois</span>(<span class="dv">10000</span>, <span class="dv">10</span>)
+<span class="kw">hist</span>(x, <span class="dt">col=</span><span class="st">&quot;cornflowerblue&quot;</span>, 
+     <span class="dt">xlab=</span><span class="kw">expression</span>(X==x),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),
+     <span class="dt">main=</span><span class="kw">expression</span>(mu==<span class="dv">10</span>))
+x=<span class="kw">rpois</span>(<span class="dv">10000</span>, <span class="dv">100</span>)
+<span class="kw">hist</span>(x, <span class="dt">col=</span><span class="st">&quot;cornflowerblue&quot;</span>, 
+     <span class="dt">xlab=</span><span class="kw">expression</span>(X==x),
+     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4000</span>),
+     <span class="dt">main=</span><span class="kw">expression</span>(mu==<span class="dv">100</span>))</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7d-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p>So what do these properties tell us? In brief, that under certain conditions we would get practically identical results when testing hypotheses about Poisson-generated data as we might from the Binomial or from the Normal, depending upon which of the above properties is in effect.</p>
+</div>
+</div>
+<div id="only-for-instructional-purposes-calculating-probabilities-of-poisson-outcomes" class="section level1">
+<h1>- ONLY For Instructional Purposes: Calculating Probabilities of Poisson Outcomes</h1>
+<p>Just like for the binomial, R has built-in functions for calculating the probability of seeing a certain number of successes, given the population mean <span class="math inline">\((\lambda)\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">14</span>, <span class="dt">by=</span><span class="dv">1</span>)
+d.x =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="dv">5</span>, <span class="dt">log=</span><span class="ot">FALSE</span>); d.x</code></pre></div>
+<pre><code>##  [1] 0.0067379470 0.0336897350 0.0842243375 0.1403738958 0.1754673698
+##  [6] 0.1754673698 0.1462228081 0.1044448630 0.0652780393 0.0362655774
+## [11] 0.0181327887 0.0082421767 0.0034342403 0.0013208616 0.0004717363</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.x =<span class="st"> </span><span class="kw">ppois</span>(x, <span class="dt">lambda=</span><span class="dv">5</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>); p.x</code></pre></div>
+<pre><code>##  [1] 0.9932620530 0.9595723180 0.8753479805 0.7349740847 0.5595067149
+##  [6] 0.3840393452 0.2378165370 0.1333716741 0.0680936347 0.0318280573
+## [11] 0.0136952686 0.0054530919 0.0020188516 0.0006979900 0.0002262537</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(d.x, <span class="dt">names.arg=</span><span class="dv">0</span>:<span class="dv">14</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,.<span class="dv">4</span>))</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7e-1.png" /><!-- --></p>
+<div id="a-worked-example-do-mass-extinctions-occur-randomly-in-time" class="section level2">
+<h2>- A Worked Example: Do mass extinctions occur randomly in time?</h2>
+<p>Do extinctions occur randomly through the long fossil record of Earth’s history or are there periods in which the extinction rates are unusually high (“mass extinctions”) compared with background rates? We can test this hypothesis via data on the number of recorded extinctions of marine invertebrate families in 76 time intervals. If mass extinctions are indeed random in time then the distribution should follow the Poisson, with any departures from the Poisson suggesting that something must have been going on.</p>
+<p><span class="math display">\[H_0: \text{Number of extinctions follow the Poisson distribution }\]</span> <span class="math display">\[H_A: \text{Number of extinctions DO NOT follow the Poisson distribution }\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extinct =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08e6MassExtinctions.csv&quot;</span>))
+<span class="kw">head</span>(extinct)</code></pre></div>
+<pre><code>##   numberOfExtinctions
+## 1                   1
+## 2                   1
+## 3                   1
+## 4                   1
+## 5                   1
+## 6                   1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(extinct)</code></pre></div>
+<pre><code>## [1] &quot;numberOfExtinctions&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.A =<span class="st"> </span><span class="kw">table</span>(extinct); tab.A <span class="co"># Note missing &quot;0&quot; here versus the text</span></code></pre></div>
+<pre><code>## extinct
+##  1  2  3  4  5  6  7  8  9 10 11 14 16 20 
+## 13 15 16  7 10  4  2  1  2  1  1  1  2  1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(extinct$numberOfExtinctions)</code></pre></div>
+<pre><code>## [1] 4.210526</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tab.A, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">20</span>), <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">type=</span><span class="st">&quot;h&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Number of Mass Extinctions&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>, <span class="dt">col=</span><span class="st">&quot;firebrick&quot;</span>, <span class="dt">cex.axis=</span><span class="fl">0.8</span>)
+at =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">1</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">at =</span> at, <span class="dt">cex.axis=</span><span class="fl">0.8</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7-1.png" /><!-- --></p>
+<p>This is all good but we need to estimate the population mean <span class="math inline">\((\lambda)\)</span> of mass extinctions. Since we only have these particular sample data to go by, that is precisely what we will use to get <span class="math inline">\(\hat{\lambda}\)</span> and treat this <span class="math inline">\(\hat{\lambda} = \lambda\)</span>.</p>
+<p>As it turns out, <span class="math inline">\(\lambda=\)</span> <code>4.2105263</code></p>
+<p>Given <span class="math inline">\(\lambda\)</span>, we can now calculate the probability of seeing no mass extinctions, 1 mass extinctions, 2 mass extinctions, and so on if indeed mass extinctions follow a Poisson distribution with a mean of 4.210526.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="dt">by=</span><span class="dv">1</span>)
+<span class="kw">plot</span>(x, <span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="fl">4.210526</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.25</span>),
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;tomato4&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">P</span>(X==x)), 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Extinctions&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Expected No. of Mass Extinctions&quot;</span>,
+     <span class="dt">cex.main=</span><span class="fl">0.99</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7f-1.png" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.d =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="fl">4.210526</span>); x.d</code></pre></div>
+<pre><code>##  [1] 1.483856e-02 6.247815e-02 1.315329e-01 1.846076e-01 1.943238e-01
+##  [6] 1.636411e-01 1.148358e-01 6.907418e-02 3.635483e-02 1.700811e-02
+## [11] 7.161307e-03 2.741170e-03 9.618139e-04 3.115187e-04 9.368982e-05
+## [16] 2.629889e-05 6.920761e-06 1.714120e-06 4.009638e-07 8.885623e-08
+## [21] 1.870657e-08</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.p =<span class="st"> </span><span class="kw">ppois</span>(x, <span class="dt">lambda=</span><span class="fl">4.210526</span>, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>); x.p</code></pre></div>
+<pre><code>##  [1] 0.01483856 0.07731671 0.20884964 0.39345725 0.58778104 0.75142211
+##  [7] 0.86625794 0.93533212 0.97168695 0.98869505 0.99585636 0.99859753
+## [13] 0.99955934 0.99987086 0.99996455 0.99999085 0.99999777 0.99999949
+## [19] 0.99999989 0.99999998 1.00000000</code></pre>
+<p>Thus, in a random sample of 76 successive time intervals we would expect to see</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.d*<span class="dv">76</span> </code></pre></div>
+<pre><code>##  [1] 1.127731e+00 4.748339e+00 9.996503e+00 1.403018e+01 1.476861e+01
+##  [6] 1.243672e+01 8.727523e+00 5.249638e+00 2.762967e+00 1.292616e+00
+## [11] 5.442593e-01 2.083289e-01 7.309786e-02 2.367542e-02 7.120426e-03
+## [16] 1.998716e-03 5.259778e-04 1.302731e-04 3.047325e-05 6.753074e-06
+## [21] 1.421700e-06</code></pre>
+<p>intervals with 0, 1, 2, 3, … mass extinctions.</p>
+<p>Let us calculate and plot these expected frequencies:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="fl">4.210526</span>) *<span class="st"> </span><span class="dv">76</span>
+expected</code></pre></div>
+<pre><code>##  [1] 1.127731e+00 4.748339e+00 9.996503e+00 1.403018e+01 1.476861e+01
+##  [6] 1.243672e+01 8.727523e+00 5.249638e+00 2.762967e+00 1.292616e+00
+## [11] 5.442593e-01 2.083289e-01 7.309786e-02 2.367542e-02 7.120426e-03
+## [16] 1.998716e-03 5.259778e-04 1.302731e-04 3.047325e-05 6.753074e-06
+## [21] 1.421700e-06</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(expected, <span class="dt">digits=</span><span class="dv">2</span>) </code></pre></div>
+<pre><code>##  [1]  1.13  4.75 10.00 14.03 14.77 12.44  8.73  5.25  2.76  1.29  0.54
+## [12]  0.21  0.07  0.02  0.01  0.00  0.00  0.00  0.00  0.00  0.00</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x, <span class="kw">round</span>(expected, <span class="dt">digits=</span><span class="dv">2</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">16</span>),
+     <span class="dt">type =</span> <span class="st">&quot;h&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>, <span class="dt">col=</span><span class="st">&quot;tomato4&quot;</span>, <span class="dt">xaxt=</span><span class="st">&quot;n&quot;</span>, <span class="dt">yaxt=</span><span class="st">&quot;n&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Frequency&quot;</span>, 
+     <span class="dt">xlab=</span><span class="st">&quot;No. of Extinctions&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Expected No. of Mass Extinctions&quot;</span>,
+     <span class="dt">sub =</span> <span class="st">&quot;(in time blocks of similar duration)&quot;</span>,
+     <span class="dt">cex.main=</span><span class="fl">0.99</span>) 
+at1 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">1</span>)
+at2 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">15</span>, <span class="dt">by =</span> <span class="dv">1</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">at =</span> at1, <span class="dt">cex.axis=</span><span class="fl">0.8</span>)
+<span class="kw">axis</span>(<span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">at =</span> at2, <span class="dt">cex.axis=</span><span class="fl">0.8</span>)</code></pre></div>
+<p><img src="Chapter08_files/figure-html/7g-1.png" /><!-- --></p>
+<p>Because the observed number of extinctions start thinning at the upper end of the distribution we need to collapse the first two (0 and 1) and the top end of the distribution into an omnibus category that we can call “10 or more”. We do so below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.ME =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;0 or 1&quot;</span>, <span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;4&quot;</span>, <span class="st">&quot;5&quot;</span>, <span class="st">&quot;6&quot;</span>, <span class="st">&quot;7&quot;</span>, <span class="st">&quot;8 or more&quot;</span>); new.ME</code></pre></div>
+<pre><code>## [1] &quot;0 or 1&quot;    &quot;2&quot;         &quot;3&quot;         &quot;4&quot;         &quot;5&quot;         &quot;6&quot;        
+## [7] &quot;7&quot;         &quot;8 or more&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.counts =<span class="st"> </span><span class="kw">c</span>(tab.A[<span class="dv">1</span>],
+                 tab.A[<span class="dv">2</span>:<span class="dv">7</span>],
+                <span class="kw">sum</span>(tab.A[<span class="dv">8</span>:<span class="dv">14</span>]) )
+new.counts</code></pre></div>
+<pre><code>##  1  2  3  4  5  6  7    
+## 13 15 16  7 10  4  2  9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(new.counts) =<span class="st"> </span>new.ME
+new.counts <span class="co"># now with the labels for each category</span></code></pre></div>
+<pre><code>##    0 or 1         2         3         4         5         6         7 
+##        13        15        16         7        10         4         2 
+## 8 or more 
+##         9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(new.counts) <span class="co"># To verify we didn&#39;t mess up somewhere and we still have 76 extinctions</span></code></pre></div>
+<pre><code>## [1] 76</code></pre>
+<p>We aren’t done yet. Since we have rearranged the grouping we will need to recalculate the expected frequencies.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span> , <span class="dv">20</span>, <span class="dt">by =</span> <span class="dv">1</span>)
+new.probs =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="fl">4.210526</span>); new.probs</code></pre></div>
+<pre><code>##  [1] 1.483856e-02 6.247815e-02 1.315329e-01 1.846076e-01 1.943238e-01
+##  [6] 1.636411e-01 1.148358e-01 6.907418e-02 3.635483e-02 1.700811e-02
+## [11] 7.161307e-03 2.741170e-03 9.618139e-04 3.115187e-04 9.368982e-05
+## [16] 2.629889e-05 6.920761e-06 1.714120e-06 4.009638e-07 8.885623e-08
+## [21] 1.870657e-08</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob.0or1 =<span class="st"> </span><span class="kw">sum</span>(new.probs[<span class="dv">1</span>:<span class="dv">2</span>]); prob.0or1</code></pre></div>
+<pre><code>## [1] 0.07731671</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob.2to7 =<span class="st"> </span>new.probs[<span class="dv">3</span>:<span class="dv">8</span>]; prob.2to7</code></pre></div>
+<pre><code>## [1] 0.13153293 0.18460761 0.19432379 0.16364107 0.11483583 0.06907418</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob.8plus =<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="kw">sum</span>(prob.0or1, prob.2to7); prob.8plus</code></pre></div>
+<pre><code>## [1] 0.06466788</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probs =<span class="st"> </span><span class="kw">c</span>(prob.0or1, prob.2to7, prob.8plus); probs</code></pre></div>
+<pre><code>## [1] 0.07731671 0.13153293 0.18460761 0.19432379 0.16364107 0.11483583
+## [7] 0.06907418 0.06466788</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(probs)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Now we conduct the <span class="math inline">\(\chi^2\)</span> test:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xsq =<span class="st"> </span><span class="kw">chisq.test</span>(new.counts, <span class="dt">p=</span>probs, <span class="dt">correct=</span><span class="ot">FALSE</span>); xsq</code></pre></div>
+<pre><code>## Warning in chisq.test(new.counts, p = probs, correct = FALSE): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  new.counts
+## X-squared = 23.95, df = 7, p-value = 0.001163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xsq$observed <span class="co"># Observed frequencies used in the test</span></code></pre></div>
+<pre><code>##    0 or 1         2         3         4         5         6         7 
+##        13        15        16         7        10         4         2 
+## 8 or more 
+##         9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xsq$expected <span class="co"># Expected frequencies used in the test</span></code></pre></div>
+<pre><code>##    0 or 1         2         3         4         5         6         7 
+##  5.876070  9.996503 14.030178 14.768608 12.436721  8.727523  5.249638 
+## 8 or more 
+##  4.914759</code></pre>
+<p>You get a warning <code>Warning message: In chisq.test(new.counts, p = probs, correct = FALSE):</code> because one of the expected frequencies is less than 5 but we should be okay here since we need 20% of the cells to have expected frequencies <span class="math inline">\(&lt; 5\)</span> or at least one cell with expected frequency <span class="math inline">\(&lt; 1\)</span> before the <span class="math inline">\(\chi^2\)</span> assumptions are unmet.</p>
+<p>The <span class="math inline">\(\chi^2\)</span> value is 23.95 with a <span class="math inline">\(p-Value = 0.001163\)</span>. This is again incorrect because of the extra degree of freedom used up when we were forced to calculate the mean of the Poisson process from the sample. The correct <span class="math inline">\(p-value\)</span> can be calculated with one less degree of freedom as:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pchisq</span>(<span class="fl">23.95</span>, <span class="dt">df=</span><span class="dv">6</span>)</code></pre></div>
+<pre><code>## [1] 0.0005334336</code></pre>
+<p>Given the p-value we can easily reject H0; the data provide sufficient evidence to conclude that mass extinctions in the fossil record DO NOT fit a Poisson distribution.</p>
+<div id="clumping-versus-dispersion" class="section level5">
+<h5>Clumping Versus Dispersion</h5>
+<p>Recall that for the Poisson distribution <span class="math inline">\(mean=variance\)</span>. Thus <em>clumping</em> is evident whenever the variance <span class="math inline">\(&gt;\)</span> the mean, and <em>dispersion</em> is evident whenever the variance <span class="math inline">\(&lt;\)</span> the mean. The mean and variance for the original extinctions data happen to be:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(extinct$numberOfExtinctions)</code></pre></div>
+<pre><code>## [1] 4.210526</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(extinct$numberOfExtinctions)</code></pre></div>
+<pre><code>## [1] 13.71509</code></pre>
+<p>and since the variance exceeds the mean we have clumping. What does this mean? Well, that mass extinctions appear to occur in bursts of successive time intervals rather than randomly across time. Why? Well, that is the interesting question.</p>
+</div>
+</div>
+</div>
+<div id="the-steps" class="section level1">
+<h1>- The Steps …</h1>
+<ol style="list-style-type: decimal">
+<li>Setup <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_A\)</span></li>
+<li>Setup <span class="math inline">\(\alpha\)</span> and the Decision-Rule</li>
+<li>Calculate the mean <span class="math inline">\((\mu)\)</span></li>
+<li>Use <span class="math inline">\(\mu\)</span> to calculate expected frequencies for counts = <span class="math inline">\(0, 1, 2, 3, \cdots\)</span></li>
+<li>See if <span class="math inline">\(\chi^2\)</span> assumptions are violated
+<ol style="list-style-type: lower-alpha">
+<li>No category has expected frequencies <span class="math inline">\(&lt; 1\)</span></li>
+<li>No more than 20% of the categories should have expected frequencies <span class="math inline">\(&lt; 5\)</span></li>
+</ol></li>
+<li>If either assumption is violated then you will need to collapse the categories and start again from Step (3)</li>
+<li>Conduct the test.</li>
+<li>Adjust for having estimated <span class="math inline">\(\mu\)</span> from the data by using <span class="math inline">\(df= n - 1 - 1 = n-2\)</span></li>
+<li>State your conclusion (in words)</li>
+</ol>
+</div>
+<div id="some-worked-problems" class="section level1">
+<h1>- Some Worked Problems</h1>
+<div id="problem-2" class="section level2">
+<h2>- Problem 2</h2>
+<p>The parasitic nematode <em>Camallanus oxycephalus</em> infects many freshwater fish, including shad. Is there evidence that nematodes do not worm their way into the fish at random?</p>
+<p><span class="math display">\[H_0: \text{ Number of nematodes per fish are distributed Poisson }\]</span> <span class="math display">\[H_A: \text{ Number of nematodes per fish are NOT distributed Poisson }\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">shad =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08q02ShadParasites.csv&quot;</span>))
+observed =<span class="st"> </span><span class="kw">table</span>(shad$numberOfParasites); observed</code></pre></div>
+<pre><code>## 
+##   0   1   2   3   4   5   6 
+## 103  72  44  14   3   1   1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(shad$numberOfParasites)</code></pre></div>
+<pre><code>## [1] 0.9453782</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(shad$numberOfParasites)</code></pre></div>
+<pre><code>## [1] 225</code></pre>
+<p>So on average we should have seen 0.9453 nematodes per fish. if this were true, the expected frequencies would have been:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dt">by=</span><span class="dv">1</span>); x</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.d =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="fl">0.9453782</span>); x.d</code></pre></div>
+<pre><code>## [1] 0.3885326001 0.3673102501 0.1736235515 0.0547133069 0.0129311919
+## [6] 0.0024449734 0.0003852374</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(x.d)</code></pre></div>
+<pre><code>## [1] 0.9999411</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob<span class="fl">.1</span> =<span class="st"> </span>x.d[<span class="dv">1</span>:<span class="dv">6</span>]; prob<span class="fl">.1</span></code></pre></div>
+<pre><code>## [1] 0.388532600 0.367310250 0.173623552 0.054713307 0.012931192 0.002444973</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob<span class="fl">.2</span> =<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="kw">sum</span>(prob<span class="fl">.1</span>); prob<span class="fl">.2</span></code></pre></div>
+<pre><code>## [1] 0.0004441261</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probs =<span class="st"> </span><span class="kw">c</span>(prob<span class="fl">.1</span>, prob<span class="fl">.2</span>); probs</code></pre></div>
+<pre><code>## [1] 0.3885326001 0.3673102501 0.1736235515 0.0547133069 0.0129311919
+## [6] 0.0024449734 0.0004441261</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(probs)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span><span class="kw">round</span>(probs*<span class="dv">238</span>, <span class="dt">digits=</span><span class="dv">2</span>); expected</code></pre></div>
+<pre><code>## [1] 92.47 87.42 41.32 13.02  3.08  0.58  0.11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>(observed, expected)</code></pre></div>
+<pre><code>##   observed expected
+## 0      103    92.47
+## 1       72    87.42
+## 2       44    41.32
+## 3       14    13.02
+## 4        3     3.08
+## 5        1     0.58
+## 6        1     0.11</code></pre>
+<p>Given the sparse frequencies for 4, 5, and 6 nematodes per fish we should collapse these categories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.observed =<span class="st"> </span><span class="kw">c</span>(<span class="dv">103</span>, <span class="dv">72</span>, <span class="dv">44</span>, <span class="dv">14</span>, <span class="dv">5</span>)
+new.probs =<span class="st"> </span><span class="kw">c</span>(probs[<span class="dv">1</span>:<span class="dv">4</span>], <span class="kw">sum</span>(probs[<span class="dv">5</span>:<span class="dv">7</span>]))
+Xsq =<span class="st"> </span><span class="kw">chisq.test</span>(new.observed, <span class="dt">p=</span>new.probs); Xsq</code></pre></div>
+<pre><code>## Warning in chisq.test(new.observed, p = new.probs): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  new.observed
+## X-squared = 4.5707, df = 4, p-value = 0.3342</code></pre>
+<p>Since again we’ll have to correct the degrees of freedom …</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">correct.pvalue =<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="kw">pchisq</span>(<span class="fl">4.5695</span>, <span class="dt">df=</span><span class="dv">3</span>)
+correct.pvalue</code></pre></div>
+<pre><code>## [1] 0.2061742</code></pre>
+<p>Given the high <span class="math inline">\(p-value\)</span> we cannot reject <span class="math inline">\(H_0\)</span>; the data provide insufficient evidence to conclude that the number of nematodes per fish are NOT Poisson distributed</p>
+</div>
+<div id="problem-15" class="section level2">
+<h2>- Problem #15</h2>
+<p>This is a famous data-set, the Prussian deaths due to mule-kicks (see below).</p>
+<p>The classic Poisson example is the data set of von Bortkiewicz (1898), documenting the chance of a Prussian cavalryman being killed by the kick of a horse or a mule. Ten army corps were observed over 20 years, giving a total of 200 observations of one corps for a one year period. The period of observation is thus one year. The total deaths from horse kicks were 122, and the average number of deaths per year per corps was thus 122/200 = 0.61. In any given year, we expect to observe approximately 1 death (0.61 deaths are not possible in the real-world) but may end up seeing 0, 2, 3, 4, etc. deaths. This is the classic Poisson situation: a rare event, whose average rate is small, with observations scattered across many small intervals of time or space.</p>
+<p><span class="math inline">\(H_0: \text{ Number of deaths due to mule kicks are distributed Poisson }\)</span></p>
+<p><span class="math inline">\(H_A: \text{ Number of deaths due to mule kicks are NOT distributed Poisson }\)</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cavalry =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter08/chap08q14Cavalry.csv&quot;</span>))
+<span class="kw">head</span>(cavalry)</code></pre></div>
+<pre><code>##   numberOfDeaths
+## 1              0
+## 2              0
+## 3              0
+## 4              0
+## 5              0
+## 6              0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(cavalry)</code></pre></div>
+<pre><code>## [1] &quot;numberOfDeaths&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab<span class="fl">.0</span> =<span class="st"> </span><span class="kw">table</span>(cavalry); tab<span class="fl">.0</span> </code></pre></div>
+<pre><code>## cavalry
+##   0   1   2   3   4 
+## 109  65  22   3   1</code></pre>
+<p>The mean number of deaths from horse kicks per regiment-year can be easily calculated: <code>0.61</code>. Now we can test whether these data follow the Poisson distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(cavalry$numberOfDeaths)</code></pre></div>
+<pre><code>## [1] 0.61</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="dt">by=</span><span class="dv">1</span>); x</code></pre></div>
+<pre><code>## [1] 0 1 2 3 4 5 6 7 8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.d =<span class="st"> </span><span class="kw">dpois</span>(x, <span class="dt">lambda=</span><span class="fl">0.61</span>); x.d</code></pre></div>
+<pre><code>## [1] 5.433509e-01 3.314440e-01 1.010904e-01 2.055505e-02 3.134646e-03
+## [6] 3.824268e-04 3.888006e-05 3.388119e-06 2.583441e-07</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(x.d)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob<span class="fl">.1</span> =<span class="st"> </span>x.d[<span class="dv">1</span>:<span class="dv">4</span>]; prob<span class="fl">.1</span></code></pre></div>
+<pre><code>## [1] 0.54335087 0.33144403 0.10109043 0.02055505</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prob<span class="fl">.2</span> =<span class="st"> </span><span class="dv">1</span> -<span class="st"> </span><span class="kw">sum</span>(prob<span class="fl">.1</span>); prob<span class="fl">.2</span></code></pre></div>
+<pre><code>## [1] 0.003559618</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">probs =<span class="st"> </span><span class="kw">c</span>(prob<span class="fl">.1</span>, prob<span class="fl">.2</span>); probs</code></pre></div>
+<pre><code>## [1] 0.543350869 0.331444030 0.101090429 0.020555054 0.003559618</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expected =<span class="st"> </span>probs *<span class="st"> </span><span class="dv">200</span>; expected </code></pre></div>
+<pre><code>## [1] 108.6701738  66.2888060  20.2180858   4.1110108   0.7119235</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(expected)</code></pre></div>
+<pre><code>## [1] 200</code></pre>
+<p>We will have to regroup the data because of the low expected frequencies for the top two categories. Given the few groups we need to work with I will hand-roll the regrouped data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.observed =<span class="st"> </span><span class="kw">c</span>(<span class="dv">109</span>, <span class="dv">65</span>, <span class="dv">22</span>, <span class="dv">4</span>)
+new.probs =<span class="st"> </span><span class="kw">c</span>(probs[<span class="dv">1</span>:<span class="dv">3</span>], <span class="kw">sum</span>(probs[<span class="dv">4</span>:<span class="dv">5</span>]))
+Xsq =<span class="st"> </span><span class="kw">chisq.test</span>(new.observed, <span class="dt">p=</span>new.probs); Xsq</code></pre></div>
+<pre><code>## Warning in chisq.test(new.observed, p = new.probs): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  new.observed
+## X-squared = 0.32352, df = 3, p-value = 0.9555</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq$expected</code></pre></div>
+<pre><code>## [1] 108.670174  66.288806  20.218086   4.822934</code></pre>
+<p><strong>Note:</strong> We get a warning because ONE cell out of FOUR (i.e., 25%) have expected frequencies <span class="math inline">\(&lt;5\)</span>. This will force us to go back and farther collapse the categories.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new.observed =<span class="st"> </span><span class="kw">c</span>(<span class="dv">109</span>, <span class="dv">65</span>, <span class="dv">26</span>)
+new.probs =<span class="st"> </span><span class="kw">c</span>(probs[<span class="dv">1</span>:<span class="dv">2</span>], <span class="dv">1</span> -<span class="st"> </span><span class="kw">sum</span>(probs[<span class="dv">1</span>:<span class="dv">2</span>]))
+Xsq =<span class="st"> </span><span class="kw">chisq.test</span>(new.observed, <span class="dt">p=</span>new.probs); Xsq</code></pre></div>
+<pre><code>## 
+##  Chi-squared test for given probabilities
+## 
+## data:  new.observed
+## X-squared = 0.062784, df = 2, p-value = 0.9691</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Xsq$expected</code></pre></div>
+<pre><code>## [1] 108.67017  66.28881  25.04102</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pchisq</span>(<span class="fl">0.0628</span>, <span class="dt">df=</span><span class="dv">1</span>) <span class="co"># the correct p-value and df</span></code></pre></div>
+<pre><code>## [1] 0.8021239</code></pre>
+<p>The estimated <span class="math inline">\(\chi^2\)</span> value is 0.0628 and since the <span class="math inline">\(p-value =\)</span> <code>0.8021239</code> is <span class="math inline">\(&gt; 0.05\)</span> we fail to Reject <span class="math inline">\(H_0\)</span>; the data provide insufficient evidence to conclude that mule-kick deaths, at least for these army corps, follow the Poisson distribution.</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

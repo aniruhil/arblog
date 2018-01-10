@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="ani" />
+
+<meta name="date" content="2015-12-15" />
+
+<title>R Script for Chapter 3</title>
+
+<script src="Chapter03_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="Chapter03_files/bootstrap-3.3.1/css/united.min.css" rel="stylesheet" />
+<script src="Chapter03_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="Chapter03_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="Chapter03_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">R Script for Chapter 3</h1>
+<h4 class="author"><em>ani</em></h4>
+<h4 class="date"><em>December 15, 2015</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#describing-data-central-tendency-and-dispersion"><span class="toc-section-number">1</span> Describing Data: Central Tendency and Dispersion</a><ul>
+<li><a href="#the-coefficient-of-variation"><span class="toc-section-number">1.1</span> The Coefficient of Variation</a></li>
+</ul></li>
+<li><a href="#working-with-grouped-data"><span class="toc-section-number">2</span> Working with Grouped Data</a></li>
+<li><a href="#cumulative-frequency-distributions"><span class="toc-section-number">3</span> Cumulative Frequency Distributions</a></li>
+<li><a href="#what-if-i-have-three-or-more-groups"><span class="toc-section-number">4</span> What if I have Three or More Groups?</a></li>
+</ul>
+</div>
+
+<div id="describing-data-central-tendency-and-dispersion" class="section level1">
+<h1><span class="header-section-number">1</span> Describing Data: Central Tendency and Dispersion</h1>
+<p>Working with the data on gliding snakes’ undulation rates we will calculate the mean, median, range, interquartile range, variance, and standard deviation. We will also construct some plots in order to see a few things in action.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">snakeData =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter03/chap03e1GlidingSnakes.csv&quot;</span>))
+<span class="kw">head</span>(snakeData)</code></pre></div>
+<pre><code>##   snake undulationRateHz
+## 1     1              0.9
+## 2     2              1.2
+## 3     3              1.2
+## 4     4              1.3
+## 5     5              1.4
+## 6     6              1.4</code></pre>
+<p>Drawing a histogram of these data will allow us to see how undulation rates are distributed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(snakeData$undulationRateHz, <span class="dt">right =</span> <span class="ot">FALSE</span>, <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;gray&quot;</span>, <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="fl">0.8</span>,<span class="fl">2.2</span>,<span class="dt">by=</span><span class="fl">0.2</span>), <span class="dt">xlab =</span> <span class="st">&quot;Undulation rate (Hz)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Frequency&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Distribution of Undulation Rates (in Hz)&quot;</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">3</span>))</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-2-1.png" /><br />
+The code below constructs a similar plot albeit with the <code>ggplot2</code> package</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(snakeData, <span class="kw">aes</span>(undulationRateHz)) +<span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="fl">0.2</span>) +<span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Undulation rate (Hz)&quot;</span>)</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-3-1.png" /><br />
+## Calculating Central Tendency &amp; Variability Calculating the mean, median, variance, and standard deviation is pretty straightforward:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(snakeData$undulationRate, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1.375</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(snakeData$undulationRate, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1.35</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(snakeData$undulationRate, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.105</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(snakeData$undulationRate, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.324037</code></pre>
+<p><strong>Note:</strong> If you have missing values in your data-set then you should run <code>mean(snakeData$undulationRateHz, na.rm=TRUE)</code> etc. for all commands. As a matter of fact R has several commands that will not run unless you specify <code>na.rm=TRUE</code>. Further, if we wanted to we could have named each estimate, for example, <code>mean.ur = mean(snakeData$undulationRate)</code> and so on.</p>
+<p>We have to be a bit careful when calculating the quartiles (<span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q_3\)</span>) and the interquartile range. This is because there are nine ways of calculating these in R. We will use <code>type=5</code> in this class since that is what is used by Whitlock &amp; Schluter. The relevant commands are shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(snakeData$undulationRateHz, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## 25% 75% 
+## 1.2 1.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">IQR</span>(snakeData$undulationRateHz, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.3</code></pre>
+<p><strong>Note:</strong> <span class="math inline">\(IQR = Q_3 - Q_1 = 1.5 - 1.2 = 0.3\)</span> . Specifying <code>probs=c(0.25, 0.75)</code> specifies that we want <span class="math inline">\(Q_1\)</span> and <span class="math inline">\(Q_3\)</span>. If you wanted the median then you’d have to specify a probs value of <code>0.50</code>.</p>
+<div id="the-coefficient-of-variation" class="section level2">
+<h2><span class="header-section-number">1.1</span> The Coefficient of Variation</h2>
+<p>The Coefficient of Variation tells us something about how a variable is distributed about its mean. Given that it is a ratio, the higher is the coefficient of variation the more dispersed are the values of the variable. Why is it a useful measure if we have others to choose from? Because it is not influenced by the units of measurement. For example, if you are measuring heights in inches and calculate the variance and standard deviation, then convert height into centimeters and recompute the variance and standard deviation, the two sets of values will differ a good bit (see below):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">height.in =<span class="st"> </span><span class="kw">c</span>(<span class="dv">65</span>, <span class="dv">72</span>, <span class="dv">77</span>, <span class="dv">60</span>, <span class="dv">58</span>)
+<span class="kw">mean</span>(height.in) <span class="co"># No missing values so na.rm=TRUE not specified</span></code></pre></div>
+<pre><code>## [1] 66.4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(height.in) <span class="co"># No missing values so na.rm=TRUE not specified</span></code></pre></div>
+<pre><code>## [1] 8.018728</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">height.cm =<span class="st"> </span>height.in *<span class="st"> </span><span class="fl">2.54</span>
+<span class="kw">mean</span>(height.cm) <span class="co"># No missing values so na.rm=TRUE not specified</span></code></pre></div>
+<pre><code>## [1] 168.656</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(height.cm) <span class="co"># No missing values so na.rm=TRUE not specified</span></code></pre></div>
+<pre><code>## [1] 20.36757</code></pre>
+<p>Now suddenly it seems as if there is more variability when height is measured in centimeters, but this is because of the units of measurement being used! If we now calculate the coefficient of variation for height in inches and then for height in centimeters we get identical estimates of how much variation there is in the heights of these individuals:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cov.in =<span class="st"> </span>(<span class="kw">sd</span>(height.in) /<span class="st"> </span><span class="kw">mean</span>(height.in)) *<span class="st"> </span><span class="dv">100</span>
+cov.in</code></pre></div>
+<pre><code>## [1] 12.0764</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cov.cm =<span class="st"> </span>(<span class="kw">sd</span>(height.cm) /<span class="st"> </span><span class="kw">mean</span>(height.cm)) *<span class="st"> </span><span class="dv">100</span>
+cov.cm</code></pre></div>
+<pre><code>## [1] 12.0764</code></pre>
+<p>Now calculating the coefficient of variation for the gliding snakes data-set:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">100</span> *<span class="st"> </span><span class="kw">sd</span>(snakeData$undulationRate)/<span class="kw">mean</span>(snakeData$undulationRate)</code></pre></div>
+<pre><code>## [1] 23.56633</code></pre>
+</div>
+</div>
+<div id="working-with-grouped-data" class="section level1">
+<h1><span class="header-section-number">2</span> Working with Grouped Data</h1>
+<p>For this exercise we’ll replicate the in-text example that uses the number of convictions data-set (see below):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">convictionsFreq =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter03/chap03t1_2ConvictionsFreq.csv&quot;</span>))
+<span class="kw">head</span>(convictionsFreq)</code></pre></div>
+<pre><code>##   convictions frequency
+## 1           0       265
+## 2           1        49
+## 3           2        21
+## 4           3        19
+## 5           4        10
+## 6           5        10</code></pre>
+<p>Notice the format of the data … it is given to us as a frequency table. Not a problem so long as we understand what we are looking at. In brief, 265 boys had no convictions, 49 had 1 conviction, and so on. We can expand the data into its long (or raw) form as shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">convictions =<span class="st"> </span><span class="kw">rep</span>(convictionsFreq$convictions, convictionsFreq$frequency)
+<span class="kw">head</span>(convictions)</code></pre></div>
+<pre><code>## [1] 0 0 0 0 0 0</code></pre>
+<p>Now the calculations can commence:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(convictions, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1.126582</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(convictions, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(convictions, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 2.456562</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(convictions, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 6.034698</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(convictions, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## 25% 75% 
+##   0   1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">IQR</span>(convictions, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">( <span class="kw">sd</span>(convictions) /<span class="st"> </span><span class="kw">mean</span>(convictions) ) *<span class="st"> </span><span class="dv">100</span></code></pre></div>
+<pre><code>## [1] 218.0544</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.c =<span class="st"> </span><span class="kw">table</span>(convictions); tab.c</code></pre></div>
+<pre><code>## convictions
+##   0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
+## 265  49  21  19  10  10   2   2   4   2   1   4   3   1   2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(tab.c, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">300</span>), <span class="dt">xlab=</span><span class="st">&quot;Number of Convictions&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-11-1.png" /><br />
+## The Speeds of Male Tidarren spiders (pre- and post-amputation)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">spiderData =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter03/chap03e2SpiderAmputation.csv&quot;</span>))
+<span class="kw">head</span>(spiderData)</code></pre></div>
+<pre><code>##   spider speed treatment
+## 1      1  1.25    before
+## 2      2  2.94    before
+## 3      3  2.38    before
+## 4      4  3.09    before
+## 5      5  3.41    before
+## 6      6  3.00    before</code></pre>
+<p><strong>Note:</strong> The two variables of interest are <code>speed</code> and <code>treatment</code>. We can start by constructing histograms of speeds before and after amputation. We will then look at a different graphic … the <code>boxplot</code>, an extremely useful plot because it conveys a lot of information very simply. First the histograms</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lattice)
+<span class="kw">histogram</span>(~<span class="st"> </span>speed |<span class="st"> </span>treatment, <span class="dt">data=</span>spiderData, <span class="dt">layout=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">type=</span><span class="kw">c</span>(<span class="st">&quot;count&quot;</span>))</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-13-1.png" /><br />
+Now the box-plots:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(speed ~<span class="st"> </span>treatment, <span class="dt">data=</span>spiderData, <span class="dt">horizontal=</span><span class="ot">TRUE</span>, <span class="dt">ylab=</span><span class="st">&quot;Amputation Treatment&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Speed (cm/s)&quot;</span>, <span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-14-1.png" /><br />
+For each group the boxplot maps a few statistics. First, the dark line inside each box is the Median for the group. Clearly the median speed is higher for the post-amputation group than for the pre-amputation group. The edges of the gray boxes reflect the first and third quartiles for each group; <span class="math inline">\(Q_1\)</span> is to the left of the Median and <span class="math inline">\(Q_3\)</span> is to the right of the Median. The “whiskers” go out to the minimum and maximum values.</p>
+<p>If a distribution is symmetric then the box should be equally wide either side of the Median and the whiskers should be of similar length on either side of the box. If you see the plot looking stretched out on one side then that tells us it is skewed towards this side. For instance, see the stretch to the right for the “after”&quot; group; these data are positively skewed (aka skewed right). For the “before” group we see the stretch to the left; this group’s speeds are negatively skewed (i.e. skewed left).</p>
+<p>We also see a lone dot at the lower extreme of the plot for the “before” group. This is an <strong>outlier</strong> … any data point that is smaller than <span class="math inline">\(Q_1 - (1.5 \times IQR)\)</span> or larger than <span class="math inline">\(Q_3 + (1.5 \times IQR)\)</span>. An outlier is essentially an extremely unusual value.</p>
+<p>We will now extract and save the before-amputation data using the <code>subset</code> switch. We will then repeat this exercise for the after-amputation data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">speedBefore =<span class="st"> </span><span class="kw">subset</span>(spiderData, treatment ==<span class="st"> &quot;before&quot;</span>) 
+speedBefore</code></pre></div>
+<pre><code>##    spider speed treatment
+## 1       1  1.25    before
+## 2       2  2.94    before
+## 3       3  2.38    before
+## 4       4  3.09    before
+## 5       5  3.41    before
+## 6       6  3.00    before
+## 7       7  2.31    before
+## 8       8  2.93    before
+## 9       9  2.98    before
+## 10     10  3.55    before
+## 11     11  2.84    before
+## 12     12  1.64    before
+## 13     13  3.22    before
+## 14     14  2.87    before
+## 15     15  2.37    before
+## 16     16  1.91    before</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">speedAfter =<span class="st"> </span><span class="kw">subset</span>(spiderData, treatment ==<span class="st"> &quot;after&quot;</span>) 
+speedAfter</code></pre></div>
+<pre><code>##    spider speed treatment
+## 17      1  2.40     after
+## 18      2  3.50     after
+## 19      3  4.49     after
+## 20      4  3.17     after
+## 21      5  5.26     after
+## 22      6  3.22     after
+## 23      7  2.32     after
+## 24      8  3.31     after
+## 25      9  3.70     after
+## 26     10  4.70     after
+## 27     11  4.94     after
+## 28     12  5.06     after
+## 29     13  3.22     after
+## 30     14  3.52     after
+## 31     15  5.45     after
+## 32     16  3.40     after</code></pre>
+<p>Now we can calculate the mean, median, variance, standard deviation, quartiles, and the interquartile range for each group.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(speedBefore$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>); <span class="kw">mean</span>(speedAfter$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 2.668125</code></pre>
+<pre><code>## [1] 3.85375</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(speedBefore$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>); <span class="kw">median</span>(speedAfter$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 2.9</code></pre>
+<pre><code>## [1] 3.51</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(speedBefore$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>); <span class="kw">var</span>(speedAfter$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.4115896</code></pre>
+<pre><code>## [1] 0.9853183</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(speedBefore$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>); <span class="kw">sd</span>(speedAfter$speed, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.6415525</code></pre>
+<pre><code>## [1] 0.992632</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(speedBefore$speed, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>##   25%   75% 
+## 2.340 3.045</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(speedAfter$speed, <span class="dt">probs=</span><span class="kw">c</span>(<span class="fl">0.25</span>, <span class="fl">0.75</span>), <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>##  25%  75% 
+## 3.22 4.82</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">IQR</span>(speedBefore$speed, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 0.705</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">IQR</span>(speedAfter$speed, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1.6</code></pre>
+<p>Just for completeness’ sake, multiply the IQR of each group by 1.5</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="fl">1.5</span> *<span class="st"> </span><span class="kw">IQR</span>(speedBefore$speed, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 1.0575</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="fl">1.5</span> *<span class="st"> </span><span class="kw">IQR</span>(speedAfter$speed, <span class="dt">type=</span><span class="dv">5</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] 2.4</code></pre>
+<p>Now subtract 1.0575 from <span class="math inline">\(Q_1\)</span> of the “before” group</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="fl">2.340</span> -<span class="st"> </span><span class="fl">1.0575</span></code></pre></div>
+<pre><code>## [1] 1.2825</code></pre>
+<p>This yields a value of <span class="math inline">\(1.2825\)</span> … Spider 1 in the “before” group has a speed of <span class="math inline">\(1.25\)</span> and hence is flagged as an outlier in the boxplot.</p>
+</div>
+<div id="cumulative-frequency-distributions" class="section level1">
+<h1><span class="header-section-number">3</span> Cumulative Frequency Distributions</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>( <span class="kw">ecdf</span>(speedBefore$speed), <span class="dt">verticals =</span> <span class="ot">TRUE</span>,  
+  <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">do.points =</span> <span class="ot">FALSE</span>,
+    <span class="dt">ylab =</span> <span class="st">&quot;Cumulative relative frequency&quot;</span>, 
+    <span class="dt">xlab =</span> <span class="st">&quot;Running speed before amputation (cm/s)&quot;</span>)
+<span class="kw">plot</span>( <span class="kw">ecdf</span>(speedAfter$speed), <span class="dt">verticals =</span> <span class="ot">TRUE</span>,  
+  <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">do.points =</span> <span class="ot">FALSE</span>,
+    <span class="dt">ylab =</span> <span class="st">&quot;Cumulative relative frequency&quot;</span>, 
+    <span class="dt">xlab =</span> <span class="st">&quot;Running speed after amputation (cm/s)&quot;</span> )</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-19-1.png" /><br />
+</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dev.off</span>()</code></pre></div>
+<pre><code>## null device 
+##           1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p>You can pick any point on the vertical axis, connect a straight line to the plotted line, then drop a perpendicular to the x-axis … and you’ll be able to say “so-and-so proportion of the spider had speeds below the x-value”. Out of sheer curiosity, pick <span class="math inline">\(0.5\)</span> on the vertical axis of both groups and draw the straight line to the plot. Now read the approximate running speed that would result if you dropped a perpendicular to the x-axis. What this says is that 50% of spiders in the before group had speeds of at most 2.9 while 50% of spiders in the after group had speeds of at most 3.51.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>( <span class="kw">ecdf</span>(speedBefore$speed), <span class="dt">verticals =</span> <span class="ot">TRUE</span>,  
+  <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">do.points =</span> <span class="ot">FALSE</span>,
+  <span class="dt">ylab =</span> <span class="st">&quot;Cumulative relative frequency&quot;</span>, 
+    <span class="dt">xlab =</span> <span class="st">&quot;Running speed before amputation (cm/s)&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.5</span>)
+<span class="kw">plot</span>( <span class="kw">ecdf</span>(speedAfter$speed), <span class="dt">verticals =</span> <span class="ot">TRUE</span>,  
+  <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">do.points =</span> <span class="ot">FALSE</span>,
+    <span class="dt">ylab =</span> <span class="st">&quot;Cumulative relative frequency&quot;</span>, 
+    <span class="dt">xlab =</span> <span class="st">&quot;Running speed after amputation (cm/s)&quot;</span> )
+<span class="kw">abline</span>(<span class="dt">h=</span><span class="fl">0.5</span>)</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-20-1.png" /><br />
+</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dev.off</span>()</code></pre></div>
+<pre><code>## null device 
+##           1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p>You don’t have to pick the <span class="math inline">\(0.5\)</span> point; you could have picked <span class="math inline">\(0.9\)</span> and said “90% of spiders in group so-and-so had speeds of so much or less”, so on and so forth.</p>
+</div>
+<div id="what-if-i-have-three-or-more-groups" class="section level1">
+<h1><span class="header-section-number">4</span> What if I have Three or More Groups?</h1>
+<p>The <code>psych</code> package (install it before you use it) is very handy here to calculate a number of statistics. We will see it in use with the data-set on sticklebacks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sticklebackData =<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">url</span>(<span class="st">&quot;http://whitlockschluter.zoology.ubc.ca/wp-content/data/chapter03/chap03e3SticklebackPlates.csv&quot;</span>))
+<span class="kw">head</span>(sticklebackData)</code></pre></div>
+<pre><code>##     id plates genotype
+## 1  4-1     11       mm
+## 2  4-2     63       Mm
+## 3  4-4     22       Mm
+## 4  4-5     10       Mm
+## 5 4-10     14       mm
+## 6 4-12     11       mm</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
+<span class="kw">describeBy</span>(sticklebackData$plates, <span class="dt">group=</span>sticklebackData$genotype, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## group: mm
+##   vars  n  mean   sd median trimmed  mad min max range skew kurtosis   se
+## 1    1 88 11.67 3.57     11   11.42 2.97   6  37    31  4.2    26.92 0.38
+## -------------------------------------------------------- 
+## group: Mm
+##   vars   n  mean    sd median trimmed  mad min max range  skew kurtosis
+## 1    1 174 50.38 15.15     59   52.52 7.41  10  68    58 -1.06    -0.18
+##     se
+## 1 1.15
+## -------------------------------------------------------- 
+## group: MM
+##   vars  n  mean   sd median trimmed  mad min max range  skew kurtosis   se
+## 1    1 82 62.78 3.41     63   63.21 1.48  42  69    27 -3.55    17.62 0.38</code></pre>
+<p>Histograms are easily drawn as well:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">histogram</span>(~<span class="st"> </span>plates |<span class="st"> </span>genotype, <span class="dt">data=</span>sticklebackData, <span class="dt">layout=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">type=</span><span class="st">&quot;count&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Number of Plates&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>)</code></pre></div>
+<p><img src="Chapter03_files/figure-html/unnamed-chunk-22-1.png" /><br />
+Again, in a very marked fashion the <span class="math inline">\(MM\)</span> group has the most number of plates on average.</p>
+<p>Constructing a table of frequencies and proportions of the stickleback genotypes is easy as well.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.s1 =<span class="st"> </span><span class="kw">table</span>(sticklebackData$genotype, <span class="dt">dnn =</span> <span class="st">&quot;genotype&quot;</span>)
+tab.s1</code></pre></div>
+<pre><code>## genotype
+##  mm  Mm  MM 
+##  88 174  82</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.s2 =<span class="st"> </span><span class="kw">addmargins</span>(tab.s1)
+tab.s2</code></pre></div>
+<pre><code>## genotype
+##  mm  Mm  MM Sum 
+##  88 174  82 344</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sticklebackFreq =<span class="st"> </span><span class="kw">data.frame</span>(tab.s2)
+sticklebackFreq</code></pre></div>
+<pre><code>##   genotype Freq
+## 1       mm   88
+## 2       Mm  174
+## 3       MM   82
+## 4      Sum  344</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.sprop1 =<span class="st"> </span><span class="kw">prop.table</span>(tab.s1)
+tab.sprop1</code></pre></div>
+<pre><code>## genotype
+##        mm        Mm        MM 
+## 0.2558140 0.5058140 0.2383721</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tab.sprop2 =<span class="st"> </span><span class="kw">addmargins</span>(tab.sprop1)
+sticklebackRelFreq =<span class="st"> </span><span class="kw">data.frame</span>(tab.sprop2)
+sticklebackRelFreq</code></pre></div>
+<pre><code>##   genotype      Freq
+## 1       mm 0.2558140
+## 2       Mm 0.5058140
+## 3       MM 0.2383721
+## 4      Sum 1.0000000</code></pre>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
