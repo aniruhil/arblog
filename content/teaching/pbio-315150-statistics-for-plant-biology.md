@@ -16,7 +16,7 @@ tags = ["Teaching"]
 | Chapter       | Slides                             | Lab                                |
 | ------------- | --------------------------------   | -------------                      |
 | Chapter 1     | [slides](/teaching/pbio/ch1.pdf)   |                                    |
-| Chapter 2     | [slides](/teaching/pbio/ch2.pdf)   | [lab 1](/teaching/pbio/)           |
+| Chapter 2     | [slides](/teaching/pbio/ch2.pdf)   | [lab 1](/teaching/pbio/Lab01.html)           |
 | Chapter 3     | [slides](/teaching/pbio/ch3.pdf)   | [html]()                           |
 | Chapter 4     | [slides](/teaching/pbio/ch4.pdf)   | [html]()                           |
 | Chapter 5     | [slides](/teaching/pbio/ch5.pdf)   | [html]()                           |
