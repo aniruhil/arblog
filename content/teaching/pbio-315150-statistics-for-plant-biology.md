@@ -11,28 +11,29 @@ tags = ["Teaching"]
 
 +++
 
-- [Syllabus (Spring 2016)](/static/teaching/pbio/syllabus2016.pdf) 
+- [Syllabus (Spring 2016)](https://aniruhil.org/teaching/pbio/syllabus2016.pdf) 
+- Note: Lab files do not necessarily correspond to each chapter so be warned.
 
-| Chapter       | Slides                           | Lab                                |
-| ------------- | -------------------------------- | -------------                      |
-| Chapter 1     | [slides](/static/teaching/pbio/ch1.pdf)   |                                    |
-| Chapter 2     | [slides](/static/teaching/pbio/ch2.pdf)   | [lab 1](/static/teaching/pbio/Lab01.html)   |
-| Chapter 3     | [slides](/static/teaching/pbio/ch3.pdf)   | [html]()                           |
-| Chapter 4     | [slides](/static/teaching/pbio/ch4.pdf)   | [html]()                           |
-| Chapter 5     | [slides](/static/teaching/pbio/ch5.pdf)   | [html]()                           |
-| Chapter 6     | [slides](/static/teaching/pbio/ch6.pdf)   | [html]()                           |
-| Chapter 7     | [slides](/static/teaching/pbio/ch7.pdf)   | [html]()                           |
-| Chapter 8     | [slides](/static/teaching/pbio/ch8.pdf)   | [html]()                           |
-| Chapter 9     | [slides](/static/teaching/pbio/ch9.pdf)   | [html]()                           |
-| Chapter 10    | [slides](/static/teaching/pbio/ch10.pdf)  | [html]()                           |
-| Chapter 11    | [slides](/static/teaching/pbio/ch11.pdf)  | [html]()                           |
-| Chapter 12    | [slides](/static/teaching/pbio/ch12.pdf)  | [html]()                           |
-| Chapter 13    | [slides](/static/teaching/pbio/ch13.pdf)  | [html]()                           |
-| Chapter 14    | [slides](/static/teaching/pbio/ch14.pdf)  | [html]()                           |
-| Chapter 15a   | [slides](/static/teaching/pbio/ch15a.pdf) | [html]()                           |
-| Chapter 15b   | [slides](/static/teaching/pbio/ch15b.pdf) | [html]()                           |
-| Chapter 16    | [slides](/static/teaching/pbio/ch16.pdf)  | [html]()                           |
-| Chapter 17    | [slides](/static/teaching/pbio/ch17.pdf)  | [html]()                           |
+| Slides                           | Lab                                |
+| -------------------------------- | -------------                      |
+| [Chapter 1](https://aniruhil.org/teaching/pbio/slides/ch1.pdf)   | [lab 1](https://aniruhil.org/teaching/pbio/labs/Lab01.html) |
+| [Chapter 2](https://aniruhil.org/teaching/pbio/slides/ch2.pdf)   | [lab 2](https://aniruhil.org/teaching/pbio/labs/Lab02.html) |
+| [Chapter 3](https://aniruhil.org/teaching/pbio/slides/ch3.pdf)   | [lab 3](https://aniruhil.org/teaching/pbio/labs/Lab03.html) |
+| [Chapter 4](https://aniruhil.org/teaching/pbio/slides/ch4.pdf)   | [lab 4](https://aniruhil.org/teaching/pbio/labs/Lab04.html) |
+| [Chapter 5](https://aniruhil.org/teaching/pbio/slides/ch5.pdf)   | [lab 5](https://aniruhil.org/teaching/pbio/labs/Lab05.html) |
+| [Chapter 6](https://aniruhil.org/teaching/pbio/slides/ch6.pdf)   | [lab 6](https://aniruhil.org/teaching/pbio/labs/Lab06.html) |
+| [Chapter 7](https://aniruhil.org/teaching/pbio/slides/ch7.pdf)   | [lab 7](https://aniruhil.org/teaching/pbio/labs/Lab07.html) |
+| [Chapter 8](https://aniruhil.org/teaching/pbio/slides/ch8.pdf)   | [lab 8](https://aniruhil.org/teaching/pbio/labs/Lab08.html) |
+| [Chapter 9](https://aniruhil.org/teaching/pbio/slides/ch9.pdf)   |                        |
+| [Chapter 10](https://aniruhil.org/teaching/pbio/slides/ch10.pdf)  |                       |
+| [Chapter 11](https://aniruhil.org/teaching/pbio/slides/ch11.pdf)  |                       |
+| [Chapter 12](https://aniruhil.org/teaching/pbio/slides/ch12.pdf)  |                       |
+| [Chapter 13](https://aniruhil.org/teaching/pbio/slides/ch13.pdf)  |                       |
+| [Chapter 14](https://aniruhil.org/teaching/pbio/slides/ch14.pdf)  |                       |
+| [Chapter 15a](https://aniruhil.org/teaching/pbio/slides/ch15a.pdf) |                      |
+| [Chapter 15b](https://aniruhil.org/teaching/pbio/slides/ch15b.pdf) |                      |
+| [Chapter 16](https://aniruhil.org/teaching/pbio/slides/ch16.pdf)  |                       |
+| [Chapter 17](https://aniruhil.org/teaching/pbio/slides/ch17.pdf)  |                       |
 
  
 
