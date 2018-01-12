@@ -1,0 +1,129 @@
+---
+title: In the Laps of the Himalayan Gods
+author: Ani Ruhil
+date: '2018-01-12'
+slug: testing-rmd-to-push
+categories:
+  - R
+tags:
+  - R Markdown
+  - plot
+  - Himalayas 
+---
+
+<script src="https://use.fontawesome.com/cc13b60851.js"></script>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, echo = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60, keep.blank.line = FALSE), fig.align = "center")
+```
+
+
+<div align = "center">
+![Tenzing Norgay and Edmund Hillary photographed after their return from the successful climb. Bettmann / Contributor / Getty Images](https://fthmb.tqn.com/E_5KO6ogD9Y4WQqEZ_w82JZPRKg=/768x0/filters:no_upscale()/Tenzing-Norgay-and-Edmund-Hillary-58c199a73df78c353c2a70bd.jpg)
+</div>
+
+> “You perfect a sport when you can do all of these things with less stuff. The most impressive ascent of Everest was by the Swedish guy who bicycled from Stockholm to Kathmandu and then soloed Everest and bicycled back to Stockholm. That is cool, as opposed to this huge multinational guided thing with computers and internet cafes at the base of Everest.” – Yvon Chouinard 
+
+## The Himalayas 
+I have no clue why I have always been fascinated by mountaineers and mountaineering. I have my own half-baked theories of course, and the winner might be the one/two years we lived in [Kurseong](https://en.wikipedia.org/wiki/Kurseong). If you left the cottage and crested the slope that lead to the main road connecting this hill-town to the rest of the world, and then closed your eyes and turned around, on a clear day you could see [Kanchenjunga](https://en.wikipedia.org/wiki/Kangchenjunga) -- The Five Treasures of Snows. I had never seen anything so majestic. I ended up reading about Tenzing Norgay and Edmund Hillary summiting [Mt. Everest](http://www.everest1953.co.uk/naming-mount-everest), a few other pieces on Annapurna, and of course, much later "Into Thin Air". On another continent, in an outlet mall in Kittery (ME) I ran into [Ed Webster](https://media.pri.org/s3fs-public/styles/story_main/public/migration/PriMigrationsDamanticWordpressAttachmentsImagesMigration/www.theworld.org/wp-content/uploads/RTR1IO5O-e1369851902488.jpg?itok=VyEL7QkU) and walked away with a signed copy of his book. 
+
+For the last few years, rattling around inside my head was this idea of writing more with data, and along came `blogdown`, leaving me with no excuse to dither. But what should I start with? A crazy idea was born when the New York Times' Sunday Edition of December 18, 2017, with the Sports section led by [Deliverance from 27,000 Feet](https://goo.gl/hEB56o). I couldn't shake off various elements of the story but most of all that here were not so well-off Bengali men and women, from Kolkata (West Bengal, India), obsessed with Chomolungma. I wanted to know: What more can one discover about the climbing fraternity, about these mountain ranges? I recalled poring over the [The Himalayan Database](http://www.himalayandatabase.com) a year or so ago as it was being updated, and lo and behold, a few file downloads later here we are. 
+
+## Mapping Peaks
+Himalayas, the great mountain range that means so much to the people of Asia, particularly those who live in its southern alluvial plains and the inhabitants of the Tibetan plateau to the north. Home to over 100 peaks that rise to 7,300 meters (24,000 feet) or more, these are the mountains that issue a siren call to mountaineers around the world. Mt. Everest, the queen herself, issues an unparalleled draw that experienced climbers and, of late, fee-paying dilettantes, find unable to ignore. 
+
+How does one start to fathom what these ranges mean to us? I don't pretend to know. What I do know is that a good story would build the narrative piece by piece and what better way to start than by geolocating these peaks. Luckily there exists a database of all known peaks, maintained by the [Alpine Club (UK)](http://www.alpine-club.org.uk/hi/about-hi.htm), with "information on 2,850 peaks over 6000 meters in Himalaya, Karakoram, Tibet, Hindu Kush, China." So not just the Himalayas but that is okay. 
+ 
+```{r alpuk01}
+load("./data/alpuk.RData")
+library(stringr)
+alpuk$Climbed = str_trim(alpuk$Climbed, side = "both")
+alpuk$ClimbStatus = ifelse(alpuk$Climbed == "y", "Yes", "No/Unknown")
+alpuk$ClimbStatus = factor(alpuk$ClimbStatus)
+```
+
+
+```{r alpuk02, echo=FALSE}
+alpuk$lat0 = gsub('\'', '.', alpuk$Latitude)
+alpuk$lat1 = gsub('\"', '', alpuk$lat0)
+alpuk$lat2 = gsub('o', ' ', alpuk$lat1)
+
+alpuk$long0 = gsub('\'', '.', alpuk$Longitude)
+alpuk$long1 = gsub('\"', '', alpuk$long0)
+alpuk$long2 = gsub('o', ' ', alpuk$long1)
+
+alpuk$lat = measurements::conv_unit(alpuk$lat2, from = 'deg_dec_min', to = 'dec_deg')
+alpuk$long = measurements::conv_unit(alpuk$long2, from = 'deg_dec_min', to = 'dec_deg')
+
+alpuk$lat = as.numeric(alpuk$lat)
+alpuk$long = as.numeric(alpuk$long)
+```
+
+The same peak may be known by different names, and several peaks on record will, at times, show the same latitude/longitude. For mapping purposes I therefore reduced the dataframe to contain a single observation per peak, based on the preferred name, height, and latitude/longitude.  
+
+```{r peaksdf}
+peaks.df = alpuk[!duplicated(alpuk[c(1, 3, 5:6)]), ]
+```
+
+A quick map lead to a frantic hunt for Mt. Everest and so I dropped a marker for Mt. Everest. The peaks in blue have had at least one successful ascent but this information was missing for the peaks in red.  
+
+```{r leaf01, dev='svg'}
+library(leaflet)
+
+icon.tent <- awesomeIcons(icon= 'glyphicon-tent', markerColor = '',
+                                  iconColor = 'black', library = 'glyphicon',
+                                  squareMarker =  TRUE)
+
+pal = colorFactor(c("red", "blue"), domain = peaks.df$ClimbStatus)
+
+m <- leaflet(peaks.df, width = "95%") %>% 
+  addProviderTiles(providers$Esri.WorldImagery) %>% 
+  setView(lng = 80.92503, lat = 32.5516, zoom = 4)
+
+m %>% addCircleMarkers(lng = peaks.df$long, lat = peaks.df$lat, 
+                 popup = (peaks.df$PNAME), stroke = FALSE, 
+                 color = ~pal(peaks.df$ClimbStatus), fillOpacity = 0.3, 
+                 radius = ~ifelse(peaks.df$ClimbStatus == "No/Unknown", 1, 2)) %>% 
+  addAwesomeMarkers(lat = 27.97467, lng = 86.91867, icon = icon.tent,
+             popup = c("Chomolungma/Qomolungma: Goddess of the Valley, Sagarmatha: Peak of Heaven, Mt. Everest (should rightfully be Mt. Sikhdar but let us not quibble"))
+```
+
+Ideally the dataframe and the map would be trimmed to include only the Himalayan mountain range but that will take some effort because peak names in the Alpine database (the geocoding source file) are very often different from the same peak's listed name in the Himalayan database (that has no geocodes). Peak heights tend to differ as well (apparently a common problem), although by small amounts, and so joining the two is on my to-do list. What I could do at the moment, however, is restrict my focus to the 14 [8,000ers](http://www.everestnews.com/8000.htm), displayed in the datatable below and then mapped. Note that the blue circle marker flags Mt. Everest's general location since the peak tends to be obscured by Lhotse until you zoom in. 
+
+
+```{r dt}
+library(dplyr)
+peaks.a8 = peaks.df %>% 
+  filter(HeightM > 8000 & PNAME %in% c("Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri", "Manaslu", "Nanga Parbat", "Annapurna", "Gasherbrum", "Broad Pk", "Shishapangma", "Gasherbrum II")) %>%
+  arrange(-HeightM) 
+
+DT::datatable(peaks.a8[, c(2, 4:7)], 
+              class = 'cell-border stripe', 
+              rownames = FALSE, 
+              extensions = 'Scroller',
+              options = list(digits = 0, scrollY = 200, scroller = TRUE, dom = 't')
+              )
+```
+
+
+```{r leaf02, dev='svg'}
+m <- leaflet(peaks.a8, width = "95%") %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>% 
+  setView(lng = 80.92503, lat = 32.5516, zoom = 5)
+
+m %>% addAwesomeMarkers(lat = peaks.a8$lat, lng = peaks.a8$long, 
+                        icon = icon.tent,
+                        popup = ~(peaks.a8$Name)) %>% 
+  addCircleMarkers(lng = 86.91867, lat = 27.97467, 
+                 popup = c("Mt. Everest"), 
+                 stroke = TRUE, fillOpacity = 0.1, radius = 16, 
+                 color = "blue")
+```
+
+Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. 
+
+
+
+
+
+
