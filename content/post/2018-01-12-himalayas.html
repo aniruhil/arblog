@@ -89,7 +89,274 @@ peaks.a8 = peaks.df %&gt;% filter(HeightM &gt; 8000 &amp; PNAME %in% c(&quot;Eve
     &quot;Manaslu&quot;, &quot;Nanga Parbat&quot;, &quot;Annapurna&quot;, &quot;Gasherbrum&quot;, &quot;Broad Pk&quot;, 
     &quot;Shishapangma&quot;, &quot;Gasherbrum II&quot;)) %&gt;% arrange(-HeightM)
 
-DT::datatable(peaks.a8[, c(2, 4:7)], class = &quot;cell-border stripe&quot;, 
+library(kableExtra)
+knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = &quot;The 14 8000ers&quot;, 
+    &quot;html&quot;) %&gt;% kable_styling(full_width = FALSE, font_size = 10)</code></pre>
+<table class="table" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:dt">Table 1: </span>The 14 8000ers
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Name
+</th>
+<th style="text-align:right;">
+HeightM
+</th>
+<th style="text-align:right;">
+HeightFt
+</th>
+<th style="text-align:left;">
+Latitude
+</th>
+<th style="text-align:left;">
+Longitude
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Everest
+</td>
+<td style="text-align:right;">
+8848
+</td>
+<td style="text-align:right;">
+29029
+</td>
+<td style="text-align:left;">
+27o58’48&quot;
+</td>
+<td style="text-align:left;">
+86o55’12&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K2
+</td>
+<td style="text-align:right;">
+8611
+</td>
+<td style="text-align:right;">
+28251
+</td>
+<td style="text-align:left;">
+35o52’48&quot;
+</td>
+<td style="text-align:left;">
+76o30’36&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Kangchenjunga
+</td>
+<td style="text-align:right;">
+8586
+</td>
+<td style="text-align:right;">
+28169
+</td>
+<td style="text-align:left;">
+27o42’00&quot;
+</td>
+<td style="text-align:left;">
+88o09’00&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lhotse
+</td>
+<td style="text-align:right;">
+8516
+</td>
+<td style="text-align:right;">
+27940
+</td>
+<td style="text-align:left;">
+27o57’36&quot;
+</td>
+<td style="text-align:left;">
+86o55’48&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Makalu
+</td>
+<td style="text-align:right;">
+8463
+</td>
+<td style="text-align:right;">
+27766
+</td>
+<td style="text-align:left;">
+27o52’48&quot;
+</td>
+<td style="text-align:left;">
+87o04’48&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cho Oyu
+</td>
+<td style="text-align:right;">
+8201
+</td>
+<td style="text-align:right;">
+26906
+</td>
+<td style="text-align:left;">
+28o05’24&quot;
+</td>
+<td style="text-align:left;">
+86o39’36&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dhaulagiri
+</td>
+<td style="text-align:right;">
+8167
+</td>
+<td style="text-align:right;">
+26795
+</td>
+<td style="text-align:left;">
+28o41’24&quot;
+</td>
+<td style="text-align:left;">
+83o29’24&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Manaslu
+</td>
+<td style="text-align:right;">
+8163
+</td>
+<td style="text-align:right;">
+26782
+</td>
+<td style="text-align:left;">
+28o32’24&quot;
+</td>
+<td style="text-align:left;">
+84o33’36&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nanga Parbat
+</td>
+<td style="text-align:right;">
+8126
+</td>
+<td style="text-align:right;">
+26660
+</td>
+<td style="text-align:left;">
+35o13’48&quot;
+</td>
+<td style="text-align:left;">
+74o35’24&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Annapurna
+</td>
+<td style="text-align:right;">
+8091
+</td>
+<td style="text-align:right;">
+26545
+</td>
+<td style="text-align:left;">
+28o35’24&quot;
+</td>
+<td style="text-align:left;">
+83o49’12&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gasherbrum
+</td>
+<td style="text-align:right;">
+8068
+</td>
+<td style="text-align:right;">
+26470
+</td>
+<td style="text-align:left;">
+35o43’48&quot;
+</td>
+<td style="text-align:left;">
+76o41’24&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Broad Pk
+</td>
+<td style="text-align:right;">
+8047
+</td>
+<td style="text-align:right;">
+26401
+</td>
+<td style="text-align:left;">
+35o48’00&quot;
+</td>
+<td style="text-align:left;">
+76o34’12&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Shishapangma
+</td>
+<td style="text-align:right;">
+8046
+</td>
+<td style="text-align:right;">
+26398
+</td>
+<td style="text-align:left;">
+28o21’00&quot;
+</td>
+<td style="text-align:left;">
+85o46’48&quot;
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gasherbrum II
+</td>
+<td style="text-align:right;">
+8035
+</td>
+<td style="text-align:right;">
+26362
+</td>
+<td style="text-align:left;">
+35o45’00&quot;
+</td>
+<td style="text-align:left;">
+76o39’00&quot;
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>DT::datatable(peaks.a8[, c(2, 4:7)], class = &quot;cell-border stripe&quot;, 
     rownames = FALSE, extensions = &quot;Scroller&quot;, options = list(digits = 0, 
         scrollY = 200, scroller = TRUE, dom = &quot;t&quot;))</code></pre>
 <div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>

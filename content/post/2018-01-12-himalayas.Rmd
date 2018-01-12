@@ -97,6 +97,9 @@ peaks.a8 = peaks.df %>%
   filter(HeightM > 8000 & PNAME %in% c("Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri", "Manaslu", "Nanga Parbat", "Annapurna", "Gasherbrum", "Broad Pk", "Shishapangma", "Gasherbrum II")) %>%
   arrange(-HeightM) 
 
+library(kableExtra)
+knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers", "html") %>% kable_styling(full_width = FALSE, font_size = 10)
+
 DT::datatable(peaks.a8[, c(2, 4:7)], 
               class = 'cell-border stripe', 
               rownames = FALSE, 
