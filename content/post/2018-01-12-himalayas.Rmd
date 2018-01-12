@@ -11,7 +11,6 @@ tags:
   - Himalayas 
 ---
 
-<script src="https://use.fontawesome.com/cc13b60851.js"></script>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, echo = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60, keep.blank.line = FALSE), fig.align = "center")
@@ -100,12 +99,6 @@ peaks.a8 = peaks.df %>%
 library(kableExtra)
 knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers", "html") %>% kable_styling(full_width = FALSE, font_size = 10)
 
-DT::datatable(peaks.a8[, c(2, 4:7)], 
-              class = 'cell-border stripe', 
-              rownames = FALSE, 
-              extensions = 'Scroller',
-              options = list(digits = 0, scrollY = 200, scroller = TRUE, dom = 't')
-              )
 ```
 
 

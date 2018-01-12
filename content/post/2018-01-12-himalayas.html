@@ -27,18 +27,8 @@ tags:
 <script src="/rmarkdown-libs/leaflet-awesomemarkers/leaflet.awesome-markers.min.js"></script>
 <link href="/rmarkdown-libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
 <script src="/rmarkdown-libs/bootstrap/bootstrap.min.js"></script>
-<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
-<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
-<link href="/rmarkdown-libs/dt-ext-scroller/css/scroller.dataTables.min.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/dt-ext-scroller/js/dataTables.scroller.min.js"></script>
-<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
 
 
-<script src="https://use.fontawesome.com/cc13b60851.js"></script>
 <div align="center">
 <div class="figure">
 <img src="https://fthmb.tqn.com/E_5KO6ogD9Y4WQqEZ_w82JZPRKg=/768x0/filters:no_upscale()/Tenzing-Norgay-and-Edmund-Hillary-58c199a73df78c353c2a70bd.jpg" alt="Tenzing Norgay and Edmund Hillary photographed after their return from the successful climb. Bettmann / Contributor / Getty Images" />
@@ -356,11 +346,6 @@ Gasherbrum II
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>DT::datatable(peaks.a8[, c(2, 4:7)], class = &quot;cell-border stripe&quot;, 
-    rownames = FALSE, extensions = &quot;Scroller&quot;, options = list(digits = 0, 
-        scrollY = 200, scroller = TRUE, dom = &quot;t&quot;))</code></pre>
-<div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2">{"x":{"filter":"none","extensions":["Scroller"],"data":[["Everest","K2","Kangchenjunga","Lhotse","Makalu","Cho Oyu","Dhaulagiri","Manaslu","Nanga Parbat","Annapurna","Gasherbrum","Broad Pk","Shishapangma","Gasherbrum II"],[8848,8611,8586,8516,8463,8201,8167,8163,8126,8091,8068,8047,8046,8035],[29029,28251,28169,27940,27766,26906,26795,26782,26660,26545,26470,26401,26398,26362],["27o58'48\"","35o52'48\"","27o42'00\"","27o57'36\"","27o52'48\"","28o05'24\"","28o41'24\"","28o32'24\"","35o13'48\"","28o35'24\"","35o43'48\"","35o48'00\"","28o21'00\"","35o45'00\""],["86o55'12\"","76o30'36\"","88o09'00\"","86o55'48\"","87o04'48\"","86o39'36\"","83o29'24\"","84o33'36\"","74o35'24\"","83o49'12\"","76o41'24\"","76o34'12\"","85o46'48\"","76o39'00\""]],"container":"<table class=\"cell-border stripe\">\n  <thead>\n    <tr>\n      <th>Name<\/th>\n      <th>HeightM<\/th>\n      <th>HeightFt<\/th>\n      <th>Latitude<\/th>\n      <th>Longitude<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"digits":0,"scrollY":200,"scroller":true,"dom":"t","crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>m &lt;- leaflet(peaks.a8, width = &quot;95%&quot;) %&gt;% addProviderTiles(providers$Esri.WorldImagery) %&gt;% 
     setView(lng = 80.92503, lat = 32.5516, zoom = 5)
 
@@ -368,7 +353,7 @@ m %&gt;% addAwesomeMarkers(lat = peaks.a8$lat, lng = peaks.a8$long,
     icon = icon.tent, popup = ~(peaks.a8$Name)) %&gt;% addCircleMarkers(lng = 86.91867, 
     lat = 27.97467, popup = c(&quot;Mt. Everest&quot;), stroke = TRUE, 
     fillOpacity = 0.1, radius = 16, color = &quot;blue&quot;)</code></pre>
-<div id="htmlwidget-3" style="width:95%;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false}]},{"method":"addAwesomeMarkers","args":[[27.9746666666667,35.8746666666667,27.7,27.956,27.8746666666667,28.0873333333333,28.6873333333333,28.5373333333333,35.2246666666667,28.5873333333333,35.7246666666667,35.8,28.35,35.75],[86.9186666666667,76.506,88.15,86.9246666666667,87.0746666666667,86.656,83.4873333333333,84.556,74.5873333333333,83.8186666666667,76.6873333333333,76.5686666666667,85.7746666666667,76.65],{"icon":"glyphicon-tent","markerColor":"","iconColor":"black","spin":false,"squareMarker":true,"iconRotate":0,"font":"monospace","prefix":"glyphicon"},null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Everest","K2","Kangchenjunga","Lhotse","Makalu","Cho Oyu","Dhaulagiri","Manaslu","Nanga Parbat","Annapurna","Gasherbrum","Broad Pk","Shishapangma","Gasherbrum II"],null,null,null,null,null,null]},{"method":"addCircleMarkers","args":[27.97467,86.91867,16,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.1,"dashArray":null},null,null,"Mt. Everest",null,null,null,null]}],"setView":[[32.5516,80.92503],5,[]],"limits":{"lat":[27.7,35.8746666666667],"lng":[74.5873333333333,88.15]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2" style="width:95%;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["Esri.WorldImagery",null,null,{"errorTileUrl":"","noWrap":false,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false}]},{"method":"addAwesomeMarkers","args":[[27.9746666666667,35.8746666666667,27.7,27.956,27.8746666666667,28.0873333333333,28.6873333333333,28.5373333333333,35.2246666666667,28.5873333333333,35.7246666666667,35.8,28.35,35.75],[86.9186666666667,76.506,88.15,86.9246666666667,87.0746666666667,86.656,83.4873333333333,84.556,74.5873333333333,83.8186666666667,76.6873333333333,76.5686666666667,85.7746666666667,76.65],{"icon":"glyphicon-tent","markerColor":"","iconColor":"black","spin":false,"squareMarker":true,"iconRotate":0,"font":"monospace","prefix":"glyphicon"},null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Everest","K2","Kangchenjunga","Lhotse","Makalu","Cho Oyu","Dhaulagiri","Manaslu","Nanga Parbat","Annapurna","Gasherbrum","Broad Pk","Shishapangma","Gasherbrum II"],null,null,null,null,null,null]},{"method":"addCircleMarkers","args":[27.97467,86.91867,16,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"blue","weight":5,"opacity":0.5,"fill":true,"fillColor":"blue","fillOpacity":0.1,"dashArray":null},null,null,"Mt. Everest",null,null,null,null]}],"setView":[[32.5516,80.92503],5,[]],"limits":{"lat":[27.7,35.8746666666667],"lng":[74.5873333333333,88.15]}},"evals":[],"jsHooks":[]}</script>
 <p>Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I’ll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across.</p>
 </div>
