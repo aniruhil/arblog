@@ -1,16 +1,17 @@
 ---
-title: In the Laps of the Himalayan Gods
+title: The Himalayas
 author: Ani Ruhil
 date: '2018-01-12'
-slug: testing-rmd-to-push
+slug: the-himalayas
 categories:
   - R
+  - Himalayas
 tags:
-  - R Markdown
   - plot
-  - Himalayas 
+  - R Markdown
+  - Leaflet
+  - Mountaineering
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, echo = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60, keep.blank.line = FALSE), fig.align = "center")
@@ -96,9 +97,12 @@ peaks.a8 = peaks.df %>%
   filter(HeightM > 8000 & PNAME %in% c("Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri", "Manaslu", "Nanga Parbat", "Annapurna", "Gasherbrum", "Broad Pk", "Shishapangma", "Gasherbrum II")) %>%
   arrange(-HeightM) 
 
-library(kableExtra)
-knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers", "html") %>% kable_styling(full_width = FALSE, font_size = 10)
-
+DT::datatable(peaks.a8[, c(2, 4:7)], 
+              class = 'cell-border stripe', 
+              rownames = FALSE, 
+              extensions = 'Scroller',
+              options = list(digits = 0, scrollY = 200, scroller = TRUE, dom = 't')
+              )
 ```
 
 
@@ -117,9 +121,5 @@ m %>% addAwesomeMarkers(lat = peaks.a8$lat, lng = peaks.a8$long,
 ```
 
 Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. 
-
-
-
-
 
 
