@@ -11,12 +11,15 @@ tags:
   - R Markdown
   - Leaflet
   - Mountaineering
+output: 
+  html_document: 
+    css: ~/Documents/github/arblog/static/css/blue.css
+fontsize: 12pt    
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, echo = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60, keep.blank.line = FALSE), fig.align = "center")
 ```
-
 
 <div align = "center">
 ![Tenzing Norgay and Edmund Hillary photographed after their return from the successful climb. Bettmann / Contributor / Getty Images](https://fthmb.tqn.com/E_5KO6ogD9Y4WQqEZ_w82JZPRKg=/768x0/filters:no_upscale()/Tenzing-Norgay-and-Edmund-Hillary-58c199a73df78c353c2a70bd.jpg)
@@ -65,14 +68,15 @@ The same peak may be known by different names, and several peaks on record will,
 peaks.df = alpuk[!duplicated(alpuk[c(1, 3, 5:6)]), ]
 ```
 
-A quick map lead to a frantic hunt for Mt. Everest and so I dropped a marker for Mt. Everest. The peaks in blue have had at least one successful ascent but this information was missing for the peaks in red.  
+A quick map lead to a frantic hunt for Mt. Everest and so I dropped a marker for Mt. Everest. The peaks in blue have had at least one successful ascent but this information was missing for the peaks in red. Incidentally, the `icon.tent` command that was commented out was an interesting learning experience: If I use `awesomeIcons` all the fonts get changed but if I don't then the standard font settings for the blog stay alive. Not sure what is going on here but I am sure there is a fix. So much for trying to use red tents as markers for each peak!
+
 
 ```{r leaf01, dev='svg'}
 library(leaflet)
 
-icon.tent <- awesomeIcons(icon= 'glyphicon-tent', markerColor = '',
-                                  iconColor = 'black', library = 'glyphicon',
-                                  squareMarker =  TRUE)
+# icon.tent <- awesomeIcons(icon= 'glyphicon-tent', markerColor = '',
+#                                  iconColor = 'black', library = 'glyphicon',
+#                                  squareMarker =  TRUE)
 
 pal = colorFactor(c("red", "blue"), domain = peaks.df$ClimbStatus)
 
@@ -84,11 +88,12 @@ m %>% addCircleMarkers(lng = peaks.df$long, lat = peaks.df$lat,
                  popup = (peaks.df$PNAME), stroke = FALSE, 
                  color = ~pal(peaks.df$ClimbStatus), fillOpacity = 0.3, 
                  radius = ~ifelse(peaks.df$ClimbStatus == "No/Unknown", 1, 2)) %>% 
-  addAwesomeMarkers(lat = 27.97467, lng = 86.91867, icon = icon.tent,
+  addMarkers(lat = 27.97467, lng = 86.91867, 
              popup = c("Chomolungma/Qomolungma: Goddess of the Valley, Sagarmatha: Peak of Heaven, Mt. Everest (should rightfully be Mt. Sikhdar but let us not quibble"))
+
 ```
 
-Ideally the dataframe and the map would be trimmed to include only the Himalayan mountain range but that will take some effort because peak names in the Alpine database (the geocoding source file) are very often different from the same peak's listed name in the Himalayan database (that has no geocodes). Peak heights tend to differ as well (apparently a common problem), although by small amounts, and so joining the two is on my to-do list. What I could do at the moment, however, is restrict my focus to the 14 [8,000ers](http://www.everestnews.com/8000.htm), displayed in the datatable below and then mapped. Note that the blue circle marker flags Mt. Everest's general location since the peak tends to be obscured by Lhotse until you zoom in. 
+Ideally the dataframe and the map would be trimmed to include only the Himalayan mountain range but that will take some effort because peak names in the Alpine database (the geocoding source file) are very often different from the same peak's listed name in the Himalayan database (that has no geocodes). Peak heights tend to differ as well (apparently a common problem), although by small amounts, and so joining the two is on my to-do list. What I could do at the moment, however, is restrict my focus to the 14 [8,000ers](http://www.everestnews.com/8000.htm), displayed in the datatable below and then mapped. Note that the larger, cornflower blue circle marker flags Mt. Everest's general location since the peak tends to be obscured by **Lhotse** until you zoom in. 
 
 
 ```{r dt}
@@ -97,12 +102,9 @@ peaks.a8 = peaks.df %>%
   filter(HeightM > 8000 & PNAME %in% c("Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri", "Manaslu", "Nanga Parbat", "Annapurna", "Gasherbrum", "Broad Pk", "Shishapangma", "Gasherbrum II")) %>%
   arrange(-HeightM) 
 
-DT::datatable(peaks.a8[, c(2, 4:7)], 
-              class = 'cell-border stripe', 
-              rownames = FALSE, 
-              extensions = 'Scroller',
-              options = list(digits = 0, scrollY = 200, scroller = TRUE, dom = 't')
-              )
+library(kableExtra)
+knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers", "html") %>%
+  kable_styling(full_width = FALSE, font_size = 12)
 ```
 
 
@@ -111,15 +113,18 @@ m <- leaflet(peaks.a8, width = "95%") %>%
   addProviderTiles(providers$Esri.WorldImagery) %>% 
   setView(lng = 80.92503, lat = 32.5516, zoom = 5)
 
-m %>% addAwesomeMarkers(lat = peaks.a8$lat, lng = peaks.a8$long, 
-                        icon = icon.tent,
+m %>% addCircleMarkers(lat = peaks.a8$lat, lng = peaks.a8$long, 
+                        color = "blue", stroke = TRUE, fillOpacity = 0.1, radius = 3,
                         popup = ~(peaks.a8$Name)) %>% 
   addCircleMarkers(lng = 86.91867, lat = 27.97467, 
                  popup = c("Mt. Everest"), 
                  stroke = TRUE, fillOpacity = 0.1, radius = 16, 
-                 color = "blue")
+                 color = "cornflowerblue")
+
 ```
 
+
 Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. 
+
 
 
