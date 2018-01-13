@@ -124,7 +124,11 @@ m %>% addCircleMarkers(lat = peaks.a8$lat, lng = peaks.a8$long,
 ```
 
 
-Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. 
+Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. But before I do that, why not plot the typical route of an Everest expedition, starting with the base camp? 
+
+```{r route, dev='svg'}
+route.df = data.frame(spot = c("basecamp"), lat = c(28.004333316), long = c(86.855663244))
+```
 
 
 
