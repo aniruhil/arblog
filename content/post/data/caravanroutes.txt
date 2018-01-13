@@ -1,0 +1,6 @@
+peak, 	group, site, lat, long,	elevationft
+Everest, 1, Kathmandu, 27.698162, 85.358894, 4390
+Everest, 2, Lukla, 27.688098, 86.731718, 9383
+Everest, 3, Namche, 27.807213, 86.713607, 11286
+Everest, 4, Pheriche, 27.893561, 86.819876, 14340
+Everest, 5, Base Camp, 28.004348, 86.852596, 17598
