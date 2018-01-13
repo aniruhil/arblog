@@ -111,24 +111,34 @@ knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers",
 ```{r leaf02, dev='svg'}
 m <- leaflet(peaks.a8, width = "95%") %>%
   addProviderTiles(providers$Esri.WorldImagery) %>% 
-  setView(lng = 80.92503, lat = 32.5516, zoom = 5)
+  setView(lng = 86.859444, lat = 28.007222, zoom = 3)
 
 m %>% addCircleMarkers(lat = peaks.a8$lat, lng = peaks.a8$long, 
                         color = "blue", stroke = TRUE, fillOpacity = 0.1, radius = 3,
                         popup = ~(peaks.a8$Name)) %>% 
-  addCircleMarkers(lng = 86.91867, lat = 27.97467, 
+  addCircleMarkers(lng = 86.925278, lat = 27.988056, 
                  popup = c("Mt. Everest"), 
-                 stroke = TRUE, fillOpacity = 0.1, radius = 16, 
+                 stroke = TRUE, fillOpacity = 0.1, radius = 4, 
                  color = "cornflowerblue")
 
 ```
 
 
-Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. But before I do that, why not plot the typical route of an Everest expedition, starting with the base camp? 
+
+Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. But before I do that, why not plot the typical route of an Everest expedition, starting with Kathmandu? This is a rough route map since I had to search for the campsites and intervening features such as the Khumbu Icefall, Lhotse Face, and the Western Cwm so the route is likely no better than a rough sketch. 
 
 ```{r route, dev='svg'}
-route.df = data.frame(spot = c("basecamp"), lat = c(28.004333316), long = c(86.855663244))
+route.df = read.csv("./data/routelatlong.txt", header = TRUE)
+library(leaflet)
+m <- leaflet(width = "95%") %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>% 
+  setView(lng = 86.91867, lat = 27.97467, zoom = 12) %>%
+  addPolylines(data = route.df, lng = ~long, lat = ~lat, group = ~(group), color = "firebrick", fillOpacity = 0.1, stroke = TRUE, weight = 3) %>%
+  addCircleMarkers(data = route.df, lng = ~long, lat = ~lat, color = "navy", fillOpacity = 0.5, stroke = TRUE, radius = 3, popup = ~site)
+m
 ```
+
+You will see the penultimate marker popup displaying, if clicked, the famous (but perhaps no more) [Hillary Step](https://www.outsideonline.com/2191911/american-climbers-confirm-hillary-step-gone). Another piece of mountain lore we have lost I suppose. I'll be adding some more details about each of these sites in the next update. 
 
 
 

@@ -1,0 +1,11 @@
+group, site, lat, long
+1, South Basecamp, 28.007222, 86.859444
+2, Khumbu Icefall, 28.003145, 86.869817
+3, Western Cwm, 27.980833, 86.898056
+4, Camp III, 27.980305, 86.901999
+5, Lhotse Face, 27.972932, 86.911340
+6, Camp IV, 27.974279, 86.929980
+7, Southcol, 27.976174, 86.932126
+8, Hillary Step, 27.987570, 86.925134
+9, Summit, 27.988056, 86.925278
+
