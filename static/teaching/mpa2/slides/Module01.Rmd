@@ -22,22 +22,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, eval = FALSE, echo = FALSE}
-# layout: true
-  
-# <div class="my-header"></div>
-# <div class="my-footer"><span>xaringan power    
-# &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-# &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-# yolo</span></div> 
-# 
-
-
-# xaringan::inf_mr('/Users/ruhil/Documents/Teaching/Data Analytics/presentations/Module01.Rmd') 
-# xaringan::inf_mr('./presentations/Module01.Rmd') 
-```
-
-
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 
