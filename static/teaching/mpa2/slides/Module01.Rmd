@@ -81,8 +81,8 @@ Save the data I sent you to the **data** folder
 
 Now we install some packages via `Tools -> Install Packages...` and updated packages via `Tools -> Check for Package Updates...`<sup>1</sup>
 
-```{r, eval=FALSE}
-devtools, ggplot2, dplyr, reshape2, lubridate, car, Hmisc, gapminder, leaflet, prettydoc, DT, data.table, htmltools, scales, ggridges
+```{r noeval, eval=FALSE}
+install.packages("devtools", "ggplot2", "dplyr", "reshape2", "lubridate", "car", "Hmisc", "gapminder", "leaflet", "prettydoc", "DT", "data.table", "htmltools", "scales", "ggridges")
 ```
 
 Other packages will be installed as needed 
