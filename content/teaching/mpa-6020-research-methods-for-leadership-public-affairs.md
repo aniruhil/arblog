@@ -11,7 +11,10 @@ tags = ["Teaching"]
 
 +++
 
-- The syllabus can be [found here](https://aniruhil.org/static/teaching/mpa/60200/)
+- The syllabus can be [found here](https://aniruhil.org/teaching/mpa2/60200/syllabus.pdf)
 
-
+- The slides are here:
+  - [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/slides/Module01.html) 
+  - [Basic data visualization with `ggplot2`](https://aniruhil.org/teaching/mpa2/slides/Module02.html) 
+  
 
