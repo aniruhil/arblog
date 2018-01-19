@@ -606,7 +606,7 @@ library(widgetframe)
 m1 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 14) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-saveWidget(m1, 'leaflet.html')
+# saveWidget(m1, 'leaflet.html')
 m1
 ```
 
@@ -622,7 +622,7 @@ m2 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 15) %>%
   addMarkers(lat = 39.319984, lng = -82.107084, popup = c("The Ridges, Building 21")) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-saveWidget(m2, 'leaflet2.html')
+# saveWidget(m2, 'leaflet2.html')
 m2
 ```
 
