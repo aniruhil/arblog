@@ -15,5 +15,5 @@ tags = ["Teaching"]
 
 - The slides are here:
   - [Introduction to R and RStudio](https://aniruhil.org/teaching/mpa2/module01.html) 
-  - [Basic data Visualization with ggplot2](https://aniruhil.org/teaching/mpa2/module01.html) 
+  - [Basic data Visualization with ggplot2](https://aniruhil.org/teaching/mpa2/module02.html) 
 
