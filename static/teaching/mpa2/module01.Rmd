@@ -5,7 +5,6 @@ author: "Ani Ruhil"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
-    chakra: libs/remark-latest.min.js
     lib_dir: libs
     css: ["default", "rladies-fonts"]
     seal: true
@@ -15,9 +14,6 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-      navigation:
-        scroll: false
-        click: false
 ---
 
 ```{r, eval = FALSE, echo = FALSE}
@@ -39,7 +35,7 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 
-knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 300, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 65), fig.align = "center", fig.width = 8, fig.height = 6, out.width = "60%") 
+knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 300, tidy = TRUE, tidy.opts = list(width.cutoff = 65), fig.align = "center", fig.width = 8, fig.height = 6, out.width = "60%") 
 ```
 
 ## Agenda 
@@ -88,9 +84,9 @@ Save the data I sent you to the **data** folder
 
 Now we install some packages via `Tools -> Install Packages...` and updated packages via `Tools -> Check for Package Updates...`<sup>1</sup>
 
-```{r, eval=FALSE}
-devtools, ggplot2, dplyr, reshape2, lubridate, car, Hmisc, gapminder, leaflet, prettydoc, DT, data.table, htmltools, scales, ggridges
-```
+
+> devtools, ggplot2, dplyr, reshape2, lubridate, car, Hmisc, gapminder, leaflet, prettydoc, DT, data.table, htmltools, scales, ggridges
+
 
 Other packages will be installed as needed 
 
