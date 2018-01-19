@@ -14,6 +14,6 @@ tags = ["Teaching"]
 - The syllabus can be [found here](https://aniruhil.org/teaching/mpa2/syllabus.pdf)
 
 - The slides are here:
-  - [Testing xaringan](https://aniruhil.org/teaching/mpa2/mod01.html) 
-  - [Testing xaringan](https://aniruhil.org/teaching/mpa2/module01.html) 
+  - [Introduction to R and RStudio](https://aniruhil.org/teaching/mpa2/module01.html) 
+  - [Basic data Visualization with ggplot2](https://aniruhil.org/teaching/mpa2/module01.html) 
 
