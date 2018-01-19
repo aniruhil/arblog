@@ -15,5 +15,5 @@ tags = ["Teaching"]
 
 - The slides are here:
   - [Testing xaringan](https://aniruhil.org/teaching/mpa2/mod01.html) 
-
+  - [Testing xaringan](https://aniruhil.org/teaching/mpa2/module01.html) 
 
