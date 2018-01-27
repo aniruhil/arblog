@@ -12,7 +12,13 @@ header:
   image: ''
 ---
 
-Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. "However, the meticulous chronicler's name will live on. A mountain in north-west Nepal, bordering Tibet, was named Peak Hawley in her honour in 2014."
+Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. One quote stands above the rest. In [an interview]() she said, when asked: 
+
+> "Interviewer: How do you want to be remembered? Do you have any thoughts about that?
+
+> EH: No, I’ve never thought about being remembered. 
+
+"However, the meticulous chronicler's name will live on. A mountain in north-west Nepal, bordering Tibet, was named Peak Hawley in her honour in 2014." 
 
 {{< tweet 956787424285380609 >}}
 
