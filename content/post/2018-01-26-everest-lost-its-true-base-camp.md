@@ -14,5 +14,6 @@ header:
 
 Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. "However, the meticulous chronicler's name will live on. A mountain in north-west Nepal, bordering Tibet, was named Peak Hawley in her honour in 2014."
 
-{{< tweet 56787424285380609 >}}
+{{< tweet 956787424285380609 >}}
 
+The [New York Times](https://www.nytimes.com/2018/01/26/obituaries/elizabeth-hawley-who-chronicled-everest-treks-dies-at-94.html) has a touching piece on her life and passing but I would also recommend [I'll Call You in Kathmandu](http://www.himalayandatabase.com/hawleybio.html). Courage she had in spades, as much as any who summitted Mt. Everest perhaps.  
