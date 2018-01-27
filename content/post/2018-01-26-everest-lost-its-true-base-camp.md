@@ -12,7 +12,7 @@ header:
   image: ''
 ---
 
-Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. One quote stands above the rest. In [an interview]() she said, when asked: 
+Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. One quote stands above the rest. In [an interview](http://adventureblog.nationalgeographic.com/2016/03/11/i-frighten-a-lot-of-people-everest-chronicler-elizabeth-hawley-92-tells-it-like-it-is/) she said, when asked: 
 
 > "Interviewer: How do you want to be remembered? Do you have any thoughts about that?
 
