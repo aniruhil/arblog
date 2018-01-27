@@ -18,9 +18,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE
 
 I've been itching to get back into the himal database and Elizabeth Hawley's passing jolted me back into action. I wanted to start by looking at the peaks themselves, hoping this would give me a better understanding of the fields before I delve into the expedition data. We have data on 457 peaks, but only 377 are open and only 309 of these have been climbed. Information about the date of the summiting is missing for 3 peaks (we have the year and the month but not the day) so that drops the dataset down to 306 peaks. 
 
-There is a lot one could play with but I decided to restrict myself to what may be the natural questions of interest to most -- when were peaks first climbed, by whom? What region of the Himalayas has seen the most peaks climbed. What countries have the summiters come from and has this changed over time? What about the seasons when most summits were made? The peak heights themselves, were the smaller peaks necessarily climbed first? Note that I don't have the dates when a peak was opened to climbers, and some of the notes in the database suggest that some claims of summiting may not necessarily be true. To make matters worse, the same climber changes nationalities between one peak and another.^[For example, Pasang Dawa Lama is listed as Indian for the two 1953 ascents of Ghyuthumba Main and Dudh Kundali -- both with Herbert Tichy -- but as Nepalese for the famous Cho Oyu ascent of 1954 (again with Herbert Tichy). Similarly, Tenzing Norgay is listed as Indian but the Nepalese government claims him as their own. I suspect this Nepalese/Indian flip-flop occurs mostly with Sherpas and hence for breakouts by nationality the Indian and Nepalese tallies should be recognized as undercounts/overcounts.] As such, the noise in these data should be kept in mind. Right, time to see what we have here.    
+There is a lot one could play with but I decided to restrict myself to what may be the natural questions of interest to most -- when were peaks first climbed, by whom? What region of the Himalayas has seen the most peaks climbed. What countries have the summiters come from and has this changed over time? What about the seasons when most summits were made? The peak heights themselves, were the smaller peaks necessarily climbed first? 
 
-```{r}
+```{r one}
 load("./data/cpeaks2.RData")
 
 cpeaks2$Summit.MonthDay = gsub(" ", "/", cpeaks2$PSMTDATE)
@@ -33,7 +33,7 @@ cpeaks2$Summit.Date = as.Date(cpeaks2$Summit.Year, format = "%Y/%b/%d")
 How many summits have been made per year, starting with the first record of Alexander Kellas' ascent of Langpo on September 14, 1909? 
 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+```{r two, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
 library(dplyr)
 tab.01 = cpeaks2 %>% 
   select(PKNAME, PYEAR) %>% 
@@ -48,7 +48,7 @@ ggplot(tab.01, aes(x = as.numeric(PYEAR), y = Climbs)) + geom_bar(stat  = "ident
 
 What countries have most of the first summiters come from? 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+```{r three, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
 df.02 = cpeaks2 %>% 
   select(PKNAME, PYEAR, Summit.Date, country1:country5) %>% 
   group_by(PKNAME, PYEAR, Summit.Date) %>% 
@@ -67,7 +67,7 @@ Nepalese climbers (127 peaks) lead the way, no pun intended, and for obvious rea
 
 If we focus only on the countries with 10 or more peaks summited by their climbers, breaking the preceding distribution down by the year of the ascent reveals some interesting patterns.    
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+```{r four, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
 tab.03 = df.02 %>% 
   group_by(PYEAR, Nationality) %>% 
   summarise(Number = n())
@@ -79,8 +79,8 @@ For this subset of countries, most climbs occurred after 1950, with UK expeditio
 
 Which climber has made the most first ascents? The top 16, are shown below. These are all climbers who had four or more first ascents; expanding the filter any wider would result in too large a list. For example, 19 climbers have 3 ascents each and 62 have 2 ascents each! 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
-df.05 = cpeaks2 %>% 
+```{r five, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+df.03 = cpeaks2 %>% 
   select(PKNAME, PYEAR, summiter1:summiter5) %>% 
   group_by(PKNAME, PYEAR) %>% 
   gather(key = "SummitNum", value = "Summiter", 3:7) %>%
@@ -89,51 +89,53 @@ df.05 = cpeaks2 %>%
   summarise(Summits = n()) %>% 
   arrange(-Summits)
 
-tab.06 = df.05 %>% 
+tab.04 = df.03 %>% 
   filter(Summits >= 4) %>% 
   arrange(-Summits) 
 
-ggplot(tab.06, aes(x = reorder(Summiter, Summits), y = Summits, fill = Summits)) + geom_bar(stat  = "identity") + labs(x = "Summiter", y = "Count", title = "Number of Peaks Summited", subtitle = "(1909-2017)", caption = "Source: The Himalayan Database (2017)") + coord_flip() + theme_minimal() + theme(legend.position = "none")
+ggplot(tab.04, aes(x = reorder(Summiter, Summits), y = Summits, fill = Summits)) + geom_bar(stat  = "identity") + labs(x = "Summiter", y = "Count", title = "Number of Peaks Summited", subtitle = "(1909-2017)", caption = "Source: The Himalayan Database (2017)") + coord_flip() + theme_minimal() + theme(legend.position = "none")
 ```
 
 I am also curious about climbs by region and year, just to see what patterns this exercise reveals. 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
-df.03 = cpeaks2 %>% 
+```{r six, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+df.04 = cpeaks2 %>% 
   select(PKNAME, PYEAR, HIMAL, REGION) %>% 
   group_by(REGION) %>% 
   filter(REGION != "Unclassified") 
 
-tab.04 = df.03 %>% 
+tab.05 = df.04 %>% 
   group_by(PYEAR, REGION) %>%
   summarise(Number = n()) 
 
-ggplot(tab.04, aes(x = as.numeric(PYEAR), y = Number)) + geom_line(aes(group = REGION), stat = "identity") + facet_wrap(~ REGION, ncol = 2, scales = "fixed") + theme_minimal() + scale_y_continuous(breaks = c(0:130)) + theme(legend.position = "none") + labs(x = "Year", y = "Number of peaks climbed in a given year", title = "Number of peaks first summited", subtitle = "(by Year and Region)", caption = "Source: The Himalayan Database")
+ggplot(tab.05, aes(x = as.numeric(PYEAR), y = Number)) + geom_line(aes(group = REGION), stat = "identity") + facet_wrap(~ REGION, ncol = 2, scales = "fixed") + theme_minimal() + scale_y_continuous(breaks = c(0:130)) + theme(legend.position = "none") + labs(x = "Year", y = "Number of peaks climbed in a given year", title = "Number of peaks first summited", subtitle = "(by Year and Region)", caption = "Source: The Himalayan Database")
 ```
 
 So the Kanchenjunga-Janak region saw most of the early climbs but since 2000, most first summits have occurred in the Khumbu-Rolwaling-Makalu region. That suggests a westward sweep since Kangchenjunga-Janak is the eastern-most Himal. I'll have to look into this because I know there are several excellent works on the history of mountaineering in the Himalayas. 
 
 Time to close this post with a quick peak at seasons. Conventionally, Spring (March - May) and Autumn (September - November) are the major climbing seasons, followed by a few who attempt summits in Winter (December - February), with minimal to zero activity in Summer (June - August) when the monsoon sweeps in. 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
-df.04 = cpeaks2 %>% 
+```{r seven, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+df.05 = cpeaks2 %>% 
   select(PKNAME, PYEAR, PSEASON, HEIGHTM, REGION) %>% 
   filter(PSEASON != "Unknown") 
 
-tab.05 = df.04 %>%
+tab.06 = df.05 %>%
   group_by(PYEAR, PSEASON) %>% 
   summarise(Number = n())
 
-ggplot(tab.05, aes(x = as.numeric(PYEAR), y = Number, group = PSEASON)) + geom_line(stat = "identity") + facet_wrap(~ PSEASON, ncol = 2, scales = "fixed") + theme_minimal() + scale_y_continuous(breaks = c(0:130)) + theme(legend.position = "none") + labs(x = "Year", y = "Number of peaks climbed", title = "Peaks first summited", subtitle = "(by Year and Season)", caption = "Source: The Himalayan Database")
+ggplot(tab.06, aes(x = as.numeric(PYEAR), y = Number, group = PSEASON)) + geom_line(stat = "identity") + facet_wrap(~ PSEASON, ncol = 2, scales = "fixed") + theme_minimal() + scale_y_continuous(breaks = c(0:130)) + theme(legend.position = "none") + labs(x = "Year", y = "Number of peaks climbed", title = "Peaks first summited", subtitle = "(by Year and Season)", caption = "Source: The Himalayan Database")
 ```
 
 Now that is interesting and at odds with what was expected. Digging into these climbs I see a total of 15 first ascents, 10 between 2000 and 2009 and the remaining between 1935 and 1999. The majority (seven) are in Kanjiroba-Far West, and all 15 are for peaks with heights of 7,362 meters or less. 
 
 I'll end by looking at the distribution of peak heights by region, just because I love  `ggridges`. 
 
-```{r, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
+```{r eight, fig.width = 7, fig.height = 9, out.width="80%", dev = "svg"}
 library(ggridges)
 ggplot(cpeaks2, aes(x = HEIGHTM, y = REGION)) + geom_density_ridges(alpha = 0.2, aes(fill = REGION)) + theme_minimal() + theme(legend.position = "none") + labs(x = "Peak Height (in meters)", y = "Region", title = "Peak Heights by Himalayan Region", subtitle = "(in meters)", caption = "Source: The Himalayan Database (2017)")
 ```
+
+This has been an interesting exercise but it isn't foolproof. I don't have the dates when a peak was opened to climbers, and some of the notes in the database suggest that some claims of summiting may not necessarily be true. To make matters worse, in a handful of cases the same climber changes nationalities across peaks.^[For example, Pasang Dawa Lama is listed as Indian for the two 1953 ascents of Ghyuthumba Main and Dudh Kundali -- both with Herbert Tichy -- but as Nepalese for the famous Cho Oyu ascent of 1954 (again with Herbert Tichy). Similarly, Tenzing Norgay is listed as Indian but the Nepalese government claims him as their own. I suspect this Nepalese/Indian flip-flop occurs mostly with Sherpas and hence for breakouts by nationality the Indian and Nepalese tallies should be recognized as undercounts/overcounts.] Finally, when the summit teams included more than one individual from the same country but the team included members from two or more countries, it is difficult to sort out nationalities with accuracy. This leads to an undercount for some nations. Some, if not all, of these issues will hopefully be resolved by employing the expedition database. 
 
 
