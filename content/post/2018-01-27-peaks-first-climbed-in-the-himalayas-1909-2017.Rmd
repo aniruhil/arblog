@@ -91,9 +91,10 @@ df.03 = cpeaks2 %>%
 
 tab.04 = df.03 %>% 
   filter(Summits >= 4) %>% 
-  arrange(-Summits) 
+  arrange(-Summits, Summiter) 
 
-ggplot(tab.04, aes(x = reorder(Summiter, Summits), y = Summits, fill = Summits)) + geom_bar(stat  = "identity") + labs(x = "Summiter", y = "Count", title = "Number of Peaks Summited", subtitle = "(1909-2017)", caption = "Source: The Himalayan Database (2017)") + coord_flip() + theme_minimal() + theme(legend.position = "none")
+library(kableExtra)
+knitr::kable(tab.04, booktabs = TRUE, "html") %>% kable_styling(full_width = FALSE)
 ```
 
 I am also curious about climbs by region and year, just to see what patterns this exercise reveals. 

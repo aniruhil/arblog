@@ -77,14 +77,153 @@ ggplot(subset(tab.03, Nationality %in% c(&quot;India&quot;, &quot;New Zealand&qu
     Summiter != &quot;2 unknown members&quot; &amp; Summiter != &quot;2 unknown Sherpas&quot;) %&gt;% 
     group_by(Summiter) %&gt;% summarise(Summits = n()) %&gt;% arrange(-Summits)
 
-tab.04 = df.03 %&gt;% filter(Summits &gt;= 4) %&gt;% arrange(-Summits)
+tab.04 = df.03 %&gt;% filter(Summits &gt;= 4) %&gt;% arrange(-Summits, 
+    Summiter)
 
-ggplot(tab.04, aes(x = reorder(Summiter, Summits), y = Summits, 
-    fill = Summits)) + geom_bar(stat = &quot;identity&quot;) + labs(x = &quot;Summiter&quot;, 
-    y = &quot;Count&quot;, title = &quot;Number of Peaks Summited&quot;, subtitle = &quot;(1909-2017)&quot;, 
-    caption = &quot;Source: The Himalayan Database (2017)&quot;) + coord_flip() + 
-    theme_minimal() + theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/post/2018-01-27-peaks-first-climbed-in-the-himalayas-1909-2017_files/figure-html/five-1.svg" width="80%" /></p>
+library(kableExtra)
+knitr::kable(tab.04, booktabs = TRUE, &quot;html&quot;) %&gt;% kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Summiter
+</th>
+<th style="text-align:right;">
+Summits
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Paulo Grobel
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tamotsu Ohnishi
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ang Temba Sherpa
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mingma Tsering Sherpa
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pasang Phutar Sherpa (I)
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Takehiko Yanagihara
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chuldim Nuru Sherpa
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+David Gottlieb
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dennis Davis
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dorje Sherpa
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Juergen Wellenkamp
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Koji Mizutani
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pasang Sherpa
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Peter Boultbee
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tashi Sherpa
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wilfred Noyce
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
 <p>I am also curious about climbs by region and year, just to see what patterns this exercise reveals.</p>
 <pre class="r"><code>df.04 = cpeaks2 %&gt;% select(PKNAME, PYEAR, HIMAL, REGION) %&gt;% 
     group_by(REGION) %&gt;% filter(REGION != &quot;Unclassified&quot;)
