@@ -129,6 +129,8 @@ m %>% addCircleMarkers(lat = peaks.a8$lat, lng = peaks.a8$long,
 
 Voila! We have the 14 great peaks that should be the focal point for most of the analysis to follow, provided the database has expedition data for each peak. In the next post I'll go over the structure of the climbing database and start to pull out some basic yet interesting patterns I come across. But before I do that, why not plot the typical route of an Everest expedition, starting with Kathmandu? This is a rough route map since I had to search for the campsites and other legendary features such as the Khumbu Icefall, the Western Cwm, etc. so the route is likely no better than a rough sketch. 
 
+`Map edited on January 28, 2018` to correct anomalies in some of the coordinates of the camps. I had been trying to work off google maps but then switched to Alex Txikon's GPS tracker. 
+
 ```{r route, dev='svg'}
 route.df = read.csv("./data/routelatlong.txt", header = TRUE)
 caravan.df = read.csv("./data/caravanroutes.txt", header = TRUE)
@@ -136,7 +138,7 @@ caravan.df = read.csv("./data/caravanroutes.txt", header = TRUE)
 library(leaflet)
 m <- leaflet(width = "95%") %>%
   addProviderTiles(providers$Esri.WorldImagery) %>% 
-  setView(lat = 27.865824, lng = 86.210930, zoom = 9) %>%
+  setView(lat = 27.980289, lng = 86.899604, zoom = 13) %>%
   addPolylines(data = route.df, lng = ~long, lat = ~lat, group = ~(group), color = "firebrick", fillOpacity = 0.1, stroke = TRUE, weight = 3) %>%
   addCircleMarkers(data = route.df, lng = ~long, lat = ~lat, color = "cornflowerblue", fillOpacity = 0.5, stroke = TRUE, radius = 3, popup = ~site) %>% 
   addPolylines(data = caravan.df, lng = ~long, lat = ~lat, group = ~(group), color = "purple", fillOpacity = 0.1, stroke = TRUE, weight = 3) %>%
