@@ -80,7 +80,7 @@ library(leaflet)
 
 pal = colorFactor(c("red", "blue"), domain = peaks.df$ClimbStatus)
 
-m <- leaflet(peaks.df, width = "95%") %>% 
+m <- leaflet(peaks.df, width = "100%") %>% 
   addProviderTiles(providers$Esri.WorldImagery) %>% 
   setView(lng = 80.92503, lat = 32.5516, zoom = 4)
 
@@ -111,7 +111,7 @@ knitr::kable(peaks.a8[, c(2, 4:7)], booktabs = TRUE, caption = "The 14 8000ers",
 
 
 ```{r leaf02, dev='svg'}
-m <- leaflet(peaks.a8, width = "95%") %>%
+m <- leaflet(peaks.a8, width = "100%") %>%
   addProviderTiles(providers$Esri.WorldImagery) %>% 
   setView(lng = 86.859444, lat = 28.007222, zoom = 3)
 
@@ -136,7 +136,7 @@ route.df = read.csv("./data/routelatlong.txt", header = TRUE)
 caravan.df = read.csv("./data/caravanroutes.txt", header = TRUE)
 
 library(leaflet)
-m <- leaflet(width = "95%") %>%
+m <- leaflet(width = "100%") %>%
   addProviderTiles(providers$Esri.WorldImagery) %>% 
   setView(lat = 27.980289, lng = 86.899604, zoom = 13) %>%
   addPolylines(data = route.df, lng = ~long, lat = ~lat, group = ~(group), color = "firebrick", fillOpacity = 0.1, stroke = TRUE, weight = 3) %>%
