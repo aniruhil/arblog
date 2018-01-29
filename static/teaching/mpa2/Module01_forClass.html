@@ -420,10 +420,10 @@ ourdata =<span class="st"> </span><span class="kw">load</span>(<span class="st">
 
 m1 &lt;-<span class="st"> </span><span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">setView</span>(<span class="dt">lat =</span> <span class="fl">39.322577</span>, <span class="dt">lng =</span> <span class="op">-</span><span class="fl">82.106336</span>, <span class="dt">zoom =</span> <span class="dv">14</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">setMapWidgetStyle</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">frameWidget</span>(<span class="dt">height =</span> <span class="st">&quot;275&quot;</span>)
-<span class="kw">saveWidget</span>(m1, <span class="st">&quot;leaflet.html&quot;</span>)
+<span class="co"># saveWidget(m1, 'leaflet.html')</span>
 m1</code></pre></div>
-<div id="htmlwidget-945bf873504cdbd28451" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-945bf873504cdbd28451">{"x":{"url":"Module01_forClass_files/figure-html//widgets/widget_leaf1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-b875f04de0fdd242cb31" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b875f04de0fdd242cb31">{"x":{"url":"Module01_forClass_files/figure-html//widgets/widget_leaf1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 <p>Notice how this was built:</p>
 <ul>
 <li>Use <code>setView()</code> to center the map with given latitude and longitude and then pick a reasonable zoom factor with <code>zoom =</code>. If you set the zoom factor too low you will be seeing the place from outer space and if too high then you might standing on a street corner, so experiment with it.</li>
@@ -432,23 +432,14 @@ m1</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">m2 &lt;-<span class="st"> </span><span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">setView</span>(<span class="dt">lat =</span> <span class="fl">39.322577</span>, <span class="dt">lng =</span> <span class="op">-</span><span class="fl">82.106336</span>, <span class="dt">zoom =</span> <span class="dv">15</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">addMarkers</span>(<span class="dt">lat =</span> <span class="fl">39.319984</span>, <span class="dt">lng =</span> <span class="op">-</span><span class="fl">82.107084</span>, <span class="dt">popup =</span> <span class="kw">c</span>(<span class="st">&quot;The Ridges, Building 21&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">setMapWidgetStyle</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">frameWidget</span>(<span class="dt">height =</span> <span class="st">&quot;275&quot;</span>)
-<span class="kw">saveWidget</span>(m2, <span class="st">&quot;leaflet2.html&quot;</span>)
+<span class="co"># saveWidget(m2, 'leaflet2.html')</span>
 m2</code></pre></div>
-<div id="htmlwidget-536110ea00c1d448579f" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-536110ea00c1d448579f">{"x":{"url":"Module01_forClass_files/figure-html//widgets/widget_leaf2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-945bf873504cdbd28451" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-945bf873504cdbd28451">{"x":{"url":"Module01_forClass_files/figure-html//widgets/widget_leaf2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="rstudio-webinars" class="section level1">
 <h1>RStudio webinars</h1>
-<p>The fantastic team at RStudio runs free webinar that are often very helpful so be sure to signup with your email. Here are some video recodgins of webinars that are relevant to what we have covered so far.</p>
-<ul>
-<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/">Programming Part 1 (Writing code in RStudio)</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-programming-part-2/">Programming Part 2 (Debugging code in RStudio)</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-managing-change-part-1/">Managing Change Part 1 (Projects in RStudio)</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/importing-data-into-r/">Importing Data into R</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/whats-new-with-readxl/">Whats new with readxl</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/getting-your-data-into-r/">Getting your data into R</a></li>
-<li><a href="https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/">Getting Started with R Markdown</a></li>
-</ul>
+<p>The fantastic team at RStudio runs free webinar that are often very helpful so be sure to signup with your email. Here are some video recodgins of webinars that are relevant to what we have covered so far. - <a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/">Programming Part 1 (Writing code in RStudio)</a> - <a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-programming-part-2/">Programming Part 2 (Debugging code in RStudio)</a> - <a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-managing-change-part-1/">Managing Change Part 1 (Projects in RStudio)</a> - <a href="https://www.rstudio.com/resources/webinars/importing-data-into-r/">Importing Data into R</a> - <a href="https://www.rstudio.com/resources/webinars/whats-new-with-readxl/">Whats new with readxl</a> - <a href="https://www.rstudio.com/resources/webinars/getting-your-data-into-r/">Getting your data into R</a> - <a href="https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/">Getting Started with R Markdown</a></p>
 <hr />
 <div id="exercises-for-practice" class="section level2">
 <h2>Exercises for practice</h2>

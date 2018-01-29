@@ -388,7 +388,7 @@ library(widgetframe)
 m1 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 14) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-saveWidget(m1, 'leaflet.html')
+# saveWidget(m1, 'leaflet.html')
 m1
 ```
 
@@ -403,13 +403,12 @@ m2 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 15) %>%
   addMarkers(lat = 39.319984, lng = -82.107084, popup = c("The Ridges, Building 21")) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-saveWidget(m2, 'leaflet2.html')
+# saveWidget(m2, 'leaflet2.html')
 m2
 ```
 
 # RStudio webinars
 The fantastic team at RStudio runs free webinar that are often very helpful so be sure to signup with your email. Here are some video recodgins of webinars that are relevant to what we have covered so far. 
-
 - [Programming Part 1 (Writing code in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) 
 - [Programming Part 2 (Debugging code in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-programming-part-2/) 
 - [Managing Change Part 1 (Projects in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-managing-change-part-1/) 
@@ -417,7 +416,6 @@ The fantastic team at RStudio runs free webinar that are often very helpful so b
 - [Whats new with readxl](https://www.rstudio.com/resources/webinars/whats-new-with-readxl/) 
 - [Getting your data into R](https://www.rstudio.com/resources/webinars/getting-your-data-into-r/) 
 - [Getting Started with R Markdown](https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/)
-
 
 ---------------
 
@@ -498,7 +496,6 @@ In a follow-up chunk run both the following commands on this data-set
 In a final chunk, run the commands necessary to save each of the three data-sets as separate `RData` files. Make sure you save them in your **data** folder. 
 
 Now knit the complete `Rmd` file to **html** 
-
 
 #### Ex. 4: Knitting with prettydoc 
 
