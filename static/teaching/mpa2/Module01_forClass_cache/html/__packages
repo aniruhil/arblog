@@ -1,0 +1,12 @@
+base
+htmltools
+vembedr
+readxl
+haven
+foreign
+DT
+HistData
+leaflet
+leaflet.extras
+htmlwidgets
+widgetframe
