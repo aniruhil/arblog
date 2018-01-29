@@ -413,6 +413,7 @@ m2
 
 # RStudio webinars
 The fantastic team at RStudio runs free webinar that are often very helpful so be sure to signup with your email. Here are some video recodgins of webinars that are relevant to what we have covered so far. 
+
 - [Programming Part 1 (Writing code in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/) 
 - [Programming Part 2 (Debugging code in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-programming-part-2/) 
 - [Managing Change Part 1 (Projects in RStudio)](https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-managing-change-part-1/) 
