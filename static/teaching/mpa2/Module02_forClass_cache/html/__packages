@@ -1,0 +1,15 @@
+base
+ggplot2movies
+dplyr
+ggplot2
+wesanderson
+ggthemes
+patchwork
+scales
+viridisLite
+viridis
+ggridges
+plotly
+shiny
+bindrcpp
+hexbin
