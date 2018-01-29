@@ -95,7 +95,7 @@ There are other advantages to tibbles that we will encounter at a later stage.
 
 # `ggplot2` and the [grammar of graphics](http://vita.had.co.nz/papers/layered-grammar.html)
 
-<center><img src = "../images/grammarofgraphics.png", width = 400px></center>
+<center><img src = "./images/grammarofgraphics.png", width = 400px></center>
 
 `qplot` will generate a quick plot but `ggplot2` is the way to go so we build with it. Read the relevant chapter on the grammar of graphics from the link in the syllabus or then [watch this video](https://vimeo.com/223812632). 
 
@@ -242,7 +242,7 @@ Note the addition of
 We could also add a second or even a third/fourth categorical variable. Let us see this with our `hsb2` data-set. we can start by reading in the data file. 
 
 ```{r bar5}
-load("../data/hsb2.RData")
+load("./data/hsb2.RData")
 colnames(hsb2) = tolower(colnames(hsb2)) 
 ggplot(data = hsb2, aes(x = ses, group = female)) + geom_bar(aes(fill = female)) + theme_minimal()
 ```
@@ -272,7 +272,7 @@ If you've forgotten what these are, see [histogram](http://tinlizzie.org/histogr
 Let us load the `hsb2` data we had downloaded, processed (adding value labels to categorical variables) and saved in our **data** folder in the last module. 
 
 ```{r loading}
-load("../data/hsb2.RData")
+load("./data/hsb2.RData")
 ```
 
 For histograms in ggplot2, `geom_histogram()` does the trick but note that the default number of bins is not very useful and can be tweaked, along with other embellishments. 
@@ -392,7 +392,7 @@ ggplot(economics, aes(x = date, y = uempmed)) + geom_line() + xlab("Date") + yla
 They can look very plain and aesthetically unappealing unless you dress them up. See the one below and then the one that follows. 
 
 ```{r line2}
-load("../data/gap.df.RData")
+load("./data/gap.df.RData")
 ggplot(gap.df, aes(x = year, y = LifeExp, group = continent, color = continent)) + geom_line() + geom_point() + xlab("Year") + ylab("Median Life Expectancy (in years)") + theme(legend.position = "bottom") 
 ```
 
@@ -444,7 +444,7 @@ ggplot(mpg, aes(x = cty, y = hwy)) + geom_count(col = "firebrick", show.legend =
 The second example relies on our `Boston Marathon` data, looking at finishing times of men and women, respectively. We could have tried to put both groups in the same plot but that ends up obscuring things more than revealing anything. 
 
 ```{r count2}
-boston = read.csv("../data/BostonMarathon.csv")
+boston = read.csv("./data/BostonMarathon.csv")
 boston2 = boston[sample(nrow(boston), 200), ]
 ggplot(boston2, aes(x = Age, y = finishtime, group = M.F)) + geom_count(aes(color = M.F), show.legend = FALSE) + labs(subtitle = "", y = "Finishing Times (in seconds)", x = "Age (in years)") + facet_wrap(~ M.F, ncol = 1) 
 ```
