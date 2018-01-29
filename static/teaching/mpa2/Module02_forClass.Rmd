@@ -475,7 +475,6 @@ ggplot(data = diamonds, aes(y = price, x = carat)) + geom_hex() + xlab("Weight i
  - keep [ggplot2 cheatsheet handy](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) 
 - join [stackoverflow](https://stackoverflow.com) but if you ask a question, `post with a MWE (minimum working example)`. This is crucial otherwise be prepared to have your head bitten off or at best have nobody respond to your question!
 
-
 Some resources to bear in mind: 
 
 - [The Data Visualization Catalogue](https://datavizcatalogue.com) developed by Severino Ribecca to create a library of different information visualization types 
