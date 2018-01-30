@@ -25,12 +25,9 @@ output:
 # &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 # yolo</span></div> 
 # 
-
-
 # xaringan::inf_mr('/Users/ruhil/Documents/Teaching/Data Analytics/presentations/Module01.Rmd') 
 # xaringan::inf_mr('./presentations/Module01.Rmd') 
 ```
-
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
