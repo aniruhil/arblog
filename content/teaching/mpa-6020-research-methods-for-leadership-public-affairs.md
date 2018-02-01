@@ -17,7 +17,7 @@ The syllabus can be [found here](https://aniruhil.org/teaching/mpa2/syllabus.pdf
 | :----  | :-----                     |
 | [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/module01.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/Module01_forClass.html) |
 | [Basic data Visualization with ggplot2](https://aniruhil.org/teaching/mpa2/module02.html) | [Basic data Visualization with ggplot2](https://aniruhil.org/teaching/mpa2/Module02_forClass.html) | 
-| [Some basic data operations](https://aniruhil.org/teaching/mpa2/module03.html) | [Some basic data operations](https://aniruhil.org/teaching/mpa2/Module03_forClass.html) | 
+| [Some basic data operations](https://aniruhil.org/teaching/mpa2/Module03.html) | [Some basic data operations](https://aniruhil.org/teaching/mpa2/Module03_forClass.html) | 
 
 
  
