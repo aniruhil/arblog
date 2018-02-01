@@ -1,0 +1,569 @@
+---
+title: "Rmd file for Module 03"
+author: "Ani Ruhil"
+date: "`r Sys.Date()`"
+output:
+    html_document: 
+      collapsed: no
+      highlight: haddock
+      smooth_scroll: no
+      theme: readable
+      toc: yes
+      toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 600, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60), fig.align = "center", fig.width = 10, fig.height = 8, out.width = "65%", dev = 'svg', highlight = TRUE) 
+
+# camo = knitr::knit_theme$get("camo")
+# knitr::knit_theme$set(camo)
+```
+
+# Agenda 
+Our goal in this module is to understand some basic operations in R. Specifically, we will look at combining two or more data-sets, modifying variables, creating variables, converting quantitative variables into qualitative variables, and so on. There is a lot more  we could learn here but I  will focus on the essential tasks you are likely to run into. 
+
+# Data Types 
+A typical data-frame will look like the following: 
+
+```{r df0}
+load("./data/hsb2.RData")
+```
+
+If the `load()` command does not work, use "Files" to find the `hsb2.RData` file and load it that way. You will have `columns`, each representing a variable, and `rows`, each representing an observation. The variables can be numeric (`num`), such as `id`, `write`, `read`, etc. or then a categorical variable that R calls a factor (`Factor`). The `numeric` class includes `integer` (a limited range of values) and `double` (double precision format) but these distinctions should  not be of any consequence to you at the moment. If you have dates with/without times, the variable type will show up as `dates`, some variables may show up as `logical` (TRUE/FALSE/NA), and yet others a `character` (for example, "A", "Bitcoin", "p@12359" and so on).  
+
+You have to be careful though since your data might have numeric codes for categorical variables. For example, if we read in the following file you will see this issue in effect: 
+
+```{r df1}
+hsb = read.table('https://stats.idre.ucla.edu/stat/data/hsb2.csv', header = TRUE, sep=",")
+```
+
+These are the same data as we have in `hsb2` but here the categorical variables are carrying numeric codes that represent different attributes 
+
+- female  = (0/1) 
+- race = (1=hispanic 2=asian 3=african-amer 4=white) 
+- ses  = socioeconomic status (1=low 2=middle 3=high) 
+- schtyp =  type of school (1=public 2=private) 
+- prog   = type of program (1=general 2=academic 3=vocational) 
+
+This happens very often and so we end up having to convert this pseudo-numeric variable into a categorical variable that R calls a `factor`. This is done as follows: 
+
+```{r df2}
+hsb$female = factor(hsb$female, levels = c(0, 1), labels = c("Male", "Female"))
+hsb$race = factor(hsb$race, levels = c(1:4), labels = c("Hispanic", "Asian", "African American", "White"))
+hsb$ses = factor(hsb$ses, levels = c(1:3), labels = c("Low", "Middle", "High"))
+hsb$schtyp = factor(hsb$schtyp, levels = c(1:2), labels = c("Public", "Private"))
+hsb$prog = factor(hsb$prog, levels = c(1:3), labels = c("General", "Academic", "Vocational"))
+```
+
+> `factor(dataframe$variable, levels = c(...), labels = c(...))`
+
+Notice the pattern: Overwrite the original variable as a `factor()` by specifying the target variable's name `hsb$female`, then telling R what the unique values are via `levels = c()` and then listing how each unique value should be labelled via `labels = c()`.^[The only way to label things correctly is to know what each value maps to (is female = 1 a Female or a Male) but luckily we have that information here.] 
+
+Of course, we could have not overwritten the original variables but instead created new ones, as shown below. This would be the more prudent approach, and has become my habit. 
+
+```{r df3}
+hsb = read.table('https://stats.idre.ucla.edu/stat/data/hsb2.csv', header = TRUE, sep=",")
+hsb$female.f = factor(hsb$female, levels = c(0, 1), labels = c("Male", "Female"))
+hsb$race.f = factor(hsb$race, levels = c(1:4), labels = c("Hispanic", "Asian", "African American", "White"))
+hsb$ses.f = factor(hsb$ses, levels = c(1:3), labels = c("Low", "Middle", "High"))
+hsb$schtyp.f = factor(hsb$schtyp, levels = c(1:2), labels = c("Public", "Private"))
+hsb$prog.f = factor(hsb$prog, levels = c(1:3), labels = c("General", "Academic", "Vocational"))
+```
+
+## Numbers masquerading as characters or factors
+At times numbers will get read in as characters or factors, as is evident from the example below:
+
+```{r df4}
+x1 = c(1, 2, 3, 4, 5)
+x2 = c(1, 2, 3, 4, "a5")
+x3 = c(1, 2, 3, 4, "hello")
+x4 = c(1, 2, 3, 4, NA)
+```
+
+Notice that x1 and x2 are read in as numeric but x2 and x3 show up as `chr`, short for `character`. You could convert x2 and x3 into numeric as follows:
+
+```{r df5}
+x2.num = as.numeric(x2)
+x3.num = as.numeric(x3)
+```
+
+The `NA` values are `not applicable` values, essentially R-speak for `missing values`. 
+
+On other occasions, the variable may in fact be numeric but because of some anomalies in the variable, R will read it in as a factor. When this happens, converting the variable into numeric has to be done with care. Just running `as.numeric()` will not work. See the example below where `age` is flagged as a factor, perhaps because the variable was stored and exported with the double-quotation marks.  
+
+```{r df6}
+score = c(100, 101, 102, 103, 104, 105, 106)
+sex = c("Male", "Female", "Male", "Female", "Female", "Male", "Female")
+age = c("18", "18", "19", "19", "21", "21", "NA")
+my.df = cbind.data.frame(score, sex, age)
+```
+
+If I try `as.numeric()` the conversion uses the factor codings 1, 2, 3, 4 instead of the actual age values. So what is recommended is that you run `as.numeric(levels(data$variable))[data$variable]` instead. You can see the difference by comparing `age.num1` against `age.num2`. 
+
+```{r df7}
+my.df$age.num1 = as.numeric(my.df$age)
+my.df$age.num2 = as.numeric(levels(my.df$age))[my.df$age]
+```
+
+## Operating on numeric variables 
+We often need to transform an original numeric variable, stored perhaps as a proportion that we want to convert into a percentage. Or we may want to square it, divide it by 100, and so on. These operations are very straightforward. 
+
+```{r t0}
+my.df = data.frame(x = c(0.1, 0.2, 0.3, 0.4))
+my.df$x.pct = my.df$x * 100
+my.df$x.div10 = my.df$x / 10
+my.df$x.squared = my.df$x^2
+my.df$x.sqroot = sqrt(my.df$x)
+my.df$x.doubled = my.df$x * 2
+```
+
+## Binning 
+We can also group numeric data into `bins`. Let us see this with our  reading scores from the `hsb2` data-set. 
+
+```{r binning}
+load("./data/hsb2.RData")
+summary(hsb2)
+```
+Remember, we want meaningful groups, no fewer than 4/5 and staying below 8/9 unless we need more. To create the groups, 
+
+- Start by calculating the range of the variable (maximum value - minimum value) 
+- Divide this range by the number of groups we'd like 
+- Round up to the resulting value, which becomes the width of the interval  
+
+For example, the range of the reading scores is `r 76 - 28`. Say we want 5 groups. Dividing 48 by 5 yields `r 48/5` so we round up to 10. Now we see what the groups might be: 28-38, 38-48, 48-58, 58-68, 68-78. Now we ask R to create a new variable that represents these groups. 
+
+```{r grouping0}
+hsb2$grouped_read = cut(hsb2$read, breaks = c(28, 38, 48, 58, 68, 78))
+table(hsb2$grouped_read)
+```
+
+Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn't grouped is a reading score of 28. Why? Because when you group, you have to decide whether the intervals are `left-open` or `right-open` ... If I run into  a 38, should it go in the 38-48 group or the 28-38 group? This decision can be invoked by adding `right = FALSE` or `right = TRUE` (which is the default). So let me set `right = FALSE`. 
+
+```{r grouping1}
+hsb2$grouped_read2 = cut(hsb2$read, breaks = c(28, 38, 48, 58, 68, 78), right = FALSE)
+table(hsb2$grouped_read2)
+```
+
+Now open up the data-frame and arrange the rows in ascending order of `read`. Find `read = 48`. With the default `right = TRUE` this score was put in the 38-48 group but with `right = FALSE` it was put in the 48-58 group. So `right = FALSE` only include values in a group `(a,b]`  if the value is $a <= x < b$. With `right = TRUE` only include values in a group `[a, b)` if the value is $a < x <= b$. 
+
+More generally you'll see folks just specify the number of cuts they want. 
+
+```{r grouping2}
+hsb2$grouped_read3 = cut(hsb2$read, breaks = 5)
+table(hsb2$grouped_read3)
+```
+
+But since age cannot include a decimal value this may be unsuitable for our purposes. Of course, we could have avoided this open/closed business of the interval by simply doing this: 
+
+```{r grouping3}
+hsb2$grouped_read4 = cut(hsb2$read, breaks = c(25, 35, 45, 55, 65, 75, 85))
+table(hsb2$grouped_read4)
+```
+
+And there you have it! 
+
+# Lowercase and Uppercase 
+
+```{r t1}
+my.df = data.frame(sex = c("M", "F", "M", "F"), 
+                   NAMES = c("Andy", "Jill", "Jack", "Madison"), 
+                   age = c(24, 48, 72, 96))
+```
+
+Maybe I want the names of  the individuals to be all uppercase, or perhaps all lowercase. I can do this via: 
+
+```{r t2}
+my.df$sex.lower = tolower(my.df$sex)
+```
+
+Maybe it is not the values but the column names that I want to convert to lowercase. This is easily done via 
+
+```{r t3}
+colnames(my.df)[2] = "names"
+```
+
+Note: I asked for  the second column's name to be changed to "names". Since that was the only column that was in uppercase I could have achieved the same thing by running:
+
+```{r t4}
+my.df = data.frame(sex = c("M", "F", "M", "F"), 
+                   NAMES = c("Andy", "Jill", "Jack", "Madison"), 
+                   age = c(24, 48, 72, 96))
+colnames(my.df) = tolower(colnames(my.df))
+```
+
+By the same logic, I could convert each column name to uppercase by typing 
+
+```{r t5}
+colnames(my.df) = toupper(colnames(my.df))
+```
+
+And then of course, using the following to change a specific column name to uppercase: 
+
+```{r t6}
+my.df = data.frame(sex = c("M", "F", "M", "F"), 
+                   NAMES = c("Andy", "Jill", "Jack", "Madison"), 
+                   age = c(24, 48, 72, 96))
+colnames(my.df)[1] = toupper(colnames(my.df)[1])
+colnames(my.df)[3] = "AGE"
+```
+
+What should be clear by now is that there are many ways to end up with the same result with R code. This is one of the wonderful features of R. 
+
+## A little more on factors
+
+With the `hsb` data we converted some variables into factors. Here I want to show you a couple of things to pay attention to. 
+
+First, I can create a new variable and store it as a factor as follows:
+
+```{r f1}
+my.df$female1[my.df$SEX == "M"] = 0 
+my.df$female1[my.df$SEX == "F"] = 1 
+my.df$female1 = factor(my.df$female1, levels = c(0, 1), labels = c("Male", "Female"))
+```
+
+I could have also skipped the `0/1` business and just done this: 
+
+```{r f2}
+my.df$female2[my.df$SEX == "M"] = "Male" 
+my.df$female2[my.df$SEX == "F"] = "Female" 
+my.df$female2 = factor(my.df$female2)
+```
+
+Notice the difference between `female1` and `female2` 
+
+- female1: Since you specified `levels = c(0, 1)` and indicated the lowest level be mapped to Male, the factor is built in that order ... Male first, then Female 
+- female2: Here we did not specify the levels and hence R falls back on its default of building them up alphabetically ... Female first, then Male 
+
+Lets see the question of factor levels with a different example. Say we had the following variable, 10 responses to a survey question.
+
+```{r f3}
+fdf = data.frame(x = c(rep("Disagree", 3), rep("Neutral", 2), rep("Agree", 5)))
+fdf$responses = factor(fdf$x)
+levels(fdf$responses)
+table(fdf$responses)
+```
+
+This makes no sense since we'd like the logical ordering of Disagree -> Neutral -> Agree and this can be achieved via `ordered()`, making sure to specify the order of the levels with `levels = c()`.  
+
+```{r f4}
+fdf$newresponses = ordered(fdf$responses, levels = c("Disagree", "Neutral", "Agree"))
+levels(fdf$newresponses)
+min(fdf$newresponses)
+table(fdf$newresponses)
+```
+
+I could have also generated this desired order when creating the factor as, for example, via 
+
+```{r f5}
+fdf$xordered = factor(fdf$x, ordered = TRUE, levels = c("Disagree", "Neutral", "Agree"))
+levels(fdf$xordered)
+min(fdf$xordered)
+table(fdf$xordered)
+```
+
+Notice the `min()` command ... which asks for the minimum level of a factor. This works with ordered factors but not with unordered factors; try it with `x` and with `responses`. 
+
+Before we move on, a word about the command we used to generate a new factor from an existing variable --  
+
+```{r f6, eval=FALSE}
+my.df$female2[my.df$SEX == "M"] = "Male" 
+my.df$female2[my.df$SEX == "F"] = "Female" 
+```
+
+I use this a lot when generating new variables, and even when fixing problems with an existing variable. For example, say we were given the data on the sex of these 10 individuals but the values included typos. 
+
+```{r f7}
+sexdf = data.frame(mf = c(rep("Male", 3), rep("male", 2), rep("Female", 3), rep("femalE", 2)))
+levels(sexdf$mf)
+```
+
+Obviously not what we'd like so we can go in and clean it up a bit. How? As follows: 
+
+```{r f8}
+sexdf$mf[sexdf$mf == "male"] = "Male" 
+sexdf$mf[sexdf$mf == "femalE"] = "Female" 
+levels(sexdf$mf)
+table(sexdf$mf)
+```
+
+Wait a second, we still see `femalE` and `male` but with 0 counts; how should we get rid of these ghosts? 
+
+```{r f9}
+sexdf$newmf = droplevels(sexdf$mf)
+levels(sexdf$newmf)
+table(sexdf$newmf)
+```
+
+Having fixed this issue we can drop the original variable via 
+
+```{r f10}
+sexdf$mf = NULL
+```
+
+# Subsetting data 
+I may also need to drop a factor level. For example, say I am working with the `diamond` data-set and need to subset my analysis to diamonds that are Very Good or better. 
+
+```{r diamondsdata}
+library(ggplot2)
+data(diamonds)
+str(diamonds$cut)
+table(diamonds$cut)
+```
+
+I can subset as follows: 
+
+```{r dia1}
+dia.sub1 = subset(diamonds, cut != "Fair" & cut != "Good")
+str(dia.sub1$cut)
+table(dia.sub1$cut)
+```
+
+## Dropping factor levels
+Aha! I see no diamonds in the excluded cut ratings but `str()` still shows R remembering `cut` as having 5 ratings and the frequency table shows up with zero counts for both so we drop these levels explicitly. 
+
+```{r dia2}
+dia.sub1$cutnew = droplevels(dia.sub1$cut)
+str(dia.sub1$cutnew)
+table(dia.sub1$cutnew)
+```
+
+Now a bit more on sub-setting data. You can subset with as simple or as complicated a condition you need. For example, maybe you only want Ideal diamonds with a certain minimum clarity and price. Sure, you can use this sub-setting condition as shown below:
+
+```{r dia3}
+dia.sub2 = subset(diamonds, cut == "Ideal" & clarity == "VVS1" & price > 3933)
+table(dia.sub2$cut)
+table(dia.sub2$clarity)
+min(dia.sub2$price)
+```
+
+Here the sub-setting is generating a data-frame that will only include observations that meet all three requirements (since you used `&` in the command). If you had run the following instead you would have had very different results. 
+
+```{r dia4}
+dia.sub3 = subset(diamonds, cut == "Ideal" | clarity == "VVS1" | price > 3933)
+dia.sub4 = subset(diamonds, cut == "Ideal" & clarity == "VVS1" | price > 3933)
+dia.sub5 = subset(diamonds, cut == "Ideal" | clarity == "VVS1" & price > 3933)
+```
+
+That is because `&` is saying "this criterion and that criterion both have to be met" while `|` is saying "either this criterion is met or that criterion is met". So what you did was to ask for 
+
+- dia.sub3 = either the cut is Ideal OR clarity is VVS1 OR price exceeds 3933. Let us check 
+
+```{r dia.sub3check}
+table(dia.sub3$cut)
+table(dia.sub3$clarity)
+min(dia.sub3$price)
+```
+
+- dia.sub4 = either the cut is Ideal AND clarity is VVS1 OR price exceeds 3933 
+
+```{r dia.sub4check}
+table(dia.sub4$cut)
+table(dia.sub4$clarity)
+min(dia.sub4$price)
+```
+
+
+- dia.sub5 = either the cut is Ideal OR clarity is VVS1 AND price exceeds 3933 
+
+```{r dia.sub5check}
+table(dia.sub5$cut)
+table(dia.sub5$clarity)
+min(dia.sub5$price)
+```
+
+You could also subset the data in different ways using, for example, `%in%` 
+
+```{r dia5}
+dia.sub6 = diamonds[diamonds$cut == "Ideal" | diamonds$clarity == "VVS1" | diamonds$price > 3933, ] # same as dia.sub3 
+dia.sub7 = diamonds[ !(diamonds$cut %in% c("Fair", "Good")), ] # same as dia.sub1 
+dia.sub8 = diamonds[ diamonds$cut %in% c("Ideal", "Premium", "Very Good"), ] # same as dia.sub1 and dia.sub7
+```
+
+# Exporting data 
+Often, after data have been processed in R, we need to share them with folks who don't use R or want the data in a specific format. This is easily done, as shown below. 
+
+```{r dataout}
+out.df = data.frame(Person = c("John", "Timothy", "Olivia", "Sebastian", "Serena"), Age = c(22, 24, 18, 24, 35))
+
+write.csv(out.df, file = "./data/out.csv", row.names = FALSE) # CSV format 
+
+library(haven)
+write_dta(out.df, "./data/out.df.dta") # Stata format
+write_sav(out.df, "./data/out.df.sav") # SPSS format 
+write_sas(out.df, "./data/out.df.sas") # SAS format 
+
+library(writexl)
+write_xlsx(out.df, "./data/out.df.xlsx") # Excel format
+```
+
+There are other packages that import/export data so be sure to check them out as well, in particular [rio](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). 
+
+# Merging data
+Say I have data on some students, with test scores in one file and their gender in another file. Each file has a unique student identifier, called `ID`. How can I create a single data-set? Let us see each data-set first.    
+
+```{r merge0}
+data1 = data.frame(Score = c(10, 21, 33, 12, 35, 67, 43, 99), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "C31", "Q22"))
+data2 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
+```
+
+Open up both data-sets and note that students C31 and Q22 are missing from `data2` and students E52 and H71 are missing from `data1`.  
+
+What about the merge? To merge data-frames we need to specify the `merge key(s)`  -- the variable(s) that identifies unique observations in each file. This variable(s) must be present in all the files you want to merge. So long as it exists, you now need to decide: Do you only want to 
+
+- merge observations that show up in both files `(natural join)` 
+- merge everything even if some cases show up in one but not the other `(full outer join)` 
+- merge such that all cases in file `x` are retained but only those seen in file `y` are joined `(left outer join)` 
+- merge to keep all cases in `y` and only those cases are to be merged from `x` that show up in `y`, referred to as `(right outer join)` 
+
+```{r merge1}
+natural = merge(x = data1, y = data2, by = c("ID"), all = FALSE) # only merge if ID seen in both files
+full = merge(x = data1, y = data2, by = c("ID"), all = TRUE) # merge everything 
+left = merge(x = data1, y = data2, by = c("ID"), all.x = TRUE) # make sure all cases from file x are retained 
+right = merge(x = data1, y = data2, by = c("ID"), all.y  = TRUE)  # make sure all cases from file y are retained 
+```
+
+What if the ID variables had different names in the files? You could rename them to have a common name or you could use `by.x =` and `by.y = ` as shown below. 
+
+```{r merge2}
+data3 = data.frame(Score = c(10, 21, 33, 12, 35, 67, 43, 99), ID1 = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "C31", "Q22"))
+data4 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"), ID2 = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
+diffids = merge(data3, data4, by.x = c("ID1"), by.y = c("ID2"), all = FALSE)
+```
+
+You can also have more than one merge key. For example, if I am merging data for Ohio schools, each district has a district ID number `(dirn)`, each school has building ID number `(birn)`, and then the district's name `(district)`, the building's name `(building)`, and so on. If I am merging these data then my `by = ` statement will be `by = c("dirn", "birn", "district", "building")`.  
+
+If we have multiple data-frames to merge we can do so in several ways but my default approach is to rely on the `Reduce()` command, as shown below. 
+
+```{r merge3}
+df1 = data.frame(Score = c(10, 21, 33, 12, 35, 67, 43, 99), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "C31", "Q22"))
+df2 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
+df3 = data.frame(Age = c(6, 7, 6, 8, 8, 9, 10, 5), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
+
+my.list = list(df1, df2, df3)
+df.123 = Reduce(function(...) merge(..., by = c("ID"), all = TRUE), my.list)
+```
+
+# Identifying and handling duplicates 
+Every now and then you also run into duplicate rows with no good explanation for how that could have happened. Here is an example: 
+
+```{r dups0}
+dups.df = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "A12", "WX1"))
+```
+
+Students A12 and WX1 show up twice! There are two basic commands that we can use to find duplicates -- `unique` and `duplicated`. 
+
+```{r dups1}
+duplicated(dups.df) # flag duplicate rows with TRUE 
+
+!duplicated(dups.df) # flag not duplicated rows with TRUE 
+
+dups.df[duplicated(dups.df), ] # reveal the duplicated rows 
+
+dups.df[!duplicated(dups.df), ] # reveal the not duplicated rows 
+
+nodups.df = dups.df[!duplicated(dups.df), ] # save a dataframe without duplicated rows
+
+onlydups.df = dups.df[duplicated(dups.df), ] # save a dataframe with ONLY the duplicated rows
+```
+
+
+# Rearranging a data-frame
+We may, at times, want to move the variables around so they are in a particular order (age next to race and so on, for example), perhaps drop some because there are too many variables and we don't need all of them. We may also want to arrange the data-frame in ascending or descending order of some variable(s) (increasing order of age or price for example. These tasks are easily done.
+
+```{r arrange0}
+df1 = mtcars[order(mtcars$mpg), ] # arrange the data-frame in ascending order of mpg 
+df2 = mtcars[order(-mtcars$mpg), ] # arrange the data-frame in descending order of mpg 
+df3 = mtcars[order(mtcars$am, mtcars$mpg), ] # arrange the data-frame in ascending order of automatic/manual and then in ascending order of mpg 
+```
+
+What if I want to order the columns such that the first column is `am` and then comes `mpg`, followed by `qsec` and then the rest of the columns? Well, the first thing I want to do is see what variable is in which column via the `names()` command. 
+
+```{r arrange1}
+names(mtcars) # the original structure of the mtcars data-frame
+```
+
+So `mpg` is in column 1, `cyl` is in column 2, and `carb` is the last one in column 11. 
+
+Now I'll specify that I want all rows by doing this `[, c()]` and then specify the order of the columns by entering the column numbers in `c()`
+
+```{r arrange2}
+df4 = mtcars[, c(9, 1, 7, 2:6, 8, 10:11)] # specifying the position of the columns 
+names(df4)
+```
+
+If I only wanted certain columns I could omit the other columns. 
+
+```{r arrange3}
+df5 = mtcars[, c(9, 1, 7)] # specifying the position of the columns 
+```
+
+Remember the comma in `mtcars[,` ... this tells R to keep all rows in mtcars. If, instead, I did this I would only get the first four rows, not all.  
+
+```{r arrange4}
+df6 = mtcars[1:4, c(9, 1, 7)] # keep first four rows and the specified columns
+```
+
+I would end up with only the first four rows of mtcars, not every row. So try to remember the order: `dataframe[i, j]` where `i` reference the rows and `j` reference the columns. Folks often get tripped up over this switch. 
+
+# Working with strings 
+
+Often you run into strings that have to be manipulated. Often, when working with county data, for example, county names are followed by ` County, Ohio` and this is superfluous so we end up excising it 
+
+```{r}
+c.data = read.csv("./data/strings.csv")
+head(c.data)
+```
+
+Let us just retain the county name from `GEO.display.label` 
+
+```{r}
+c.data$county = gsub(" County, Ohio", "", c.data$GEO.display.label)
+head(c.data)
+```
+
+Note the sequence `gsub("look for this pattern", "replace with this", mydata$myvariable)`
+
+-----------
+
+
+# Practice Tasks 
+
+## Task 1 
+Why are our best and most experienced employees leaving prematurely? 
+
+The data [available here](https://aniruhil.github.io/avsr/teaching/dataviz/HR_comma_sep.csv) includes information on several current and former employees of an anonymous organization.** Fields in the data-set include: 
+
+* satisfaction_level = Level of satisfaction (0-1) 
+* last_evaluation = Evaluation of employee performance (0-1) 
+* number_project = Number of projects completed while at work 
+* average_monthly_hours = Average monthly hours at workplace 
+* time_spend_company = Number of years spent in the company 
+* Work_accident = Whether the employee had a workplace accident (1 or 0)
+* left = Whether the employee left the workplace or not (1 or 0)  
+* promotion_last_5years = Whether the employee was promoted in the last five years (1 or 0) 
+* sales = Department in which they work for 
+* salary = Relative level of salary (low med high) 
+
+(a) Read in the data-set 
+
+(b) Create new variables that represent all categorical variables as factors. Make sure you order the levels of the factor (if they need to be ordered). 
+
+(c) Convert satisfaction_level from a 0-1 scale to a 0-100 scale 
+
+(d) Convert time spent in the company to months rather than years 
+
+(e) Order the columns such that `left` appears as the first column 
+
+(f) Arrange the data-set such that the rows are in descending order of `average_montly_hours` (the column is misspelled in the original data) 
+
+(g) Create a subset of these data that contains only records that match the following criteria: 
+    (1) The employee must not have had a work accident, AND 
+    (2)  The employee must have been promoted in the last 5 years 
+
+Report the number of observations you end up with. 
+
+(h) Make all `column names` lowercase for the data-set you created in (g)
+
+
+
+
