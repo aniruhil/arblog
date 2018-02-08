@@ -93,6 +93,8 @@ m %>% addCircleMarkers(lng = peaks.df$long, lat = peaks.df$lat,
 
 ```
 
+
+
 ####
 
 Ideally the dataframe and the map would be trimmed to include only the Himalayan mountain range but that will take some effort because peak names in the Alpine database (the geocoding source file) are very often different from the same peak's listed name in the Himalayan database (that has no geocodes). Peak heights tend to differ as well (apparently a common problem), although by small amounts, and so joining the two is on my to-do list. What I could do at the moment, however, is restrict my focus to the 14 [8,000ers](http://www.everestnews.com/8000.htm), displayed in the datatable below and then mapped. Note that the larger, cornflower blue circle marker flags Mt. Everest's general location since the peak tends to be obscured by **Lhotse** until you zoom in. 
