@@ -136,7 +136,7 @@ my.df$age.num2 = as.numeric(levels(my.df$age))[my.df$age]
 
 Open up the data-frame and then see these two variables to understand how `age.num1` is invalid but `age.num2` is valid 
 
----
+----
 
 We often need to transform an original numeric variable, stored perhaps as a proportion that we want to convert into a percentage. Or we may want to square it, divide it by 100, and so on. These operations are very straightforward. 
 
@@ -148,45 +148,46 @@ my.df = data.frame(x = c(0.1, 0.2, 0.3, 0.4))
 my.df$x.pct = my.df$x * 100
 
 # Divide x by 10
-my.df$x.div10 = my.df$x / 10
+my.df$x.div = my.df$x / 10
 
 # Square x
-my.df$x.squared = my.df$x^2
+my.df$x.sqrd = my.df$x^2
 
 # Take the square-root of x
-my.df$x.sqroot = sqrt(my.df$x)
+my.df$x.sqrt = sqrt(my.df$x)
 
 # Multiply x by 2
-my.df$x.doubled = my.df$x * 2
+my.df$x.dbled = my.df$x * 2
 ```
 ]
 
 .pull-right[
 ```{r, echo=FALSE}
-library(DT)
-datatable(my.df)
+my.df
 ```
 ]
 ---
 
 We can also group numeric data into `bins`. Let us see this with our  reading scores from the `hsb2` data-set. 
 
-```{r grouping0}
+```{r,  echo=FALSE}
 load("./data/hsb2.RData")
+```
+
+```{r grouping0}
 hsb2$grouped_read = cut(hsb2$read, breaks = c(28, 38, 48, 58, 68, 78))
 table(hsb2$grouped_read)
 ```
 
-Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn't grouped is a reading score of 28. Why? Because when you group, you have to decide whether the intervals are `left-open` or `right-open` ... If I run into  a 38, should it go in the 38-48 group or the 28-38 group? This decision can be invoked by adding `right = FALSE` or `right = TRUE` (which is the default). So let me set `right = FALSE`. 
+Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn't grouped is a reading score of 28. Why? You have to choose `left-open` or `right-open` intervals... should 38 go in the 38-48 group or the 28-38 group? This decision can be invoked by adding `right = FALSE` or `right = TRUE` (which is the default). So let me set `right = FALSE`. 
 
 ```{r grouping1}
 hsb2$grouped_read2 = cut(hsb2$read, breaks = c(28, 38, 48, 58, 68, 78), right = FALSE)
 table(hsb2$grouped_read2)
 ```
 
-Now open up the data-frame and arrange the rows in ascending order of `read`. Find `read = 48`. With the default `right = TRUE` this score was put in the 38-48 group but with `right = FALSE` it was put in the 48-58 group. So `right = FALSE` only include values in a group `(a,b]`  if the value is $a <= x < b$. With `right = TRUE` only include values in a group `[a, b)` if the value is $a < x <= b$. 
+Open `hsb2` and arrange rows in ascending order of `read`. Find `read = 48`. With the default `right = TRUE` 48 put in 38-48 group but with `right = FALSE` 48 put in 48-58 group. So `right = FALSE` only include values in a group `(a,b]`  if the value is $a <= x < b$. With `right = TRUE` only include values in a group `[a, b)` if the value is $a < x <= b$. 
 
-See the side-by-side comparison on the next slide 
 
 ---
 
@@ -481,7 +482,7 @@ data1 = data.frame(Score = c(10, 21, 33, 12, 35, 67, 43, 99), ID = c("A12", "A23
 data2 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female", "Male", "Female"), ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
 ```
 
-Open up both data-sets and note that students C31 and Q22 are missing from `data2` and students E52 and H71 are missing from `data1`.  
+Open both data-sets and note C31 and Q22 missing from `data2` &  E52 and H71 missing from `data1`.  
 
 .pull-left[
 ```{r mergedt1, echo=FALSE}
@@ -736,6 +737,7 @@ class: inverse, middle, center
 ---
 ```{r}
 dfs = data.frame(x = c(0, 1, 2, 3, 4, NA), y = c(10, 11, 12, NA, 14, 15))
+dfs
 ```
 
 `rowSums()` for each row, sum the columns so that you end up with a row total 
@@ -747,6 +749,9 @@ rowSums(dfs, na.rm = TRUE)  # sum columns 1 and 2 for each row
 ```{r}
 colSums(dfs, na.rm = TRUE)
 ```
+
+---
+
 `rowMeans()` for each row, calculate the mean of the columns 
 ````{r}
 rowMeans(dfs, na.rm = TRUE)

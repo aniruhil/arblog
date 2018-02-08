@@ -4,7 +4,7 @@
     <title>Basic Data Operations in R</title>
     <meta charset="utf-8">
     <meta name="author" content="Ani Ruhil" />
-    <meta name="date" content="2018-01-31" />
+    <meta name="date" content="2018-02-08" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 # Basic Data Operations in R
 ## (MPA 6020)
 ### Ani Ruhil
-### 2018-01-31
+### 2018-02-08
 
 ---
 
@@ -190,7 +190,7 @@ my.df$age.num2 = as.numeric(levels(my.df$age))[my.df$age]
 
 Open up the data-frame and then see these two variables to understand how `age.num1` is invalid but `age.num2` is valid 
 
----
+----
 
 We often need to transform an original numeric variable, stored perhaps as a proportion that we want to convert into a percentage. Or we may want to square it, divide it by 100, and so on. These operations are very straightforward. 
 
@@ -203,30 +203,37 @@ my.df = data.frame(x = c(0.1, 0.2, 0.3, 0.4))
 my.df$x.pct = my.df$x * 100
 
 # Divide x by 10
-my.df$x.div10 = my.df$x/10
+my.df$x.div = my.df$x/10
 
 # Square x
-my.df$x.squared = my.df$x^2
+my.df$x.sqrd = my.df$x^2
 
 # Take the square-root of x
-my.df$x.sqroot = sqrt(my.df$x)
+my.df$x.sqrt = sqrt(my.df$x)
 
 # Multiply x by 2
-my.df$x.doubled = my.df$x * 2
+my.df$x.dbled = my.df$x * 2
 ```
 ]
 
 .pull-right[
-<div id="htmlwidget-3175e60ec04cff3e41b0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3175e60ec04cff3e41b0">{"x":{"filter":"none","data":[["1","2","3","4"],[0.1,0.2,0.3,0.4],[10,20,30,40],[0.01,0.02,0.03,0.04],[0.01,0.04,0.09,0.16],[0.316227766016838,0.447213595499958,0.547722557505166,0.632455532033676],[0.2,0.4,0.6,0.8]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>x<\/th>\n      <th>x.pct<\/th>\n      <th>x.div10<\/th>\n      <th>x.squared<\/th>\n      <th>x.sqroot<\/th>\n      <th>x.doubled<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+
+```
+##     x x.pct x.div x.sqrd    x.sqrt x.dbled
+## 1 0.1    10  0.01   0.01 0.3162278     0.2
+## 2 0.2    20  0.02   0.04 0.4472136     0.4
+## 3 0.3    30  0.03   0.09 0.5477226     0.6
+## 4 0.4    40  0.04   0.16 0.6324555     0.8
+```
 ]
 ---
 
 We can also group numeric data into `bins`. Let us see this with our  reading scores from the `hsb2` data-set. 
 
 
+
+
 ```r
-load("./data/hsb2.RData")
 hsb2$grouped_read = cut(hsb2$read, breaks = c(28, 38, 48, 58, 68, 78))
 table(hsb2$grouped_read)
 ```
@@ -237,7 +244,7 @@ table(hsb2$grouped_read)
 ##      13      69      61      47       9
 ```
 
-Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn't grouped is a reading score of 28. Why? Because when you group, you have to decide whether the intervals are `left-open` or `right-open` ... If I run into  a 38, should it go in the 38-48 group or the 28-38 group? This decision can be invoked by adding `right = FALSE` or `right = TRUE` (which is the default). So let me set `right = FALSE`. 
+Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn't grouped is a reading score of 28. Why? You have to choose `left-open` or `right-open` intervals... should 38 go in the 38-48 group or the 28-38 group? This decision can be invoked by adding `right = FALSE` or `right = TRUE` (which is the default). So let me set `right = FALSE`. 
 
 
 ```r
@@ -251,9 +258,8 @@ table(hsb2$grouped_read2)
 ##      14      68      62      36      20
 ```
 
-Now open up the data-frame and arrange the rows in ascending order of `read`. Find `read = 48`. With the default `right = TRUE` this score was put in the 38-48 group but with `right = FALSE` it was put in the 48-58 group. So `right = FALSE` only include values in a group `(a,b]`  if the value is `\(a &lt;= x &lt; b\)`. With `right = TRUE` only include values in a group `[a, b)` if the value is `\(a &lt; x &lt;= b\)`. 
+Open `hsb2` and arrange rows in ascending order of `read`. Find `read = 48`. With the default `right = TRUE` 48 put in 38-48 group but with `right = FALSE` 48 put in 48-58 group. So `right = FALSE` only include values in a group `(a,b]`  if the value is `\(a &lt;= x &lt; b\)`. With `right = TRUE` only include values in a group `[a, b)` if the value is `\(a &lt; x &lt;= b\)`. 
 
-See the side-by-side comparison on the next slide 
 
 ---
 
@@ -738,7 +744,7 @@ data2 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female",
     ID = c("A12", "A23", "Z14", "WX1", "Y31", "D66", "E52", "H71"))
 ```
 
-Open up both data-sets and note that students C31 and Q22 are missing from `data2` and students E52 and H71 are missing from `data1`.  
+Open both data-sets and note C31 and Q22 missing from `data2` &amp;  E52 and H71 missing from `data1`.  
 
 .pull-left[
 <div id="htmlwidget-3175e60ec04cff3e41b0" style="width:100%;height:auto;" class="datatables html-widget"></div>
@@ -1104,6 +1110,17 @@ class: inverse, middle, center
 
 ```r
 dfs = data.frame(x = c(0, 1, 2, 3, 4, NA), y = c(10, 11, 12, NA, 14, 15))
+dfs
+```
+
+```
+##    x  y
+## 1  0 10
+## 2  1 11
+## 3  2 12
+## 4  3 NA
+## 5  4 14
+## 6 NA 15
 ```
 
 `rowSums()` for each row, sum the columns so that you end up with a row total 
@@ -1126,6 +1143,9 @@ colSums(dfs, na.rm = TRUE)
 ##  x  y 
 ## 10 62
 ```
+
+---
+
 `rowMeans()` for each row, calculate the mean of the columns 
 
 ```r
