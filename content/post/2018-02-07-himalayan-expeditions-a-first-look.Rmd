@@ -73,7 +73,7 @@ ggplot(tab.06) + geom_bar(aes(x = as.numeric(YEAR), y = Number, group = REGION, 
 ggplot(tab.06) + geom_bar(aes(x = as.numeric(YEAR), y = Percent, group = REGION, fill = REGION), stat = "identity") + labs(x = "Year", y = "Percent", title = "Expeditions per year by Region", subtitle = "(in the Himalayas)", caption = "Source: The Himalayan Database (2017)", fill = "") + theme_minimal() + scale_fill_brewer(type = "qual") + theme(legend.position = "bottom")
 ```
 
-Now that is pretty but what am I looking at? I suppose, that until the late 1940s, Kangchenjunga-Janak and the Khumbu_Rolwaling-Makalu himals were the only ones anybody sought to climb. Nepal was not open to climbers to it makes sense that it was the British, from Darjeeling, looking to summit new peaks. The Khumbu-Rolwaling-Makalu himal reigns supreme though, through time, no doubt about that. Not sure why interest in Kanjiroba-Far West tailed off after the 1970s. I have a hunch that it is because of the commercial climbing that ensued but the only way to answer that question would be to dig further inton the data. Happy times ahead. 
+Now that is pretty but what am I looking at? I suppose, that until the late 1940s, Kangchenjunga-Janak and the Khumbu-Rolwaling-Makalu himals were the only ones anybody sought to climb. Nepal was not open to climbers to it makes sense that it was the British, from Darjeeling, looking to summit new peaks. The Khumbu-Rolwaling-Makalu himal reigns supreme though, through time, no doubt about that. Not sure why interest in Kanjiroba-Far West tailed off after the 1970s. I have a hunch that it is because of the commercial climbing that ensued but the only way to answer that question would be to dig further inton the data. Happy times ahead. 
 
 
 
