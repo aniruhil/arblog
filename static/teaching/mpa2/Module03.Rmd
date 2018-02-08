@@ -484,6 +484,8 @@ data2 = data.frame(Sex = c("Male", "Female", "Male", "Female", "Male", "Female",
 
 Open both data-sets and note C31 and Q22 missing from `data2` &  E52 and H71 missing from `data1`.  
 
+---
+
 .pull-left[
 ```{r mergedt1, echo=FALSE}
 datatable(data1, options = list(columnDefs = list(list(className = 'dt-center', targets = c(1:2))), filter = "top", rownames = FALSE, class = "compact"))
