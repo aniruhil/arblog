@@ -1,0 +1,85 @@
+---
+title: Himalayan Expeditions - a first look
+author: Ani Ruhil
+date: '2018-02-07'
+slug: himalayan-expeditions-a-first-look
+categories:
+  - Himalayas
+  - R
+tags:
+  - Mountaineering
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+I am afraid that if I let time pass without writing steadily the stream of  posts will dry up. To stave off that possibility here I am, taking a crack at understanding the expeditions. This is a fascinating database because it has a lot of rich detail that I want to run through before summer comes around. To keep the momentum I began by looking at the number and nature of expeditions to the Himalayan peaks. I began by looking at the 9,608 unique expeditions I see in the database. 
+
+```{r,  echo=FALSE}
+load("/users/ruhil/Documents/Data Hub/Himalayan Database/data/hdexped.RData")
+load("/users/ruhil/Documents/Data Hub/Himalayan Database/data/hdpeaks.RData")
+peaexp = merge(hdpeaks, hdexped, by = "PEAKID")
+save(peaexp, file = "/users/ruhil/Documents/Data Hub/Himalayan Database/data/peaexp.RData")
+
+library(dplyr)
+tab.01 = peaexp %>%
+  group_by(YEAR) %>% 
+  summarise(Number = n_distinct(EXPID))
+
+library(ggplot2)
+ggplot(tab.01, aes(x = as.numeric(YEAR), y = Number)) + geom_bar(stat = "identity", fill = "cornflowerblue") + geom_smooth(method = "auto", color = "firebrick", size = 0.5, alpha = 0.01) + labs(x = "Year", y = "Count", title = "Number of Expeditions per year", subtitle = "(in the Himalayas)", caption = "Source: The Himalayan Database (2017)") + theme_minimal() + geom_vline(xintercept = 1949, color = "gray60") + geom_text(aes(x = 1925, y = 50), label = "Exploratory", size = 3) + 
+geom_vline(xintercept = 1969, color = "gray60") + geom_text(aes(x = 1959, y = 100), label = "Expeditionary", size = 3) + 
+geom_vline(xintercept = 1989, color = "gray60") + geom_text(aes(x = 1979, y = 200), label = "Transitional", size = 3) + geom_text(aes(x = 2005, y = 450), label = "Commercial", size = 3) 
+```
+
+The maintainers of the database emphasize the four phases of expeditions over the century (and then some), and you see these reflected in the plot. Notice the uptick starting in the 1950s; clearly Hilary and Tenzing had a massive impact. 
+
+Not all peaks have garnered the same attention, of course. 
+
+```{r, echo=FALSE}
+tab.02 = peaexp %>%
+  group_by(PKNAME, HEIGHTM) %>% 
+  summarise(Number = n_distinct(EXPID)) %>% 
+  arrange(-Number)
+
+library(kableExtra)
+DT::datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 5, dom = 'tip')) 
+```
+
+Of course, some peaks have received more attention at different points in time so the questions is how the distribution of expeditions varies by peak. For brevity, I only focus on some of the more popular 8-thousanders. 
+
+```{r, echo=FALSE, fig.height = 8}
+tab.03 = peaexp %>%
+  group_by(PKNAME, HEIGHTM, YEAR) %>% 
+  filter(HEIGHTM >= 8000) %>% 
+  summarise(Number = n_distinct(EXPID)) %>% 
+  filter(PKNAME %in% c("Everest", "Cho Oyu", "Lhotse", "Kangchenjunga", "Makalu", "Manaslu", "Dhaulagiri I", "Annapurna I")) %>% 
+  arrange(-Number) 
+
+ggplot(tab.03, aes(x = as.numeric(YEAR), y = Number)) + geom_bar(stat = "identity", fill = "cornflowerblue") + geom_smooth(method = "auto", color = "firebrick", size = 0.5, alpha = 0.01) + labs(x = "Year", y = "Count", title = "Number of Expeditions to 8-thousanders per year", subtitle = "(in the Himalayas)", caption = "Source: The Himalayan Database (2017)") + facet_wrap(~ PKNAME, ncol = 2, scales = "free_y") + theme_minimal()
+```
+
+What intrgues me is the sudden  interest in `Cho Oyu` but what I can glean is that Cho Oyu seems to be the "most accessible" 8-thousanders to climb. Well that sums it up nicely.   
+
+```{r, echo=FALSE}
+tab.06 = peaexp %>%
+  group_by(YEAR, REGION) %>% 
+  summarise(Number = n_distinct(EXPID)) %>% 
+  mutate(Percent = (Number / sum(Number)) * 100 )
+
+ggplot(tab.06) + geom_bar(aes(x = as.numeric(YEAR), y = Number, group = REGION, fill = REGION), stat = "identity") + labs(x = "Year", y = "Count", title = "Expeditions per year by Region", subtitle = "(in the Himalayas)", caption = "Source: The Himalayan Database (2017)", fill = "") + theme_minimal() + scale_fill_brewer(type = "qual") + theme(legend.position = "bottom")
+
+ggplot(tab.06) + geom_bar(aes(x = as.numeric(YEAR), y = Percent, group = REGION, fill = REGION), stat = "identity") + labs(x = "Year", y = "Percent", title = "Expeditions per year by Region", subtitle = "(in the Himalayas)", caption = "Source: The Himalayan Database (2017)", fill = "") + theme_minimal() + scale_fill_brewer(type = "qual") + theme(legend.position = "bottom")
+```
+
+Now that is pretty but what am I looking at? I suppose, that until the late 1940s, Kangchenjunga-Janak and the Khumbu_Rolwaling-Makalu himals were the only ones anybody sought to climb. Nepal was not open to climbers to it makes sense that it was the British, from Darjeeling, looking to summit new peaks. The Khumbu-Rolwaling-Makalu himal reigns supreme though, through time, no doubt about that. Not sure why interest in Kanjiroba-Far West tailed off after the 1970s. I have a hunch that it is because of the commercial climbing that ensued but the only way to answer that question would be to dig further inton the data. Happy times ahead. 
+
+
+
+
+
+
+
+
+
