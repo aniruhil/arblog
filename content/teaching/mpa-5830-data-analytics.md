@@ -1,15 +1,17 @@
 +++
-title = 'MPA 5830: Data Analytics for the public sector and non-profits'
 
-author = Ani Ruhil
+title = "MPA 5830: Data Analytics for the public sector and non-profits"
 
-date = '2018-02-09'
+author = "Ani Ruhil"
 
-slug = mpa-5830-data-analytics-for-the-public-sector-and-non-profits
+date = "2018-02-09"
+
+slug = "mpa-5830-data-analytics-for-the-public-sector-and-non-profits"
 
 categories = ["Teaching"]
 
 tags = ["Teaching"]
+
 +++
 
 
