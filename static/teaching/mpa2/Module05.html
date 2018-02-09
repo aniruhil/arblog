@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Working with dates and times</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <meta name="date" content="2018-02-09" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Working with dates and times
+## (MPA 6020)
+### Ani Ruhil
+### 2018-02-09
+
+---
+
+
+
+
+## Agenda 
+
+Understanding how to work with dates and times with 
+
+- using `base R` 
+- using `lubridate` 
+
+---
+
+Start by creating some data values.  
+
+
+```r
+basedate = as.Date("1970-1-1")
+today = Sys.Date()
+tomorrow = as.Date("2017-12-18")
+yesterday1 = "12/16/2017"
+yesterday2 = "12-16-17"
+yesterday3 = "12 16 17"
+```
+
+How did R read these? 
+
+
+```r
+str(list(basedate, today, tomorrow, yesterday1, yesterday2, yesterday3))
+```
+
+```
+## List of 6
+##  $ : Date[1:1], format: "1970-01-01"
+##  $ : Date[1:1], format: "2018-02-08"
+##  $ : Date[1:1], format: "2017-12-18"
+##  $ : chr "12/16/2017"
+##  $ : chr "12-16-17"
+##  $ : chr "12 16 17"
+```
+
+Some are dates some are characters `(chr)` 
+
+---
+
+We can flip the characters into dates 
+
+
+```r
+yesterday1d = as.Date(yesterday1, format = "%m/%d/%Y")
+yesterday2d = as.Date(yesterday2, format = "%m-%d-%y")
+yesterday3d = as.Date(yesterday3, format = "%m %d %y")
+yesterday1d
+```
+
+```
+## [1] "2017-12-16"
+```
+
+```r
+yesterday2d
+```
+
+```
+## [1] "2017-12-16"
+```
+
+```r
+yesterday3d
+```
+
+```
+## [1] "2017-12-16"
+```
+
+---
+
+There are special switches that indicate date components when you `format = ""`
+
+
+```r
+df = data.frame(Code = c("%a", "%A", "%d", "%m", "%b", "%B", "%y", "%Y"), Represents = c("Day spelled out (abbreviated)", 
+    "Day spelled out", "Day of the month", "Month", "Month (abbreviated)", "Month (fully spelled out)", 
+    "Year (2-digits)", "Year (4-digits)"), Example = c("Mon", "Monday", "16", "12", "Dec", 
+    "December", "17", "2017"))
+
+df
+```
+
+```
+##   Code                    Represents  Example
+## 1   %a Day spelled out (abbreviated)      Mon
+## 2   %A               Day spelled out   Monday
+## 3   %d              Day of the month       16
+## 4   %m                         Month       12
+## 5   %b           Month (abbreviated)      Dec
+## 6   %B     Month (fully spelled out) December
+## 7   %y               Year (2-digits)       17
+## 8   %Y               Year (4-digits)     2017
+```
+
+
+---
+
+So if you ever run into a date field that needs formatting, what we have covered should help you convert it into a proper date formatted variable.  
+
+Once you convert them to the date format, you can extract other quantities. 
+
+
+```r
+weekdays(yesterday1d)
+```
+
+```
+## [1] "Saturday"
+```
+
+```r
+months(today)
+```
+
+```
+## [1] "February"
+```
+
+```r
+quarters(today)
+```
+
+```
+## [1] "Q1"
+```
+
+---
+
+Sometimes you will have a number representing the date, with the number representing the number of days since (if positive) or before (if negative) some date  of origin. R uses `1970-01-01` but other software packages may (and some do) use different days. Thus, for example, if the dates are listed as 
+
+
+```r
+x = c(17651, -2345, 19760)
+```
+
+Then these numbers represent the following dates: 
+
+
+```r
+x.dates = as.Date(x, origin = "1970-01-01")
+x.dates
+```
+
+```
+## [1] "2018-04-30" "1963-08-01" "2024-02-07"
+```
+
+You can also convert dates into the numbers representing dates. 
+
+
+```r
+x.julian = julian(x.dates, origin = as.POSIXct("1970-01-01", tz = "UCT"))
+x.julian
+```
+
+```
+## [1] 17651 -2345 19760
+## attr(,"origin")
+## [1] "1970-01-01 UCT"
+```
+
+[Julian?](http://aa.usno.navy.mil/data/docs/JulianDate.php) 
+
+---
+
+What if I wanted to create a sequence of dates, starting with Feb 8, 2018 but increasing by 1 day at a time or by every 5th day? 
+
+
+```r
+start.date = as.Date(as.character("2018-02-08"), format = "%Y-%m-%d")
+date.seq1 = seq(start.date, by = 1, length.out = 7)
+date.seq1
+```
+
+```
+## [1] "2018-02-08" "2018-02-09" "2018-02-10" "2018-02-11" "2018-02-12"
+## [6] "2018-02-13" "2018-02-14"
+```
+
+```r
+date.seq5 = seq(start.date, by = 5, length.out = 3)
+date.seq5
+```
+
+```
+## [1] "2018-02-08" "2018-02-13" "2018-02-18"
+```
+
+Note that `length.out =` is specifying how many you dates want to create. 
+
+---
+
+Now, what if I want to know the date 30 days from today? 19 days ago? 
+
+
+```r
+date.30 = today + 30
+date.19 = today - 19
+```
+
+How many days lapsed between two dates? 
+
+
+```r
+date1 = as.Date("2017-04-28")
+date2 = Sys.Date()
+lapsed.time = date2 - date1
+lapsed.time
+```
+
+```
+## Time difference of 286 days
+```
+
+Say I want to create a vector of dates that starts and ends on specific dates, and the step function is 1 day, a week, 4 months, etc. The step is indicated with the `by = ""` command 
+
+
+```r
+my.dates1 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "day")
+my.dates2 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "week")
+my.dates3 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "month")
+my.dates4 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "3 days")
+my.dates5 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "2 weeks")
+my.dates6 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "4 months")
+my.dates7 = seq(from = as.Date("2017-12-17"), to = as.Date("2019-12-16"), by = "year")
+my.dates8 = seq(from = as.Date("2017-12-17"), to = as.Date("2022-12-16"), by = "2 years")
+```
+
+---
+
+class: inverse, middle, center 
+
+&lt;center&gt;&lt;img src = "./images/hex-lubridate.png"&gt;&lt;/center&gt;
+
+---
+
+This package makes working with dates and times quite easy because it does what base R does but in more intuitive ways and perhaps more flexibly. Let us start with some date fields.
+
+
+```r
+today1 = "20171217"
+today2 = "2017-12-17"
+today3 = "2017 December 17"
+today4 = "20171217143241"
+today5 = "2017 December 17 14:32:41"
+today6 = "December 17 2017 14:32:41"
+today7 = "17-Dec, 2017 14:32:41"
+```
+
+The formats are quite varied but `lubridate` deals with them quite seamlessly so long as you pay attention to the order -- is year first or last? What about month? day? Is time given in hours, minutes and seconds?. 
+
+---
+
+.pull-left[
+
+```r
+library(lubridate)
+
+ymd(today1)
+```
+
+```
+## [1] "2017-12-17"
+```
+
+```r
+ymd(today2)
+```
+
+```
+## [1] "2017-12-17"
+```
+
+```r
+ymd(today3)
+```
+
+```
+## [1] "2017-12-17"
+```
+]
+.pull-right[
+
+```r
+ymd_hms(today4)
+```
+
+```
+## [1] "2017-12-17 14:32:41 UTC"
+```
+
+```r
+ymd_hms(today5)
+```
+
+```
+## [1] "2017-12-17 14:32:41 UTC"
+```
+
+```r
+mdy_hms(today6)
+```
+
+```
+## [1] "2017-12-17 14:32:41 UTC"
+```
+
+```r
+dmy_hms(today7)
+```
+
+```
+## [1] "2017-12-17 14:32:41 UTC"
+```
+]
+
+---
+
+If I need to extract data/time elements, I can do that as well. 
+
+
+```r
+today = dmy_hms(today7)
+today  # a date and time set in today7 
+```
+
+```
+## [1] "2017-12-17 14:32:41 UTC"
+```
+
+```r
+today.y = year(today)
+today.y  # The year 
+```
+
+```
+## [1] 2017
+```
+
+```r
+today.m1 = month(today)
+today.m1  # the month, as a number  
+```
+
+```
+## [1] 12
+```
+
+```r
+today.m2 = month(today, label = TRUE, abbr = TRUE)
+today.m2  # labeling the month but with an abbreviation 
+```
+
+```
+## [1] Dec
+## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec
+```
+
+```r
+today.m3 = month(today, label = TRUE, abbr = FALSE)
+today.m3  # fully labelling the month 
+```
+
+```
+## [1] December
+## 12 Levels: January &lt; February &lt; March &lt; April &lt; May &lt; June &lt; ... &lt; December
+```
+
+---
+
+.pull-left[
+
+```r
+today.w = week(today)
+today.w  # what week of the year is it? 
+```
+
+```
+## [1] 51
+```
+
+```r
+today.doy = yday(today)
+today.doy  # what day of the year is it? 
+```
+
+```
+## [1] 351
+```
+
+```r
+today.dom = mday(today)
+today.dom  # what day of the month is it? 
+```
+
+```
+## [1] 17
+```
+]
+.pull-right[
+
+```r
+today.dow1 = wday(today)
+today.dow1  # what day of the week is it,  as a number? 
+```
+
+```
+## [1] 1
+```
+
+```r
+today.dow2 = wday(today, label = TRUE, abbr = TRUE)
+today.dow2  #  day of the week labelled but abbreviated 
+```
+
+```
+## [1] Sun
+## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat
+```
+
+```r
+today.dow3 = wday(today, label = TRUE, abbr = FALSE)
+today.dow3  # day of the week fully labelled  
+```
+
+```
+## [1] Sunday
+## 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday
+```
+]
+
+---
+
+
+```r
+today.h = hour(today)
+today.h  # what hour is it? 
+```
+
+```
+## [1] 14
+```
+
+```r
+today.m = minute(today)
+today.m  # what minute is it? 
+```
+
+```
+## [1] 32
+```
+
+```r
+today.s = second(today)
+today.s  # what second is it? 
+```
+
+```
+## [1] 41
+```
+
+```r
+today.tz = tz(today)
+today.tz  # what time zone is it? 
+```
+
+```
+## [1] "UTC"
+```
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightlines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

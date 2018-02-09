@@ -1,0 +1,239 @@
+---
+title: "Working with dates and times"
+subtitle: "(MPA 6020)"
+author: "Ani Ruhil"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["default", "rladies-fonts"]
+    seal: true
+    self_contained: false
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightlines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 300, tidy = TRUE, tidy.opts = list(width.cutoff = 90), fig.align = "center", fig.width = 8, fig.height = 6, out.width = "60%", cache = TRUE) 
+```
+
+## Agenda 
+
+Understanding how to work with dates and times with 
+
+- using `base R` 
+- using `lubridate` 
+
+---
+
+Start by creating some data values.  
+
+```{r dates00}
+basedate = as.Date("1970-1-1")
+today = Sys.Date()
+tomorrow = as.Date("2017-12-18")
+yesterday1 = "12/16/2017"
+yesterday2 = "12-16-17"
+yesterday3 = "12 16 17"
+```
+
+How did R read these? 
+
+```{r dates01}
+str(list(basedate, today, tomorrow, yesterday1, yesterday2, yesterday3))
+```
+
+Some are dates some are characters `(chr)` 
+
+---
+
+We can flip the characters into dates 
+
+```{r dates02}
+yesterday1d = as.Date(yesterday1, format = "%m/%d/%Y")
+yesterday2d = as.Date(yesterday2, format = "%m-%d-%y")
+yesterday3d = as.Date(yesterday3, format = "%m %d %y")
+yesterday1d; yesterday2d; yesterday3d
+```
+
+---
+
+There are special switches that indicate date components when you `format = ""`
+
+```{r dates08}
+df = data.frame(Code = c("%a", "%A", "%d", "%m", "%b", "%B", "%y", "%Y"), 
+    Represents = c("Day spelled out (abbreviated)", "Day spelled out", "Day of the month", "Month", "Month (abbreviated)", 
+        "Month (fully spelled out)", "Year (2-digits)", "Year (4-digits)"), 
+    Example = c("Mon", "Monday", "16", "12", "Dec", "December", "17", "2017"))
+
+df
+```
+
+
+---
+
+So if you ever run into a date field that needs formatting, what we have covered should help you convert it into a proper date formatted variable.  
+
+Once you convert them to the date format, you can extract other quantities. 
+
+```{r dates03}
+weekdays(yesterday1d)
+months(today)
+quarters(today)
+```
+
+---
+
+Sometimes you will have a number representing the date, with the number representing the number of days since (if positive) or before (if negative) some date  of origin. R uses `1970-01-01` but other software packages may (and some do) use different days. Thus, for example, if the dates are listed as 
+
+```{r dates04}
+x = c(17651, -2345, 19760)
+```
+
+Then these numbers represent the following dates: 
+
+```{r dates05}
+x.dates = as.Date(x, origin = "1970-01-01")
+x.dates
+```
+
+You can also convert dates into the numbers representing dates. 
+
+```{r dates06}
+x.julian = julian(x.dates, origin = as.POSIXct("1970-01-01", tz = "UCT"))
+x.julian
+```
+
+[Julian?](http://aa.usno.navy.mil/data/docs/JulianDate.php) 
+
+---
+
+What if I wanted to create a sequence of dates, starting with Feb 8, 2018 but increasing by 1 day at a time or by every 5th day? 
+
+```{r dates07}
+start.date = as.Date(as.character("2018-02-08"), format = "%Y-%m-%d")
+date.seq1 = seq(start.date, by = 1, length.out = 7)
+date.seq1
+date.seq5 = seq(start.date, by = 5, length.out = 3)
+date.seq5
+```
+
+Note that `length.out =` is specifying how many you dates want to create. 
+
+---
+
+Now, what if I want to know the date 30 days from today? 19 days ago? 
+
+```{r dates09}
+date.30 = today + 30
+date.19 = today - 19
+```
+
+How many days lapsed between two dates? 
+
+```{r dates10}
+date1 = as.Date("2017-04-28")
+date2 = Sys.Date()
+lapsed.time = date2 - date1; lapsed.time
+```
+
+Say I want to create a vector of dates that starts and ends on specific dates, and the step function is 1 day, a week, 4 months, etc. The step is indicated with the `by = ""` command 
+
+```{r dates11}
+my.dates1 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "day")
+my.dates2 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "week")
+my.dates3 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "month")
+my.dates4 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "3 days")
+my.dates5 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "2 weeks")
+my.dates6 = seq(from = as.Date("2017-12-17"), to = as.Date("2018-12-16"), by = "4 months")
+my.dates7 = seq(from = as.Date("2017-12-17"), to = as.Date("2019-12-16"), by = "year")
+my.dates8 = seq(from = as.Date("2017-12-17"), to = as.Date("2022-12-16"), by = "2 years")
+```
+
+---
+
+class: inverse, middle, center 
+
+<center><img src = "./images/hex-lubridate.png"></center>
+
+---
+
+This package makes working with dates and times quite easy because it does what base R does but in more intuitive ways and perhaps more flexibly. Let us start with some date fields.
+
+```{r  lu01}
+today1 = "20171217"
+today2 = "2017-12-17"
+today3 = "2017 December 17"
+today4 = "20171217143241"
+today5 = "2017 December 17 14:32:41"
+today6 = "December 17 2017 14:32:41"
+today7 = "17-Dec, 2017 14:32:41"
+```
+
+The formats are quite varied but `lubridate` deals with them quite seamlessly so long as you pay attention to the order -- is year first or last? What about month? day? Is time given in hours, minutes and seconds?. 
+
+---
+
+.pull-left[
+```{r lu02a}
+library(lubridate)
+
+ymd(today1)
+ymd(today2)
+ymd(today3)
+```
+]
+.pull-right[
+```{r lu02b}
+ymd_hms(today4)
+ymd_hms(today5)
+mdy_hms(today6)
+dmy_hms(today7)
+```
+]
+
+---
+
+If I need to extract data/time elements, I can do that as well. 
+
+```{r lu07}
+today = dmy_hms(today7); today # a date and time set in today7 
+today.y = year(today); today.y # The year 
+today.m1 = month(today); today.m1 # the month, as a number  
+today.m2 = month(today, label = TRUE, abbr = TRUE); today.m2 # labeling the month but with an abbreviation 
+today.m3 = month(today, label = TRUE, abbr = FALSE); today.m3# fully labelling the month 
+```
+
+---
+
+.pull-left[
+```{r lu08a}
+today.w = week(today); today.w # what week of the year is it? 
+today.doy = yday(today); today.doy # what day of the year is it? 
+today.dom = mday(today); today.dom # what day of the month is it? 
+```
+]
+.pull-right[
+```{r lu08b}
+today.dow1 = wday(today); today.dow1 # what day of the week is it,  as a number? 
+today.dow2 = wday(today, label = TRUE, abbr = TRUE); today.dow2 #  day of the week labelled but abbreviated 
+today.dow3 = wday(today, label = TRUE, abbr = FALSE); today.dow3 # day of the week fully labelled  
+```
+]
+
+---
+
+```{r lu08c}
+today.h = hour(today); today.h # what hour is it? 
+today.m = minute(today); today.m # what minute is it? 
+today.s = second(today); today.s # what second is it? 
+today.tz = tz(today); today.tz # what time zone is it? 
+```
+
