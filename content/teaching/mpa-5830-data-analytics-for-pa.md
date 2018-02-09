@@ -3,7 +3,7 @@ title = 'MPA 5830: Data Analytics for Public Sector and Non-Profit Managers'
 
 date = "2017-08-01"
 
-slug =  "mpa-6020-research-methods-for-leadership-public-affairs"
+slug =  "mpa-5830-data-analytics-for-public-sector-and-non-profit-managers"
 
 categories = ["Teaching"]
 
