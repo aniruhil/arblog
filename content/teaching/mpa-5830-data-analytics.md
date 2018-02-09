@@ -6,7 +6,7 @@ author = "Ani Ruhil"
 
 date = "2018-02-09"
 
-slug = "mpa-5830-data-analytics-for-the-public-sector-and-non-profits"
+slug = "mpa-5830-data-analytics"
 
 categories = ["Teaching"]
 
