@@ -34,7 +34,7 @@ You will usually end up needing and using some or all of these six functions:
 In order to understand how these commands work we rely on a simple data frame -- all flights originating and departing from Columbus (Ohio) for January through September of 2017. Let  us load the data and `dplyr`. 
 
 ```{r cmhflights}
-load("./data/cmhflights_01092017.RData")
+load("../data/cmhflights_01092017.RData")
 
 library(dplyr)
 names(cmhflights)
@@ -404,7 +404,7 @@ The database has too many variables (175 or so) and so I'll have you use just a 
 
 ```{r pt01}
 library(readr)
-tb = read_csv("./data/TB_notifications_2018-02-07.csv")
+tb = read_csv("../data/TB_notifications_2018-02-07.csv")
 ```
 
 Let us use `dplyr` to select and filter the tb database so that it meets the following criteria: (i) observations from 2012 or earlier years are kept, and (ii) keep only columns 1 through 6 and 25 (new_sp_m04) through 44 (new_sp_fu).  
@@ -505,6 +505,62 @@ head(tbtab.02)
 
 This is just one example of how `dplyr` and `tidyr` -- two packages from the `tidyverse` -- can be used to deal with what seems to be quite messy data. The more you use it, the easier it becomes to figure out solutions to even very complicated messy data setups. 
 
+# forcats
+The tidyverse team has another package for working with factors -- `forcats`. How is it useful? 
+
+For example, say I have the `mtcars` data and want to see the distribution of the number of cylinders a car has. 
+
+```{r fc01}
+data(mtcars)
+table(mtcars$cyl)
+```
+
+`cyl` is stored as a numeric so I can flip this into a factor via 
+
+```{r fc02}
+library(forcats)
+mtcars$f.cyl = factor(mtcars$cyl)
+mtcars$f.cyl = fct_recode(mtcars$f.cyl, Four = '4', Six = '6', Eight = '8')
+table(mtcars$f.cyl)
+```
+
+If I plot `mpg` by the car, I get 
+
+```{r fc03}
+mtcars$model = row.names(mtcars)
+
+library(ggplot2)
+ggplot(mtcars, aes(x = mpg, y = model)) + geom_point() + labs(x = "Miles per gallon", y = "Car Model")
+```
+
+This isn't very helpful since the models are not arranged in ascending/descending order of miles per gallon. That can be easily fixed:
+
+```{r fc04}
+ggplot(mtcars, aes(x = mpg, fct_reorder(f = model, x = mpg))) + geom_point() + labs(x = "Miles per gallon", y = "Car Model")
+```
+
+If I  want the plot to be in descending order of `mpg`, 
+
+```{r fc05}
+ggplot(mtcars, aes(x = mpg, fct_reorder(f = model, x = -mpg))) + geom_point() + labs(x = "Miles per gallon", y = "Car Model")
+```
+
+I can do this with barplots too. 
+
+```{r fc06}
+ggplot(mtcars, aes(f.cyl)) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
+```
+
+And now the bars ordered by descending frequency, and then by descending frequency. 
+
+```{r fc07}
+ggplot(mtcars, aes(fct_infreq(f.cyl))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
+
+ggplot(mtcars, aes(fct_rev(fct_infreq(f.cyl)))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
+```
+
+Note the use of `ftc_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending. 
+
 
 # Practice Tasks
 
@@ -527,5 +583,6 @@ The tidy data should have the days as rows and TMIN and TMAX as columns (i.e., y
 Download [these data](http://databank.worldbank.org/data/download/catalog/climate_change_download_0.xls) from the World bank's World Development Indicators and Climate Change Knowledge Portal on climate systems, exposure to climate impacts, resilience, greenhouse gas emissions, and energy use. The data are in a worksheet called, wait for it, `Data`, and need to be tidied up such that for every country you have one row per year and then columns for each of the 58 measures (called `Series name` in the database). 
 
 If you really want to challenge yourself, create separate data frames from the `Country` worksheet and the `Series` worksheet. Then merge these with data frame you tidied up. 
+
 
 

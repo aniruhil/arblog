@@ -4,7 +4,7 @@
     <title>dplyr and tidyr</title>
     <meta charset="utf-8">
     <meta name="author" content="Ani Ruhil" />
-    <meta name="date" content="2018-02-08" />
+    <meta name="date" content="2018-02-12" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # dplyr and tidyr
 ## (MPA 6020)
 ### Ani Ruhil
-### 2018-02-08
+### 2018-02-12
 
 ---
 
@@ -298,6 +298,7 @@ tab.05 = cmhflights %&gt;% select(Month, UniqueCarrier, Dest, DepDelayMinutes, O
 ```
 
 ---
+
 ## mutate
 Thus far we have been creating a summary data frame containing whatever we calculated -- the frequencies, averages, and so  on. Some times, however, you may want these calculations to be be appended to the original data frame and stored as new columns. This can be done with `mutate()`, as shown below. In this particular example, I am calculating median departure delay by airline (for each airport it departs from) and then including this as a column called `Median.Delay` in cmhflights. 
 
@@ -324,6 +325,94 @@ names(mut.df2)
 ```
 
 ---
+
+class: inverse, middle, center
+
+### Calculations with dplyr 
+
+---
+
+I want a simple frequency table of flights by carrier. 
+
+
+```r
+tab.01 = cmhflights %&gt;% count(Carrier, sort = TRUE)
+```
+
+By carrier and destination? 
+
+
+```r
+tab.02 = cmhflights %&gt;% count(Carrier, Dest, sort = TRUE)
+```
+
+How many unique aircraft do we have?
+
+
+```r
+cmhflights %&gt;% summarise(unique.planes = n_distinct(TailNum))
+```
+
+```
+## # A tibble: 50 x 3
+## # Groups:   UniqueCarrier [?]
+##    UniqueCarrier Origin unique.planes
+##    &lt;chr&gt;         &lt;chr&gt;          &lt;int&gt;
+##  1 AA            CMH              188
+##  2 AA            DFW              152
+##  3 AA            LAX               60
+##  4 AA            PHL               17
+##  5 AA            PHX               68
+##  6 DL            ATL              433
+##  7 DL            CMH              538
+##  8 DL            DTW                2
+##  9 DL            LAX              100
+## 10 DL            MCO                2
+## # ... with 40 more rows
+```
+
+---
+
+How many flights do we see per unique aircraft? 
+
+
+```r
+tab.03 = cmhflights %&gt;% group_by(TailNum) %&gt;% summarise(Number = n())
+```
+
+If you wanted options in terms of carriers when flying out of Columbus, which destination would give you maximal options? 
+
+
+```r
+tab.04 = cmhflights %&gt;% filter(Origin == "CMH") %&gt;% group_by(Dest) %&gt;% summarise(unique.carriers = n_distinct(Carrier)) %&gt;% 
+    arrange(-unique.carriers)
+```
+
+How many flights to each destination, from Columbus, on February 15?
+
+
+```r
+tab.05 = cmhflights %&gt;% filter(Month == 1 &amp; DayofMonth == 1 &amp; Origin == "CMH") %&gt;% group_by(Dest) %&gt;% 
+    summarise(n.flts = n()) %&gt;% arrange(-n.flts)
+```
+
+
+What if we want the preceding by airline?
+
+
+```r
+tab.06 = cmhflights %&gt;% filter(Month == 1 &amp; DayofMonth == 1 &amp; Origin == "CMH") %&gt;% group_by(Dest, 
+    Carrier) %&gt;% summarise(n.flts = n()) %&gt;% arrange(-n.flts)
+```
+
+---
+
+class: inverse, middle, center
+
+### unnest
+
+---
+
 # unnest 
 Every now and then the data you have to work with includes some list-columns -- columns that are like mini-data frames themselves. Suddenly R functions that would otherwise work will not execute as desired. The `unnest` function from the `tidyverse` unpacks these list-columns into a regular tibble. First a small data frame that shows a list-column. 
 
@@ -623,7 +712,7 @@ The database has too many variables (175 or so) and so I'll have you use just a 
 
 ```r
 library(readr)
-tb = read_csv("./data/TB_notifications_2018-02-07.csv")
+tb = read_csv("../data/TB_notifications_2018-02-07.csv")
 ```
 
 ---
@@ -842,7 +931,128 @@ head(tbtab.02)
 ## 6 China   Males 45-54    668133
 ```
 
-This is just one example of how `dplyr` and `tidyr` -- two packages from the `tidyverse` -- can be used to deal with what seems to be quite messy data. The more you use it, the easier it becomes to figure out solutions to even very complicated messy data setups.
+This is just one example of how `dplyr` and `tidyr` -- two packages from the `tidyverse` -- can be used to deal with what seems to be quite messy data. The more you use it, the easier it becomes to figure out solutions to even very complicated messy data setups. 
+
+---
+
+class: inverse, middle, center 
+
+&lt;center&gt;&lt;img src = "./images/hex-forcats.png" width = 200px&gt;&lt;/center&gt;
+
+---
+
+Say I have the `mtcars` data and want to see the distribution of the number of cylinders a car has
+
+
+```r
+data(mtcars)
+table(mtcars$cyl)
+```
+
+```
+## 
+##  4  6  8 
+## 11  7 14
+```
+
+`cyl` is stored as a numeric so I can flip this into a factor via 
+
+
+```r
+library(forcats)
+mtcars$f.cyl = factor(mtcars$cyl)
+mtcars$f.cyl = fct_recode(mtcars$f.cyl, Four = "4", Six = "6", Eight = "8")
+table(mtcars$f.cyl)
+```
+
+```
+## 
+##  Four   Six Eight 
+##    11     7    14
+```
+
+---
+
+If I plot `mpg` by the car, I get 
+
+
+```r
+mtcars$model = row.names(mtcars)
+
+library(ggplot2)
+ggplot(mtcars, aes(x = mpg, y = model)) + geom_point() + labs(x = "Miles per gallon", y = "Car Model")
+```
+
+&lt;img src="Module04_files/figure-html/fc03-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+This isn't very helpful since the models are not arranged in ascending/descending order of miles per gallon. That can be easily fixed:
+
+---
+
+.pull-left[
+
+If I  want the plot to be in descending order of `mpg`, 
+
+
+```r
+ggplot(mtcars, aes(x = mpg, fct_reorder(f = model, x = mpg))) + geom_point() + labs(x = "Miles per gallon", 
+    y = "Car Model")
+```
+
+&lt;img src="Module04_files/figure-html/fc04-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+If I  want the plot to be in descending order of `mpg`, 
+
+
+```r
+ggplot(mtcars, aes(x = mpg, fct_reorder(f = model, x = -mpg))) + geom_point() + labs(x = "Miles per gallon", 
+    y = "Car Model")
+```
+
+&lt;img src="Module04_files/figure-html/fc05-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+I can do this with bar-plots too. 
+
+
+```r
+ggplot(mtcars, aes(f.cyl)) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + 
+    labs(x = "Number of cylinders", y = "Frequency")
+```
+
+&lt;img src="Module04_files/figure-html/fc06-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+.pull-left[
+The bars ordered by descending frequency
+
+
+```r
+ggplot(mtcars, aes(fct_infreq(f.cyl))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + 
+    labs(x = "Number of cylinders", y = "Frequency")
+```
+
+&lt;img src="Module04_files/figure-html/fc07a-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+The bars ordered by ascending frequency
+
+```r
+ggplot(mtcars, aes(fct_rev(fct_infreq(f.cyl)))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + 
+    labs(x = "Number of cylinders", y = "Frequency")
+```
+
+&lt;img src="Module04_files/figure-html/fc07b-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+
+Note the use of `ftc_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
