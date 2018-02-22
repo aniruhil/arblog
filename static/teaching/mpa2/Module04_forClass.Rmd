@@ -547,19 +547,19 @@ ggplot(mtcars, aes(x = mpg, fct_reorder(f = model, x = -mpg))) + geom_point() + 
 
 I can do this with barplots too. 
 
-```{r fc06}
+```{r fc06, out.width="60%"}
 ggplot(mtcars, aes(f.cyl)) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
 ```
 
 And now the bars ordered by descending frequency, and then by descending frequency. 
 
-```{r fc07}
+```{r fc07, out.width="60%"}
 ggplot(mtcars, aes(fct_infreq(f.cyl))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
 
 ggplot(mtcars, aes(fct_rev(fct_infreq(f.cyl)))) + geom_bar(aes(fill = f.cyl)) + theme(legend.position = "none") + labs(x = "Number of cylinders", y = "Frequency")
 ```
 
-Note the use of `ftc_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending. 
+Note the use of `fct_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending. 
 
 
 # Practice Tasks
