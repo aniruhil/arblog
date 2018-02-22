@@ -716,4 +716,4 @@ ggplot(mtcars, aes(fct_rev(fct_infreq(f.cyl)))) + geom_bar(aes(fill = f.cyl)) + 
 ```
 ]
 
-Note the use of `ftc_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending. 
+Note the use of `fct_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending. 

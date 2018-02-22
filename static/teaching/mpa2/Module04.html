@@ -4,7 +4,7 @@
     <title>dplyr and tidyr</title>
     <meta charset="utf-8">
     <meta name="author" content="Ani Ruhil" />
-    <meta name="date" content="2018-02-12" />
+    <meta name="date" content="2018-02-22" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # dplyr and tidyr
 ## (MPA 6020)
 ### Ani Ruhil
-### 2018-02-12
+### 2018-02-22
 
 ---
 
@@ -1052,7 +1052,7 @@ ggplot(mtcars, aes(fct_rev(fct_infreq(f.cyl)))) + geom_bar(aes(fill = f.cyl)) + 
 &lt;img src="Module04_files/figure-html/fc07b-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
-Note the use of `ftc_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending.
+Note the use of `fct_infreq()` for descending and then `fct_rev(fct_infreq())` for ascending.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
