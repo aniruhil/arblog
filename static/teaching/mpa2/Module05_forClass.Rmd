@@ -50,13 +50,14 @@ yesterday1d; yesterday2d; yesterday3d
 
 There are special switches that indicate date components when you `format = ""`
 
-```{r dates08}
+```{r dates08, echo=FALSE}
 df = data.frame(Code = c("%a", "%A", "%d", "%m", "%b", "%B", "%y", "%Y"), 
     Represents = c("Day spelled out (abbreviated)", "Day spelled out", "Day of the month", "Month", "Month (abbreviated)", 
         "Month (fully spelled out)", "Year (2-digits)", "Year (4-digits)"), 
     Example = c("Mon", "Monday", "16", "12", "Dec", "December", "17", "2017"))
 
-df
+library(kableExtra)
+knitr::kable(df, booktabs = TRUE, "html") %>% kable_styling(full_width = FALSE)
 ```
 
 So if you ever run into a date field that needs formatting, what we have covered should help you convert it into a proper date formatted variable.  

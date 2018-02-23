@@ -4,7 +4,7 @@
     <title>Working with dates and times</title>
     <meta charset="utf-8">
     <meta name="author" content="Ani Ruhil" />
-    <meta name="date" content="2018-02-09" />
+    <meta name="date" content="2018-02-23" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Working with dates and times
 ## (MPA 6020)
 ### Ani Ruhil
-### 2018-02-09
+### 2018-02-23
 
 ---
 
@@ -98,27 +98,57 @@ yesterday3d
 
 There are special switches that indicate date components when you `format = ""`
 
-
-```r
-df = data.frame(Code = c("%a", "%A", "%d", "%m", "%b", "%B", "%y", "%Y"), Represents = c("Day spelled out (abbreviated)", 
-    "Day spelled out", "Day of the month", "Month", "Month (abbreviated)", "Month (fully spelled out)", 
-    "Year (2-digits)", "Year (4-digits)"), Example = c("Mon", "Monday", "16", "12", "Dec", 
-    "December", "17", "2017"))
-
-df
-```
-
-```
-##   Code                    Represents  Example
-## 1   %a Day spelled out (abbreviated)      Mon
-## 2   %A               Day spelled out   Monday
-## 3   %d              Day of the month       16
-## 4   %m                         Month       12
-## 5   %b           Month (abbreviated)      Dec
-## 6   %B     Month (fully spelled out) December
-## 7   %y               Year (2-digits)       17
-## 8   %Y               Year (4-digits)     2017
-```
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Code &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Represents &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Example &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %a &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Day spelled out (abbreviated) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mon &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Day spelled out &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Monday &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %d &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Day of the month &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %m &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Month &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %b &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Month (abbreviated) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Dec &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Month (fully spelled out) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; December &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %y &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Year (2-digits) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; %Y &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Year (4-digits) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2017 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 
 ---

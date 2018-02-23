@@ -11,7 +11,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-02-09" />
+<meta name="date" content="2018-02-23" />
 
 <title>Rmd file for Module 05</title>
 
@@ -240,7 +240,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Rmd file for Module 05</h1>
 <h4 class="author"><em>Ani Ruhil</em></h4>
-<h4 class="date"><em>2018-02-09</em></h4>
+<h4 class="date"><em>2018-02-23</em></h4>
 
 </div>
 
@@ -277,23 +277,111 @@ yesterday1d</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">yesterday3d</code></pre></div>
 <pre><code>## [1] &quot;2017-12-16&quot;</code></pre>
 <p>There are special switches that indicate date components when you <code>format = &quot;&quot;</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Code =</span> <span class="kw">c</span>(<span class="st">&quot;%a&quot;</span>, <span class="st">&quot;%A&quot;</span>, <span class="st">&quot;%d&quot;</span>, <span class="st">&quot;%m&quot;</span>, <span class="st">&quot;%b&quot;</span>, <span class="st">&quot;%B&quot;</span>, 
-    <span class="st">&quot;%y&quot;</span>, <span class="st">&quot;%Y&quot;</span>), <span class="dt">Represents =</span> <span class="kw">c</span>(<span class="st">&quot;Day spelled out (abbreviated)&quot;</span>, 
-    <span class="st">&quot;Day spelled out&quot;</span>, <span class="st">&quot;Day of the month&quot;</span>, <span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Month (abbreviated)&quot;</span>, 
-    <span class="st">&quot;Month (fully spelled out)&quot;</span>, <span class="st">&quot;Year (2-digits)&quot;</span>, <span class="st">&quot;Year (4-digits)&quot;</span>), 
-    <span class="dt">Example =</span> <span class="kw">c</span>(<span class="st">&quot;Mon&quot;</span>, <span class="st">&quot;Monday&quot;</span>, <span class="st">&quot;16&quot;</span>, <span class="st">&quot;12&quot;</span>, <span class="st">&quot;Dec&quot;</span>, <span class="st">&quot;December&quot;</span>, 
-        <span class="st">&quot;17&quot;</span>, <span class="st">&quot;2017&quot;</span>))
-
-df</code></pre></div>
-<pre><code>##   Code                    Represents  Example
-## 1   %a Day spelled out (abbreviated)      Mon
-## 2   %A               Day spelled out   Monday
-## 3   %d              Day of the month       16
-## 4   %m                         Month       12
-## 5   %b           Month (abbreviated)      Dec
-## 6   %B     Month (fully spelled out) December
-## 7   %y               Year (2-digits)       17
-## 8   %Y               Year (4-digits)     2017</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Code
+</th>
+<th style="text-align:left;">
+Represents
+</th>
+<th style="text-align:left;">
+Example
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+%a
+</td>
+<td style="text-align:left;">
+Day spelled out (abbreviated)
+</td>
+<td style="text-align:left;">
+Mon
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%A
+</td>
+<td style="text-align:left;">
+Day spelled out
+</td>
+<td style="text-align:left;">
+Monday
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%d
+</td>
+<td style="text-align:left;">
+Day of the month
+</td>
+<td style="text-align:left;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%m
+</td>
+<td style="text-align:left;">
+Month
+</td>
+<td style="text-align:left;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%b
+</td>
+<td style="text-align:left;">
+Month (abbreviated)
+</td>
+<td style="text-align:left;">
+Dec
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%B
+</td>
+<td style="text-align:left;">
+Month (fully spelled out)
+</td>
+<td style="text-align:left;">
+December
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%y
+</td>
+<td style="text-align:left;">
+Year (2-digits)
+</td>
+<td style="text-align:left;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+%Y
+</td>
+<td style="text-align:left;">
+Year (4-digits)
+</td>
+<td style="text-align:left;">
+2017
+</td>
+</tr>
+</tbody>
+</table>
 <p>So if you ever run into a date field that needs formatting, what we have covered should help you convert it into a proper date formatted variable.</p>
 <p>Once you convert them to the date format, you can extract other quantities.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">weekdays</span>(yesterday1d)</code></pre></div>
