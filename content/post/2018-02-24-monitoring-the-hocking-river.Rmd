@@ -31,10 +31,7 @@ hocking <- readNWISuv(siteNumbers = siteNo,
 
 parameterInfo <- attr(hocking, "variableInfo")
 siteInfo <- attr(hocking, "siteInfo")
-
 hocking <- renameNWISColumns(hocking)
-names(hocking)
-
 hocking$dates = as.Date(as.character(as.POSIXct(hocking$dateTime)))
 
 library(ggplot2)

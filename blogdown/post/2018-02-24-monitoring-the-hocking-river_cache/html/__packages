@@ -1,0 +1,11 @@
+base
+datasets
+utils
+grDevices
+graphics
+stats
+methods
+dataRetrieval
+bindrcpp
+ggplot2
+hrbrthemes
