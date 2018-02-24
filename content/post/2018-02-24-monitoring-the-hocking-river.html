@@ -5,11 +5,39 @@ date: '2018-02-24'
 slug: monitoring-the-hocking-river
 categories:
   - R
-tags: []
+tags: 
+  - USGS
+  - Hocking
+  - Ohio
+  - Athens
 ---
 
 
 
 <p>Its yet another rainy day but not really since the Hocking River that meanders through our town is under flood-watch. Things must be bad enough that the University was forced to cancel all classes for Monday. To whit: “A forecast for heavy rains and high winds have resulted in a flood warning for Athens County beginning this weekend into Monday. Based on current forecasts, specific areas on campus may be impacted by flooding Sunday evening into Monday morning. In addition to closed roadways and flooding on campus, there is a potential for high winds, which increases the possibility of widespread outages across campus, impacting power in residence halls, dining facilities and academic buildings.”</p>
 <p>Naturally, being ever curious I decided to check out the <a href="https://owi.usgs.gov/R/dataRetrieval.html"><code>dataRetrieval</code> package</a> and am glad I did because now I have another toy I can share with our Environmental Studies students. Here is a just quick plot of discharge levels over time.</p>
-<p><img src="/post/2018-02-24-monitoring-the-hocking-river_files/figure-html/dr01-1.png" width="672" /><img src="/post/2018-02-24-monitoring-the-hocking-river_files/figure-html/dr01-2.png" width="672" /></p>
+<pre class="r"><code>library(dataRetrieval)
+
+siteNo &lt;- &quot;03159500&quot;
+pCode &lt;- c(&quot;00060&quot;, &quot;00065&quot;)
+start.date &lt;- &quot;1993-04-24&quot;
+end.date &lt;- &quot;2018-02-24&quot;
+
+hocking &lt;- readNWISuv(siteNumbers = siteNo,
+                      parameterCd = pCode,
+                      startDate = start.date,
+                      endDate = end.date)
+
+parameterInfo &lt;- attr(hocking, &quot;variableInfo&quot;)
+siteInfo &lt;- attr(hocking, &quot;siteInfo&quot;)
+hocking &lt;- renameNWISColumns(hocking)
+hocking$dates = as.Date(as.character(as.POSIXct(hocking$dateTime)))
+
+library(ggplot2)
+library(hrbrthemes)
+ggplot(data = hocking, aes(dates, Flow_Inst)) +
+  geom_line(color = &quot;cornflowerblue&quot;) + scale_x_date(date_breaks = &quot;4 years&quot;) + labs(y = &quot;Discharge, cubic feet per second&quot;, x = &quot;Date&quot;, title = &quot;The Hocking River, Ohio&quot;, subtitle = &quot;(1993 - 2018)&quot;, caption = &quot;Source: USGS&quot;) + ylim(c(0, 20000)) + theme_ipsum_rc()</code></pre>
+<p><img src="/post/2018-02-24-monitoring-the-hocking-river_files/figure-html/dr01-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(data = subset(hocking, !is.na(GH_Inst)), aes(dates, GH_Inst)) +
+  geom_line(color = &quot;firebrick&quot;) + scale_x_date(date_breaks = &quot;3 weeks&quot;) + labs(y = &quot;Gage Height (in feet)&quot;, x = &quot;Date&quot;, title = &quot;The Hocking River, Ohio&quot;, subtitle = &quot;(2017 - 2018)&quot;, caption = &quot;Source: USGS&quot;) + theme_ipsum_rc()</code></pre>
+<p><img src="/post/2018-02-24-monitoring-the-hocking-river_files/figure-html/dr01-2.png" width="672" /></p>
