@@ -20,7 +20,7 @@ Naturally, being ever curious I decided to check out the [`dataRetrieval` packag
 library(dataRetrieval)
 
 siteNo <- "03159500"
-pCode <- "00060"
+pCode <- c("00060", "00065")
 start.date <- "1993-04-24"
 end.date <- "2018-02-24"
 
@@ -41,4 +41,6 @@ library(ggplot2)
 library(hrbrthemes)
 ggplot(data = hocking, aes(dates, Flow_Inst)) +
   geom_line(color = "cornflowerblue") + scale_x_date(date_breaks = "4 years") + labs(y = "Discharge, cubic feet per second", x = "Date", title = "The Hocking River, Ohio", subtitle = "(1993 - 2018)", caption = "Source: USGS") + ylim(c(0, 20000)) + theme_ipsum_rc()
+ggplot(data = subset(hocking, !is.na(GH_Inst)), aes(dates, GH_Inst)) +
+  geom_line(color = "firebrick") + scale_x_date(date_breaks = "3 weeks") + theme_minimal() + labs(y = "Gage Height (in feet)", x = "Date", title = "The Hocking River, Ohio", subtitle = "(2017 - 2018)", caption = "Source: USGS")
 ```
