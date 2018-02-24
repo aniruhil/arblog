@@ -3,16 +3,12 @@ title: "Rmd file for Module 01"
 author: "Ani Ruhil"
 date: "`r Sys.Date()`"
 output:
-    html_document: 
-      theme: readable
-      highlight: tango
-      toc: true
-      toc_float: true
-      collapsed: false
-      smooth_scroll: false
-      self_contained: true
-editor_options: 
-  chunk_output_type: console
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true 
+    collapsed: false
+    smooth_scroll: false
 ---
 
 <script>
@@ -47,9 +43,9 @@ knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, messag
 
 ### Installing R and RStudio 
 
-First install the latest version of ![](./images/Rsvgsm.png) from [here](https://cloud.r-project.org) 
+First install the latest version of ![](../images/Rsvgsm.png) from [here](https://cloud.r-project.org) 
 
-Then install the latest version of ![](./images/Rstudiosm.png) from [here](https://www.rstudio.com/products/rstudio/download/)
+Then install the latest version of ![](../images/Rstudiosm.png) from [here](https://www.rstudio.com/products/rstudio/download/)
 
 Launch RStudio and check that it shows 
 
@@ -68,7 +64,7 @@ embed_vimeo("97166163") %>%
 ## Understand your RStudio Environment 
 
 ```{r panes, out.width="70%", echo=FALSE}
-knitr::include_graphics("./images/rstudiopanes.png")
+knitr::include_graphics("../images/rstudiopanes.png")
 ```
 
 (1) Console = This is where commands are issued to R, either by typing and hitting enter or running commands from a script (like your R Markdown file) 
@@ -117,7 +113,7 @@ mpa6020
   -- data 
 ```
 
-(4) Now create a `project` via `File -> New Project`, choose `Existing Directory`, `r knitr::include_graphics("./images/projects.png")` and browse to the  **mpa6020** folder. RStudio will restart and when it does you will be in the project folder and will see a file called `mpa6020.Rproj`
+(4) Now create a `project` via `File -> New Project`, choose `Existing Directory`, `r knitr::include_graphics("../images/projects.png")` and browse to the  **mpa6020** folder. RStudio will restart and when it does you will be in the project folder and will see a file called `mpa6020.Rproj`
 
 
 ## R Markdown files
@@ -131,18 +127,18 @@ embed_vimeo("178485416") %>%
 (1) Go to `New File -> R Markdown ...` and enter a `My First Rmd File` in title and your `name`. 
 
 ```{r rmd00, out.width = "300", echo=FALSE}
-knitr::include_graphics("./images/Rmd.png")
+knitr::include_graphics("../images/Rmd.png")
 ```
 
 (2)  Click `OK` 
-(3) Now `File -> Save As..` and save it as `testing_rmd` in the **code** sub-folder and click  ![this button](./images/knit.png) 
+(3) Now `File -> Save As..` and save it as `testing_rmd` in the **code** sub-folder and click  ![this button](../images/knit.png) 
 
 > You may see a message that says some packages need to be installed/updated. Allow these to be installed/updated. 
 
 If all goes well, you should see the following output: 
 
 ```{r rmd01, echo=FALSE, fig.height=6, fig.width=5, dev='svg', out.width = "70%"}
-knitr::include_graphics("./images/img01.png")
+knitr::include_graphics("../images/img01.png")
 ```
 
 As the document knits, watch for error messages 
@@ -179,8 +175,8 @@ embed_vimeo("142172484") %>%
 Make sure you have the data-sets sent to you via slack in the **data** folder. If you don't then the commands that follow will not work. We start by reading a simple `comma-separated variable` format file and then a `tab-delimited variable` format file. 
 
 ```{r csvtab, eval=TRUE}
-df.csv = read.csv("./data/ImportDataCSV.csv", sep = ",", header = TRUE) 
-df.tab = read.csv("./data/ImportDataTAB.txt", sep = "\t", header = TRUE) 
+df.csv = read.csv("../data/ImportDataCSV.csv", sep = ",", header = TRUE) 
+df.tab = read.csv("../data/ImportDataTAB.txt", sep = "\t", header = TRUE) 
 ```
 
 The `sep = ","` switch says the individual variables are separated by a comma, and `header = TRUE` switch indicates that the first row includes variable names. The tab-delimited file needs `sep = "\t"`. If both files were read then `Environment` should show objects called `df.csv` and `df.tab`. If you don't see these, check the following: 
@@ -193,25 +189,25 @@ The `sep = ","` switch says the individual variables are separated by a comma, a
 
 ```{r excel, eval=TRUE}
 library(readxl)
-df.xls = read_excel("./data/ImportDataXLS.xls")
-df.xlsx = read_excel("./data/ImportDataXLSX.xlsx")
+df.xls = read_excel("../data/ImportDataXLS.xls")
+df.xlsx = read_excel("../data/ImportDataXLSX.xlsx")
 ```
 
 **SPSS, Stata, SAS** files can be read via the `haven` package
 
 ```{r others, eval=TRUE}
 library(haven)
-df.stata = read_stata("./data/ImportDataStata.dta")
-df.sas = read_sas("./data/ImportDataSAS.sas7bdat")
-df.spss = read_sav("./data/ImportDataSPSS.sav")
+df.stata = read_stata("../data/ImportDataStata.dta")
+df.sas = read_sas("../data/ImportDataSAS.sas7bdat")
+df.spss = read_sav("../data/ImportDataSPSS.sav")
 ```
 
 It is also common to encounter **fixed-width** files where the raw data are stored without any gaps between successive variables. However, these files will come with documentation that will tell you where each variable starts and ends, along with other details about each variable. 
 
-<center><img src = "./images/fwftxt.png", width = 300px></center> 
+<center><img src = "../images/fwftxt.png", width = 300px></center> 
 
 ```{r dfw, eval=TRUE}
-df.fw = read.fwf("./data/fwfdata.txt", widths = c(4, 9, 2, 4), header = FALSE, col.names = c("Name", "Month", "Day", "Year"))
+df.fw = read.fwf("../data/fwfdata.txt", widths = c(4, 9, 2, 4), header = FALSE, col.names = c("Name", "Month", "Day", "Year"))
 ```
 
 Notice we need `widths = c()` to indicate how many slots each variable takes and then `col.names = c()` to label the columns since the data file does not have variable names. 
@@ -252,8 +248,8 @@ unlink(temp)
 You can save your data in a format that R will recognize, giving it the **RData** or **rdata** extension 
 
 ```{r saverd, eval=TRUE}
-save(oursasdata, file = "./data/oursasdata.RData")
-save(oursasdata, file = "./data/oursasdata.rdata")
+save(oursasdata, file = "../data/oursasdata.RData")
+save(oursasdata, file = "../data/oursasdata.rdata")
 ```
 
 Check your **data** directory to confirm both files are present 
@@ -301,10 +297,10 @@ I am overwriting each variable, indicating to R that variable `x` will show up a
 Having added labels to the factors in __hsb2__ we can now save the data for later use. 
 
 ```{r hasb2saveanew, eval=TRUE}
-save(hsb2, file="./data/hsb2.RData") 
+save(hsb2, file="../data/hsb2.RData") 
 ```
 
-Let us test if this R Markdown file will ![](./images/knit.png) to html. If all is good then we can `Close Project`, and when we do so, RStudio will close the project and reopen in a vanilla session.  
+Let us test if this R Markdown file will ![](../images/knit.png) to html. If all is good then we can `Close Project`, and when we do so, RStudio will close the project and reopen in a vanilla session.  
 
 ### Data in packages 
 
@@ -337,9 +333,9 @@ You can save your data via
 
 ```{r mysave1, eval=FALSE}
 data(mtcars)
-save(mtcars, file = "./data/mtcars.RData")
+save(mtcars, file = "../data/mtcars.RData")
 rm(list = ls()) # To clear the Environment
-load("./data/mtcars.RData")
+load("../data/mtcars.RData")
 ```
 
 You can also save multiple data files as follows: 
@@ -348,7 +344,7 @@ You can also save multiple data files as follows:
 data(mtcars)
 library(ggplot2)
 data(diamonds)
-save(mtcars, diamonds, file = "./data/mydata.RData") 
+save(mtcars, diamonds, file = "../data/mydata.RData") 
 rm(list = ls()) # To clear the Environment
 load("./data/mydata.RData")
 ```
@@ -357,18 +353,18 @@ If you want to save just a single `object` from the environment and then load it
 
 ```{r saverds}
 data(mtcars)
-saveRDS(mtcars, file = "./data/mydata.RDS")
+saveRDS(mtcars, file = "../data/mydata.RDS")
 rm(list = ls()) # To clear the Environment
-ourdata = readRDS("./data/mydata.RDS")
+ourdata = readRDS("../data/mydata.RDS")
 ```
 
 If instead you did the following, the file will be read with the name when saved 
 
 ```{r load}
 data(mtcars)
-save(mtcars, file = "./data/mtcars.RData")
+save(mtcars, file = "../data/mtcars.RData")
 rm(list = ls())  # To clear the Environment
-ourdata = load("./data/mtcars.RData") # Note ourdata is listed as "mtcars" 
+ourdata = load("../data/mtcars.RData") # Note ourdata is listed as "mtcars" 
 ```
 
 If you want to save everything you have done in the work session you can via `save.image()` 
@@ -392,7 +388,7 @@ library(widgetframe)
 m1 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 14) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-# saveWidget(m1, 'leaflet.html')
+saveWidget(m1, 'leaflet.html')
 m1
 ```
 
@@ -407,7 +403,7 @@ m2 <- leaflet() %>% setView(lat = 39.322577, lng = -82.106336, zoom = 15) %>%
   addMarkers(lat = 39.319984, lng = -82.107084, popup = c("The Ridges, Building 21")) %>% 
   addTiles() %>% setMapWidgetStyle() %>%
   frameWidget(height = '275')
-# saveWidget(m2, 'leaflet2.html')
+saveWidget(m2, 'leaflet2.html')
 m2
 ```
 
@@ -422,6 +418,7 @@ The fantastic team at RStudio runs free webinar that are often very helpful so b
 - [Getting your data into R](https://www.rstudio.com/resources/webinars/getting-your-data-into-r/) 
 - [Getting Started with R Markdown](https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/)
 
+
 ---------------
 
 ## Exercises for practice 
@@ -435,7 +432,7 @@ Give it a title, your name as the author, and then save it with in **code** with
 Delete all content after the following code chunk  
 
 ```{r, out.width = "50%", echo=FALSE}
-knitr::include_graphics("./images/dchunk.png")
+knitr::include_graphics("../images/dchunk.png")
 ```
 
 Add this level 1 heading `The Starwars Data` and then insert your first code chunk *exactly as shown below* 
@@ -502,13 +499,14 @@ In a final chunk, run the commands necessary to save each of the three data-sets
 
 Now knit the complete `Rmd` file to **html** 
 
+
 #### Ex. 4: Knitting with prettydoc 
 
 I'd like you to use a specific R Markdown format because the  resulting html files are very readable 
 
 You had installed the `prettydoc` package so now create a prettydoc Rmd file as shown below: 
 
-<center><img src = "./images/prettydoc1.png", width = 300px> <img src = "./images/prettydoc2.png", width = 280px></center>
+<center><img src = "../images/prettydoc1.png", width = 300px> <img src = "../images/prettydoc2.png", width = 280px></center>
 
 Now take all the text and code chunk you created in Ex. 3 and insert it in this file. Make sure you add a title, etc in the `YAML` and then knit the file to `html` 
 
