@@ -20,7 +20,7 @@ Its yet another rainy day but not really since the Hocking River that meanders t
 
 Naturally, being ever curious I decided to check out the [`dataRetrieval` package](https://owi.usgs.gov/R/dataRetrieval.html) and am glad I did because now I have another toy I can share with our Environmental Studies students. Here is a just quick plot of discharge levels over time. 
 
-`Updated @ 20:33:57 EST` 
+`Updated on 2018-02-25 @ 19:21:55 EST` 
 
 ```{r dr01, echo=TRUE}
 library(dataRetrieval)
@@ -28,7 +28,7 @@ library(dataRetrieval)
 siteNo <- "03159500"
 pCode <- c("00060", "00065")
 start.date <- "1993-04-24"
-end.date <- "2018-02-24"
+end.date <- "2018-02-25"
 
 hocking <- readNWISuv(siteNumbers = siteNo,
                       parameterCd = pCode,
