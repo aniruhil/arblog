@@ -20,7 +20,7 @@ The syllabus can be [found here](https://aniruhil.org/teaching/mpa2/syllabus.pdf
 | [Basic data operations](https://aniruhil.org/teaching/mpa2/Module03.html) | [Basic data operations](https://aniruhil.org/teaching/mpa2/Module03_forClass.html) | 
 | [Tidy and tweak your data](https://aniruhil.org/teaching/mpa2/Module04.html) | [Tidy and tweak your data](https://aniruhil.org/teaching/mpa2/Module04_forClass.html) |
 | [Work with dates & times](https://aniruhil.org/teaching/mpa2/Module05.html) | [Work with dates & times](https://aniruhil.org/teaching/mpa2/Module05_forClass.html) | 
-| [Census and USGS Data](https://aniruhil.org/teaching/mpa2/Module06.html) | [Census and USGS Data](https://aniruhil.org/teaching/mpa2/Module06_forClass.html) | 
+| [Census, World Bank, and USGS Data](https://aniruhil.org/teaching/mpa2/Module06.html) | [Census, World Bank, and USGS Data](https://aniruhil.org/teaching/mpa2/Module06_forClass.html) | 
 | [Maps in  R](https://aniruhil.org/teaching/mpa2/Module07.html) | [Maps  in R](https://aniruhil.org/teaching/mpa2/Module07_forClass.html) | 
 
 
