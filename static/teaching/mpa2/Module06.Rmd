@@ -1,0 +1,423 @@
+---
+title: "Census and USGS Data"
+subtitle: "(MPA 6020)"
+author: "Ani Ruhil"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["default", "rladies-fonts", "header-footer.css"]
+    seal: true
+    self_contained: false
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightlines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 300, tidy = TRUE, tidy.opts = list(width.cutoff = 90), fig.align = "center", fig.width = 8, fig.height = 6, out.width = "60%", cache = TRUE) 
+
+library(tidycensus)
+library(tidyverse)
+```
+
+
+## Agenda 
+
+Brief overview of useful Census and other data sources you may need  
+
+- using the Census API with `tidycensus`  and `censusapi` 
+- data from the World Bank  
+- data from the USGS 
+
+---
+
+class: inverse, middle, center 
+
+## `tidycensus` 
+
+---
+
+Kyle Walker has authored `tidycensus` to ease working with Census data and it is built to work well with the `tidyverse` and mapping libraries. 
+
+* get a Census API key [from here](http://api.census.gov/data/key_signup.html) 
+* install the `tidycensus` package  
+
+```{r, eval=FALSE}
+library(tidycensus)
+library(tidyverse)
+census_api_key("INSERT YOUR API KEY HERE")
+```
+
+Two functions of primary value -- 
+
+(1) `get_decennial()` for decennial census data from 1990, 2000, and 2010 
+(2) `get_acs()` for data from the American Community Survey (ACS) series 
+
+Typical starting point will be finding the table you want and an easy way to do this is by pulling a list of all tables available for a sopecific census product. Below you see the code for grabbing a list of the Summary File 1 tables from the 2010 decennial census, followed by the 1-year 2016 ACS and the 5-year ACS (2012-2016).    
+
+```{r}
+my.tables.d = load_variables(year = 2010, dataset = "sf1", cache = TRUE)
+my.tables.a1 = load_variables(year = 2016, dataset = "acs1", cache = TRUE)
+my.tables.a5 = load_variables(year = 2016, dataset = "acs5", cache = TRUE)
+```
+
+---
+
+Each of these will show you what variables are available, and make it easier for you to choose the ones you want to work with. Assume we want total population, variable `P0010001`, from the decennial census  
+
+```{r tc04}
+state.popn.d = get_decennial(geography = "state", 
+              variables = c(totpopn = "P0010001"))
+county.popn.d = get_decennial(geography = "county", 
+              variables = c(totpopn = "P0010001"),
+              state = "OH")
+tract.popn.d = get_decennial(geography = "tract", 
+              variables = c(totpopn = "P0010001"),
+              state = "OH", county = "Athens")
+```
+
+and then from the ACS. Note that the default for each is 2010 and the most recent ACS (2012-2016). 
+
+```{r tc05}
+state.popn.acs = get_acs(geography = "state", 
+              variables = c(totpopn = "B01003_001"))
+county.popn.acs = get_acs(geography = "county", 
+              variables = c(totpopn = "B01003_001"),
+              state = "OH")
+tract.popn.acs = get_acs(geography = "tract", 
+              variables = c(totpopn = "B01003_001"),
+              state = "OH", county = "Athens")
+```
+
+---
+
+You can also get an entire table instead of having to list variables, such as shown below, with the default decennial census for the package's current version (2010).  
+
+```{r tc06}
+county.table.d = get_decennial(geography = "county", table = "P012", summary_var = "P0010001")
+state.table.d = get_decennial(geography = "state", table = "P012", summary_var = "P0010001")
+```
+
+Population data for all tracts in the country? 
+
+```{r tc07, message=FALSE, warning=FALSE, eval=FALSE}
+library(tidycensus)
+library(purrr)
+
+us <- unique(fips_codes$state)[1:51]
+
+totalpop <- map_df(us, function(x) {
+  get_acs(geography = "tract", variables = "B01003_001", 
+          state = x, geometry = TRUE)
+})
+```
+
+---
+
+class: inverse, middle, center
+
+## `censusapi`
+
+---
+
+This package will allow you to grab a vast array of Census products, and very niftily as well I might add. 
+
+```{r ca0}
+library(censusapi)
+apis <- listCensusApis()
+```
+
+Application Programming Interfaces (APIs) could have slightly varying parameters so it pays to check the API documentation [available here](https://www.census.gov/data/developers/data-sets.html).  
+
+It is easy to find variable names via the built-in function `listCensusMetadata`. As an example, the bureau's small area health insurance estimates are shown below, as well as the small area income and poverty estimates. 
+
+```{r ca1}
+sahie_vars <- listCensusMetadata(name = "timeseries/healthins/sahie", 
+                                 type = "variables")
+saipe_vars <- listCensusMetadata(name = "timeseries/poverty/saipe", 
+                                 type = "variables")
+```
+
+Want to see what geographies are available? Switch `type =` to `geography`:
+
+```{r ca2}
+sahie_geos <- listCensusMetadata(name = "timeseries/healthins/sahie", 
+                                 type = "geography")
+saipe_geos <- listCensusMetadata(name = "timeseries/poverty/saipe", 
+                                 type = "geography")
+```
+
+---
+
+Grab  the most recent county-level data but note that the latest SAHIE are for 2015 while the latest SAIPE are for 2016. Every variable is downloaded as a  `chr` so you will need to flip what should be numeric into numeric. 
+
+```{r ca3, eval=FALSE}
+sahie_counties <- getCensus(name = "timeseries/healthins/sahie",
+    vars = c("NAME", "IPRCAT", "IPR_DESC", "PCTUI_PT"), 
+    region = "county:*", regionin = "state:39", time = 2015, key = CENSUS_KEY)
+head(sahie_counties, n = 12L)
+
+saipe_counties <- getCensus(name = "timeseries/poverty/saipe",
+    vars = c("NAME", "SAEPOVRTALL_PT", "SAEMHI_PT"), 
+    region = "county:*", regionin = "state:39", time = 2016, key = CENSUS_KEY)
+head(saipe_counties, n = 12L)
+
+saipe_counties$prate = as.numeric(saipe_counties$SAEPOVRTALL_PT)
+saipe_counties$mdhinc = as.numeric(saipe_counties$SAEMHI_PT)
+```
+
+---
+
+If you want data for a lot of geographies, the package will let you do it in seconds. For example, if you want tract-level data for `all tracts`, you can get it as shown below: 
+
+```{r ca5, eval=FALSE}
+fips
+tracts <- NULL
+for (f in fips) {
+    stateget <- paste("state:", f, sep = "")
+    temp <- getCensus(name = "sf3", vintage  = 1990,
+    vars = c("P0070001", "P0070002", "P114A001"), region = "tract:*",
+    regionin = stateget, key = CENSUS_KEY)
+    tracts <- rbind(tracts, temp)
+}
+head(tracts)
+```
+
+Notice that you had to specify the `region`, and since tracts are nested within states, you had to add `regionin = stateget`. 
+
+---
+
+class: inverse, middle, center
+
+## World Bank data with `data360r` and `wbstats` 
+
+---
+
+Two packages are available to access data gathered by the World Bank, [`data360r`](https://github.com/mrpsonglao/data360r) and [`wbstats`](https://github.com/GIST-ORNL/wbstats). Install both packages, and then we can start with `data360r`. We  can start by seeing what indicators are available, some basic country-level information, and what data-sets are available.  
+
+```{r wb01}
+library(data360r)
+#get all indicator metadata in Govdata360
+df_indicators <- get_metadata360(site = "gov", metadata_type = "indicators")
+#get all country metadata in TCdata360
+df_countries <- get_metadata360(metadata_type = 'countries')
+#get all dataset metadata in TCdata360
+df_datasets <- get_metadata360(metadata_type = 'datasets')
+```
+
+---
+
+Once you have identified a particular table, note it's ID, and then  pull it. Say I want indicator 90 = `Can a married woman register a business in the same way as a married man?` I can do the same thing for more than one indicator by specifying the IDs.
+
+```{r wb02}
+df_ind90 = get_data360(indicator_id = c(90))
+df_indtwo = get_data360(indicator_id = c(28130, 28131))
+```
+
+If I only want all data for a specific country or just the indicators we pull in `df_ind1` for a specific country you could do: 
+
+```{r wb03}
+df_allone = get_data360(country_iso3 = "IND")
+df_ind1 <- search_360("woman business", search_type = "indicator", limit_results = 5)
+df_allindtwo = get_data360(indicator_id = df_ind1$id, country_iso3 = "IND")
+```
+
+---
+
+Now an example with two measures -- legal age of marriage for boys and girls. Note that the package allows you to specify the `long` format (preferred) than the default `wide` format you see earlier results being returned in. Note also the use of `timeframes = c()` that allows you to specify the specific time period you want the indicators for. 
+
+```{r wb04}
+search_360("marriage", search_type = "indicator")
+```
+
+---
+
+```{r wbo4b}
+df_marriage <- get_data360(indicator_id = c(204, 205), timeframes = c(2016), output_type = 'long')
+library(ggplot2)
+ggplot(df_marriage, aes(x = Observation, group = Indicator, fill = Indicator)) +
+ 	geom_bar() + theme(legend.position = "none") + facet_wrap(~ Indicator, ncol = 1) + labs(x = "Legal Age of Marriage", y = "Frequency", title = "Legal Age of Marriage for Boys vs. Girls", subtitle = "(2016)", caption = "Source: World Bank Data")
+```
+
+---
+
+The `wbstats` package does pretty much the same thing. Let us see the core functionality by loading the library and then seeing what is available in terms of indicators, topics, and so on. We can then set the most current list of information in `wb_cachelist` to be used via `new_cache`. Doing so speeds up the operations and ensures that you are getting the most uptodate data. 
+
+```{r wbstats01}
+library(wbstats)
+str(wb_cachelist, max.level = 1)
+new_cache <- wbcache()
+```
+
+---
+
+What indicators are available? 
+
+```{r wbstats02}
+corruption_vars <- wbsearch(pattern = "corruption")
+head(corruption_vars)
+```
+
+---
+
+If I want information from a particular source, say Bloomberg, 
+
+```{r wbstats03}
+blmbrg_vars <- wbsearch(pattern = "Bloomberg", fields = "sourceOrg")
+head(blmbrg_vars)
+```
+
+---
+
+Searching for indicators tied to multiple subjects is easy as well:
+
+```{r wbstats04}
+povemply_vars <- wbsearch(pattern = "poverty | unemployment | employment")
+head(povemply_vars)
+```
+
+---
+
+Once we identify what we want, downloading the data is easy as well, needing us to specify just the indicator(s) and then the start and end dates, and then specific country codes if you want data for specific countries. Below I am pulling total population. 
+
+```{r wbstats05}
+pop_data1 <- wb(indicator = "SP.POP.TOTL", startdate = 1960, enddate = 2016)
+
+pop_data2 <- wb(country = c("ABW","AF", "SSF", "ECA", "IND", "CHN"),
+               indicator = "SP.POP.TOTL", startdate = 1960, enddate = 2016)
+
+pop_data3 <- wb(country = c("ABW","AF", "SSF", "ECA", "IND", "CHN"),
+               indicator = c("SP.POP.TOTL", "NY.GDP.MKTP.CD"), 
+               startdate = 1960, enddate = 2016)
+head(pop_data3)
+```
+
+---
+
+```{r wbstats05b}
+pop_data4 <- wb(country = c("ABW","AF", "SSF", "ECA", "IND", "CHN"),
+               indicator = c("SP.POP.TOTL", "NY.GDP.MKTP.CD"), 
+               startdate = 1960, enddate = 2016, return_wide = TRUE)
+head(pop_data4)
+```
+
+---
+
+By default `wb()` will return the data in long format but not necessarily in a tidy format. If you want the data returned on call in a wide format, specify `return_wide = TRUE` and you will have tidy data. 
+
+If you will be working with dates, whether for plotting purposes or otherwise, then activate the `POSIXct = TRUE` switch. Otherwise you will have to do this manually. 
+
+```{r wbstats06}
+pop_data5 <- wb(country = c("IND", "CHN"),
+               indicator = c("SP.POP.TOTL"), 
+               startdate = 1960, enddate = 2016, return_wide = TRUE, 
+               POSIXct = TRUE)
+head(pop_data5)
+```
+
+---
+
+```{r wbstats06b}
+library(scales)
+ggplot(pop_data5, aes(x  = date_ct, y = SP.POP.TOTL)) + 
+  geom_line(aes(color = country)) + scale_y_continuous(labels = comma) + 
+  scale_x_date(date_breaks = "10 years") + theme(legend.position = "bottom") + 
+  labs(x = "Date", y = "Total Population") + theme_minimal()
+```
+
+---
+
+class: inverse, middle, center
+
+## USGS data with `dataRetrieval`
+
+---
+
+The `dataRetrieval` package gives you easy access to water data gathered and warehoused by  the USGS, USDA, EPA, and other entities. The package has an excellent [tutorial available here](https://owi.usgs.gov/R/dataRetrieval.html#1) so I will not go into too many details and nuances here. Start by installing the package and then loading it. 
+
+```{r usgs01}
+library(dataRetrieval)
+```
+
+You will need to know the site(s) you are interested in, as well as the parameters and statistics of interest. The package comes with a built-in data-set that shows you the parameters available, and the complete list of statistics [is available here](https://help.waterdata.usgs.gov/code/stat_cd_nm_query?stat_nm_cd=%25&fmt=html). Sites can be located [from this inventory](https://waterdata.usgs.gov/nwis/inventory).  
+
+```{r usgs02}
+parameterCdFile <- parameterCdFile
+names(parameterCdFile)
+```
+
+---
+
+If you are curious about a specific parameter, you can see what all is available for it. I'll look for anything related to the keyword `storm`, and also what parameter units are available.  
+
+```{r usgs03}
+stormq <- parameterCdFile[grep("storm",
+                                parameterCdFile$parameter_nm,
+                                ignore.case =  TRUE),]
+unique(stormq$parameter_units)
+```
+
+Let us do a quick grab of some data for the Hocking River at Athens, Ohio. 
+
+```{r usgs04}
+siteNo <- "03159500"
+pCode <- "00065"
+start.date <- "2014-10-01"
+end.date <- "2018-02-26"
+
+hocking <- readNWISuv(siteNumbers = siteNo,
+                     parameterCd = pCode,
+                     startDate = start.date,
+                     endDate = end.date)
+```
+
+---
+
+Since the column names are based on parameter codes and hence cryptic, you can clean them up, and also see other attributes embedded in the data-set.
+
+```{r usgs05}
+names(hocking)
+hocking <- renameNWISColumns(hocking)
+names(hocking)
+names(attributes(hocking))
+```
+
+---
+
+If I wanted data for multiple sites, I could find the site numbers and then grab the data.  
+
+```{r usgs06}
+sites <- c("03158200", "03159246")
+pcode <- "00065"
+start.date <- "2014-10-01"
+end.date <- "2018-02-26"
+
+hocking2 <- readNWISuv(siteNumbers = sites,
+                      parameterCd = pcode,
+                      startDate = start.date,
+                      endDate = end.date)
+hocking2 <- renameNWISColumns(hocking2)
+```
+
+Now a simple time-series plot of gage height for both sites. Note that although I asked for data going far back, not all sites have all data for all time periods so it helps to check the site inventory first. (The code and plot are on the following slide)
+
+---
+
+```{r usgs07}
+parameterInfo <- attr(hocking2, "variableInfo")
+hocking2$station = ifelse(hocking2$site_no == "03158200", "Monday Creek at Doanville", "Sunday Creek Below Millfield")
+hocking2$mydates = as.Date(as.character(hocking2$dateTime), format  = "%Y-%m-%d")
+
+ggplot(data = hocking2, aes(mydates, GH_Inst, color = station)) + 
+  geom_line() + xlab("") + ylab(parameterInfo$variableDescription) + 
+  scale_x_date(date_breaks = "2 weeks") + theme_minimal() + 
+  theme(legend.position = "bottom")  
+```
+

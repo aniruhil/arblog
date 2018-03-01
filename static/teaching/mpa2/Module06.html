@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Census and USGS Data</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <meta name="date" content="2018-03-01" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="header-footer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Census and USGS Data
+## (MPA 6020)
+### Ani Ruhil
+### 2018-03-01
+
+---
+
+
+
+
+
+## Agenda 
+
+Brief overview of useful Census and other data sources you may need  
+
+- using the Census API with `tidycensus`  and `censusapi` 
+- data from the World Bank  
+- data from the USGS 
+
+---
+
+class: inverse, middle, center 
+
+## `tidycensus` 
+
+---
+
+Kyle Walker has authored `tidycensus` to ease working with Census data and it is built to work well with the `tidyverse` and mapping libraries. 
+
+* get a Census API key [from here](http://api.census.gov/data/key_signup.html) 
+* install the `tidycensus` package  
+
+
+```r
+library(tidycensus)
+library(tidyverse)
+census_api_key("INSERT YOUR API KEY HERE")
+```
+
+Two functions of primary value -- 
+
+(1) `get_decennial()` for decennial census data from 1990, 2000, and 2010 
+(2) `get_acs()` for data from the American Community Survey (ACS) series 
+
+Typical starting point will be finding the table you want and an easy way to do this is by pulling a list of all tables available for a sopecific census product. Below you see the code for grabbing a list of the Summary File 1 tables from the 2010 decennial census, followed by the 1-year 2016 ACS and the 5-year ACS (2012-2016).    
+
+
+```r
+my.tables.d = load_variables(year = 2010, dataset = "sf1", cache = TRUE)
+my.tables.a1 = load_variables(year = 2016, dataset = "acs1", cache = TRUE)
+my.tables.a5 = load_variables(year = 2016, dataset = "acs5", cache = TRUE)
+```
+
+---
+
+Each of these will show you what variables are available, and make it easier for you to choose the ones you want to work with. Assume we want total population, variable `P0010001`, from the decennial census  
+
+
+```r
+state.popn.d = get_decennial(geography = "state", variables = c(totpopn = "P0010001"))
+county.popn.d = get_decennial(geography = "county", variables = c(totpopn = "P0010001"), state = "OH")
+tract.popn.d = get_decennial(geography = "tract", variables = c(totpopn = "P0010001"), state = "OH", 
+    county = "Athens")
+```
+
+and then from the ACS. Note that the default for each is 2010 and the most recent ACS (2012-2016). 
+
+
+```r
+state.popn.acs = get_acs(geography = "state", variables = c(totpopn = "B01003_001"))
+county.popn.acs = get_acs(geography = "county", variables = c(totpopn = "B01003_001"), state = "OH")
+tract.popn.acs = get_acs(geography = "tract", variables = c(totpopn = "B01003_001"), state = "OH", 
+    county = "Athens")
+```
+
+---
+
+You can also get an entire table instead of having to list variables, such as shown below, with the default decennial census for the package's current version (2010).  
+
+
+```r
+county.table.d = get_decennial(geography = "county", table = "P012", summary_var = "P0010001")
+state.table.d = get_decennial(geography = "state", table = "P012", summary_var = "P0010001")
+```
+
+Population data for all tracts in the country? 
+
+
+```r
+library(tidycensus)
+library(purrr)
+
+us &lt;- unique(fips_codes$state)[1:51]
+
+totalpop &lt;- map_df(us, function(x) {
+    get_acs(geography = "tract", variables = "B01003_001", state = x, geometry = TRUE)
+})
+```
+
+---
+
+class: inverse, middle, center
+
+## `censusapi`
+
+---
+
+This package will allow you to grab a vast array of Census products, and very niftily as well I might add. 
+
+
+```r
+library(censusapi)
+apis &lt;- listCensusApis()
+```
+
+Application Programming Interfaces (APIs) could have slightly varying parameters so it pays to check the API documentation [available here](https://www.census.gov/data/developers/data-sets.html).  
+
+It is easy to find variable names via the built-in function `listCensusMetadata`. As an example, the bureau's small area health insurance estimates are shown below, as well as the small area income and poverty estimates. 
+
+
+```r
+sahie_vars &lt;- listCensusMetadata(name = "timeseries/healthins/sahie", type = "variables")
+saipe_vars &lt;- listCensusMetadata(name = "timeseries/poverty/saipe", type = "variables")
+```
+
+Want to see what geographies are available? Switch `type =` to `geography`:
+
+
+```r
+sahie_geos &lt;- listCensusMetadata(name = "timeseries/healthins/sahie", type = "geography")
+saipe_geos &lt;- listCensusMetadata(name = "timeseries/poverty/saipe", type = "geography")
+```
+
+---
+
+Grab  the most recent county-level data but note that the latest SAHIE are for 2015 while the latest SAIPE are for 2016. Every variable is downloaded as a  `chr` so you will need to flip what should be numeric into numeric. 
+
+
+```r
+sahie_counties &lt;- getCensus(name = "timeseries/healthins/sahie", vars = c("NAME", "IPRCAT", 
+    "IPR_DESC", "PCTUI_PT"), region = "county:*", regionin = "state:39", time = 2015, key = CENSUS_KEY)
+head(sahie_counties, n = 12L)
+
+saipe_counties &lt;- getCensus(name = "timeseries/poverty/saipe", vars = c("NAME", "SAEPOVRTALL_PT", 
+    "SAEMHI_PT"), region = "county:*", regionin = "state:39", time = 2016, key = CENSUS_KEY)
+head(saipe_counties, n = 12L)
+
+saipe_counties$prate = as.numeric(saipe_counties$SAEPOVRTALL_PT)
+saipe_counties$mdhinc = as.numeric(saipe_counties$SAEMHI_PT)
+```
+
+---
+
+If you want data for a lot of geographies, the package will let you do it in seconds. For example, if you want tract-level data for `all tracts`, you can get it as shown below: 
+
+
+```r
+fips
+tracts &lt;- NULL
+for (f in fips) {
+    stateget &lt;- paste("state:", f, sep = "")
+    temp &lt;- getCensus(name = "sf3", vintage = 1990, vars = c("P0070001", "P0070002", "P114A001"), 
+        region = "tract:*", regionin = stateget, key = CENSUS_KEY)
+    tracts &lt;- rbind(tracts, temp)
+}
+head(tracts)
+```
+
+Notice that you had to specify the `region`, and since tracts are nested within states, you had to add `regionin = stateget`. 
+
+---
+
+class: inverse, middle, center
+
+## World Bank data with `data360r` and `wbstats` 
+
+---
+
+Two packages are available to access data gathered by the World Bank, [`data360r`](https://github.com/mrpsonglao/data360r) and [`wbstats`](https://github.com/GIST-ORNL/wbstats). Install both packages, and then we can start with `data360r`. We  can start by seeing what indicators are available, some basic country-level information, and what data-sets are available.  
+
+
+```r
+library(data360r)
+# get all indicator metadata in Govdata360
+df_indicators &lt;- get_metadata360(site = "gov", metadata_type = "indicators")
+# get all country metadata in TCdata360
+df_countries &lt;- get_metadata360(metadata_type = "countries")
+# get all dataset metadata in TCdata360
+df_datasets &lt;- get_metadata360(metadata_type = "datasets")
+```
+
+---
+
+Once you have identified a particular table, note it's ID, and then  pull it. Say I want indicator 90 = `Can a married woman register a business in the same way as a married man?` I can do the same thing for more than one indicator by specifying the IDs.
+
+
+```r
+df_ind90 = get_data360(indicator_id = c(90))
+```
+
+```
+## &lt;simpleError in parse_block(g[-1], g[1], params.src): duplicate label 'setup'&gt;
+```
+
+```r
+df_indtwo = get_data360(indicator_id = c(28130, 28131))
+```
+
+If I only want all data for a specific country or just the indicators we pull in `df_ind1` for a specific country you could do: 
+
+
+```r
+df_allone = get_data360(country_iso3 = "IND")
+df_ind1 &lt;- search_360("woman business", search_type = "indicator", limit_results = 5)
+df_allindtwo = get_data360(indicator_id = df_ind1$id, country_iso3 = "IND")
+```
+
+```
+## &lt;simpleError in parse_block(g[-1], g[1], params.src): duplicate label 'setup'&gt;
+```
+
+---
+
+Now an example with two measures -- legal age of marriage for boys and girls. Note that the package allows you to specify the `long` format (preferred) than the default `wide` format you see earlier results being returned in. Note also the use of `timeframes = c()` that allows you to specify the specific time period you want the indicators for. 
+
+
+```r
+search_360("marriage", search_type = "indicator")
+```
+
+```
+##     id
+## 1: 204
+## 2: 205
+## 3: 206
+## 4: 207
+## 5: 208
+##                                                                                                         name
+## 1:                                                               What is the legal age of marriage for boys?
+## 2:                                                              What is the legal age of marriage for girls?
+## 3:                                                    Are there any exceptions to the legal age of marriage?
+## 4:                                              Does the law prohibit or invalidate child or early marriage?
+## 5: Are there penalties in the law for authorizing or knowingly entering into the child or early marriage?¥Ë_
+##                slug      type      score                     dataset
+## 1:    age.marr.male indicator 0.11111111 Women, Business and the Law
+## 2:     age.marr.fem indicator 0.11111111 Women, Business and the Law
+## 3: marry.age.except indicator 0.10000000 Women, Business and the Law
+## 4:        chld.marr indicator 0.10000000 Women, Business and the Law
+## 5:        h44ef57bd indicator 0.05882353 Women, Business and the Law
+##    redirect
+## 1:    FALSE
+## 2:    FALSE
+## 3:    FALSE
+## 4:    FALSE
+## 5:    FALSE
+```
+
+---
+
+
+```r
+df_marriage &lt;- get_data360(indicator_id = c(204, 205), timeframes = c(2016), output_type = "long")
+library(ggplot2)
+ggplot(df_marriage, aes(x = Observation, group = Indicator, fill = Indicator)) + geom_bar() + 
+    theme(legend.position = "none") + facet_wrap(~Indicator, ncol = 1) + labs(x = "Legal Age of Marriage", 
+    y = "Frequency", title = "Legal Age of Marriage for Boys vs. Girls", subtitle = "(2016)", 
+    caption = "Source: World Bank Data")
+```
+
+&lt;img src="Module06_files/figure-html/wbo4b-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+The `wbstats` package does pretty much the same thing. Let us see the core functionality by loading the library and then seeing what is available in terms of indicators, topics, and so on. We can then set the most current list of information in `wb_cachelist` to be used via `new_cache`. Doing so speeds up the operations and ensures that you are getting the most uptodate data. 
+
+
+```r
+library(wbstats)
+str(wb_cachelist, max.level = 1)
+```
+
+```
+## List of 7
+##  $ countries  :'data.frame':	304 obs. of  18 variables:
+##  $ indicators :'data.frame':	16978 obs. of  7 variables:
+##  $ sources    :'data.frame':	43 obs. of  8 variables:
+##  $ datacatalog:'data.frame':	238 obs. of  29 variables:
+##  $ topics     :'data.frame':	21 obs. of  3 variables:
+##  $ income     :'data.frame':	7 obs. of  3 variables:
+##  $ lending    :'data.frame':	4 obs. of  3 variables:
+```
+
+```r
+new_cache &lt;- wbcache()
+```
+
+---
+
+What indicators are available? 
+
+
+```r
+corruption_vars &lt;- wbsearch(pattern = "corruption")
+head(corruption_vars)
+```
+
+```
+##             indicatorID
+## 6106     IC.CNS.CORR.ZS
+## 6858     IC.FRM.ELEC.ZS
+## 6873 IC.FRM.CORR.GRAFT2
+## 6874 IC.FRM.CORR.CRIME9
+## 6875  IC.FRM.CORR.CORR9
+## 6876  IC.FRM.CORR.CORR8
+##                                                                                          indicator
+## 6106                        Corruption (% of managers surveyed ranking this as a major constraint)
+## 6858                               Electricity (% of firms identifying this as a major constraint)
+## 6873             Bribery index (% of gift or informal payment requests during public transactions)
+## 6874 Percent of firms identifying the courts system as a major constraint                         
+## 6875                             Percent of firms expected to give gifts to get an import license 
+## 6876                          Percent of firms expected to give gifts to get a construction permit
+```
+
+---
+
+If I want information from a particular source, say Bloomberg, 
+
+
+```r
+blmbrg_vars &lt;- wbsearch(pattern = "Bloomberg", fields = "sourceOrg")
+head(blmbrg_vars)
+```
+
+```
+##        indicatorID                             indicator
+## 262   WHEAT_US_HRW        Wheat, US, HRW, $/mt, current$
+## 766       SUGAR_US         Sugar, US, cents/kg, current$
+## 2563  RUBBER1_MYSG Rubber, Singapore, cents/kg, current$
+## 9488    GFDD.SM.01                Stock price volatility
+## 9496    GFDD.OM.02 Stock market return (%, year-on-year)
+## 12003       BARLEY                Barley, $/mt, current$
+```
+
+---
+
+Searching for indicators tied to multiple subjects is easy as well:
+
+
+```r
+povemply_vars &lt;- wbsearch(pattern = "poverty | unemployment | employment")
+head(povemply_vars)
+```
+
+```
+##    indicatorID
+## 35   WP15177.9
+## 36   WP15177.8
+## 37   WP15177.7
+## 38   WP15177.6
+## 39   WP15177.5
+## 40   WP15177.4
+##                                                                                        indicator
+## 35         Received government transfers in the past year, income, richest 60% (% ages 15+) [w2]
+## 36         Received government transfers in the past year, income, poorest 40% (% ages 15+) [w2]
+## 37 Received government transfers in the past year, secondary education or more (% ages 15+) [w2]
+## 38   Received government transfers in the past year, primary education or less (% ages 15+) [w2]
+## 39                Received government transfers in the past year, older adults (% ages 25+) [w2]
+## 40              Received government transfers in the past year, young adults (% ages 15-24) [w2]
+```
+
+---
+
+Once we identify what we want, downloading the data is easy as well, needing us to specify just the indicator(s) and then the start and end dates, and then specific country codes if you want data for specific countries. Below I am pulling total population. 
+
+
+```r
+pop_data1 &lt;- wb(indicator = "SP.POP.TOTL", startdate = 1960, enddate = 2016)
+
+pop_data2 &lt;- wb(country = c("ABW", "AF", "SSF", "ECA", "IND", "CHN"), indicator = "SP.POP.TOTL", 
+    startdate = 1960, enddate = 2016)
+
+pop_data3 &lt;- wb(country = c("ABW", "AF", "SSF", "ECA", "IND", "CHN"), indicator = c("SP.POP.TOTL", 
+    "NY.GDP.MKTP.CD"), startdate = 1960, enddate = 2016)
+head(pop_data3)
+```
+
+```
+##   iso3c date  value indicatorID         indicator iso2c country
+## 1   ABW 2016 104822 SP.POP.TOTL Population, total    AW   Aruba
+## 2   ABW 2015 104341 SP.POP.TOTL Population, total    AW   Aruba
+## 3   ABW 2014 103795 SP.POP.TOTL Population, total    AW   Aruba
+## 4   ABW 2013 103187 SP.POP.TOTL Population, total    AW   Aruba
+## 5   ABW 2012 102577 SP.POP.TOTL Population, total    AW   Aruba
+## 6   ABW 2011 102053 SP.POP.TOTL Population, total    AW   Aruba
+```
+
+---
+
+
+```r
+pop_data4 &lt;- wb(country = c("ABW", "AF", "SSF", "ECA", "IND", "CHN"), indicator = c("SP.POP.TOTL", 
+    "NY.GDP.MKTP.CD"), startdate = 1960, enddate = 2016, return_wide = TRUE)
+head(pop_data4)
+```
+
+```
+##   iso3c date iso2c country NY.GDP.MKTP.CD SP.POP.TOTL
+## 1   ABW 1960    AW   Aruba             NA       54211
+## 2   ABW 1961    AW   Aruba             NA       55438
+## 3   ABW 1962    AW   Aruba             NA       56225
+## 4   ABW 1963    AW   Aruba             NA       56695
+## 5   ABW 1964    AW   Aruba             NA       57032
+## 6   ABW 1965    AW   Aruba             NA       57360
+```
+
+---
+
+By default `wb()` will return the data in long format but not necessarily in a tidy format. If you want the data returned on call in a wide format, specify `return_wide = TRUE` and you will have tidy data. 
+
+If you will be working with dates, whether for plotting purposes or otherwise, then activate the `POSIXct = TRUE` switch. Otherwise you will have to do this manually. 
+
+
+```r
+pop_data5 &lt;- wb(country = c("IND", "CHN"), indicator = c("SP.POP.TOTL"), startdate = 1960, 
+    enddate = 2016, return_wide = TRUE, POSIXct = TRUE)
+head(pop_data5)
+```
+
+```
+##   iso3c date iso2c country    date_ct granularity SP.POP.TOTL
+## 1   CHN 1960    CN   China 1960-01-01      annual   667070000
+## 2   CHN 1961    CN   China 1961-01-01      annual   660330000
+## 3   CHN 1962    CN   China 1962-01-01      annual   665770000
+## 4   CHN 1963    CN   China 1963-01-01      annual   682335000
+## 5   CHN 1964    CN   China 1964-01-01      annual   698355000
+## 6   CHN 1965    CN   China 1965-01-01      annual   715185000
+```
+
+---
+
+
+```r
+library(scales)
+ggplot(pop_data5, aes(x = date_ct, y = SP.POP.TOTL)) + geom_line(aes(color = country)) + scale_y_continuous(labels = comma) + 
+    scale_x_date(date_breaks = "10 years") + theme(legend.position = "bottom") + labs(x = "Date", 
+    y = "Total Population") + theme_minimal()
+```
+
+&lt;img src="Module06_files/figure-html/wbstats06b-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, middle, center
+
+## USGS data with `dataRetrieval`
+
+---
+
+The `dataRetrieval` package gives you easy access to water data gathered and warehoused by  the USGS, USDA, EPA, and other entities. The package has an excellent [tutorial available here](https://owi.usgs.gov/R/dataRetrieval.html#1) so I will not go into too many details and nuances here. Start by installing the package and then loading it. 
+
+
+```r
+library(dataRetrieval)
+```
+
+You will need to know the site(s) you are interested in, as well as the parameters and statistics of interest. The package comes with a built-in data-set that shows you the parameters available, and the complete list of statistics [is available here](https://help.waterdata.usgs.gov/code/stat_cd_nm_query?stat_nm_cd=%25&amp;fmt=html). Sites can be located [from this inventory](https://waterdata.usgs.gov/nwis/inventory).  
+
+
+```r
+parameterCdFile &lt;- parameterCdFile
+names(parameterCdFile)
+```
+
+```
+## [1] "parameter_cd"       "parameter_group_nm" "parameter_nm"      
+## [4] "casrn"              "srsname"            "parameter_units"
+```
+
+---
+
+If you are curious about a specific parameter, you can see what all is available for it. I'll look for anything related to the keyword `storm`, and also what parameter units are available.  
+
+
+```r
+stormq &lt;- parameterCdFile[grep("storm", parameterCdFile$parameter_nm, ignore.case = TRUE), 
+    ]
+unique(stormq$parameter_units)
+```
+
+```
+## [1] "nu"      "hours"   "minutes" "Mgal"    "ft3/s"   "mgd"     "in"
+```
+
+Let us do a quick grab of some data for the Hocking River at Athens, Ohio. 
+
+
+```r
+siteNo &lt;- "03159500"
+pCode &lt;- "00065"
+start.date &lt;- "2014-10-01"
+end.date &lt;- "2018-02-26"
+
+hocking &lt;- readNWISuv(siteNumbers = siteNo, parameterCd = pCode, startDate = start.date, endDate = end.date)
+```
+
+---
+
+Since the column names are based on parameter codes and hence cryptic, you can clean them up, and also see other attributes embedded in the data-set.
+
+
+```r
+names(hocking)
+```
+
+```
+## [1] "agency_cd"        "site_no"          "dateTime"        
+## [4] "X_00065_00000"    "X_00065_00000_cd" "tz_cd"
+```
+
+```r
+hocking &lt;- renameNWISColumns(hocking)
+names(hocking)
+```
+
+```
+## [1] "agency_cd"  "site_no"    "dateTime"   "GH_Inst"    "GH_Inst_cd"
+## [6] "tz_cd"
+```
+
+```r
+names(attributes(hocking))
+```
+
+```
+## [1] "class"         "row.names"     "names"         "url"          
+## [5] "siteInfo"      "variableInfo"  "disclaimer"    "statisticInfo"
+## [9] "queryTime"
+```
+
+---
+
+If I wanted data for multiple sites, I could find the site numbers and then grab the data.  
+
+
+```r
+sites &lt;- c("03158200", "03159246")
+pcode &lt;- "00065"
+start.date &lt;- "2014-10-01"
+end.date &lt;- "2018-02-26"
+
+hocking2 &lt;- readNWISuv(siteNumbers = sites, parameterCd = pcode, startDate = start.date, endDate = end.date)
+hocking2 &lt;- renameNWISColumns(hocking2)
+```
+
+Now a simple time-series plot of gage height for both sites. Note that although I asked for data going far back, not all sites have all data for all time periods so it helps to check the site inventory first. (The code and plot are on the following slide)
+
+---
+
+
+```r
+parameterInfo &lt;- attr(hocking2, "variableInfo")
+hocking2$station = ifelse(hocking2$site_no == "03158200", "Monday Creek at Doanville", "Sunday Creek Below Millfield")
+hocking2$mydates = as.Date(as.character(hocking2$dateTime), format = "%Y-%m-%d")
+
+ggplot(data = hocking2, aes(mydates, GH_Inst, color = station)) + geom_line() + xlab("") + 
+    ylab(parameterInfo$variableDescription) + scale_x_date(date_breaks = "2 weeks") + theme_minimal() + 
+    theme(legend.position = "bottom")
+```
+
+&lt;img src="Module06_files/figure-html/usgs07-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightlines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
