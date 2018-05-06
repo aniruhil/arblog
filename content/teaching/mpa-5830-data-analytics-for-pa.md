@@ -12,9 +12,9 @@ tags = ["Teaching"]
 +++
 
 
-| Slides | Knitted RMarkdown | Practice Problems |
-| :----  | :-----            | :---------        |
-| [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/module01.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/Module01_forClass.html) |  [Practice Problems](https://aniruhil.org/teaching/danalytics/Practice_Module01.html) |
+| Slides | Knitted RMarkdown |
+| :----  | :-----            |
+| [Introduction to R & RStudio](https://aniruhil.org/teaching/mpa2/module01.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/Module01.html) |
 
 
 

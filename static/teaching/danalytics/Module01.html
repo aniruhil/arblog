@@ -10,14 +10,80 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="@Ruhil" />
+<meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-05-05" />
+<meta name="date" content="2018-05-06" />
 
-<title>MPA 5830: Practice Exercises for Module 01</title>
+<title>MPA 5830 - Module 01</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 
@@ -43,67 +109,246 @@ code > span.ot { color: #007020; }
 <div id="container">
 <div class="inner">
 <header>
-<h1 class="title toc-ignore">MPA 5830: Practice Exercises for Module 01</h1>
-<h3 class="author"><span class="citation">@Ruhil</span></h3>
-<h3 class="date">2018-05-05</h3>
+<h1 class="title toc-ignore">MPA 5830 - Module 01</h1>
+<h3 class="author">Ani Ruhil</h3>
+<h3 class="date">2018-05-06</h3>
 </header>
 
 <hr>
 
 
 
-<div id="problem-1" class="section level4 unnumbered">
-<h4>Problem 1</h4>
-<p><strong>The next set of questions deal with <a href="https://aniruhil.github.io/avsr/teaching/dataviz/af.xls">this data-set</a> dataset that consists of responses of graduate students in the social sciences enrolled in STA 6126 in a recent term at the University of Florida. The variables are:</strong></p>
+<div id="reading-data" class="section level2">
+<h2>Reading data</h2>
+<p>Make sure you have the data-sets sent to you via <strong>Slack</strong> extracted and saved in the <strong>data</strong> folder. If you don’t then the commands that follow will not work.</p>
+<p>We start by reading a simple <code>comma-separated variable</code> format file and then a <code>tab-delimited variable</code> format file.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">df.csv =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../data/ImportDataCSV.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">df.tab =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../data/ImportDataTAB.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>) </a></code></pre></div>
+<p>Note … * The <code>sep = &quot;,&quot;</code> switch says the individual variables are separated by a comma * <code>header = TRUE</code> switch indicates that the first row includes variable names * The tab-delimited file needs <code>sep = &quot;\t&quot;</code></p>
+<p>If both files were read then your RStudio <code>Environment</code> should show objects called <code>df.csv</code> and <code>df.tab</code>. If you don’t see these, check the following:</p>
 <ul>
-<li>GE gender</li>
-<li>AG age in years</li>
-<li>HI high school GPA (on a four-point scale)</li>
-<li>CO college GPA</li>
-<li>DH distance (in miles) of the campus from your home town</li>
-<li>DR distance (in miles) of the classroom from your current residence</li>
-<li>TV average number of hours per week that you watch TV</li>
-<li>SP average number of hours per week that you participate in sports or have other physical exercise NE * number of times a week you read a newspaper</li>
-<li>AH number of people you know who have died from AIDS or who are HIV+</li>
-<li>VE whether you are a vegetarian</li>
-<li>PA political affiliation (d = Democrat, r = Republican, i = independent)</li>
-<li>PI political ideology</li>
-<li>RE how often you attend religious services</li>
-<li>AB opinion about whether abortion should be legal in the first three months of pregnancy</li>
-<li>AA support affirmative action</li>
-<li>LD belief in life after death</li>
-</ul>
-<p>Download these data and read into your software package (SPSS, Excel, etc.). Make sure you label all the variables and their values (if the variable is categorical). For example, the variable <code>HI</code> must be labeled <code>high school GPA (on a four-point scale)</code> and the values of political affiliation labeled Democrat/Independent/Republican rather than d/i/r, and so on.</p>
-<hr />
-</div>
-<div id="problem-2" class="section level4 unnumbered">
-<h4>Problem 2</h4>
-<p><strong>Why are our best and most experienced employees leaving prematurely? The data <a href="https://aniruhil.github.io/avsr/teaching/dataviz/HR_comma_sep.csv">available here</a> includes information on several current and former employees of an anonymous organization.</strong> Fields in the data-set include:</p>
-<ul>
-<li>satisfaction_level = Level of satisfaction (0-1)</li>
-<li>last_evaluation = Evaluation of employee performance (0-1)</li>
-<li>number_project = Number of projects completed while at work</li>
-<li>average_monthly_hours = Average monthly hours at workplace</li>
-<li>time_spend_company = Number of years spent in the company</li>
-<li>Work_accident = Whether the employee had a workplace accident</li>
-<li>left = Whether the employee left the workplace or not (1 or 0)<br />
+<li>Make sure you have the files in your <strong>data</strong> folder</li>
+<li>Make sure the folder has been correctly named (no blank spaces before or after, all lowercase, etc)<br />
 </li>
-<li>promotion_last_5years = Whether the employee was promoted in the last five years</li>
-<li>sales = Department in which they work for</li>
-<li>salary = Relative level of salary (low/med/high)</li>
+<li>Make sure the data folder is inside <strong>mpa5830</strong></li>
 </ul>
-<p>Read this data-set into R and generate a summary via the <code>summary()</code> command. While you are at it, for each variable in the data-set below, identify whether it is (a) numeric or categorical, and (b) a ratio/interval level of measurement (if numeric) or nominal/ordinal (if categorical).</p>
-<hr />
+<p><strong>Excel</strong> files can be read via the <code>readxl</code> package</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(readxl)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">df.xls =<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../data/ImportDataXLS.xls&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">df.xlsx =<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../data/ImportDataXLSX.xlsx&quot;</span>)</a></code></pre></div>
+<p><strong>SPSS, Stata, SAS</strong> files can be read via the <code>haven</code> package</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(haven)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">df.stata =<span class="st"> </span><span class="kw">read_stata</span>(<span class="st">&quot;../data/ImportDataStata.dta&quot;</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">df.sas =<span class="st"> </span><span class="kw">read_sas</span>(<span class="st">&quot;../data/ImportDataSAS.sas7bdat&quot;</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">df.spss =<span class="st"> </span><span class="kw">read_sav</span>(<span class="st">&quot;../data/ImportDataSPSS.sav&quot;</span>)</a></code></pre></div>
+<p>It is also common to encounter <strong>fixed-width</strong> files where the raw data are stored without any gaps between successive variables. However, these files will come with documentation that will tell you where each variable starts and ends, along with other details about each variable.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">df.fw =<span class="st"> </span><span class="kw">read.fwf</span>(<span class="st">&quot;../data/fwfdata.txt&quot;</span>, <span class="dt">widths =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">header =</span> <span class="ot">FALSE</span>, <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;Name&quot;</span>, <span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Day&quot;</span>, <span class="st">&quot;Year&quot;</span>))</a></code></pre></div>
+<p>Notice we need <code>widths = c(.,.,.,)</code> to indicate how many slots each variable takes and then <code>col.names = c(,,,)</code> to label the columns since the data file does not have variable names.</p>
+<div id="reading-files-from-the-web" class="section level3">
+<h3>Reading Files from the Web</h3>
+<p>It is possible to specify the full web-path for a file and read it in, rather than storing a local copy. This is often useful when updated by the source (Census Bureau, Bureau of Labor, Bureau of Economic Analysis, etc.)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fpe =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;http://data.princeton.edu/wws509/datasets/effort.dat&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">test =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/test.txt&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">test.csv =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/test.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">library</span>(foreign)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">hsb2.spss =<span class="st"> </span><span class="kw">read.spss</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/hsb2.sav&quot;</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">df.hsb2.spss =<span class="st"> </span><span class="kw">as.data.frame</span>(hsb2.spss)</a></code></pre></div>
+<p>Note that <code>hsb2.spss</code> was read with the <code>foreign</code>, an alternative package to <code>haven</code> - <code>foreign</code> calls <code>read.spss</code> - <code>haven</code> calls <code>read_spss</code></p>
+<p>The <code>foreign</code> package will also read Stata and other formats and was the one I used a lot before defaulting to <code>haven</code> now. There are other packages for reading SAS, SPSS, etc. data files – <code>sas7bdat</code>, <code>rio</code>, <code>data.table</code>, <code>xlsx</code>, <code>XLConnect</code>, <code>gdata</code>, etc. For class purposes, <code>haven</code> should be the default package you use.</p>
 </div>
-<div id="problem-3" class="section level4 unnumbered">
-<h4>Problem 3</h4>
+<div id="reading-compressed-files" class="section level3">
+<h3>Reading compressed files</h3>
+<p>Large files may sit in compressed archives on the web and R has a neat way of allowing you to download the file, unzip it, and read it. Why is this useful? Because if these files tend to be updated periodicially, R’s ability lets you use the same piece of R code to download/unzip/read the updated file. The tedious way would be to manually download, unzip, place in the appropriate data folder, and then read it.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">temp =<span class="st"> </span><span class="kw">tempfile</span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">download.file</span>(<span class="st">&quot;ftp://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NVSS/bridgepop/2016/pcen_v2016_y1016.sas7bdat.zip&quot;</span>, temp)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">oursasdata =<span class="st"> </span>haven<span class="op">::</span><span class="kw">read_sas</span>(<span class="kw">unz</span>(temp, <span class="st">&quot;pcen_v2016_y1016.sas7bdat&quot;</span>))</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">unlink</span>(temp)</a></code></pre></div>
+<p>You can save your data in a format that R will recognize, giving it the <strong>RData</strong> or <strong>rdata</strong> extension</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">save</span>(oursasdata, <span class="dt">file =</span> <span class="st">&quot;../data/oursasdata.RData&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">save</span>(oursasdata, <span class="dt">file =</span> <span class="st">&quot;../data/oursasdata.rdata&quot;</span>)</a></code></pre></div>
+<p>Check your <strong>data</strong> directory to confirm both files are present</p>
+</div>
+</div>
+<div id="minimal-example-of-data-processing" class="section level2">
+<h2>Minimal example of data processing</h2>
+<p>Working with the <strong>hsb2</strong> data: 200 students from the High school and Beyond study. The variables in this file are:</p>
+<ul>
+<li>female = (0/1)</li>
+<li>race = (1=hispanic 2=asian 3=african-amer 4=white)</li>
+<li>ses = socioeconomic status (1=low 2=middle 3=high)</li>
+<li>schtyp = type of school (1=public 2=private)</li>
+<li>prog = type of program (1=general 2=academic 3=vocational)</li>
+<li>read = standardized reading score</li>
+<li>write = standardized writing score</li>
+<li>math = standardized math score</li>
+<li>science = standardized science score</li>
+<li>socst = standardized social studies score</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">hsb2 =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">'https://stats.idre.ucla.edu/stat/data/hsb2.csv'</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)</a></code></pre></div>
+<p>What are the variable names (i.e., the column headings) in this file? The <code>names()</code> command will tell you that.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">names</span>(hsb2)</a></code></pre></div>
+<pre><code>##  [1] &quot;id&quot;      &quot;female&quot;  &quot;race&quot;    &quot;ses&quot;     &quot;schtyp&quot;  &quot;prog&quot;    &quot;read&quot;   
+##  [8] &quot;write&quot;   &quot;math&quot;    &quot;science&quot; &quot;socst&quot;</code></pre>
+<p>Similarly, the <code>str()</code> command will show you the details of each variable</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">str</span>(hsb2)</a></code></pre></div>
+<pre><code>## 'data.frame':    200 obs. of  11 variables:
+##  $ id     : int  70 121 86 141 172 113 50 11 84 48 ...
+##  $ female : int  0 1 0 0 0 0 0 0 0 0 ...
+##  $ race   : int  4 4 4 4 4 4 3 1 4 3 ...
+##  $ ses    : int  1 2 3 3 2 2 2 2 2 2 ...
+##  $ schtyp : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ prog   : int  1 3 1 3 2 2 1 2 1 2 ...
+##  $ read   : int  57 68 44 63 47 44 50 34 63 57 ...
+##  $ write  : int  52 59 33 44 52 52 59 46 57 55 ...
+##  $ math   : int  41 53 54 47 57 51 42 45 54 52 ...
+##  $ science: int  47 63 58 53 53 63 53 39 58 50 ...
+##  $ socst  : int  57 61 31 56 61 61 61 36 51 51 ...</code></pre>
+<p>and the <code>summary()</code> command will give you some summary information about each variable.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">summary</span>(hsb2)</a></code></pre></div>
+<pre><code>##        id             female           race           ses       
+##  Min.   :  1.00   Min.   :0.000   Min.   :1.00   Min.   :1.000  
+##  1st Qu.: 50.75   1st Qu.:0.000   1st Qu.:3.00   1st Qu.:2.000  
+##  Median :100.50   Median :1.000   Median :4.00   Median :2.000  
+##  Mean   :100.50   Mean   :0.545   Mean   :3.43   Mean   :2.055  
+##  3rd Qu.:150.25   3rd Qu.:1.000   3rd Qu.:4.00   3rd Qu.:3.000  
+##  Max.   :200.00   Max.   :1.000   Max.   :4.00   Max.   :3.000  
+##      schtyp          prog            read           write      
+##  Min.   :1.00   Min.   :1.000   Min.   :28.00   Min.   :31.00  
+##  1st Qu.:1.00   1st Qu.:2.000   1st Qu.:44.00   1st Qu.:45.75  
+##  Median :1.00   Median :2.000   Median :50.00   Median :54.00  
+##  Mean   :1.16   Mean   :2.025   Mean   :52.23   Mean   :52.77  
+##  3rd Qu.:1.00   3rd Qu.:2.250   3rd Qu.:60.00   3rd Qu.:60.00  
+##  Max.   :2.00   Max.   :3.000   Max.   :76.00   Max.   :67.00  
+##       math          science          socst      
+##  Min.   :33.00   Min.   :26.00   Min.   :26.00  
+##  1st Qu.:45.00   1st Qu.:44.00   1st Qu.:46.00  
+##  Median :52.00   Median :53.00   Median :52.00  
+##  Mean   :52.65   Mean   :51.85   Mean   :52.41  
+##  3rd Qu.:59.00   3rd Qu.:58.00   3rd Qu.:61.00  
+##  Max.   :75.00   Max.   :74.00   Max.   :71.00</code></pre>
+<p>There are no value labels for the various qualitative/categorical variables (female, race, ses, schtyp, and prog) but these are easily created as shown below.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">hsb2<span class="op">$</span>female =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>female, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>))</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">hsb2<span class="op">$</span>race =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>race, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Hispanic&quot;</span>, <span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;African American&quot;</span>, <span class="st">&quot;White&quot;</span>))</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">hsb2<span class="op">$</span>ses =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>ses, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;High&quot;</span>))</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">hsb2<span class="op">$</span>schtyp =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>schtyp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Public&quot;</span>, <span class="st">&quot;Private&quot;</span>))</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">hsb2<span class="op">$</span>prog =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>prog, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;General&quot;</span>, <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>))</a></code></pre></div>
+<p>I am overwriting each variable, indicating to R that variable <code>x</code> will show up as numeric with values 0 and 1, and that a 0 should be treated as male and a 1 as female, and so on. There are are four values for race, 3 for ses, 2 for schtyp, and 3 for prog, so the mapping has to reflect this. Note that this is just a quick run through with creating value labels; we will cover this in greater detail in a later module.</p>
+<p><strong>save your work!!</strong></p>
+<p>Having added labels to the factors in <strong>hsb2</strong> we can now save the data for later use.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">save</span>(hsb2, <span class="dt">file=</span><span class="st">&quot;../data/hsb2.RData&quot;</span>) </a></code></pre></div>
+<p>Let us test if this R Markdown file will Knit to html. If all is good then we can <code>Close Project</code>, and when we do so, RStudio will close the project and reopen in a vanilla session.</p>
+<div id="data-in-packages" class="section level3">
+<h3>Data in packages</h3>
+<p>Almost all R packages come bundled with data-sets, too many of them to walk you through but</p>
+<ul>
+<li><a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html">see here for standard ones</a></li>
+<li><a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html">here are some more</a></li>
+<li><a href="http://www.public.iastate.edu/~hofmann/data_in_r_sortable.html">and some more</a></li>
+</ul>
+<p>To load data from a package, if you know the data-set’s name, run</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(HistData)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;Galton&quot;</span>)</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">names</span>(Galton)</a></code></pre></div>
+<pre><code>## [1] &quot;parent&quot; &quot;child&quot;</code></pre>
+<p>or you can run</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;GaltonFamilies&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HistData&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">names</span>(GaltonFamilies)</a></code></pre></div>
+<pre><code>## [1] &quot;family&quot;          &quot;father&quot;          &quot;mother&quot;          &quot;midparentHeight&quot;
+## [5] &quot;children&quot;        &quot;childNum&quot;        &quot;gender&quot;          &quot;childHeight&quot;</code></pre>
+</div>
+<div id="saving-data-and-workspaces" class="section level3">
+<h3>Saving data and workspaces</h3>
+<p>You can save your data via</p>
+<ul>
+<li><code>save(dataname, file = &quot;filepath/filename.RData&quot;)</code> or</li>
+<li><code>save(dataname, file = &quot;filepath/filename.rdata&quot;)</code></li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">data</span>(mtcars)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">save</span>(mtcars, <span class="dt">file =</span> <span class="st">&quot;../data/mtcars.RData&quot;</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="co"># To clear the Environment</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">load</span>(<span class="st">&quot;../data/mtcars.RData&quot;</span>)</a></code></pre></div>
+<p>You can also save multiple data files, individual objects, and even everything you have done in a work session. These are covered in the textbook.</p>
+<p>If you are not in a project and they try to close RStudio after some code has been run, you will be prompted to save (or not) the <code>workspace</code> and you should say “no” by default unless you want to save the workspace.</p>
+</div>
+</div>
+<div id="rstudio-webinars" class="section level1">
+<h1>RStudio webinars</h1>
+<p>The fantastic team at RStudio runs free webinar that are often very helpful so be sure to signup with your email. Here are some video recodgins of webinars that are relevant to what we have covered so far.</p>
+<ul>
+<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-part-1/">Programming Part 1 (Writing code in RStudio)</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-programming-part-2/">Programming Part 2 (Debugging code in RStudio)</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/rstudio-essentials-webinar-series-managing-change-part-1/">Managing Change Part 1 (Projects in RStudio)</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/importing-data-into-r/">Importing Data into R</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/whats-new-with-readxl/">Whats new with readxl</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/getting-your-data-into-r/">Getting your data into R</a></li>
+<li><a href="https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/">Getting Started with R Markdown</a></li>
+</ul>
+<hr />
+<div id="exercises-for-practice" class="section level2">
+<h2>Exercises for practice</h2>
+<p>These are some exercises you can use to practice and build your R skills. They are not for grade. s</p>
+<div id="ex.-1-creating-and-knitting-a-new-rmarkdown-file" class="section level3">
+<h3>Ex. 1: Creating and knitting a new RMarkdown file</h3>
+<p>Open a fresh session by launching RStudio and then running <code>File -&gt; Open Project...</code></p>
+<p>Give it a title, your name as the author, and then save it with in <strong>code</strong> with the following name: <code>m1ex1.Rmd</code></p>
+<p>Add this level 1 heading <code>The Starwars Data</code> and then insert your first code chunk <em>exactly as shown below</em></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">data</span>(starwars)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">str</span>(starwars)</a></code></pre></div>
+<p>Add this level 2 heading <code>Character Heights and Weights</code> and then your second code chunk</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, plot<span class="op">$</span>mass)</a></code></pre></div>
+<p>Now knit this file to <strong>html</strong></p>
+</div>
+<div id="ex.-2-lorem-ipsum-paragraphs-and-graphs" class="section level3">
+<h3>Ex. 2: Lorem Ipsum paragraphs and graphs</h3>
+<p>Go to <a href="https://loremipsumgenerator.com/generator/?n=2&amp;t=p">this website</a> and generate five Lorem Ipsum placeholder text paragraphs</p>
+<ul>
+<li>para 1: must have level 1 heading</li>
+<li>para 2: must have level 2 heading</li>
+<li>para 3: must have level 3 heading</li>
+<li>para 4: must have level 4 heading</li>
+<li>para 5: must have level 5 heading</li>
+</ul>
+<p>Using the <code>starwars</code> data, create five code chunks, one after each paragraph</p>
+<ul>
+<li>Each code chunk will have the same R code (see below)</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, plot<span class="op">$</span>mass)</a></code></pre></div>
+<p>Now knit this file to <strong>html</strong></p>
+</div>
+<div id="ex.-3-reading-in-three-data-files" class="section level3">
+<h3>Ex. 3: Reading in three data files</h3>
+<p>Create a new <code>RMarkdown</code> file that is blank after the <code>initial setup code chunk</code></p>
+<p>Insert a code chunk that reads in both these files found on the web</p>
+<ul>
+<li><code>http://www.stata.com/data/jwooldridge/eacsap/mroz.dta</code></li>
+<li><code>http://calcnet.mth.cmich.edu/org/spss/V16_materials/DataSets_v16/airline_passengers.sav</code> In a follow-up code chunk, run the <code>summary()</code> command on each data-set</li>
+</ul>
+<p>In a separate code chunk, read in <a href="https://s3.amazonaws.com/tripdata/201502-citibike-tripdata.zip">this dataset</a> after you download it and save the unzipped file in your <strong>data</strong> folder.</p>
+<ul>
+<li>The variable <code>gender</code> has the following codes: <code>Zero = unknown; 1 = male; 2 = female</code></li>
+<li>Use this coding scheme to convert <code>gender</code> into a <code>factor</code> with these value labels</li>
+</ul>
+<p>In a follow-up chunk run both the following commands on this data-set</p>
+<ul>
+<li><code>names()</code></li>
+<li><code>str()</code></li>
+<li><code>summary()</code></li>
+</ul>
+<p>In a final chunk, run the commands necessary to save each of the three data-sets as separate <code>RData</code> files. Make sure you save them in your <strong>data</strong> folder.</p>
+<p>Now knit the complete <code>Rmd</code> file to <strong>html</strong></p>
+</div>
+<div id="ex.-4-welcome-to-kaggle-mass-shootings" class="section level3">
+<h3>Ex. 4: Welcome to Kaggle &amp; Mass Shootings</h3>
 <p>Go to <a href="https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years">this page on Kaggle</a> and read the description of the data-set on mass shootings in the United States that occurred during the 1966-2017 period. once you have read the overview of the data, click the “Data” tab and download the file called <code>Mass Shootings Dataset.csv</code>. Be careful; there are several versions so the one you want is the very last one and not any that have a version number attached, such as “Mass Shootings Dataset Ver 2.csv” for example.</p>
 <p>Now read this file into R, perhaps naming it shootings and run the <code>summary()</code> command on it. Note the number of observations and the number of variables in the data-set.</p>
-<hr />
 </div>
-<div id="problem-4" class="section level4 unnumbered">
-<h4>Problem 4</h4>
+<div id="ex.-5-animal-shelters" class="section level3">
+<h3>Ex. 5: Animal Shelters</h3>
 <p>Go to <a href="https://www.kaggle.com/aaronschlegel/austin-animal-center-shelter-outcomes-and">this page on Kaggle</a> and download the file called <code>aac_shelter_outcomes.csv</code> AFTER reading the data overview, read in the file and generate a list of variable names with an appropriate command.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
