@@ -15,7 +15,7 @@ tags = ["Teaching"]
 | Slides | Knitted RMarkdown |
 | :----  | :-----            |
 | [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/presentations/Module01Pres.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/Module01.html) |
-| [Reading/Writing data and some calculations](https://aniruhil.org/teaching/danalytics/presentations/Module01Pres.html) | [Reading/Writing data and some calculations](https://aniruhil.org/teaching/danalytics/Module01.html) |
+| [Reading/Writing data and some calculations](https://aniruhil.org/teaching/danalytics/presentations/Module02Pres.html) | [Reading/Writing data and some calculations](https://aniruhil.org/teaching/danalytics/Module02.html) |
 
 
 
