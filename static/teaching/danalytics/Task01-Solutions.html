@@ -135,10 +135,7 @@ code > span.ot { color: #007020; }
 <div id="the-fatalities-data" class="section level1">
 <h1>The fatalities data</h1>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(readxl)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">url &lt;-<span class="st"> &quot;https://aniruhil.github.io/avsr/teaching/dataviz/Fatalities_by_VehicleType.xlsx&quot;</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">destfile &lt;-<span class="st"> &quot;fatalities.xlsx&quot;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">curl<span class="op">::</span><span class="kw">curl_download</span>(url, destfile)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">fatalities &lt;-<span class="st"> </span><span class="kw">read_excel</span>(destfile, <span class="dt">skip =</span> <span class="dv">2</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-2" data-line-number="2">fatalities &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;../data/Fatalities_by_VehicleType.xlsx&quot;</span>)</a></code></pre></div>
 <div id="the-names-and-the-summary-commands" class="section level2">
 <h2>The <code>names()</code> and the <code>summary()</code> commands</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">names</span>(fatalities)</a></code></pre></div>

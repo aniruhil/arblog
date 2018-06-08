@@ -14,7 +14,7 @@
 
 <meta name="date" content="2018-06-08" />
 
-<title>MPA 5830 - Module 02</title>
+<title>MPA 5830 - Module 02 Exercises</title>
 
 
 
@@ -109,7 +109,7 @@ code > span.ot { color: #007020; }
 <div id="container">
 <div class="inner">
 <header>
-<h1 class="title toc-ignore">MPA 5830 - Module 02</h1>
+<h1 class="title toc-ignore">MPA 5830 - Module 02 Exercises</h1>
 <h3 class="author">Ani Ruhil</h3>
 <h3 class="date">2018-06-08</h3>
 </header>
@@ -118,487 +118,8 @@ code > span.ot { color: #007020; }
 
 
 
-<div id="agenda" class="section level1">
-<h1>Agenda</h1>
-<p>Our goal in this module is to understand some basic operations in R. Specifically, we will look at combining two or more data-sets, modifying variables, creating variables, converting quantitative variables into qualitative variables, and so on. There is a lot more we could learn here but I will focus on the essential tasks you are likely to run into.</p>
-</div>
-<div id="data-types" class="section level1">
-<h1>Data Types</h1>
-<p>A typical data-frame will look like the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;../data/hsb2.RData&quot;</span>)</a></code></pre></div>
-<p>If the <code>load()</code> command does not work, use “Files” to find the <code>hsb2.RData</code> file and load it that way. You will have <code>columns</code>, each representing a variable, and <code>rows</code>, each representing an observation. The variables can be numeric (<code>num</code>), such as <code>id</code>, <code>write</code>, <code>read</code>, etc. or then a categorical variable that R calls a factor (<code>Factor</code>). The <code>numeric</code> class includes <code>integer</code> (a limited range of values) and <code>double</code> (double precision format) but these distinctions should not be of any consequence to you at the moment. If you have dates with/without times, the variable type will show up as <code>dates</code>, some variables may show up as <code>logical</code> (TRUE/FALSE/NA), and yet others a <code>character</code> (for example, “A”, “Bitcoin”, “<a href="mailto:p@12359">p@12359</a>” and so on).</p>
-<p>You have to be careful though since your data might have numeric codes for categorical variables. For example, if we read in the following file you will see this issue in effect:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">hsb =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/hsb2.csv&quot;</span>, </a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)</a></code></pre></div>
-<p>These are the same data as we have in <code>hsb2</code> but here the categorical variables are carrying numeric codes that represent different attributes</p>
-<ul>
-<li>female = (0/1)</li>
-<li>race = (1=hispanic 2=asian 3=african-amer 4=white)</li>
-<li>ses = socioeconomic status (1=low 2=middle 3=high)</li>
-<li>schtyp = type of school (1=public 2=private)</li>
-<li>prog = type of program (1=general 2=academic 3=vocational)</li>
-</ul>
-<p>This happens very often and so we end up having to convert this pseudo-numeric variable into a categorical variable that R calls a <code>factor</code>. This is done as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">hsb<span class="op">$</span>female =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>female, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, </a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">    <span class="st">&quot;Female&quot;</span>))</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">hsb<span class="op">$</span>race =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>race, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Hispanic&quot;</span>, </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;African American&quot;</span>, <span class="st">&quot;White&quot;</span>))</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">hsb<span class="op">$</span>ses =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>ses, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, </a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;High&quot;</span>))</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">hsb<span class="op">$</span>schtyp =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>schtyp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Public&quot;</span>, </a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="st">&quot;Private&quot;</span>))</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">hsb<span class="op">$</span>prog =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>prog, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;General&quot;</span>, </a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>))</a></code></pre></div>
-<blockquote>
-<p><code>factor(dataframe$variable, levels = c(...), labels = c(...))</code></p>
-</blockquote>
-<p>Notice the pattern: Overwrite the original variable as a <code>factor()</code> by specifying the target variable’s name <code>hsb$female</code>, then telling R what the unique values are via <code>levels = c()</code> and then listing how each unique value should be labelled via <code>labels = c()</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<p>Of course, we could have not overwritten the original variables but instead created new ones, as shown below. This would be the more prudent approach, and has become my habit.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">hsb =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/hsb2.csv&quot;</span>, </a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">hsb<span class="op">$</span>female.f =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>female, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, </a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="st">&quot;Female&quot;</span>))</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">hsb<span class="op">$</span>race.f =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>race, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Hispanic&quot;</span>, </a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="st">&quot;Asian&quot;</span>, <span class="st">&quot;African American&quot;</span>, <span class="st">&quot;White&quot;</span>))</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">hsb<span class="op">$</span>ses.f =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>ses, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, </a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;High&quot;</span>))</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">hsb<span class="op">$</span>schtyp.f =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>schtyp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Public&quot;</span>, </a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="st">&quot;Private&quot;</span>))</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">hsb<span class="op">$</span>prog.f =<span class="st"> </span><span class="kw">factor</span>(hsb<span class="op">$</span>prog, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;General&quot;</span>, </a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">    <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>))</a></code></pre></div>
-<div id="numbers-masquerading-as-characters-or-factors" class="section level2">
-<h2>Numbers masquerading as characters or factors</h2>
-<p>At times numbers will get read in as characters or factors, as is evident from the example below:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">x1 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">x2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="st">&quot;a5&quot;</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">x3 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="st">&quot;hello&quot;</span>)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">x4 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="ot">NA</span>)</a></code></pre></div>
-<p>Notice that x1 and x2 are read in as numeric but x2 and x3 show up as <code>chr</code>, short for <code>character</code>. You could convert x2 and x3 into numeric as follows:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x2.num =<span class="st"> </span><span class="kw">as.numeric</span>(x2)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">x3.num =<span class="st"> </span><span class="kw">as.numeric</span>(x3)</a></code></pre></div>
-<p>The <code>NA</code> values are <code>not applicable</code> values, essentially R-speak for <code>missing values</code>.</p>
-<p>On other occasions, the variable may in fact be numeric but because of some anomalies in the variable, R will read it in as a factor. When this happens, converting the variable into numeric has to be done with care. Just running <code>as.numeric()</code> will not work. See the example below where <code>age</code> is flagged as a factor, perhaps because the variable was stored and exported with the double-quotation marks.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">score =<span class="st"> </span><span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">101</span>, <span class="dv">102</span>, <span class="dv">103</span>, <span class="dv">104</span>, <span class="dv">105</span>, <span class="dv">106</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">sex =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, </a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="st">&quot;Female&quot;</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">age =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;18&quot;</span>, <span class="st">&quot;18&quot;</span>, <span class="st">&quot;19&quot;</span>, <span class="st">&quot;19&quot;</span>, <span class="st">&quot;21&quot;</span>, <span class="st">&quot;21&quot;</span>, <span class="st">&quot;NA&quot;</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">my.df =<span class="st"> </span><span class="kw">cbind.data.frame</span>(score, sex, age)</a></code></pre></div>
-<p>If I try <code>as.numeric()</code> the conversion uses the factor codings 1, 2, 3, 4 instead of the actual age values. So what is recommended is that you run <code>as.numeric(levels(data$variable))[data$variable]</code> instead. You can see the difference by comparing <code>age.num1</code> against <code>age.num2</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">my.df<span class="op">$</span>age.num1 =<span class="st"> </span><span class="kw">as.numeric</span>(my.df<span class="op">$</span>age)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">my.df<span class="op">$</span>age.num2 =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">levels</span>(my.df<span class="op">$</span>age))[my.df<span class="op">$</span>age]</a></code></pre></div>
-</div>
-<div id="operating-on-numeric-variables" class="section level2">
-<h2>Operating on numeric variables</h2>
-<p>We often need to transform an original numeric variable, stored perhaps as a proportion that we want to convert into a percentage. Or we may want to square it, divide it by 100, and so on. These operations are very straightforward.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">my.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>))</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">my.df<span class="op">$</span>x.pct =<span class="st"> </span>my.df<span class="op">$</span>x <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">my.df<span class="op">$</span>x.div10 =<span class="st"> </span>my.df<span class="op">$</span>x<span class="op">/</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">my.df<span class="op">$</span>x.squared =<span class="st"> </span>my.df<span class="op">$</span>x<span class="op">^</span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">my.df<span class="op">$</span>x.cubed =<span class="st"> </span>my.df<span class="op">$</span>x<span class="op">^</span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">my.df<span class="op">$</span>x.sqroot =<span class="st"> </span><span class="kw">sqrt</span>(my.df<span class="op">$</span>x)</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">my.df<span class="op">$</span>x.doubled =<span class="st"> </span>my.df<span class="op">$</span>x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">my.df<span class="op">$</span>x.fourths =<span class="st"> </span>my.df<span class="op">$</span>x<span class="op">^</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">x.pctwrong =<span class="st"> </span>my.df<span class="op">$</span>x <span class="op">*</span><span class="st"> </span><span class="dv">100</span></a></code></pre></div>
-</div>
-<div id="binning" class="section level2">
-<h2>Binning</h2>
-<p>We can also group numeric data into <code>bins</code>. Let us see this with our reading scores from the <code>hsb2</code> data-set.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;../data/hsb2.RData&quot;</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">summary</span>(hsb2)</a></code></pre></div>
-<pre><code>##        id            female                  race         ses    
-##  Min.   :  1.00   Male  : 91   Hispanic        : 24   Low   :47  
-##  1st Qu.: 50.75   Female:109   Asian           : 11   Middle:95  
-##  Median :100.50                African American: 20   High  :58  
-##  Mean   :100.50                White           :145              
-##  3rd Qu.:150.25                                                  
-##  Max.   :200.00                                                  
-##      schtyp            prog          read           write      
-##  Public :168   General   : 45   Min.   :28.00   Min.   :31.00  
-##  Private: 32   Academic  :105   1st Qu.:44.00   1st Qu.:45.75  
-##                Vocational: 50   Median :50.00   Median :54.00  
-##                                 Mean   :52.23   Mean   :52.77  
-##                                 3rd Qu.:60.00   3rd Qu.:60.00  
-##                                 Max.   :76.00   Max.   :67.00  
-##       math          science          socst      
-##  Min.   :33.00   Min.   :26.00   Min.   :26.00  
-##  1st Qu.:45.00   1st Qu.:44.00   1st Qu.:46.00  
-##  Median :52.00   Median :53.00   Median :52.00  
-##  Mean   :52.65   Mean   :51.85   Mean   :52.41  
-##  3rd Qu.:59.00   3rd Qu.:58.00   3rd Qu.:61.00  
-##  Max.   :75.00   Max.   :74.00   Max.   :71.00</code></pre>
-<p>Remember, we want meaningful groups, no fewer than 4/5 and staying below 8/9 unless we need more. To create the groups,</p>
-<ul>
-<li>Start by calculating the range of the variable (maximum value - minimum value)</li>
-<li>Divide this range by the number of groups we’d like</li>
-<li>Round up to the resulting value, which becomes the width of the interval</li>
-</ul>
-<p>For example, the range of the reading scores is 48. Say we want 5 groups. Dividing 48 by 5 yields 9.6 so we round up to 10. Now we see what the groups might be: 28-38, 38-48, 48-58, 58-68, 68-78. Now we ask R to create a new variable that represents these groups.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">hsb2<span class="op">$</span>grouped_read =<span class="st"> </span><span class="kw">cut</span>(hsb2<span class="op">$</span>read, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">28</span>, <span class="dv">38</span>, <span class="dv">48</span>, <span class="dv">58</span>, </a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">    <span class="dv">68</span>, <span class="dv">78</span>))</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">table</span>(hsb2<span class="op">$</span>grouped_read)</a></code></pre></div>
-<pre><code>## 
-## (28,38] (38,48] (48,58] (58,68] (68,78] 
-##      13      69      61      47       9</code></pre>
-<p>Uh oh! we have a total of 199 so what happened to the 200th? The one that wasn’t grouped is a reading score of 28. Why? Because when you group, you have to decide whether the intervals are <code>left-open</code> or <code>right-open</code> … If I run into a 38, should it go in the 38-48 group or the 28-38 group? This decision can be invoked by adding <code>right = FALSE</code> or <code>right = TRUE</code> (which is the default). So let me set <code>right = FALSE</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">hsb2<span class="op">$</span>grouped_read2 =<span class="st"> </span><span class="kw">cut</span>(hsb2<span class="op">$</span>read, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">28</span>, <span class="dv">38</span>, <span class="dv">48</span>, <span class="dv">58</span>, </a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">    <span class="dv">68</span>, <span class="dv">78</span>), <span class="dt">right =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">table</span>(hsb2<span class="op">$</span>grouped_read2)</a></code></pre></div>
-<pre><code>## 
-## [28,38) [38,48) [48,58) [58,68) [68,78) 
-##      14      68      62      36      20</code></pre>
-<p>Now open up the data-frame and arrange the rows in ascending order of <code>read</code>. Find <code>read = 48</code>. With the default <code>right = TRUE</code> this score was put in the 38-48 group but with <code>right = FALSE</code> it was put in the 48-58 group. So <code>right = FALSE</code> only include values in a group <code>(a,b]</code> if the value is <span class="math inline">\(a &lt;= x &lt; b\)</span>. With <code>right = TRUE</code> only include values in a group <code>[a, b)</code> if the value is <span class="math inline">\(a &lt; x &lt;= b\)</span>.</p>
-<p>More generally you’ll see folks just specify the number of cuts they want.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">hsb2<span class="op">$</span>grouped_read3 =<span class="st"> </span><span class="kw">cut</span>(hsb2<span class="op">$</span>read, <span class="dt">breaks =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">table</span>(hsb2<span class="op">$</span>grouped_read3)</a></code></pre></div>
-<pre><code>## 
-##   (28,37.6] (37.6,47.2] (47.2,56.8] (56.8,66.4]   (66.4,76] 
-##          14          68          48          50          20</code></pre>
-<p>But since age cannot include a decimal value this may be unsuitable for our purposes. Of course, we could have avoided this open/closed business of the interval by simply doing this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">hsb2<span class="op">$</span>grouped_read4 =<span class="st"> </span><span class="kw">cut</span>(hsb2<span class="op">$</span>read, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>, </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">    <span class="dv">65</span>, <span class="dv">75</span>, <span class="dv">85</span>))</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">table</span>(hsb2<span class="op">$</span>grouped_read4)</a></code></pre></div>
-<pre><code>## 
-## (25,35] (35,45] (45,55] (55,65] (65,75] (75,85] 
-##       9      45      76      49      19       2</code></pre>
-<p>And there you have it!</p>
-</div>
-</div>
-<div id="lowercase-and-uppercase" class="section level1">
-<h1>Lowercase and Uppercase</h1>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">my.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">NAMES =</span> <span class="kw">c</span>(<span class="st">&quot;Andy&quot;</span>, </a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">    <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Madison&quot;</span>), <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">48</span>, <span class="dv">72</span>, <span class="dv">96</span>))</a></code></pre></div>
-<p>Maybe I want the names of the individuals to be all uppercase, or perhaps all lowercase. I can do this via:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">my.df<span class="op">$</span>sex.lower =<span class="st"> </span><span class="kw">tolower</span>(my.df<span class="op">$</span>sex)</a></code></pre></div>
-<p>Maybe it is not the values but the column names that I want to convert to lowercase. This is easily done via</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">colnames</span>(my.df)[<span class="dv">2</span>] =<span class="st"> &quot;names&quot;</span></a></code></pre></div>
-<p>Note: I asked for the second column’s name to be changed to “names”. Since that was the only column that was in uppercase I could have achieved the same thing by running:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">my.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">NAMES =</span> <span class="kw">c</span>(<span class="st">&quot;Andy&quot;</span>, </a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">    <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Madison&quot;</span>), <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">48</span>, <span class="dv">72</span>, <span class="dv">96</span>))</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">colnames</span>(my.df) =<span class="st"> </span><span class="kw">tolower</span>(<span class="kw">colnames</span>(my.df))</a></code></pre></div>
-<p>By the same logic, I could convert each column name to uppercase by typing</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">colnames</span>(my.df) =<span class="st"> </span><span class="kw">toupper</span>(<span class="kw">colnames</span>(my.df))</a></code></pre></div>
-<p>And then of course, using the following to change a specific column name to uppercase:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">my.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">NAMES =</span> <span class="kw">c</span>(<span class="st">&quot;Andy&quot;</span>, </a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">    <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Madison&quot;</span>), <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">48</span>, <span class="dv">72</span>, <span class="dv">96</span>))</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">colnames</span>(my.df)[<span class="dv">1</span>] =<span class="st"> </span><span class="kw">toupper</span>(<span class="kw">colnames</span>(my.df)[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw">colnames</span>(my.df)[<span class="dv">3</span>] =<span class="st"> &quot;AGE&quot;</span></a></code></pre></div>
-<p>What should be clear by now is that there are many ways to end up with the same result with R code. This is one of the wonderful features of R.</p>
-<div id="a-little-more-on-factors" class="section level2">
-<h2>A little more on factors</h2>
-<p>With the <code>hsb</code> data we converted some variables into factors. Here I want to show you a couple of things to pay attention to.</p>
-<p>First, I can create a new variable and store it as a factor as follows:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">my.df<span class="op">$</span>female1[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;M&quot;</span>] =<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">my.df<span class="op">$</span>female1[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;F&quot;</span>] =<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">my.df<span class="op">$</span>female1 =<span class="st"> </span><span class="kw">factor</span>(my.df<span class="op">$</span>female1, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, </a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">    <span class="st">&quot;Female&quot;</span>))</a></code></pre></div>
-<p>I could have also skipped the <code>0/1</code> business and just done this:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">my.df<span class="op">$</span>female2[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;M&quot;</span>] =<span class="st"> &quot;Male&quot;</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">my.df<span class="op">$</span>female2[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;F&quot;</span>] =<span class="st"> &quot;Female&quot;</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">my.df<span class="op">$</span>female2 =<span class="st"> </span><span class="kw">factor</span>(my.df<span class="op">$</span>female2)</a></code></pre></div>
-<p>Notice the difference between <code>female1</code> and <code>female2</code></p>
-<ul>
-<li>female1: Since you specified <code>levels = c(0, 1)</code> and indicated the lowest level be mapped to Male, the factor is built in that order … Male first, then Female</li>
-<li>female2: Here we did not specify the levels and hence R falls back on its default of building them up alphabetically … Female first, then Male</li>
-</ul>
-<p>Lets see the question of factor levels with a different example. Say we had the following variable, 10 responses to a survey question.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">fdf =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Disagree&quot;</span>, <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;Neutral&quot;</span>, <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">    <span class="kw">rep</span>(<span class="st">&quot;Agree&quot;</span>, <span class="dv">5</span>)))</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3">fdf<span class="op">$</span>responses =<span class="st"> </span><span class="kw">factor</span>(fdf<span class="op">$</span>x)</a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="kw">levels</span>(fdf<span class="op">$</span>responses)</a></code></pre></div>
-<pre><code>## [1] &quot;Agree&quot;    &quot;Disagree&quot; &quot;Neutral&quot;</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">table</span>(fdf<span class="op">$</span>responses)</a></code></pre></div>
-<pre><code>## 
-##    Agree Disagree  Neutral 
-##        5        3        2</code></pre>
-<p>This makes no sense since we’d like the logical ordering of Disagree -&gt; Neutral -&gt; Agree and this can be achieved via <code>ordered()</code>, making sure to specify the order of the levels with <code>levels = c()</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">fdf<span class="op">$</span>newresponses =<span class="st"> </span><span class="kw">ordered</span>(fdf<span class="op">$</span>responses, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Disagree&quot;</span>, </a>
-<a class="sourceLine" id="cb32-2" data-line-number="2">    <span class="st">&quot;Neutral&quot;</span>, <span class="st">&quot;Agree&quot;</span>))</a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="kw">levels</span>(fdf<span class="op">$</span>newresponses)</a></code></pre></div>
-<pre><code>## [1] &quot;Disagree&quot; &quot;Neutral&quot;  &quot;Agree&quot;</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">min</span>(fdf<span class="op">$</span>newresponses)</a></code></pre></div>
-<pre><code>## [1] Disagree
-## Levels: Disagree &lt; Neutral &lt; Agree</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">table</span>(fdf<span class="op">$</span>newresponses)</a></code></pre></div>
-<pre><code>## 
-## Disagree  Neutral    Agree 
-##        3        2        5</code></pre>
-<p>I could have also generated this desired order when creating the factor as, for example, via</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">fdf<span class="op">$</span>xordered =<span class="st"> </span><span class="kw">factor</span>(fdf<span class="op">$</span>x, <span class="dt">ordered =</span> <span class="ot">TRUE</span>, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Disagree&quot;</span>, </a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">    <span class="st">&quot;Neutral&quot;</span>, <span class="st">&quot;Agree&quot;</span>))</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">levels</span>(fdf<span class="op">$</span>xordered)</a></code></pre></div>
-<pre><code>## [1] &quot;Disagree&quot; &quot;Neutral&quot;  &quot;Agree&quot;</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">min</span>(fdf<span class="op">$</span>xordered)</a></code></pre></div>
-<pre><code>## [1] Disagree
-## Levels: Disagree &lt; Neutral &lt; Agree</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">table</span>(fdf<span class="op">$</span>xordered)</a></code></pre></div>
-<pre><code>## 
-## Disagree  Neutral    Agree 
-##        3        2        5</code></pre>
-<p>Notice the <code>min()</code> command … which asks for the minimum level of a factor. This works with ordered factors but not with unordered factors; try it with <code>x</code> and with <code>responses</code>.</p>
-<p>Before we move on, a word about the command we used to generate a new factor from an existing variable –</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">my.df<span class="op">$</span>female2[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;M&quot;</span>] =<span class="st"> &quot;Male&quot;</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2">my.df<span class="op">$</span>female2[my.df<span class="op">$</span>SEX <span class="op">==</span><span class="st"> &quot;F&quot;</span>] =<span class="st"> &quot;Female&quot;</span></a></code></pre></div>
-<p>I use this a lot when generating new variables, and even when fixing problems with an existing variable. For example, say we were given the data on the sex of these 10 individuals but the values included typos.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">sexdf =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mf =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Male&quot;</span>, <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;male&quot;</span>, <span class="dv">2</span>), <span class="kw">rep</span>(<span class="st">&quot;Female&quot;</span>, </a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">    <span class="dv">3</span>), <span class="kw">rep</span>(<span class="st">&quot;femalE&quot;</span>, <span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="kw">levels</span>(sexdf<span class="op">$</span>mf)</a></code></pre></div>
-<pre><code>## [1] &quot;femalE&quot; &quot;Female&quot; &quot;male&quot;   &quot;Male&quot;</code></pre>
-<p>Obviously not what we’d like so we can go in and clean it up a bit. How? As follows:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">sexdf<span class="op">$</span>mf[sexdf<span class="op">$</span>mf <span class="op">==</span><span class="st"> &quot;male&quot;</span>] =<span class="st"> &quot;Male&quot;</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2">sexdf<span class="op">$</span>mf[sexdf<span class="op">$</span>mf <span class="op">==</span><span class="st"> &quot;femalE&quot;</span>] =<span class="st"> &quot;Female&quot;</span></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="kw">levels</span>(sexdf<span class="op">$</span>mf)</a></code></pre></div>
-<pre><code>## [1] &quot;femalE&quot; &quot;Female&quot; &quot;male&quot;   &quot;Male&quot;</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">table</span>(sexdf<span class="op">$</span>mf)</a></code></pre></div>
-<pre><code>## 
-## femalE Female   male   Male 
-##      0      5      0      5</code></pre>
-<p>Wait a second, we still see <code>femalE</code> and <code>male</code> but with 0 counts; how should we get rid of these ghosts?</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">sexdf<span class="op">$</span>newmf =<span class="st"> </span><span class="kw">droplevels</span>(sexdf<span class="op">$</span>mf)</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="kw">levels</span>(sexdf<span class="op">$</span>newmf)</a></code></pre></div>
-<pre><code>## [1] &quot;Female&quot; &quot;Male&quot;</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">table</span>(sexdf<span class="op">$</span>newmf)</a></code></pre></div>
-<pre><code>## 
-## Female   Male 
-##      5      5</code></pre>
-<p>Having fixed this issue we can drop the original variable via</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">sexdf<span class="op">$</span>mf =<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
-</div>
-</div>
-<div id="subsetting-data" class="section level1">
-<h1>Subsetting data</h1>
-<p>I may also need to drop a factor level. For example, say I am working with the <code>diamond</code> data-set and need to subset my analysis to diamonds that are Very Good or better.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="kw">data</span>(diamonds)</a>
-<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">str</span>(diamonds<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>##  Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 2 4 2 3 3 3 1 3 ...</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">table</span>(diamonds<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##      1610      4906     12082     13791     21551</code></pre>
-<p>I can subset as follows:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">dia.sub1 =<span class="st"> </span><span class="kw">subset</span>(diamonds, cut <span class="op">!=</span><span class="st"> &quot;Fair&quot;</span> <span class="op">&amp;</span><span class="st"> </span>cut <span class="op">!=</span><span class="st"> &quot;Good&quot;</span>)</a>
-<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="kw">str</span>(dia.sub1<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>##  Ord.factor w/ 5 levels &quot;Fair&quot;&lt;&quot;Good&quot;&lt;..: 5 4 4 3 3 3 3 5 4 5 ...</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">table</span>(dia.sub1<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##         0         0     12082     13791     21551</code></pre>
-<div id="dropping-factor-levels" class="section level2">
-<h2>Dropping factor levels</h2>
-<p>Aha! I see no diamonds in the excluded cut ratings but <code>str()</code> still shows R remembering <code>cut</code> as having 5 ratings and the frequency table shows up with zero counts for both so we drop these levels explicitly.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">dia.sub1<span class="op">$</span>cutnew =<span class="st"> </span><span class="kw">droplevels</span>(dia.sub1<span class="op">$</span>cut)</a>
-<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="kw">str</span>(dia.sub1<span class="op">$</span>cutnew)</a></code></pre></div>
-<pre><code>##  Ord.factor w/ 3 levels &quot;Very Good&quot;&lt;&quot;Premium&quot;&lt;..: 3 2 2 1 1 1 1 3 2 3 ...</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">table</span>(dia.sub1<span class="op">$</span>cutnew)</a></code></pre></div>
-<pre><code>## 
-## Very Good   Premium     Ideal 
-##     12082     13791     21551</code></pre>
-<p>Now a bit more on sub-setting data. You can subset with as simple or as complicated a condition you need. For example, maybe you only want Ideal diamonds with a certain minimum clarity and price. Sure, you can use this sub-setting condition as shown below:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">dia.sub2 =<span class="st"> </span><span class="kw">subset</span>(diamonds, cut <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span> <span class="op">&amp;</span><span class="st"> </span>clarity <span class="op">==</span><span class="st"> &quot;VVS1&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="st">    </span>price <span class="op">&gt;</span><span class="st"> </span><span class="dv">3933</span>)</a>
-<a class="sourceLine" id="cb68-3" data-line-number="3"><span class="kw">table</span>(dia.sub2<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##         0         0         0         0       283</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">table</span>(dia.sub2<span class="op">$</span>clarity)</a></code></pre></div>
-<pre><code>## 
-##   I1  SI2  SI1  VS2  VS1 VVS2 VVS1   IF 
-##    0    0    0    0    0    0  283    0</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">min</span>(dia.sub2<span class="op">$</span>price)</a></code></pre></div>
-<pre><code>## [1] 3955</code></pre>
-<p>Here the sub-setting is generating a data-frame that will only include observations that meet all three requirements (since you used <code>&amp;</code> in the command). If you had run the following instead you would have had very different results.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">dia.sub3 =<span class="st"> </span><span class="kw">subset</span>(diamonds, cut <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span> <span class="op">|</span><span class="st"> </span>clarity <span class="op">==</span><span class="st"> &quot;VVS1&quot;</span> <span class="op">|</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">    </span>price <span class="op">&gt;</span><span class="st"> </span><span class="dv">3933</span>)</a>
-<a class="sourceLine" id="cb74-3" data-line-number="3">dia.sub4 =<span class="st"> </span><span class="kw">subset</span>(diamonds, cut <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span> <span class="op">&amp;</span><span class="st"> </span>clarity <span class="op">==</span><span class="st"> &quot;VVS1&quot;</span> <span class="op">|</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-4" data-line-number="4"><span class="st">    </span>price <span class="op">&gt;</span><span class="st"> </span><span class="dv">3933</span>)</a>
-<a class="sourceLine" id="cb74-5" data-line-number="5">dia.sub5 =<span class="st"> </span><span class="kw">subset</span>(diamonds, cut <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span> <span class="op">|</span><span class="st"> </span>clarity <span class="op">==</span><span class="st"> &quot;VVS1&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-6" data-line-number="6"><span class="st">    </span>price <span class="op">&gt;</span><span class="st"> </span><span class="dv">3933</span>)</a></code></pre></div>
-<p>That is because <code>&amp;</code> is saying “this criterion and that criterion both have to be met” while <code>|</code> is saying “either this criterion is met or that criterion is met”. So what you did was to ask for</p>
-<ul>
-<li>dia.sub3 = either the cut is Ideal OR clarity is VVS1 OR price exceeds 3933. Let us check</li>
-</ul>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">table</span>(dia.sub3<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##       656      2073      5310      6692     21551</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">table</span>(dia.sub3<span class="op">$</span>clarity)</a></code></pre></div>
-<pre><code>## 
-##   I1  SI2  SI1  VS2  VS1 VVS2 VVS1   IF 
-##  354 6106 8144 8108 5283 3248 3655 1384</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">min</span>(dia.sub3<span class="op">$</span>price)</a></code></pre></div>
-<pre><code>## [1] 326</code></pre>
-<ul>
-<li>dia.sub4 = either the cut is Ideal AND clarity is VVS1 OR price exceeds 3933</li>
-</ul>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw">table</span>(dia.sub4<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##       645      1922      4648      6182      8019</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">table</span>(dia.sub4<span class="op">$</span>clarity)</a></code></pre></div>
-<pre><code>## 
-##   I1  SI2  SI1  VS2  VS1 VVS2 VVS1   IF 
-##  261 4848 5450 4364 2660 1210 2321  302</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">min</span>(dia.sub4<span class="op">$</span>price)</a></code></pre></div>
-<pre><code>## [1] 414</code></pre>
-<ul>
-<li>dia.sub5 = either the cut is Ideal OR clarity is VVS1 AND price exceeds 3933</li>
-</ul>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">table</span>(dia.sub5<span class="op">$</span>cut)</a></code></pre></div>
-<pre><code>## 
-##      Fair      Good Very Good   Premium     Ideal 
-##         6        35       127       106     21551</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">table</span>(dia.sub5<span class="op">$</span>clarity)</a></code></pre></div>
-<pre><code>## 
-##   I1  SI2  SI1  VS2  VS1 VVS2 VVS1   IF 
-##  146 2598 4282 5071 3589 2606 2321 1212</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">min</span>(dia.sub5<span class="op">$</span>price)</a></code></pre></div>
-<pre><code>## [1] 326</code></pre>
-<p>You could also subset the data in different ways using, for example, <code>%in%</code></p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">dia.sub6 =<span class="st"> </span>diamonds[diamonds<span class="op">$</span>cut <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span> <span class="op">|</span><span class="st"> </span>diamonds<span class="op">$</span>clarity <span class="op">==</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="st">    &quot;VVS1&quot;</span> <span class="op">|</span><span class="st"> </span>diamonds<span class="op">$</span>price <span class="op">&gt;</span><span class="st"> </span><span class="dv">3933</span>, ]  <span class="co"># same as dia.sub3 </span></a>
-<a class="sourceLine" id="cb93-3" data-line-number="3">dia.sub7 =<span class="st"> </span>diamonds[<span class="op">!</span>(diamonds<span class="op">$</span>cut <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Fair&quot;</span>, <span class="st">&quot;Good&quot;</span>)), ]  <span class="co"># same as dia.sub1 </span></a>
-<a class="sourceLine" id="cb93-4" data-line-number="4">dia.sub8 =<span class="st"> </span>diamonds[diamonds<span class="op">$</span>cut <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Ideal&quot;</span>, <span class="st">&quot;Premium&quot;</span>, <span class="st">&quot;Very Good&quot;</span>), </a>
-<a class="sourceLine" id="cb93-5" data-line-number="5">    ]  <span class="co"># same as dia.sub1 and dia.sub7</span></a></code></pre></div>
-</div>
-</div>
-<div id="exporting-data" class="section level1">
-<h1>Exporting data</h1>
-<p>Often, after data have been processed in R, we need to share them with folks who don’t use R or want the data in a specific format. This is easily done, as shown below.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">out.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Person =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Timothy&quot;</span>, <span class="st">&quot;Olivia&quot;</span>, <span class="st">&quot;Sebastian&quot;</span>, </a>
-<a class="sourceLine" id="cb94-2" data-line-number="2">    <span class="st">&quot;Serena&quot;</span>), <span class="dt">Age =</span> <span class="kw">c</span>(<span class="dv">22</span>, <span class="dv">24</span>, <span class="dv">18</span>, <span class="dv">24</span>, <span class="dv">35</span>))</a>
-<a class="sourceLine" id="cb94-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="kw">write.csv</span>(out.df, <span class="dt">file =</span> <span class="st">&quot;../data/out.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)  <span class="co"># CSV format </span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb94-6" data-line-number="6"><span class="kw">library</span>(haven)</a>
-<a class="sourceLine" id="cb94-7" data-line-number="7"><span class="kw">write_dta</span>(out.df, <span class="st">&quot;../data/out.df.dta&quot;</span>)  <span class="co"># Stata format</span></a>
-<a class="sourceLine" id="cb94-8" data-line-number="8"><span class="kw">write_sav</span>(out.df, <span class="st">&quot;../data/out.df.sav&quot;</span>)  <span class="co"># SPSS format </span></a>
-<a class="sourceLine" id="cb94-9" data-line-number="9"><span class="kw">write_sas</span>(out.df, <span class="st">&quot;../data/out.df.sas&quot;</span>)  <span class="co"># SAS format </span></a>
-<a class="sourceLine" id="cb94-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb94-11" data-line-number="11"><span class="kw">library</span>(writexl)</a>
-<a class="sourceLine" id="cb94-12" data-line-number="12"><span class="kw">write_xlsx</span>(out.df, <span class="st">&quot;../data/out.df.xlsx&quot;</span>)  <span class="co"># Excel format</span></a></code></pre></div>
-<p>There are other packages that import/export data so be sure to check them out as well, in particular <a href="https://cran.r-project.org/web/packages/rio/vignettes/rio.html">rio</a>.</p>
-</div>
-<div id="merging-data" class="section level1">
-<h1>Merging data</h1>
-<p>Say I have data on some students, with test scores in one file and their gender in another file. Each file has a unique student identifier, called <code>ID</code>. How can I create a single data-set? Let us see each data-set first.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">data1 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">21</span>, <span class="dv">33</span>, <span class="dv">12</span>, <span class="dv">35</span>, <span class="dv">67</span>, <span class="dv">43</span>, <span class="dv">99</span>), </a>
-<a class="sourceLine" id="cb95-2" data-line-number="2">    <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;C31&quot;</span>, <span class="st">&quot;Q22&quot;</span>))</a>
-<a class="sourceLine" id="cb95-3" data-line-number="3">data2 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, </a>
-<a class="sourceLine" id="cb95-4" data-line-number="4">    <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, </a>
-<a class="sourceLine" id="cb95-5" data-line-number="5">    <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;E52&quot;</span>, <span class="st">&quot;H71&quot;</span>))</a></code></pre></div>
-<p>Open up both data-sets and note that students C31 and Q22 are missing from <code>data2</code> and students E52 and H71 are missing from <code>data1</code>.</p>
-<p>What about the merge? To merge data-frames we need to specify the <code>merge key(s)</code> – the variable(s) that identifies unique observations in each file. This variable(s) must be present in all the files you want to merge. So long as it exists, you now need to decide: Do you only want to</p>
-<ul>
-<li>merge observations that show up in both files <code>(natural join)</code></li>
-<li>merge everything even if some cases show up in one but not the other <code>(full outer join)</code></li>
-<li>merge such that all cases in file <code>x</code> are retained but only those seen in file <code>y</code> are joined <code>(left outer join)</code></li>
-<li>merge to keep all cases in <code>y</code> and only those cases are to be merged from <code>x</code> that show up in <code>y</code>, referred to as <code>(right outer join)</code></li>
-</ul>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">natural =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> data1, <span class="dt">y =</span> data2, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>), <span class="dt">all =</span> <span class="ot">FALSE</span>)  <span class="co"># only merge if ID seen in both files</span></a>
-<a class="sourceLine" id="cb96-2" data-line-number="2">full =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> data1, <span class="dt">y =</span> data2, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>), <span class="dt">all =</span> <span class="ot">TRUE</span>)  <span class="co"># merge everything </span></a>
-<a class="sourceLine" id="cb96-3" data-line-number="3">left =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> data1, <span class="dt">y =</span> data2, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>), <span class="dt">all.x =</span> <span class="ot">TRUE</span>)  <span class="co"># make sure all cases from file x are retained </span></a>
-<a class="sourceLine" id="cb96-4" data-line-number="4">right =<span class="st"> </span><span class="kw">merge</span>(<span class="dt">x =</span> data1, <span class="dt">y =</span> data2, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>), <span class="dt">all.y =</span> <span class="ot">TRUE</span>)  <span class="co"># make sure all cases from file y are retained </span></a></code></pre></div>
-<p>What if the ID variables had different names in the files? You could rename them to have a common name or you could use <code>by.x =</code> and <code>by.y =</code> as shown below.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">data3 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">21</span>, <span class="dv">33</span>, <span class="dv">12</span>, <span class="dv">35</span>, <span class="dv">67</span>, <span class="dv">43</span>, <span class="dv">99</span>), </a>
-<a class="sourceLine" id="cb97-2" data-line-number="2">    <span class="dt">ID1 =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;C31&quot;</span>, </a>
-<a class="sourceLine" id="cb97-3" data-line-number="3">        <span class="st">&quot;Q22&quot;</span>))</a>
-<a class="sourceLine" id="cb97-4" data-line-number="4">data4 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, </a>
-<a class="sourceLine" id="cb97-5" data-line-number="5">    <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="dt">ID2 =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, </a>
-<a class="sourceLine" id="cb97-6" data-line-number="6">    <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;E52&quot;</span>, <span class="st">&quot;H71&quot;</span>))</a>
-<a class="sourceLine" id="cb97-7" data-line-number="7">diffids =<span class="st"> </span><span class="kw">merge</span>(data3, data4, <span class="dt">by.x =</span> <span class="kw">c</span>(<span class="st">&quot;ID1&quot;</span>), <span class="dt">by.y =</span> <span class="kw">c</span>(<span class="st">&quot;ID2&quot;</span>), </a>
-<a class="sourceLine" id="cb97-8" data-line-number="8">    <span class="dt">all =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>You can also have more than one merge key. For example, if I am merging data for Ohio schools, each district has a district ID number <code>(dirn)</code>, each school has building ID number <code>(birn)</code>, and then the district’s name <code>(district)</code>, the building’s name <code>(building)</code>, and so on. If I am merging these data then my <code>by =</code> statement will be <code>by = c(&quot;dirn&quot;, &quot;birn&quot;, &quot;district&quot;, &quot;building&quot;)</code>.</p>
-<p>If we have multiple data-frames to merge we can do so in several ways but my default approach is to rely on the <code>Reduce()</code> command, as shown below.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">df1 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">21</span>, <span class="dv">33</span>, <span class="dv">12</span>, <span class="dv">35</span>, <span class="dv">67</span>, <span class="dv">43</span>, <span class="dv">99</span>), <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, </a>
-<a class="sourceLine" id="cb98-2" data-line-number="2">    <span class="st">&quot;A23&quot;</span>, <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;C31&quot;</span>, <span class="st">&quot;Q22&quot;</span>))</a>
-<a class="sourceLine" id="cb98-3" data-line-number="3">df2 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, </a>
-<a class="sourceLine" id="cb98-4" data-line-number="4">    <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, </a>
-<a class="sourceLine" id="cb98-5" data-line-number="5">    <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;E52&quot;</span>, <span class="st">&quot;H71&quot;</span>))</a>
-<a class="sourceLine" id="cb98-6" data-line-number="6">df3 =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Age =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">5</span>), <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, </a>
-<a class="sourceLine" id="cb98-7" data-line-number="7">    <span class="st">&quot;A23&quot;</span>, <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;E52&quot;</span>, <span class="st">&quot;H71&quot;</span>))</a>
-<a class="sourceLine" id="cb98-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb98-9" data-line-number="9">my.list =<span class="st"> </span><span class="kw">list</span>(df1, df2, df3)</a>
-<a class="sourceLine" id="cb98-10" data-line-number="10">df<span class="fl">.123</span> =<span class="st"> </span><span class="kw">Reduce</span>(<span class="cf">function</span>(...) <span class="kw">merge</span>(..., <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;ID&quot;</span>), <span class="dt">all =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb98-11" data-line-number="11">    my.list)</a></code></pre></div>
-</div>
-<div id="identifying-and-handling-duplicates" class="section level1">
-<h1>Identifying and handling duplicates</h1>
-<p>Every now and then you also run into duplicate rows with no good explanation for how that could have happened. Here is an example:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">dups.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Sex =</span> <span class="kw">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, </a>
-<a class="sourceLine" id="cb99-2" data-line-number="2">    <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>, <span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>), <span class="dt">ID =</span> <span class="kw">c</span>(<span class="st">&quot;A12&quot;</span>, <span class="st">&quot;A23&quot;</span>, </a>
-<a class="sourceLine" id="cb99-3" data-line-number="3">    <span class="st">&quot;Z14&quot;</span>, <span class="st">&quot;WX1&quot;</span>, <span class="st">&quot;Y31&quot;</span>, <span class="st">&quot;D66&quot;</span>, <span class="st">&quot;A12&quot;</span>, <span class="st">&quot;WX1&quot;</span>))</a></code></pre></div>
-<p>Students A12 and WX1 show up twice! There are two basic commands that we can use to find duplicates – <code>unique</code> and <code>duplicated</code>.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">duplicated</span>(dups.df)  <span class="co"># flag duplicate rows with TRUE </span></a></code></pre></div>
-<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="op">!</span><span class="kw">duplicated</span>(dups.df)  <span class="co"># flag not duplicated rows with TRUE </span></a></code></pre></div>
-<pre><code>## [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">dups.df[<span class="kw">duplicated</span>(dups.df), ]  <span class="co"># reveal the duplicated rows </span></a></code></pre></div>
-<pre><code>##      Sex  ID
-## 7   Male A12
-## 8 Female WX1</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">dups.df[<span class="op">!</span><span class="kw">duplicated</span>(dups.df), ]  <span class="co"># reveal the not duplicated rows </span></a></code></pre></div>
-<pre><code>##      Sex  ID
-## 1   Male A12
-## 2 Female A23
-## 3   Male Z14
-## 4 Female WX1
-## 5   Male Y31
-## 6 Female D66</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">nodups.df =<span class="st"> </span>dups.df[<span class="op">!</span><span class="kw">duplicated</span>(dups.df), ]  <span class="co"># save a dataframe without duplicated rows</span></a>
-<a class="sourceLine" id="cb108-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb108-3" data-line-number="3">onlydups.df =<span class="st"> </span>dups.df[<span class="kw">duplicated</span>(dups.df), ]  <span class="co"># save a dataframe with ONLY the duplicated rows</span></a></code></pre></div>
-</div>
-<div id="rearranging-a-data-frame" class="section level1">
-<h1>Rearranging a data-frame</h1>
-<p>We may, at times, want to move the variables around so they are in a particular order (age next to race and so on, for example), perhaps drop some because there are too many variables and we don’t need all of them. We may also want to arrange the data-frame in ascending or descending order of some variable(s) (increasing order of age or price for example. These tasks are easily done.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">df1 =<span class="st"> </span>mtcars[<span class="kw">order</span>(mtcars<span class="op">$</span>mpg), ]  <span class="co"># arrange the data-frame in ascending order of mpg </span></a>
-<a class="sourceLine" id="cb109-2" data-line-number="2">df2 =<span class="st"> </span>mtcars[<span class="kw">order</span>(<span class="op">-</span>mtcars<span class="op">$</span>mpg), ]  <span class="co"># arrange the data-frame in descending order of mpg </span></a>
-<a class="sourceLine" id="cb109-3" data-line-number="3">df3 =<span class="st"> </span>mtcars[<span class="kw">order</span>(mtcars<span class="op">$</span>am, mtcars<span class="op">$</span>mpg), ]  <span class="co"># arrange the data-frame in ascending order of automatic/manual and then in ascending order of mpg </span></a></code></pre></div>
-<p>What if I want to order the columns such that the first column is <code>am</code> and then comes <code>mpg</code>, followed by <code>qsec</code> and then the rest of the columns? Well, the first thing I want to do is see what variable is in which column via the <code>names()</code> command.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">names</span>(mtcars)  <span class="co"># the original structure of the mtcars data-frame</span></a></code></pre></div>
-<pre><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
-## [11] &quot;carb&quot;</code></pre>
-<p>So <code>mpg</code> is in column 1, <code>cyl</code> is in column 2, and <code>carb</code> is the last one in column 11.</p>
-<p>Now I’ll specify that I want all rows by doing this <code>[, c()]</code> and then specify the order of the columns by entering the column numbers in <code>c()</code></p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1">df4 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span><span class="op">:</span><span class="dv">11</span>)]  <span class="co"># specifying the position of the columns </span></a>
-<a class="sourceLine" id="cb112-2" data-line-number="2"><span class="kw">names</span>(df4)</a></code></pre></div>
-<pre><code>##  [1] &quot;am&quot;   &quot;mpg&quot;  &quot;qsec&quot; &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;vs&quot;   &quot;gear&quot;
-## [11] &quot;carb&quot;</code></pre>
-<p>If I only wanted certain columns I could omit the other columns.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">df5 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># specifying the position of the columns </span></a></code></pre></div>
-<p>Remember the comma in <code>mtcars[,</code> … this tells R to keep all rows in mtcars. If, instead, I did this I would only get the first four rows, not all.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">df6 =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># keep first four rows and the specified columns</span></a></code></pre></div>
-<p>I would end up with only the first four rows of mtcars, not every row. So try to remember the order: <code>dataframe[i, j]</code> where <code>i</code> reference the rows and <code>j</code> reference the columns. Folks often get tripped up over this switch.</p>
-</div>
-<div id="working-with-strings" class="section level1">
-<h1>Working with strings</h1>
-<p>Often you run into strings that have to be manipulated. Often, when working with county data, for example, county names are followed by <code>County, Ohio</code> and this is superfluous so we end up excising it</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">c.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../data/strings.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
-<pre><code>##           GEO.id GEO.id2      GEO.display.label respop72016
-## 1 0500000US39001   39001     Adams County, Ohio       27907
-## 2 0500000US39003   39003     Allen County, Ohio      103742
-## 3 0500000US39005   39005   Ashland County, Ohio       53652
-## 4 0500000US39007   39007 Ashtabula County, Ohio       98231
-## 5 0500000US39009   39009    Athens County, Ohio       66186
-## 6 0500000US39011   39011  Auglaize County, Ohio       45894</code></pre>
-<p>Let us just retain the county name from <code>GEO.display.label</code></p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">c.data<span class="op">$</span>county =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; County, Ohio&quot;</span>, <span class="st">&quot;&quot;</span>, c.data<span class="op">$</span>GEO.display.label)</a>
-<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
-<pre><code>##           GEO.id GEO.id2      GEO.display.label respop72016    county
-## 1 0500000US39001   39001     Adams County, Ohio       27907     Adams
-## 2 0500000US39003   39003     Allen County, Ohio      103742     Allen
-## 3 0500000US39005   39005   Ashland County, Ohio       53652   Ashland
-## 4 0500000US39007   39007 Ashtabula County, Ohio       98231 Ashtabula
-## 5 0500000US39009   39009    Athens County, Ohio       66186    Athens
-## 6 0500000US39011   39011  Auglaize County, Ohio       45894  Auglaize</code></pre>
-<p>Note the sequence <code>gsub(&quot;look for this pattern&quot;, &quot;replace with this&quot;, mydata$myvariable)</code></p>
-<hr />
-</div>
 <div id="practice-tasks" class="section level1">
 <h1>Practice Tasks</h1>
-<div id="task-1" class="section level2">
-<h2>Task 1</h2>
 <p>Why are our best and most experienced employees leaving prematurely?</p>
 <p>The data <a href="https://aniruhil.github.io/avsr/teaching/dataviz/HR_comma_sep.csv">available here</a> includes information on several current and former employees of an anonymous organization.** Fields in the data-set include:</p>
 <ul>
@@ -615,12 +136,36 @@ code > span.ot { color: #007020; }
 <li>salary = Relative level of salary (low med high)</li>
 </ul>
 <ol style="list-style-type: lower-alpha">
-<li><p>Read in the data-set</p></li>
-<li><p>Create new variables that represent all categorical variables as factors. Make sure you order the levels of the factor (if they need to be ordered).</p></li>
-<li><p>Convert satisfaction_level from a 0-1 scale to a 0-100 scale</p></li>
-<li><p>Convert time spent in the company to months rather than years</p></li>
-<li><p>Order the columns such that <code>left</code> appears as the first column</p></li>
-<li><p>Arrange the data-set such that the rows are in descending order of <code>average_montly_hours</code> (the column is misspelled in the original data)</p></li>
+<li>Read in the data-set</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">hrdata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://aniruhil.github.io/avsr/teaching/dataviz/HR_comma_sep.csv&quot;</span>,  <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)</a></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Create new variables that represent all categorical variables as factors. Make sure you order the levels of the factor (if they need to be ordered).</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">hrdata<span class="op">$</span>work_accident_new =<span class="st"> </span><span class="kw">factor</span>(hrdata<span class="op">$</span>Work_accident, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Did not have work accident&quot;</span>, <span class="st">&quot;Had work  accident&quot;</span>))</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">hrdata<span class="op">$</span>left_new =<span class="st"> </span><span class="kw">factor</span>(hrdata<span class="op">$</span>left, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Did not leave workplace&quot;</span>, <span class="st">&quot;Left workplace&quot;</span>))</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">hrdata<span class="op">$</span>promotion_last_5years_new =<span class="st"> </span><span class="kw">factor</span>(hrdata<span class="op">$</span>promotion_last_5years,<span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Not promoted&quot;</span>, <span class="st">&quot;Promoted&quot;</span>))</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">hrdata<span class="op">$</span>salary_new =<span class="st"> </span><span class="kw">ordered</span>(hrdata<span class="op">$</span>salary, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>))</a></code></pre></div>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Convert satisfaction_level from a 0-1 scale to a 0-100 scale</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">hrdata<span class="op">$</span>satisfaction_level_new =<span class="st"> </span>(hrdata<span class="op">$</span>satisfaction_level <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)</a></code></pre></div>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>Convert time spent in the company to months rather than years</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">hrdata<span class="op">$</span>time_spend_company_new =<span class="st"> </span>(hrdata<span class="op">$</span>time_spend_company <span class="op">*</span><span class="st"> </span><span class="dv">12</span>)</a></code></pre></div>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>Order the columns such that <code>left</code> appears as the first column</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">hrdata&lt;-<span class="st"> </span>hrdata[, <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="op">:</span><span class="dv">16</span>)]</a></code></pre></div>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>Arrange the data-set such that the rows are in descending order of <code>average_montly_hours</code> (the column is misspelled in the original data)</li>
+</ol>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">hrdata =<span class="st"> </span>hrdata[<span class="kw">order</span>(hrdata<span class="op">$</span>average_montly_hours), ]</a></code></pre></div>
+<ol start="7" style="list-style-type: lower-alpha">
 <li>Create a subset of these data that contains only records that match the following criteria:
 <ol style="list-style-type: decimal">
 <li>The employee must not have had a work accident, AND</li>
@@ -628,16 +173,12 @@ code > span.ot { color: #007020; }
 </ol></li>
 </ol>
 <p>Report the number of observations you end up with.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">hrdata.sub =<span class="st">  </span><span class="kw">subset</span>(hrdata, Work_accident <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>promotion_last_5years <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<p>There are 243 observations in this subset of the data.</p>
 <ol start="8" style="list-style-type: lower-alpha">
 <li>Make all <code>column names</code> lowercase for the data-set you created in (g)</li>
 </ol>
-</div>
-</div>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>The only way to label things correctly is to know what each value maps to (i.e., is female = 1 a Female or a Male) but luckily we have that information here.<a href="#fnref1" class="footnote-back">↩</a></p></li>
-</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">colnames</span>(hrdata.sub) &lt;-<span class="st"> </span><span class="kw">tolower</span>(<span class="kw">colnames</span>(hrdata))</a></code></pre></div>
 </div>
 </div>
 </div>
