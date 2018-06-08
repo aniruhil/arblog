@@ -14,8 +14,11 @@ tags = ["Teaching"]
 
 | Slides | Knitted RMarkdown | Solutions to Exercises | Solutions to Task | 
 | :----  | :-----            | :-----------           | :-----------      |
-| [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/presentations/Module01Pres.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/Module01.html) | [Module 01 Exercise Solutions](https://aniruhil.org/teaching/danalytics/Module01_Exercises.html) | [Task 01](https://aniruhil.org/teaching/danalytics/Task01-Solutions.html) |
-| [Basic data operations](https://aniruhil.org/teaching/danalytics/presentations/Module02Pres.html) | [Basic data operations](https://aniruhil.org/teaching/danalytics/Module02.html) | [Module 01 Exercise Solutions](https://aniruhil.org/teaching/danalytics/Module02_Exercises.html) | [Task 02](https://aniruhil.org/teaching/danalytics/Task02-Solutions.html) |
+| [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/presentations/Module01Pres.html) | [Introduction to R & RStudio](https://aniruhil.org/teaching/danalytics/Module01.html) | [Module 01 Exercise Solutions](https://aniruhil.org/teaching/danalytics/Module01_Exercises.html) | [Task 01](https://aniruhil.org/teaching/danalytics/Task01-Solutions.html) | 
+| [Basic data operations](https://aniruhil.org/teaching/danalytics/presentations/Module02Pres.html) | [Basic data operations](https://aniruhil.org/teaching/danalytics/Module02.html) | [Module 01 Exercise Solutions](https://aniruhil.org/teaching/danalytics/Module02_Exercises.html) | [Task 02](https://aniruhil.org/teaching/danalytics/Task02-Solutions.html) | 
+
+
+
 
 
 
