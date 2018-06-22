@@ -24,6 +24,8 @@ output:
 options(htmltools.dir.version = FALSE)
 
 knitr::opts_chunk$set(fig.align = 'center', echo = TRUE, warning = FALSE, message = FALSE, dpi = 300, cache = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 65), fig.align = "center", fig.width = 8, fig.height = 6, out.width = "60%") 
+
+knitr::write_bib(c("knitr", "stringr"), "", width = 60)
 ```
 
 ## Agenda 
@@ -82,9 +84,13 @@ scales, ggridges
 
 Other packages will be installed as needed. 
 
-**Note:** If you are running some code I have provided or you have found online and you get a message saying `library(xyz)` not found, go ahead and install that library. 
+**Note:** If you are running some code I have provided or you have found online and you get a message saying 
 
-.footnote[[1] It is a good idea to update packages on a regular frequency but every now and then something might break with an update but it is usually fixed sooner rather than later by the developer.]
+`Error in library(xyz) : there is no package called ‘xyz’`  
+
+go ahead and install that library. 
+
+.footnote[[1] It is a good idea to update packages regularly. Every now and then an ppdate might break something  but it is usually fixed sooner rather than later by the developer.]
 
 ???
 - Make sure they install `devtools` and `prettydoc` 
@@ -92,9 +98,9 @@ Other packages will be installed as needed.
 ---
 
 ## Working directory versus Rprojects 
-- Start by finding your current working directory; type `getwd()`  at the `>` prompt in the `Console` and see the result 
-- Now create a folder called **mpa5830**  to store everything you will read, develop, etc. in this course 
-- Inside **mpa5830** create two sub-folders called **code** and **data**, respectively. The  folder structure will now be 
+- Start by finding your current working directory; type `getwd()`  at the console prompt `>` and see the filepath  
+- Now create a folder called **mpa5830** to store everything you will work with in this course 
+- Inside **mpa5830** create two sub-folders -- (1) **code** and (2) **data**, respectively. The folder structure will now be 
 
 ```{r, eval=FALSE}
 mpa5830 
@@ -102,8 +108,9 @@ mpa5830
   -- data 
 ```
 
-- Now create a `project` via `File -> New Project`, choose `Existing Directory`, <center><img src = "../images/projects.png", width = 300px></center> and browse to the  **mpa5830** folder  
-- RStudio will restart and you will be in the project folder, seeing a file called `mpa5830.Rproj`
+- Create a `project` via `File -> New Project`, choose `Existing Directory`, <center><img src = "../images/projects.png", width = 275px></center> and browse to the  **mpa5830** folder  
+- RStudio will restart and you will be in the project folder, seeing a file called `mpa5830.Rproj` 
+-  Now on start every session by double-clicking this file or using RStudio's File menu: `File -> Recent Projects`        
 
 ???
 - Point out that every time they start working they can click on `mpa5830.Rproj` and everything should work seamlessly unless something breaks 
@@ -413,3 +420,4 @@ The fantastic team at RStudio runs free webinar that are often very helpful so b
 - [Whats new with readxl](https://www.rstudio.com/resources/webinars/whats-new-with-readxl/) 
 - [Getting your data into R](https://www.rstudio.com/resources/webinars/getting-your-data-into-r/) 
 - [Getting Started with R Markdown](https://www.rstudio.com/resources/webinars/getting-started-with-r-markdown/)
+

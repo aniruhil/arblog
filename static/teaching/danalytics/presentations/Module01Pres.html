@@ -4,7 +4,7 @@
     <title>Introduction to R &amp; RStudio</title>
     <meta charset="utf-8">
     <meta name="author" content="Ani Ruhil" />
-    <meta name="date" content="2018-06-07" />
+    <meta name="date" content="2018-06-22" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 # Introduction to R &amp; RStudio
 ## (MPA 5830)
 ### Ani Ruhil
-### 2018-06-07
+### 2018-06-22
 
 ---
 
@@ -88,9 +88,13 @@ scales, ggridges
 
 Other packages will be installed as needed. 
 
-**Note:** If you are running some code I have provided or you have found online and you get a message saying `library(xyz)` not found, go ahead and install that library. 
+**Note:** If you are running some code I have provided or you have found online and you get a message saying 
 
-.footnote[[1] It is a good idea to update packages on a regular frequency but every now and then something might break with an update but it is usually fixed sooner rather than later by the developer.]
+`Error in library(xyz) : there is no package called ‘xyz’`  
+
+go ahead and install that library. 
+
+.footnote[[1] It is a good idea to update packages regularly. Every now and then an ppdate might break something  but it is usually fixed sooner rather than later by the developer.]
 
 ???
 - Make sure they install `devtools` and `prettydoc` 
@@ -98,9 +102,9 @@ Other packages will be installed as needed.
 ---
 
 ## Working directory versus Rprojects 
-- Start by finding your current working directory; type `getwd()`  at the `&gt;` prompt in the `Console` and see the result 
-- Now create a folder called **mpa5830**  to store everything you will read, develop, etc. in this course 
-- Inside **mpa5830** create two sub-folders called **code** and **data**, respectively. The  folder structure will now be 
+- Start by finding your current working directory; type `getwd()`  at the console prompt `&gt;` and see the filepath  
+- Now create a folder called **mpa5830** to store everything you will work with in this course 
+- Inside **mpa5830** create two sub-folders -- (1) **code** and (2) **data**, respectively. The folder structure will now be 
 
 
 ```r
@@ -109,8 +113,9 @@ mpa5830
 --data
 ```
 
-- Now create a `project` via `File -&gt; New Project`, choose `Existing Directory`, &lt;center&gt;&lt;img src = "../images/projects.png", width = 300px&gt;&lt;/center&gt; and browse to the  **mpa5830** folder  
-- RStudio will restart and you will be in the project folder, seeing a file called `mpa5830.Rproj`
+- Create a `project` via `File -&gt; New Project`, choose `Existing Directory`, &lt;center&gt;&lt;img src = "../images/projects.png", width = 275px&gt;&lt;/center&gt; and browse to the  **mpa5830** folder  
+- RStudio will restart and you will be in the project folder, seeing a file called `mpa5830.Rproj` 
+-  Now on start every session by double-clicking this file or using RStudio's File menu: `File -&gt; Recent Projects`        
 
 ???
 - Point out that every time they start working they can click on `mpa5830.Rproj` and everything should work seamlessly unless something breaks 
