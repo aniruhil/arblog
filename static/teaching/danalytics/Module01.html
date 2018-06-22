@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-06-07" />
+<meta name="date" content="2018-06-22" />
 
 <title>MPA 5830 - Module 01</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 01</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-06-07</h3>
+<h3 class="date">2018-06-22</h3>
 </header>
 
 <hr>
@@ -233,10 +233,32 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb15-3" data-line-number="3">hsb2<span class="op">$</span>ses =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>ses, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Middle&quot;</span>, <span class="st">&quot;High&quot;</span>))</a>
 <a class="sourceLine" id="cb15-4" data-line-number="4">hsb2<span class="op">$</span>schtyp =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>schtyp, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Public&quot;</span>, <span class="st">&quot;Private&quot;</span>))</a>
 <a class="sourceLine" id="cb15-5" data-line-number="5">hsb2<span class="op">$</span>prog =<span class="st"> </span><span class="kw">factor</span>(hsb2<span class="op">$</span>prog, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>), <span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;General&quot;</span>, <span class="st">&quot;Academic&quot;</span>, <span class="st">&quot;Vocational&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">summary</span>(hsb2)</a></code></pre></div>
+<pre><code>##        id            female                  race         ses    
+##  Min.   :  1.00   Male  : 91   Hispanic        : 24   Low   :47  
+##  1st Qu.: 50.75   Female:109   Asian           : 11   Middle:95  
+##  Median :100.50                African American: 20   High  :58  
+##  Mean   :100.50                White           :145              
+##  3rd Qu.:150.25                                                  
+##  Max.   :200.00                                                  
+##      schtyp            prog          read           write      
+##  Public :168   General   : 45   Min.   :28.00   Min.   :31.00  
+##  Private: 32   Academic  :105   1st Qu.:44.00   1st Qu.:45.75  
+##                Vocational: 50   Median :50.00   Median :54.00  
+##                                 Mean   :52.23   Mean   :52.77  
+##                                 3rd Qu.:60.00   3rd Qu.:60.00  
+##                                 Max.   :76.00   Max.   :67.00  
+##       math          science          socst      
+##  Min.   :33.00   Min.   :26.00   Min.   :26.00  
+##  1st Qu.:45.00   1st Qu.:44.00   1st Qu.:46.00  
+##  Median :52.00   Median :53.00   Median :52.00  
+##  Mean   :52.65   Mean   :51.85   Mean   :52.41  
+##  3rd Qu.:59.00   3rd Qu.:58.00   3rd Qu.:61.00  
+##  Max.   :75.00   Max.   :74.00   Max.   :71.00</code></pre>
 <p>I am overwriting each variable, indicating to R that variable <code>x</code> will show up as numeric with values 0 and 1, and that a 0 should be treated as male and a 1 as female, and so on. There are are four values for race, 3 for ses, 2 for schtyp, and 3 for prog, so the mapping has to reflect this. Note that this is just a quick run through with creating value labels; we will cover this in greater detail in a later module.</p>
 <p><strong>save your work!!</strong></p>
 <p>Having added labels to the factors in <strong>hsb2</strong> we can now save the data for later use.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">save</span>(hsb2, <span class="dt">file=</span><span class="st">&quot;../data/hsb2.RData&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">save</span>(hsb2, <span class="dt">file=</span><span class="st">&quot;../data/hsb2.RData&quot;</span>) </a></code></pre></div>
 <p>Let us test if this R Markdown file will Knit to html. If all is good then we can <code>Close Project</code>, and when we do so, RStudio will close the project and reopen in a vanilla session.</p>
 <div id="data-in-packages" class="section level3">
 <h3>Data in packages</h3>
@@ -247,13 +269,13 @@ code > span.ot { color: #007020; }
 <li><a href="http://www.public.iastate.edu/~hofmann/data_in_r_sortable.html">and some more</a></li>
 </ul>
 <p>To load data from a package, if you know the data-set’s name, run</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(HistData)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;Galton&quot;</span>)</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">names</span>(Galton)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">library</span>(HistData)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">data</span>(<span class="st">&quot;Galton&quot;</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">names</span>(Galton)</a></code></pre></div>
 <pre><code>## [1] &quot;parent&quot; &quot;child&quot;</code></pre>
 <p>or you can run</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;GaltonFamilies&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HistData&quot;</span>)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw">names</span>(GaltonFamilies)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">data</span>(<span class="st">&quot;GaltonFamilies&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;HistData&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">names</span>(GaltonFamilies)</a></code></pre></div>
 <pre><code>## [1] &quot;family&quot;          &quot;father&quot;          &quot;mother&quot;          &quot;midparentHeight&quot;
 ## [5] &quot;children&quot;        &quot;childNum&quot;        &quot;gender&quot;          &quot;childHeight&quot;</code></pre>
 </div>
@@ -264,10 +286,10 @@ code > span.ot { color: #007020; }
 <li><code>save(dataname, file = &quot;filepath/filename.RData&quot;)</code> or</li>
 <li><code>save(dataname, file = &quot;filepath/filename.rdata&quot;)</code></li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">data</span>(mtcars)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">save</span>(mtcars, <span class="dt">file =</span> <span class="st">&quot;../data/mtcars.RData&quot;</span>)</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="co"># To clear the Environment</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">load</span>(<span class="st">&quot;../data/mtcars.RData&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">data</span>(mtcars)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw">save</span>(mtcars, <span class="dt">file =</span> <span class="st">&quot;../data/mtcars.RData&quot;</span>)</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>()) <span class="co"># To clear the Environment</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">load</span>(<span class="st">&quot;../data/mtcars.RData&quot;</span>)</a></code></pre></div>
 <p>You can also save multiple data files, individual objects, and even everything you have done in a work session. These are covered in the textbook.</p>
 <p>If you are not in a project and they try to close RStudio after some code has been run, you will be prompted to save (or not) the <code>workspace</code> and you should say “no” by default unless you want to save the workspace.</p>
 </div>
@@ -293,11 +315,11 @@ code > span.ot { color: #007020; }
 <p>Open a fresh session by launching RStudio and then running <code>File -&gt; Open Project...</code></p>
 <p>Give it a title, your name as the author, and then save it with in <strong>code</strong> with the following name: <code>m1ex1.Rmd</code></p>
 <p>Add this level 1 heading <code>The Starwars Data</code> and then insert your first code chunk <em>exactly as shown below</em></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">data</span>(starwars)</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="kw">str</span>(starwars)</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">data</span>(starwars)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">str</span>(starwars)</a></code></pre></div>
 <p>Add this level 2 heading <code>Character Heights and Weights</code> and then your second code chunk</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, plot<span class="op">$</span>mass)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, starwars<span class="op">$</span>mass)</a></code></pre></div>
 <p>Now knit this file to <strong>html</strong></p>
 </div>
 <div id="ex.-2-lorem-ipsum-paragraphs-and-graphs" class="section level3">
@@ -314,7 +336,7 @@ code > span.ot { color: #007020; }
 <ul>
 <li>Each code chunk will have the same R code (see below)</li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, plot<span class="op">$</span>mass)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">plot</span>(starwars<span class="op">$</span>height, starwars<span class="op">$</span>mass)</a></code></pre></div>
 <p>Now knit this file to <strong>html</strong></p>
 </div>
 <div id="ex.-3-reading-in-three-data-files" class="section level3">
@@ -330,7 +352,7 @@ code > span.ot { color: #007020; }
 <li>The variable <code>gender</code> has the following codes: <code>Zero = unknown; 1 = male; 2 = female</code></li>
 <li>Use this coding scheme to convert <code>gender</code> into a <code>factor</code> with these value labels</li>
 </ul>
-<p>In a follow-up chunk run both the following commands on this data-set</p>
+<p>In a follow-up chunk run the following commands on this data-set</p>
 <ul>
 <li><code>names()</code></li>
 <li><code>str()</code></li>
@@ -346,7 +368,7 @@ code > span.ot { color: #007020; }
 </div>
 <div id="ex.-5-animal-shelters" class="section level3">
 <h3>Ex. 5: Animal Shelters</h3>
-<p>Go to <a href="https://www.kaggle.com/aaronschlegel/austin-animal-center-shelter-outcomes-and">this page on Kaggle</a> and download the file called <code>aac_shelter_outcomes.csv</code> AFTER reading the data overview, read in the file and generate a list of variable names with an appropriate command.</p>
+<p>Go to <a href="https://www.kaggle.com/aaronschlegel/austin-animal-center-shelter-outcomes-and">this page on Kaggle</a> and download the file called <code>aac_shelter_outcomes.zip</code>, unzip it, and AFTER reading the data overview, read in the file and generate a list of variable names with an appropriate command.</p>
 </div>
 </div>
 </div>
