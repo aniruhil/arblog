@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-06-08" />
+<meta name="date" content="2018-07-08" />
 
 <title>MPA 5830 - Module 02</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 02</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-06-08</h3>
+<h3 class="date">2018-07-08</h3>
 </header>
 
 <hr>
@@ -125,7 +125,7 @@ code > span.ot { color: #007020; }
 <div id="data-types" class="section level1">
 <h1>Data Types</h1>
 <p>A typical data-frame will look like the following:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;../data/hsb2.RData&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;~/Documents/Teaching/mpa5830/data/hsb2.RData&quot;</span>)</a></code></pre></div>
 <p>If the <code>load()</code> command does not work, use “Files” to find the <code>hsb2.RData</code> file and load it that way. You will have <code>columns</code>, each representing a variable, and <code>rows</code>, each representing an observation. The variables can be numeric (<code>num</code>), such as <code>id</code>, <code>write</code>, <code>read</code>, etc. or then a categorical variable that R calls a factor (<code>Factor</code>). The <code>numeric</code> class includes <code>integer</code> (a limited range of values) and <code>double</code> (double precision format) but these distinctions should not be of any consequence to you at the moment. If you have dates with/without times, the variable type will show up as <code>dates</code>, some variables may show up as <code>logical</code> (TRUE/FALSE/NA), and yet others a <code>character</code> (for example, “A”, “Bitcoin”, “<a href="mailto:p@12359">p@12359</a>” and so on).</p>
 <p>You have to be careful though since your data might have numeric codes for categorical variables. For example, if we read in the following file you will see this issue in effect:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">hsb =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/hsb2.csv&quot;</span>, </a>
@@ -281,7 +281,8 @@ code > span.ot { color: #007020; }
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">my.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>), <span class="dt">NAMES =</span> <span class="kw">c</span>(<span class="st">&quot;Andy&quot;</span>, </a>
 <a class="sourceLine" id="cb25-2" data-line-number="2">    <span class="st">&quot;Jill&quot;</span>, <span class="st">&quot;Jack&quot;</span>, <span class="st">&quot;Madison&quot;</span>), <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">24</span>, <span class="dv">48</span>, <span class="dv">72</span>, <span class="dv">96</span>))</a>
 <a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">colnames</span>(my.df)[<span class="dv">1</span>] =<span class="st"> </span><span class="kw">toupper</span>(<span class="kw">colnames</span>(my.df)[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw">colnames</span>(my.df)[<span class="dv">3</span>] =<span class="st"> &quot;AGE&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw">colnames</span>(my.df)[<span class="dv">3</span>] =<span class="st"> &quot;AGE&quot;</span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="kw">colnames</span>(my.df)[<span class="dv">3</span>] =<span class="st"> </span><span class="kw">toupper</span>(<span class="kw">colnames</span>(my.df)[<span class="dv">3</span>])</a></code></pre></div>
 <p>What should be clear by now is that there are many ways to end up with the same result with R code. This is one of the wonderful features of R.</p>
 <div id="a-little-more-on-factors" class="section level2">
 <h2>A little more on factors</h2>
@@ -467,15 +468,16 @@ code > span.ot { color: #007020; }
 <div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">out.df =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Person =</span> <span class="kw">c</span>(<span class="st">&quot;John&quot;</span>, <span class="st">&quot;Timothy&quot;</span>, <span class="st">&quot;Olivia&quot;</span>, <span class="st">&quot;Sebastian&quot;</span>, </a>
 <a class="sourceLine" id="cb94-2" data-line-number="2">    <span class="st">&quot;Serena&quot;</span>), <span class="dt">Age =</span> <span class="kw">c</span>(<span class="dv">22</span>, <span class="dv">24</span>, <span class="dv">18</span>, <span class="dv">24</span>, <span class="dv">35</span>))</a>
 <a class="sourceLine" id="cb94-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="kw">write.csv</span>(out.df, <span class="dt">file =</span> <span class="st">&quot;../data/out.csv&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)  <span class="co"># CSV format </span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb94-6" data-line-number="6"><span class="kw">library</span>(haven)</a>
-<a class="sourceLine" id="cb94-7" data-line-number="7"><span class="kw">write_dta</span>(out.df, <span class="st">&quot;../data/out.df.dta&quot;</span>)  <span class="co"># Stata format</span></a>
-<a class="sourceLine" id="cb94-8" data-line-number="8"><span class="kw">write_sav</span>(out.df, <span class="st">&quot;../data/out.df.sav&quot;</span>)  <span class="co"># SPSS format </span></a>
-<a class="sourceLine" id="cb94-9" data-line-number="9"><span class="kw">write_sas</span>(out.df, <span class="st">&quot;../data/out.df.sas&quot;</span>)  <span class="co"># SAS format </span></a>
-<a class="sourceLine" id="cb94-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb94-11" data-line-number="11"><span class="kw">library</span>(writexl)</a>
-<a class="sourceLine" id="cb94-12" data-line-number="12"><span class="kw">write_xlsx</span>(out.df, <span class="st">&quot;../data/out.df.xlsx&quot;</span>)  <span class="co"># Excel format</span></a></code></pre></div>
+<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="kw">write.csv</span>(out.df, <span class="dt">file =</span> <span class="st">&quot;~/Documents/Teaching/mpa5830/data/out.csv&quot;</span>, </a>
+<a class="sourceLine" id="cb94-5" data-line-number="5">    <span class="dt">row.names =</span> <span class="ot">FALSE</span>)  <span class="co"># CSV format </span></a>
+<a class="sourceLine" id="cb94-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb94-7" data-line-number="7"><span class="kw">library</span>(haven)</a>
+<a class="sourceLine" id="cb94-8" data-line-number="8"><span class="kw">write_dta</span>(out.df, <span class="st">&quot;~/Documents/Teaching/mpa5830/data/out.df.dta&quot;</span>)  <span class="co"># Stata format</span></a>
+<a class="sourceLine" id="cb94-9" data-line-number="9"><span class="kw">write_sav</span>(out.df, <span class="st">&quot;~/Documents/Teaching/mpa5830/data/out.df.sav&quot;</span>)  <span class="co"># SPSS format </span></a>
+<a class="sourceLine" id="cb94-10" data-line-number="10"><span class="kw">write_sas</span>(out.df, <span class="st">&quot;~/Documents/Teaching/mpa5830/data/out.df.sas&quot;</span>)  <span class="co"># SAS format </span></a>
+<a class="sourceLine" id="cb94-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb94-12" data-line-number="12"><span class="kw">library</span>(writexl)</a>
+<a class="sourceLine" id="cb94-13" data-line-number="13"><span class="kw">write_xlsx</span>(out.df, <span class="st">&quot;~/Documents/Teaching/mpa5830/data/out.df.xlsx&quot;</span>)  <span class="co"># Excel format</span></a></code></pre></div>
 <p>There are other packages that import/export data so be sure to check them out as well, in particular <a href="https://cran.r-project.org/web/packages/rio/vignettes/rio.html">rio</a>.</p>
 </div>
 <div id="merging-data" class="section level1">
@@ -565,16 +567,18 @@ code > span.ot { color: #007020; }
 <pre><code>##  [1] &quot;am&quot;   &quot;mpg&quot;  &quot;qsec&quot; &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;vs&quot;   &quot;gear&quot;
 ## [11] &quot;carb&quot;</code></pre>
 <p>If I only wanted certain columns I could omit the other columns.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">df5 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># specifying the position of the columns </span></a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">df5 =<span class="st"> </span>mtcars[, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># specifying the position of the columns </span></a>
+<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="kw">names</span>(df5)</a></code></pre></div>
+<pre><code>## [1] &quot;am&quot;   &quot;mpg&quot;  &quot;qsec&quot;</code></pre>
 <p>Remember the comma in <code>mtcars[,</code> … this tells R to keep all rows in mtcars. If, instead, I did this I would only get the first four rows, not all.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1">df6 =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># keep first four rows and the specified columns</span></a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">df6 =<span class="st"> </span>mtcars[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>, <span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">7</span>)]  <span class="co"># keep first four rows and the specified columns</span></a></code></pre></div>
 <p>I would end up with only the first four rows of mtcars, not every row. So try to remember the order: <code>dataframe[i, j]</code> where <code>i</code> reference the rows and <code>j</code> reference the columns. Folks often get tripped up over this switch.</p>
 </div>
 <div id="working-with-strings" class="section level1">
 <h1>Working with strings</h1>
 <p>Often you run into strings that have to be manipulated. Often, when working with county data, for example, county names are followed by <code>County, Ohio</code> and this is superfluous so we end up excising it</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">c.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;../data/strings.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb116-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">c.data =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Documents/Teaching/mpa5830/data/strings.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
 <pre><code>##           GEO.id GEO.id2      GEO.display.label respop72016
 ## 1 0500000US39001   39001     Adams County, Ohio       27907
 ## 2 0500000US39003   39003     Allen County, Ohio      103742
@@ -583,8 +587,8 @@ code > span.ot { color: #007020; }
 ## 5 0500000US39009   39009    Athens County, Ohio       66186
 ## 6 0500000US39011   39011  Auglaize County, Ohio       45894</code></pre>
 <p>Let us just retain the county name from <code>GEO.display.label</code></p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">c.data<span class="op">$</span>county =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; County, Ohio&quot;</span>, <span class="st">&quot;&quot;</span>, c.data<span class="op">$</span>GEO.display.label)</a>
-<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">c.data<span class="op">$</span>county =<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; County, Ohio&quot;</span>, <span class="st">&quot;&quot;</span>, c.data<span class="op">$</span>GEO.display.label)</a>
+<a class="sourceLine" id="cb119-2" data-line-number="2"><span class="kw">head</span>(c.data)</a></code></pre></div>
 <pre><code>##           GEO.id GEO.id2      GEO.display.label respop72016    county
 ## 1 0500000US39001   39001     Adams County, Ohio       27907     Adams
 ## 2 0500000US39003   39003     Allen County, Ohio      103742     Allen

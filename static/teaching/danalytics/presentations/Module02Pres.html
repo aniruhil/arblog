@@ -415,7 +415,7 @@ First, I can create a new variable and store it as a factor as follows:
 ```r
 my.df$female1[my.df$SEX == "M"] = 0  # If SEX equals 'M' create new variable female1 = 0
 my.df$female1[my.df$SEX == "F"] = 1  # If SEX equals 'F' code female1 = 1
-my.df$female1 = factor(my.df$female1, levels = c(0, 1), labels = c("Male", "Female"))  # sotre female1 as a categorical variable with labels Male/Female  
+my.df$female1 = factor(my.df$female1, levels = c(0, 1), labels = c("Male", "Female"))  # store female1 as a categorical variable with labels Male/Female  
 ```
 
 I could have also skipped the `0/1` business and just done this: 
@@ -738,12 +738,12 @@ Often, after data have been processed in R, we need to share them with folks who
 out.df = data.frame(Person = c("John", "Timothy", "Olivia", "Sebastian", "Serena"), Age = c(22, 
     24, 18, 24, 35))
 
-write.csv(out.df, file = "../data/out.csv", row.names = FALSE)  # CSV format 
+write.csv(out.df, file = "~/Documents/Teaching/mpa5830/data/out.csv", row.names = FALSE)  # CSV format 
 
 library(haven)
-write_dta(out.df, "../data/out.df.dta")  # Stata format
-write_sav(out.df, "../data/out.df.sav")  # SPSS format 
-write_sas(out.df, "../data/out.df.sas")  # SAS format 
+write_dta(out.df, "~/Documents/Teaching/mpa5830/data/out.df.dta")  # Stata format
+write_sav(out.df, "~/Documents/Teaching/mpa5830/data/out.df.sav")  # SPSS format 
+write_sas(out.df, "~/Documents/Teaching/mpa5830/data/out.df.sas")  # SAS format 
 
 library(writexl)
 write_xlsx(out.df, "./data/out.df.xlsx")  # Excel format
@@ -938,7 +938,7 @@ Often you run into strings that have to be manipulated. Often, when working with
 
 
 ```r
-c.data = read.csv("../data/strings.csv")
+c.data = read.csv("~/Documents/Teaching/mpa5830/data/strings.csv")
 head(c.data)
 ```
 
@@ -1072,7 +1072,7 @@ If you have strings, then `grepl` comes into play:
 
 
 ```r
-load("../data/movies.RData")
+load("~/Documents/Teaching/mpa5830/data/movies.RData")
 movies$comedy = ifelse(grepl("Comedy", movies$genres), "Yes", "No")
 movies$in1995 = ifelse(grepl("(1995)", movies$title), "Yes", "No")
 movies$night = ifelse(grepl("Night", movies$title), "Yes", "No")
