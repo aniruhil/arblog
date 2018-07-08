@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-06-22" />
+<meta name="date" content="2018-07-07" />
 
 <title>MPA 5830 - Module 01</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 01</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-06-22</h3>
+<h3 class="date">2018-07-07</h3>
 </header>
 
 <hr>
@@ -146,7 +146,7 @@ code > span.ot { color: #007020; }
 <p>Notice we need <code>widths = c(.,.,.,)</code> to indicate how many slots each variable takes and then <code>col.names = c(,,,)</code> to label the columns since the data file does not have variable names.</p>
 <div id="reading-files-from-the-web" class="section level3">
 <h3>Reading Files from the Web</h3>
-<p>It is possible to specify the full web-path for a file and read it in, rather than storing a local copy. This is often useful when updated by the source (Census Bureau, Bureau of Labor, Bureau of Economic Analysis, etc.)</p>
+<p>It is possible to specify the full web-path for a file and read it in, rather than storing a local copy. This is often useful when the data tend to be updated often or periodically by the source (Census Bureau, Bureau of Labor, Bureau of Economic Analysis, etc.)</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">fpe =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;http://data.princeton.edu/wws509/datasets/effort.dat&quot;</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">test =<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/test.txt&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">test.csv =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;https://stats.idre.ucla.edu/stat/data/test.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
