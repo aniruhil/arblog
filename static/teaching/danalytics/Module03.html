@@ -783,18 +783,20 @@ code > span.ot { color: #007020; }
 <div id="pew" class="section level2">
 <h2>Pew</h2>
 <p>Take the <code>pew</code> data shown to you early on in this module and using dplyr and tidyr, tidy it up so that the final data-set (a) has three columns — religion, income-group, frequency, and (b) is arranged in ascending order of religion.</p>
+<p>Now generate a data-set that has the income-groups as rows and each religion as a column, making sure you order the income-groups levels.</p>
 </div>
 <div id="weather" class="section level2">
 <h2>Weather</h2>
 <p>Tidy these weather data</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file =</span> <span class="st">&quot;http://stat405.had.co.nz/data/weather.txt&quot;</span>, </a>
 <a class="sourceLine" id="cb88-2" data-line-number="2">    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>The tidy data should have the days as rows and TMIN and TMAX as columns (i.e., you are going from wide to long).</p>
+<p>The tidy data should have the days as rows and TMIN and TMAX as columns (i.e., you are going from wide to long). Drop all rows where both TMIN and TMAX are <code>NA</code>, remove the <code>d</code> from the values in the <code>day</code> column, and sort in increasing order of <code>month</code> and <code>day</code>.</p>
 </div>
 <div id="climate-change" class="section level2">
 <h2>Climate Change</h2>
-<p>Download <a href="http://databank.worldbank.org/data/download/catalog/climate_change_download_0.xls">these data</a> from the World bank’s World Development Indicators and Climate Change Knowledge Portal on climate systems, exposure to climate impacts, resilience, greenhouse gas emissions, and energy use. The data are in a worksheet called, wait for it, <code>Data</code>, and need to be tidied up such that for every country you have one row per year and then columns for each of the 58 measures (called <code>Series name</code> in the database).</p>
-<p>If you really want to challenge yourself, create separate data frames from the <code>Country</code> worksheet and the <code>Series</code> worksheet. Then merge these with data frame you tidied up.</p>
+<p>Download <a href="http://databank.worldbank.org/data/download/catalog/climate_change_download_0.xls">these data</a> from the World bank’s World Development Indicators and Climate Change Knowledge Portal on climate systems, exposure to climate impacts, resilience, greenhouse gas emissions, and energy use.</p>
+<p>The data are in a worksheet called, wait for it, <code>Data</code>, and need to be tidied up such that for every country you have one row per year and then columns for each of the 58 measures (called <code>Series name</code> in the database).</p>
+<p>If you want to challenge yourself, create a separate data frame from the <code>Country</code> worksheet and merge appropriate columns with the data frame you tidied up.</p>
 </div>
 </div>
 <div id="dates-and-times" class="section level1">
