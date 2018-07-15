@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-06-08" />
+<meta name="date" content="2018-07-15" />
 
 <title>MPA 5830 - Task 02 Solutions</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Task 02 Solutions</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-06-08</h3>
+<h3 class="date">2018-07-15</h3>
 </header>
 
 <hr>
@@ -131,35 +131,71 @@ code > span.ot { color: #007020; }
 <h2>Creating the factors asked for</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">titanic<span class="op">$</span>pclass  =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>pclass, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;First Class&quot;</span>, <span class="st">&quot;Second Class&quot;</span>, <span class="st">&quot;Third Class&quot;</span>))</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;C&quot;</span>] =<span class="st"> &quot;Cherbourg&quot;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;Q&quot;</span>] =<span class="st"> &quot;Queenstown&quot;</span> </a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;S&quot;</span>] =<span class="st"> &quot;Southampton&quot;</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">titanic<span class="op">$</span>embarked =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>embarked)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">titanic<span class="op">$</span>survived =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>survived, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Did not survive&quot;</span>, <span class="st">&quot;Survived&quot;</span>))</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">titanic<span class="op">$</span>sex[titanic<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;female&quot;</span>] =<span class="st"> &quot;Female&quot;</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">titanic<span class="op">$</span>sex[titanic<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;male&quot;</span>] =<span class="st"> &quot;Male&quot;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">table</span>(titanic<span class="op">$</span>pclass) </a></code></pre></div>
+<pre><code>## 
+##  First Class Second Class  Third Class 
+##          323          277          709</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;C&quot;</span>] =<span class="st"> &quot;Cherbourg&quot;</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;Q&quot;</span>] =<span class="st"> &quot;Queenstown&quot;</span> </a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">titanic<span class="op">$</span>embarked[titanic<span class="op">$</span>embarked <span class="op">==</span><span class="st"> &quot;S&quot;</span>] =<span class="st"> &quot;Southampton&quot;</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">titanic<span class="op">$</span>embarked =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>embarked)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">table</span>(titanic<span class="op">$</span>embarked) </a></code></pre></div>
+<pre><code>## 
+##   Cherbourg  Queenstown Southampton 
+##         270         123         914</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">titanic<span class="op">$</span>survived =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>survived, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Did not survive&quot;</span>, <span class="st">&quot;Survived&quot;</span>))</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">table</span>(titanic<span class="op">$</span>survived) </a></code></pre></div>
+<pre><code>## 
+## Did not survive        Survived 
+##             809             500</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">titanic<span class="op">$</span>sex[titanic<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;female&quot;</span>] =<span class="st"> &quot;Female&quot;</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">titanic<span class="op">$</span>sex[titanic<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;male&quot;</span>] =<span class="st"> &quot;Male&quot;</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw">table</span>(titanic<span class="op">$</span>sex) </a></code></pre></div>
+<pre><code>## 
+## Female   Male 
+##    466    843</code></pre>
 </div>
 <div id="rounding-age" class="section level2">
 <h2>Rounding <code>age</code></h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">titanic<span class="op">$</span>age =<span class="st"> </span><span class="kw">round</span>(titanic<span class="op">$</span>age,  <span class="dt">digits =</span> <span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">titanic<span class="op">$</span>age2 =<span class="st"> </span><span class="kw">round</span>(titanic<span class="op">$</span>age, <span class="dt">digits =</span> <span class="dv">0</span>)</a></code></pre></div>
+<p>and since Mike asked about with/within,</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">titanic<span class="op">$</span>age3 =<span class="st"> </span><span class="kw">with</span>(titanic, <span class="kw">round</span>(age, <span class="dt">digits =</span> <span class="dv">0</span>))</a></code></pre></div>
 </div>
 <div id="creating-age_groups" class="section level2">
 <h2>Creating <code>age_groups</code></h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">titanic<span class="op">$</span>age_groups =<span class="st"> </span><span class="kw">cut</span>(titanic<span class="op">$</span>age, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">18</span>, <span class="dv">36</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">90</span>), <span class="dt">right =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">titanic<span class="op">$</span>age_groups =<span class="st"> </span><span class="kw">cut</span>(titanic<span class="op">$</span>age2, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">18</span>, <span class="dv">36</span>, <span class="dv">54</span>, <span class="dv">72</span>, <span class="dv">90</span>), <span class="dt">right =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw">table</span>(titanic<span class="op">$</span>age_groups) </a></code></pre></div>
+<pre><code>## 
+##  [0,18) [18,36) [36,54) [54,72) [72,90) 
+##     154     570     245      74       3</code></pre>
 </div>
 <div id="creating-modified-pclassfactor" class="section level2">
 <h2>Creating modified <code>pclass</code>factor</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;First Class&quot;</span>]  =<span class="st"> &quot;First Class&quot;</span></a></code></pre></div>
-<pre><code>## Warning: Unknown or uninitialised column: 'pclass2'.</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;Second Class&quot;</span>]  =<span class="st"> &quot;Some other Class&quot;</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;Third Class&quot;</span>]  =<span class="st"> &quot;Some other Class&quot;</span> </a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">titanic<span class="op">$</span>pclass2  =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>pclass2)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;First Class&quot;</span>]  =<span class="st"> &quot;First Class&quot;</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;Second Class&quot;</span>]  =<span class="st"> &quot;Some other Class&quot;</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">titanic<span class="op">$</span>pclass2[titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;Third Class&quot;</span>]  =<span class="st"> &quot;Some other Class&quot;</span> </a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">titanic<span class="op">$</span>pclass2  =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>pclass2)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw">table</span>(titanic<span class="op">$</span>pclass2) </a></code></pre></div>
+<pre><code>## 
+##      First Class Some other Class 
+##              323              986</code></pre>
+<p>Or you could do this</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">titanic<span class="op">$</span>pclass3 =<span class="st"> </span><span class="kw">ifelse</span>(titanic<span class="op">$</span>pclass <span class="op">==</span><span class="st"> &quot;First Class&quot;</span>, <span class="st">&quot;First Class&quot;</span>, <span class="st">&quot;Some other Class&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">titanic<span class="op">$</span>pclass3 =<span class="st"> </span><span class="kw">factor</span>(titanic<span class="op">$</span>pclass3)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw">table</span>(titanic<span class="op">$</span>pclass3) </a></code></pre></div>
+<pre><code>## 
+##      First Class Some other Class 
+##              323              986</code></pre>
 </div>
 <div id="saving-the-data-set" class="section level2">
 <h2>Saving the data-set</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">save</span>(titanic, <span class="dt">file =</span> <span class="st">&quot;../data/titanic.RData&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">save</span>(titanic, <span class="dt">file =</span> <span class="st">&quot;../data/titanic.RData&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 </div>
