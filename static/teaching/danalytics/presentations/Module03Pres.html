@@ -356,7 +356,7 @@ Of all of these airlines, which one has the highest mean departure delay?
 
 ```r
 tab.05 = cmhflights %&gt;% select(Month, UniqueCarrier, Dest, DepDelayMinutes, Origin) %&gt;% filter(Origin %in% 
-    c("CMH")) %&gt;% group_by(UniqueCarrier) %&gt;% summarise(Median.Delay = mean(DepDelayMinutes, 
+    c("CMH")) %&gt;% group_by(UniqueCarrier) %&gt;% summarise(Mean.Delay = mean(DepDelayMinutes, 
     na.rm = TRUE))
 ```
 
@@ -372,7 +372,7 @@ Thus far we have been creating a summary data frame containing whatever we calcu
 
 
 ```r
-cmhflights = cmhflights %&gt;% group_by(UniqueCarrier, Origin) %&gt;% mutate(Median.Delay = mean(DepDelayMinutes, 
+cmhflights = cmhflights %&gt;% group_by(UniqueCarrier, Origin) %&gt;% mutate(Mean.Delay = mean(DepDelayMinutes, 
     na.rm = TRUE))
 ```
 
@@ -382,14 +382,14 @@ Note the 110th column. Now, if we wanted to add this column but drop all other c
 ```r
 mut.df = cmhflights
 
-mut.df2 = mut.df %&gt;% group_by(UniqueCarrier, Dest) %&gt;% transmute(Median.Arr.Delay = mean(ArrDelayMinutes, 
+mut.df2 = mut.df %&gt;% group_by(UniqueCarrier, Dest) %&gt;% transmute(Mean.Arr.Delay = mean(ArrDelayMinutes, 
     na.rm = TRUE))
 
 names(mut.df2)
 ```
 
 ```
-## [1] "UniqueCarrier"    "Dest"             "Median.Arr.Delay"
+## [1] "UniqueCarrier"  "Dest"           "Mean.Arr.Delay"
 ```
 
 ---
@@ -493,7 +493,7 @@ How many flights do we see per unique aircraft?
 ```r
 tab.03 = cmhflights %&gt;% group_by(TailNum) %&gt;% summarise(Number = n())
 
-head(tab.03, 12)
+head(tab.03, 12)  # first 12 rows of tab.03
 ```
 
 ```
