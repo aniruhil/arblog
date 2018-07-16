@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-07-13" />
+<meta name="date" content="2018-07-16" />
 
 <title>MPA 5830 - Module 03</title>
 
@@ -116,7 +116,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 03</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-07-13</h3>
+<h3 class="date">2018-07-16</h3>
 </header>
 
 <hr>
@@ -131,12 +131,13 @@ code > span.ot { color: #007020; }
 <h1><code>dplyr</code></h1>
 <p>You will usually end up needing and using some or all of these six functions:</p>
 <ul>
-<li>you need to select columns to work with? -&gt; <code>select()</code></li>
-<li>you need to use a subset of the data based on some criterion? -&gt; <code>filter()</code></li>
-<li>you need to arrange the data in ascending/descending order of variable(s)? -&gt; <code>arrange()</code></li>
-<li>you want the results of your calculations to be a standalone data frame? -&gt; <code>summarise()</code></li>
-<li>you want to add your calculated value(s) to the existing data frame? -&gt; <code>mutate()</code></li>
-<li>you need to calculate averages, frequencies, etc by groups? -&gt; <code>group_by()</code></li>
+<li>you need to select columns to work with? <code>select()</code></li>
+<li>you need to use a subset of the data based on some criterion? <code>filter()</code></li>
+<li>you need to arrange the data in ascending/descending order of variable(s)? <code>arrange()</code></li>
+<li>you want the results of your calculations to be a standalone data frame? <code>summarise()</code></li>
+<li>you want to add your calculated value(s) to the existing data frame? <code>mutate()</code></li>
+<li>you want to add your calculated value(s) to the existing data frame but drop all variables/columns not being used in the calculation? <code>transmute()</code></li>
+<li>you need to calculate averages, frequencies, etc by groups? <code>group_by()</code></li>
 </ul>
 <p>In order to understand how these commands work we rely on a simple data frame – all flights originating and departing from Columbus (Ohio) for January through September of 2017. Let us load the data and <code>dplyr</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;/Users/ruhil/Documents/Teaching/mpa5830/data/cmhflights_01092017.RData&quot;</span>)</a>
