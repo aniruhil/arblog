@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-06-08" />
+<meta name="date" content="2018-07-19" />
 
 <title>MPA 5830 - Module 02 Exercises</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 02 Exercises</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-06-08</h3>
+<h3 class="date">2018-07-19</h3>
 </header>
 
 <hr>
@@ -148,7 +148,9 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5">hrdata<span class="op">$</span>promotion_last_5years_new =<span class="st"> </span><span class="kw">factor</span>(hrdata<span class="op">$</span>promotion_last_5years,<span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Not promoted&quot;</span>, <span class="st">&quot;Promoted&quot;</span>))</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">hrdata<span class="op">$</span>salary_new =<span class="st"> </span><span class="kw">ordered</span>(hrdata<span class="op">$</span>salary, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb2-7" data-line-number="7">hrdata<span class="op">$</span>sales_new =<span class="st"> </span><span class="kw">factor</span>(hrdata<span class="op">$</span>sales,  <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Accounting&quot;</span>, <span class="st">&quot;HR&quot;</span>, <span class="st">&quot;IT&quot;</span>, <span class="st">&quot;Management&quot;</span>, <span class="st">&quot;Marketing&quot;</span>, <span class="st">&quot;Product Management&quot;</span>, <span class="st">&quot;R&amp;D&quot;</span>, <span class="st">&quot;Sales&quot;</span>, <span class="st">&quot;Support&quot;</span>, <span class="st">&quot;Technical&quot;</span>))</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">hrdata<span class="op">$</span>salary_new =<span class="st"> </span><span class="kw">ordered</span>(hrdata<span class="op">$</span>salary, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;medium&quot;</span>, <span class="st">&quot;high&quot;</span>), <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Low&quot;</span>, <span class="st">&quot;Medium&quot;</span>, <span class="st">&quot;High&quot;</span>))</a></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Convert satisfaction_level from a 0-1 scale to a 0-100 scale</li>
 </ol>
