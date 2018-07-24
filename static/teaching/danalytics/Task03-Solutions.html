@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-07-23" />
+<meta name="date" content="2018-07-24" />
 
 <title>MPA 5830 - Task 03 Solutions</title>
 
@@ -111,7 +111,7 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Task 03 Solutions</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-07-23</h3>
+<h3 class="date">2018-07-24</h3>
 </header>
 
 <hr>
@@ -177,12 +177,12 @@ code > span.ot { color: #007020; }
 <div id="section-4" class="section level1">
 <h1>(5)</h1>
 <p>Now calculate the frequencies of the number of cars of each make. Make sure you show the results by displaying the table</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">tab3 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">tab3a &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(make) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">tab3</a></code></pre></div>
+<a class="sourceLine" id="cb7-6" data-line-number="6">tab3a</a></code></pre></div>
 <pre><code>## # A tibble: 135 x 2
 ##    make          Frequency
 ##    &lt;fct&gt;             &lt;int&gt;
@@ -198,10 +198,10 @@ code > span.ot { color: #007020; }
 ## 10 Mitsubishi         1048
 ## # ... with 125 more rows</code></pre>
 <p>This could also be done as</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">tab3 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">tab3b &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(make, <span class="dt">sort =</span> <span class="ot">TRUE</span>) </a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">tab3</a></code></pre></div>
+<a class="sourceLine" id="cb9-4" data-line-number="4">tab3b</a></code></pre></div>
 <pre><code>## # A tibble: 135 x 2
 ##    make              n
 ##    &lt;fct&gt;         &lt;int&gt;
@@ -262,16 +262,35 @@ code > span.ot { color: #007020; }
 ##  9  1985 GMC         160
 ## 10  1988 Chevrolet   159
 ## # ... with 1,698 more rows</code></pre>
+<p>or even</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">tab444 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(make, year, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">tab444</a></code></pre></div>
+<pre><code>## # A tibble: 1,708 x 3
+##    make       year     n
+##    &lt;fct&gt;     &lt;int&gt; &lt;int&gt;
+##  1 Chevrolet  1985   259
+##  2 Chevrolet  1984   250
+##  3 Ford       1984   236
+##  4 Dodge      1984   191
+##  5 Dodge      1985   190
+##  6 Ford       1985   186
+##  7 Chevrolet  1986   185
+##  8 Chevrolet  1987   173
+##  9 GMC        1985   160
+## 10 Chevrolet  1988   159
+## # ... with 1,698 more rows</code></pre>
 </div>
 <div id="section-6" class="section level1">
 <h1>(7)</h1>
 <p>Calculate the frequencies of fuelType1 by year. Make sure you show the results by displaying the table</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">tab5 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(year, fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">tab5</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">tab5 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(year, fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">tab5</a></code></pre></div>
 <pre><code>## # A tibble: 154 x 3
 ## # Groups:   year [36]
 ##     year fuelType1        Frequency
@@ -288,13 +307,32 @@ code > span.ot { color: #007020; }
 ## 10  1993 Regular Gasoline       861
 ## # ... with 144 more rows</code></pre>
 <p>or alternatively,</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">tab5 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>) </a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">tab5</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">tab55 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">tab55</a></code></pre></div>
 <pre><code>## # A tibble: 154 x 3
 ## # Groups:   year [36]
+##     year fuelType1            n
+##    &lt;int&gt; &lt;fct&gt;            &lt;int&gt;
+##  1  1984 Regular Gasoline  1702
+##  2  1985 Regular Gasoline  1442
+##  3  1987 Regular Gasoline  1102
+##  4  1986 Regular Gasoline  1064
+##  5  1988 Regular Gasoline   995
+##  6  1989 Regular Gasoline   978
+##  7  1990 Regular Gasoline   921
+##  8  1991 Regular Gasoline   895
+##  9  1992 Regular Gasoline   877
+## 10  1993 Regular Gasoline   861
+## # ... with 144 more rows</code></pre>
+<p>or even</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">tab555 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(year, fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">tab555</a></code></pre></div>
+<pre><code>## # A tibble: 154 x 3
 ##     year fuelType1            n
 ##    &lt;int&gt; &lt;fct&gt;            &lt;int&gt;
 ##  1  1984 Regular Gasoline  1702
@@ -312,13 +350,13 @@ code > span.ot { color: #007020; }
 <div id="section-7" class="section level1">
 <h1>(8)</h1>
 <p>In 2019, what fuelType1 dominates and which has the smallest frequency? What if you do this calculation by make and year? What then? Make sure you show the results by displaying the table</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">tab6 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7">tab6</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">tab6 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">tab6</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   fuelType1         Frequency
 ##   &lt;fct&gt;                 &lt;int&gt;
@@ -327,11 +365,11 @@ code > span.ot { color: #007020; }
 ## 3 Midgrade Gasoline         6
 ## 4 Diesel                    4</code></pre>
 <p>You could also do this as</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">tab6 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">tab6</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">tab6 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2019</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">tab6</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
 ##   fuelType1             n
 ##   &lt;fct&gt;             &lt;int&gt;
@@ -340,12 +378,12 @@ code > span.ot { color: #007020; }
 ## 3 Midgrade Gasoline     6
 ## 4 Diesel                4</code></pre>
 <p>In 2019 Premium Gasoline dominates (n = 246) while Diesel is at the minimum (n = 4).</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">tab66 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(make, year, fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
-<a class="sourceLine" id="cb23-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb23-6" data-line-number="6">tab66</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">tab66 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(make, year, fuelType1) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frequency =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="op">-</span>Frequency)</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">tab66</a></code></pre></div>
 <pre><code>## # A tibble: 2,664 x 4
 ## # Groups:   make, year [1,708]
 ##    make       year fuelType1        Frequency
@@ -362,13 +400,32 @@ code > span.ot { color: #007020; }
 ## 10 GMC        1985 Regular Gasoline       133
 ## # ... with 2,654 more rows</code></pre>
 <p>You could also do this as</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">tab66 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(make, year) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5">tab66</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">tab66 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(make, year) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">tab66</a></code></pre></div>
 <pre><code>## # A tibble: 2,664 x 4
 ## # Groups:   make, year [1,708]
+##    make       year fuelType1            n
+##    &lt;fct&gt;     &lt;int&gt; &lt;fct&gt;            &lt;int&gt;
+##  1 Ford       1984 Regular Gasoline   228
+##  2 Chevrolet  1985 Regular Gasoline   224
+##  3 Chevrolet  1984 Regular Gasoline   198
+##  4 Dodge      1984 Regular Gasoline   187
+##  5 Ford       1985 Regular Gasoline   178
+##  6 Chevrolet  1986 Regular Gasoline   167
+##  7 Dodge      1985 Regular Gasoline   159
+##  8 Chevrolet  1987 Regular Gasoline   155
+##  9 Chevrolet  1988 Regular Gasoline   137
+## 10 GMC        1985 Regular Gasoline   133
+## # ... with 2,654 more rows</code></pre>
+<p>or even</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">tab666 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(make, year, fuelType1, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4">tab666</a></code></pre></div>
+<pre><code>## # A tibble: 2,664 x 4
 ##    make       year fuelType1            n
 ##    &lt;fct&gt;     &lt;int&gt; &lt;fct&gt;            &lt;int&gt;
 ##  1 Ford       1984 Regular Gasoline   228
@@ -387,11 +444,11 @@ code > span.ot { color: #007020; }
 <div id="section-8" class="section level1">
 <h1>(9)</h1>
 <p>Use “unite()” to create a single variable that combines make and model.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">epa3 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">unite</span>(make_model, <span class="kw">c</span>(<span class="st">&quot;make&quot;</span>, <span class="st">&quot;model&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;: &quot;</span>)</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">head</span>(epa3)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">epa3 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw">unite</span>(make_model, <span class="kw">c</span>(<span class="st">&quot;make&quot;</span>, <span class="st">&quot;model&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;: &quot;</span>)</a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="kw">head</span>(epa3)</a></code></pre></div>
 <pre><code>##   city08 cylinders displ                      drive fuelCost08
 ## 1     19         4   2.0           Rear-Wheel Drive       2000
 ## 2      9        12   4.9           Rear-Wheel Drive       3850
@@ -417,10 +474,10 @@ code > span.ot { color: #007020; }
 <div id="section-9" class="section level1">
 <h1>(10)</h1>
 <p>Use “spread()” to convert that table you created in e. so that the result is a table that has the make as the first column and each year as a successive column.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">tab7 &lt;-<span class="st"> </span>tab4 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">spread</span>(year, Frequency)</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="kw">head</span>(tab7)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">tab7 &lt;-<span class="st"> </span>tab4 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw">spread</span>(year, Frequency)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="kw">head</span>(tab7)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 37
 ## # Groups:   make [6]
 ##   make  `1984` `1985` `1986` `1987` `1988` `1989` `1990` `1991` `1992`
@@ -441,10 +498,10 @@ code > span.ot { color: #007020; }
 <div id="section-10" class="section level1">
 <h1>(11)</h1>
 <p>Use “separate()” to generate new variables that represent each element of the <code>createdOn</code> variable. These should be titled – “Dayasname”, “Month”, “Dayasnumber”, “HMS”, “TimeZone”, “Year”</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">epa4 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">separate</span>(createdOn, <span class="kw">c</span>(<span class="st">&quot;Dayasname&quot;</span>, <span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Dayasnumber&quot;</span>, <span class="st">&quot;HMS&quot;</span>, <span class="st">&quot;TimeZone&quot;</span>, <span class="st">&quot;Year&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="kw">head</span>(epa4)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">epa4 &lt;-<span class="st"> </span>epa2 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw">separate</span>(createdOn, <span class="kw">c</span>(<span class="st">&quot;Dayasname&quot;</span>, <span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Dayasnumber&quot;</span>, <span class="st">&quot;HMS&quot;</span>, <span class="st">&quot;TimeZone&quot;</span>, <span class="st">&quot;Year&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="kw">head</span>(epa4)</a></code></pre></div>
 <pre><code>##   city08 cylinders displ                      drive fuelCost08
 ## 1     19         4   2.0           Rear-Wheel Drive       2000
 ## 2      9        12   4.9           Rear-Wheel Drive       3850
@@ -477,10 +534,10 @@ code > span.ot { color: #007020; }
 <div id="section-11" class="section level1">
 <h1>(12)</h1>
 <p>Now create a new variable called <code>date</code> by uniting Dayasnumber, Month, and Year</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">epa5 &lt;-<span class="st"> </span>epa4 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;date&quot;</span>, Dayasnumber, Month, Year, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="kw">head</span>(epa5)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">epa5 &lt;-<span class="st"> </span>epa4 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw">unite</span>(<span class="st">&quot;date&quot;</span>, Dayasnumber, Month, Year, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>)</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="kw">head</span>(epa5)</a></code></pre></div>
 <pre><code>##   city08 cylinders displ                      drive fuelCost08
 ## 1     19         4   2.0           Rear-Wheel Drive       2000
 ## 2      9        12   4.9           Rear-Wheel Drive       3850
@@ -513,10 +570,10 @@ code > span.ot { color: #007020; }
 <div id="section-12" class="section level1">
 <h1>(13)</h1>
 <p>Now create a new variable, <code>date2</code>, using <code>lubridate</code>, and store date2 in a valid date format.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">epa5<span class="op">$</span>date2 &lt;-<span class="st"> </span><span class="kw">dmy</span>(epa5<span class="op">$</span>date)</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="kw">table</span>(epa5<span class="op">$</span>date2)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">epa5<span class="op">$</span>date2 &lt;-<span class="st"> </span><span class="kw">dmy</span>(epa5<span class="op">$</span>date)</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="kw">table</span>(epa5<span class="op">$</span>date2)</a></code></pre></div>
 <pre><code>## 
 ## 2013-01-01 2013-10-29 2013-11-04 2013-11-07 2013-11-19 2013-12-04 
 ##      34209         29         23          3          7          2 
