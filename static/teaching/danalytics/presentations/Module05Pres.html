@@ -271,8 +271,6 @@ class: inverse, center, middle
 
 # `leaflet` 
 
-![](./images/elaineyes.gif)
-
 ---
 
 `leaflet` is an easy to learn a JavaScript library that generates interactive maps 
@@ -284,13 +282,14 @@ library(leaflet.extras)
 library(widgetframe)
 
 m1 &lt;- leaflet() %&gt;% setView(lat = 39.322577, lng = -82.106336, 
-    zoom = 14) %&gt;% addTiles() %&gt;% setMapWidgetStyle() %&gt;% frameWidget(height = "275")
+    zoom = 14) %&gt;% addTiles() %&gt;% setMapWidgetStyle() %&gt;% frameWidget(m1, 
+    height = "40%", width = "60%")
 saveWidget(m1, "leaflet.html")
 m1
 ```
 
-<div id="htmlwidget-3ba1aa249b46811ed581" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3ba1aa249b46811ed581">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_leaf1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))" style="width:60%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_leaf1.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 - `setView()` centers the map with given lat/lng 
 - `zoom =` applies zoom factor 
@@ -304,13 +303,13 @@ drop a pin on Building 21
 m2 &lt;- leaflet() %&gt;% setView(lat = 39.322577, lng = -82.106336, 
     zoom = 15) %&gt;% addMarkers(lat = 39.319984, lng = -82.107084, 
     popup = c("The Ridges, Building 21")) %&gt;% addTiles() %&gt;% 
-    setMapWidgetStyle() %&gt;% frameWidget(height = "275")
+    setMapWidgetStyle() %&gt;% frameWidget(m2, height = "40%", width = "60%")
 saveWidget(m2, "leaflet2.html")
 m2
 ```
 
-<div id="htmlwidget-9ae26ef0cf3b12d51997" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9ae26ef0cf3b12d51997">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_leaf2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))" style="width:60%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_leaf2.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 - `popup = ` generates a default marker with specific text
 
@@ -334,15 +333,16 @@ leaflet(data = citibike2, width = "100%") %&gt;% setView(lat = 40.74,
     lng = -73.99, zoom = 12) %&gt;% addTiles() %&gt;% addMarkers(data = citibike2, 
     lat = ~start.station.latitude, lng = ~start.station.longitude, 
     label = ~start.station.id, popup = ~start.station.name) %&gt;% 
-    setMapWidgetStyle() %&gt;% frameWidget(height = "275")
+    setMapWidgetStyle() %&gt;% frameWidget(m3, height = "40%", width = "60%")
+m3
 ```
 
 map is on the following slide ...
 
 ---
 
-<div id="htmlwidget-6b487a1fcc0b48df91ac" style="width:100%;height:275px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6b487a1fcc0b48df91ac">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_citibike3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<div id="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))" style="width:60%;height:40%;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="list(url = &quot;about:blank&quot;, options = list(xdomain = &quot;*&quot;, allowfullscreen = FALSE, lazyload = FALSE))">{"x":{"url":"Module05Pres_files/figure-html//widgets/widget_citibike3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 
 - If you click on a marker you will see the station's name
 - One can do a lot more in terms of customizing the markers but I leave that to you to explore 
