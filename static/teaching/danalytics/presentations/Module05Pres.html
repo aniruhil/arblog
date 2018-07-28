@@ -223,7 +223,7 @@ ggplot() + geom_polygon(data = my.df, aes(x = long, y = lat,
     group = group, fill = grouped_poverty), color = "black") + 
     coord_fixed(1.3) + geom_text(data = centroids2, aes(x = clong, 
     y = clat, label = county), color = "white", size = 2.25) + 
-    scale_fill_brewer(palette = "Set1", direction = -1) + labs(fill = "Poverty Quntiles") + 
+    scale_fill_brewer(palette = "Set1", direction = -1) + labs(fill = "Poverty Quintiles") + 
     theme_map()
 ```
 
