@@ -3663,8 +3663,20 @@ code > span.ot { color: #007020; }
 <pre><code>## [1] &quot;Murder&quot;   &quot;Assault&quot;  &quot;UrbanPop&quot; &quot;Rape&quot;</code></pre>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">USArrests<span class="op">$</span>statename &lt;-<span class="st"> </span><span class="kw">rownames</span>(USArrests)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">usast2 &lt;-<span class="st"> </span>usast <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(statename <span class="op">!=</span><span class="st"> &quot;District Of Columbia&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw">library</span>(ggmap)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">library</span>(maps)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">library</span>(mapdata)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">library</span>(maptools)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">library</span>(ggthemes)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">usast &lt;-<span class="st"> </span><span class="kw">map_data</span>(<span class="st">&quot;state&quot;</span>)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="kw">library</span>(stringr)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">usast<span class="op">$</span>statename &lt;-<span class="st"> </span><span class="kw">str_to_title</span>(usast<span class="op">$</span>region)</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">usast2 &lt;-<span class="st"> </span>usast <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(statename <span class="op">!=</span><span class="st"> &quot;District Of Columbia&quot;</span>)</a></code></pre></div>
 <p>Now use murder rates to create <code>quintiles</code> that represent groups of murder rates. This grouped murder rate should then be used to create a map of the 48 states you drew in (1) except with the states colored on the basis of grouped murder rates. The legend should be at the bottom.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">my.df =<span class="st"> </span><span class="kw">merge</span>(usast2, USArrests, <span class="dt">by =</span> <span class="st">&quot;statename&quot;</span>, <span class="dt">all.x =</span> <span class="ot">TRUE</span>, </a>
@@ -3718,11 +3730,10 @@ code > span.ot { color: #007020; }
 <a class="sourceLine" id="cb10-5" data-line-number="5">l1 &lt;-<span class="st"> </span><span class="kw">leaflet</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">setView</span>(<span class="dt">lat =</span> <span class="fl">19.898481</span>, <span class="dt">lng =</span> <span class="fl">73.827411</span>, </a>
 <a class="sourceLine" id="cb10-6" data-line-number="6">    <span class="dt">zoom =</span> <span class="dv">11</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addMarkers</span>(<span class="dt">lat =</span> <span class="fl">19.898481</span>, <span class="dt">lng =</span> <span class="fl">73.827411</span>, </a>
 <a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="dt">popup =</span> <span class="kw">c</span>(<span class="st">&quot;The Military Hospital, Deolali, India&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">addTiles</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">    </span><span class="kw">setMapWidgetStyle</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">frameWidget</span>(<span class="dt">height =</span> <span class="st">&quot;300&quot;</span>)</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw">saveWidget</span>(l1, <span class="st">&quot;l1.html&quot;</span>)</a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">l1</a></code></pre></div>
-<div id="htmlwidget-da36a9a8aac4a7ebf0ce" style="width:100%;height:300px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da36a9a8aac4a7ebf0ce">{"x":{"url":"Module05_Exercises_files/figure-html//widgets/widget_ex6.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">    </span><span class="kw">setMapWidgetStyle</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">frameWidget</span>(<span class="dt">width =</span> <span class="st">&quot;700&quot;</span>, <span class="dt">height =</span> <span class="st">&quot;500&quot;</span>)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">l1</a></code></pre></div>
+<div id="htmlwidget-7b595da3db17d4e3307c" style="width:700px;height:500px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7b595da3db17d4e3307c">{"x":{"url":"Module05_Exercises_files/figure-html//widgets/widget_ex6.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
