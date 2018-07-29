@@ -1,0 +1,17 @@
+base
+ggplot2
+ggmap
+maps
+mapdata
+sp
+maptools
+ggthemes
+stringr
+dplyr
+bindrcpp
+patchwork
+highcharter
+leaflet
+leaflet.extras
+htmlwidgets
+widgetframe
