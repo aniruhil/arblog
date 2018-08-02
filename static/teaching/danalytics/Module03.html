@@ -12,10 +12,170 @@
 
 <meta name="author" content="Ani Ruhil" />
 
-<meta name="date" content="2018-07-16" />
+<meta name="date" content="2018-08-02" />
 
 <title>MPA 5830 - Module 03</title>
 
+<script>/*!
+ * clipboard.js v1.7.1
+ * https://zenorocha.github.io/clipboard.js
+ *
+ * Licensed MIT © Zeno Rocha
+ */
+!function(t){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=t();else if("function"==typeof define&&define.amd)define([],t);else{var e;e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,e.Clipboard=t()}}(function(){var t,e,n;return function t(e,n,o){function i(a,c){if(!n[a]){if(!e[a]){var l="function"==typeof require&&require;if(!c&&l)return l(a,!0);if(r)return r(a,!0);var s=new Error("Cannot find module '"+a+"'");throw s.code="MODULE_NOT_FOUND",s}var u=n[a]={exports:{}};e[a][0].call(u.exports,function(t){var n=e[a][1][t];return i(n||t)},u,u.exports,t,e,n,o)}return n[a].exports}for(var r="function"==typeof require&&require,a=0;a<o.length;a++)i(o[a]);return i}({1:[function(t,e,n){function o(t,e){for(;t&&t.nodeType!==i;){if("function"==typeof t.matches&&t.matches(e))return t;t=t.parentNode}}var i=9;if("undefined"!=typeof Element&&!Element.prototype.matches){var r=Element.prototype;r.matches=r.matchesSelector||r.mozMatchesSelector||r.msMatchesSelector||r.oMatchesSelector||r.webkitMatchesSelector}e.exports=o},{}],2:[function(t,e,n){function o(t,e,n,o,r){var a=i.apply(this,arguments);return t.addEventListener(n,a,r),{destroy:function(){t.removeEventListener(n,a,r)}}}function i(t,e,n,o){return function(n){n.delegateTarget=r(n.target,e),n.delegateTarget&&o.call(t,n)}}var r=t("./closest");e.exports=o},{"./closest":1}],3:[function(t,e,n){n.node=function(t){return void 0!==t&&t instanceof HTMLElement&&1===t.nodeType},n.nodeList=function(t){var e=Object.prototype.toString.call(t);return void 0!==t&&("[object NodeList]"===e||"[object HTMLCollection]"===e)&&"length"in t&&(0===t.length||n.node(t[0]))},n.string=function(t){return"string"==typeof t||t instanceof String},n.fn=function(t){return"[object Function]"===Object.prototype.toString.call(t)}},{}],4:[function(t,e,n){function o(t,e,n){if(!t&&!e&&!n)throw new Error("Missing required arguments");if(!c.string(e))throw new TypeError("Second argument must be a String");if(!c.fn(n))throw new TypeError("Third argument must be a Function");if(c.node(t))return i(t,e,n);if(c.nodeList(t))return r(t,e,n);if(c.string(t))return a(t,e,n);throw new TypeError("First argument must be a String, HTMLElement, HTMLCollection, or NodeList")}function i(t,e,n){return t.addEventListener(e,n),{destroy:function(){t.removeEventListener(e,n)}}}function r(t,e,n){return Array.prototype.forEach.call(t,function(t){t.addEventListener(e,n)}),{destroy:function(){Array.prototype.forEach.call(t,function(t){t.removeEventListener(e,n)})}}}function a(t,e,n){return l(document.body,t,e,n)}var c=t("./is"),l=t("delegate");e.exports=o},{"./is":3,delegate:2}],5:[function(t,e,n){function o(t){var e;if("SELECT"===t.nodeName)t.focus(),e=t.value;else if("INPUT"===t.nodeName||"TEXTAREA"===t.nodeName){var n=t.hasAttribute("readonly");n||t.setAttribute("readonly",""),t.select(),t.setSelectionRange(0,t.value.length),n||t.removeAttribute("readonly"),e=t.value}else{t.hasAttribute("contenteditable")&&t.focus();var o=window.getSelection(),i=document.createRange();i.selectNodeContents(t),o.removeAllRanges(),o.addRange(i),e=o.toString()}return e}e.exports=o},{}],6:[function(t,e,n){function o(){}o.prototype={on:function(t,e,n){var o=this.e||(this.e={});return(o[t]||(o[t]=[])).push({fn:e,ctx:n}),this},once:function(t,e,n){function o(){i.off(t,o),e.apply(n,arguments)}var i=this;return o._=e,this.on(t,o,n)},emit:function(t){var e=[].slice.call(arguments,1),n=((this.e||(this.e={}))[t]||[]).slice(),o=0,i=n.length;for(o;o<i;o++)n[o].fn.apply(n[o].ctx,e);return this},off:function(t,e){var n=this.e||(this.e={}),o=n[t],i=[];if(o&&e)for(var r=0,a=o.length;r<a;r++)o[r].fn!==e&&o[r].fn._!==e&&i.push(o[r]);return i.length?n[t]=i:delete n[t],this}},e.exports=o},{}],7:[function(e,n,o){!function(i,r){if("function"==typeof t&&t.amd)t(["module","select"],r);else if(void 0!==o)r(n,e("select"));else{var a={exports:{}};r(a,i.select),i.clipboardAction=a.exports}}(this,function(t,e){"use strict";function n(t){return t&&t.__esModule?t:{default:t}}function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var i=n(e),r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},a=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),c=function(){function t(e){o(this,t),this.resolveOptions(e),this.initSelection()}return a(t,[{key:"resolveOptions",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action=e.action,this.container=e.container,this.emitter=e.emitter,this.target=e.target,this.text=e.text,this.trigger=e.trigger,this.selectedText=""}},{key:"initSelection",value:function t(){this.text?this.selectFake():this.target&&this.selectTarget()}},{key:"selectFake",value:function t(){var e=this,n="rtl"==document.documentElement.getAttribute("dir");this.removeFake(),this.fakeHandlerCallback=function(){return e.removeFake()},this.fakeHandler=this.container.addEventListener("click",this.fakeHandlerCallback)||!0,this.fakeElem=document.createElement("textarea"),this.fakeElem.style.fontSize="12pt",this.fakeElem.style.border="0",this.fakeElem.style.padding="0",this.fakeElem.style.margin="0",this.fakeElem.style.position="absolute",this.fakeElem.style[n?"right":"left"]="-9999px";var o=window.pageYOffset||document.documentElement.scrollTop;this.fakeElem.style.top=o+"px",this.fakeElem.setAttribute("readonly",""),this.fakeElem.value=this.text,this.container.appendChild(this.fakeElem),this.selectedText=(0,i.default)(this.fakeElem),this.copyText()}},{key:"removeFake",value:function t(){this.fakeHandler&&(this.container.removeEventListener("click",this.fakeHandlerCallback),this.fakeHandler=null,this.fakeHandlerCallback=null),this.fakeElem&&(this.container.removeChild(this.fakeElem),this.fakeElem=null)}},{key:"selectTarget",value:function t(){this.selectedText=(0,i.default)(this.target),this.copyText()}},{key:"copyText",value:function t(){var e=void 0;try{e=document.execCommand(this.action)}catch(t){e=!1}this.handleResult(e)}},{key:"handleResult",value:function t(e){this.emitter.emit(e?"success":"error",{action:this.action,text:this.selectedText,trigger:this.trigger,clearSelection:this.clearSelection.bind(this)})}},{key:"clearSelection",value:function t(){this.trigger&&this.trigger.focus(),window.getSelection().removeAllRanges()}},{key:"destroy",value:function t(){this.removeFake()}},{key:"action",set:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:"copy";if(this._action=e,"copy"!==this._action&&"cut"!==this._action)throw new Error('Invalid "action" value, use either "copy" or "cut"')},get:function t(){return this._action}},{key:"target",set:function t(e){if(void 0!==e){if(!e||"object"!==(void 0===e?"undefined":r(e))||1!==e.nodeType)throw new Error('Invalid "target" value, use a valid Element');if("copy"===this.action&&e.hasAttribute("disabled"))throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');if("cut"===this.action&&(e.hasAttribute("readonly")||e.hasAttribute("disabled")))throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');this._target=e}},get:function t(){return this._target}}]),t}();t.exports=c})},{select:5}],8:[function(e,n,o){!function(i,r){if("function"==typeof t&&t.amd)t(["module","./clipboard-action","tiny-emitter","good-listener"],r);else if(void 0!==o)r(n,e("./clipboard-action"),e("tiny-emitter"),e("good-listener"));else{var a={exports:{}};r(a,i.clipboardAction,i.tinyEmitter,i.goodListener),i.clipboard=a.exports}}(this,function(t,e,n,o){"use strict";function i(t){return t&&t.__esModule?t:{default:t}}function r(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function a(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function c(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}function l(t,e){var n="data-clipboard-"+t;if(e.hasAttribute(n))return e.getAttribute(n)}var s=i(e),u=i(n),f=i(o),d="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},h=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),p=function(t){function e(t,n){r(this,e);var o=a(this,(e.__proto__||Object.getPrototypeOf(e)).call(this));return o.resolveOptions(n),o.listenClick(t),o}return c(e,t),h(e,[{key:"resolveOptions",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};this.action="function"==typeof e.action?e.action:this.defaultAction,this.target="function"==typeof e.target?e.target:this.defaultTarget,this.text="function"==typeof e.text?e.text:this.defaultText,this.container="object"===d(e.container)?e.container:document.body}},{key:"listenClick",value:function t(e){var n=this;this.listener=(0,f.default)(e,"click",function(t){return n.onClick(t)})}},{key:"onClick",value:function t(e){var n=e.delegateTarget||e.currentTarget;this.clipboardAction&&(this.clipboardAction=null),this.clipboardAction=new s.default({action:this.action(n),target:this.target(n),text:this.text(n),container:this.container,trigger:n,emitter:this})}},{key:"defaultAction",value:function t(e){return l("action",e)}},{key:"defaultTarget",value:function t(e){var n=l("target",e);if(n)return document.querySelector(n)}},{key:"defaultText",value:function t(e){return l("text",e)}},{key:"destroy",value:function t(){this.listener.destroy(),this.clipboardAction&&(this.clipboardAction.destroy(),this.clipboardAction=null)}}],[{key:"isSupported",value:function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:["copy","cut"],n="string"==typeof e?[e]:e,o=!!document.queryCommandSupported;return n.forEach(function(t){o=o&&!!document.queryCommandSupported(t)}),o}}]),e}(u.default);t.exports=p})},{"./clipboard-action":7,"good-listener":4,"tiny-emitter":6}]},{},[8])(8)});</script>
+<style type="text/css">.tooltipped {
+position: relative; }
+.tooltipped::after {
+position: absolute;
+z-index: 1000000;
+display: none;
+padding: 5px 8px;
+font: normal normal 11px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+-webkit-font-smoothing: subpixel-antialiased;
+color: #fff;
+text-align: center;
+text-decoration: none;
+text-shadow: none;
+text-transform: none;
+letter-spacing: normal;
+word-wrap: break-word;
+white-space: pre;
+pointer-events: none;
+content: attr(aria-label);
+background: rgba(27, 31, 35, 0.8);
+border-radius: 3px;
+opacity: 0; }
+.tooltipped::before {
+position: absolute;
+z-index: 1000001;
+display: none;
+width: 0;
+height: 0;
+color: rgba(27, 31, 35, 0.8);
+pointer-events: none;
+content: "";
+border: 5px solid transparent;
+opacity: 0; }
+@keyframes tooltip-appear {
+from {
+opacity: 0; }
+to {
+opacity: 1; } }
+.tooltipped:hover::before, .tooltipped:hover::after,
+.tooltipped:active::before,
+.tooltipped:active::after,
+.tooltipped:focus::before,
+.tooltipped:focus::after {
+display: inline-block;
+text-decoration: none;
+animation-name: tooltip-appear;
+animation-duration: 0.1s;
+animation-fill-mode: forwards;
+animation-timing-function: ease-in;
+animation-delay: 0.4s; }
+.tooltipped-no-delay:hover::before, .tooltipped-no-delay:hover::after,
+.tooltipped-no-delay:active::before,
+.tooltipped-no-delay:active::after,
+.tooltipped-no-delay:focus::before,
+.tooltipped-no-delay:focus::after {
+opacity: 1;
+animation: none; }
+.tooltipped-multiline:hover::after,
+.tooltipped-multiline:active::after,
+.tooltipped-multiline:focus::after {
+display: table-cell; }
+.tooltipped-s::after,
+.tooltipped-se::after,
+.tooltipped-sw::after {
+top: 100%;
+right: 50%;
+margin-top: 5px; }
+.tooltipped-s::before,
+.tooltipped-se::before,
+.tooltipped-sw::before {
+top: auto;
+right: 50%;
+bottom: -5px;
+margin-right: -5px;
+border-bottom-color: rgba(27, 31, 35, 0.8); }
+.tooltipped-se::after {
+right: auto;
+left: 50%;
+margin-left: -15px; }
+.tooltipped-sw::after {
+margin-right: -15px; }
+.tooltipped-n::after,
+.tooltipped-ne::after,
+.tooltipped-nw::after {
+right: 50%;
+bottom: 100%;
+margin-bottom: 5px; }
+.tooltipped-n::before,
+.tooltipped-ne::before,
+.tooltipped-nw::before {
+top: -5px;
+right: 50%;
+bottom: auto;
+margin-right: -5px;
+border-top-color: rgba(27, 31, 35, 0.8); }
+.tooltipped-ne::after {
+right: auto;
+left: 50%;
+margin-left: -15px; }
+.tooltipped-nw::after {
+margin-right: -15px; }
+.tooltipped-s::after,
+.tooltipped-n::after {
+transform: translateX(50%); }
+.tooltipped-w::after {
+right: 100%;
+bottom: 50%;
+margin-right: 5px;
+transform: translateY(50%); }
+.tooltipped-w::before {
+top: 50%;
+bottom: 50%;
+left: -5px;
+margin-top: -5px;
+border-left-color: rgba(27, 31, 35, 0.8); }
+.tooltipped-e::after {
+bottom: 50%;
+left: 100%;
+margin-left: 5px;
+transform: translateY(50%); }
+.tooltipped-e::before {
+top: 50%;
+right: -5px;
+bottom: 50%;
+margin-top: -5px;
+border-right-color: rgba(27, 31, 35, 0.8); }
+.tooltipped-multiline::after {
+width: max-content;
+max-width: 250px;
+word-wrap: break-word;
+white-space: pre-line;
+border-collapse: separate; }
+.tooltipped-multiline.tooltipped-s::after, .tooltipped-multiline.tooltipped-n::after {
+right: auto;
+left: 50%;
+transform: translateX(-50%); }
+.tooltipped-multiline.tooltipped-w::after, .tooltipped-multiline.tooltipped-e::after {
+right: 100%; }
+@media screen and (min-width: 0\0) {
+.tooltipped-multiline::after {
+width: 250px; } }
+.tooltipped-sticky::before, .tooltipped-sticky::after {
+display: inline-block; }
+.tooltipped-sticky.tooltipped-multiline::after {
+display: table-cell; }
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+.tooltipped-w::after {
+margin-right: 4.5px; } }
+</style>
+<style type="text/css">.klippy{overflow:visible;position:relative}.btn-klippy{position:absolute;border:0;padding:1px 0 0 1px;background-color:transparent}.btn-klippy>div{margin:0;padding:0}.btn-klippy .octicon{display:inline-block;margin:0;padding:0}.btn-klippy:focus{outline:0}.btn-klippy:focus .octicon{border-width:thin;border-style:dotted;border-color:gray;border-radius:3px}
+</style>
+<script>function addClassKlippyToPreCode(){document.addEventListener("DOMContentLoaded",function(){for(var e=document.querySelectorAll("pre > code"),t=0;t<e.length;t+=1)e.item(t).parentElement.className+=" klippy"})}function addClassKlippyTo(e){document.addEventListener("DOMContentLoaded",function(){for(var t=document.querySelectorAll(e),o=0;o<t.length;o+=1)t.item(o).className+=" klippy"})}function changeTooltipMessage(e,t){e.setAttribute("aria-label",t)}function getUriOcticonClippy(e,t){var o;if("auto"===e){var n=document.createElement("a");document.body.appendChild(n),o=window.getComputedStyle(n).getPropertyValue("color"),document.body.removeChild(n)}else o=e;var l='<?xml version="1.0" encoding="UTF-8"?><svg version="1.1" viewBox="0 0 14 16" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="'+o+'" opacity="'+t+'"><path d="m2 13h4v1h-4v-1zm5-6h-5v1h5v-1zm2 3v-2l-3 3 3 3v-2h5v-2h-5zm-4.5-1h-2.5v1h2.5v-1zm-2.5 3h2.5v-1h-2.5v1zm9 1h1v2c-0.02 0.28-0.11 0.52-0.3 0.7s-0.42 0.28-0.7 0.3h-10c-0.55 0-1-0.45-1-1v-11c0-0.55 0.45-1 1-1h3c0-1.11 0.89-2 2-2s2 0.89 2 2h3c0.55 0 1 0.45 1 1v5h-1v-3h-10v9h10v-2zm-9-8h8c0-0.55-0.45-1-1-1h-1c-0.55 0-1-0.45-1-1s-0.45-1-1-1-1 0.45-1 1-0.45 1-1 1h-1c-0.55 0-1 0.45-1 1z"/></g></g></svg>';return"data:image/svg+xml;base64,"+window.btoa(l)}function initKlippy(t,o,n,l,i,a){document.addEventListener("DOMContentLoaded",function(){for(var r=getUriOcticonClippy(n,l),c="<button type='button' class='btn-klippy tooltipped tooltipped-no-delay' aria-label='"+i+"' onfocusout='changeTooltipMessage(this,&quot;"+i+"&quot;)' data-clipboard-klippy><div><img class='octicon' src='"+r+"' alt='Copy'></div></button>",d=document.querySelectorAll(".klippy > code"),p=0;p<d.length;p+=1)d.item(p).insertAdjacentHTML("beforebegin",c);var s=document.getElementsByClassName("btn-klippy");Array.prototype.map.call(s,function(e){var n=e.parentElement,l=window.getComputedStyle(n).getPropertyValue("padding-"+t),i=e.querySelector(".octicon");i.style.width=l,i.style.verticalAlign=o,"right"===t?(e.style.right="0",e.className+=" tooltipped-w"):(e.style.left="0",e.className+=" tooltipped-e"),"bottom"===o?e.style.bottom="0":e.style.top="0"});var u=new Clipboard("[data-clipboard-klippy]",{text:function(e){return e.parentNode.querySelector("code").textContent}});u.on("success",function(e){changeTooltipMessage(e.trigger,a),e.clearSelection()}),u.on("error",function(){changeTooltipMessage(e.trigger,"Press Ctrl+C or Command+C to copy")})})}function addKlippy(e,t,o,n,l,i){Clipboard.isSupported()&&initKlippy(e,t,o,n,l,i)}
+</script>
 <script>$(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
@@ -116,13 +276,17 @@ code > span.ot { color: #007020; }
 <header>
 <h1 class="title toc-ignore">MPA 5830 - Module 03</h1>
 <h3 class="author">Ani Ruhil</h3>
-<h3 class="date">2018-07-16</h3>
+<h3 class="date">2018-08-02</h3>
 </header>
 
 <hr>
 
 
 
+<script>
+  addClassKlippyTo("pre.r, pre.markdown");
+  addKlippy('right', 'top', '#6495ED', '1', 'Click to copy', 'Done');
+</script>
 <div id="agenda" class="section level1">
 <h1>Agenda</h1>
 <p>Our goal is to understand how some very powerful packages work their magic. Of somewhat recent vintage, <code>dplyr</code>, <code>tidyr</code> and <code>lubridate</code> have quickly gained a fan following because they allow you to calculate quantities of interest with relative ease. In this module we will see some of their core abilities. We will also see <code>data.table</code> in action since some R users find this package to be faster than others.</p>
@@ -190,63 +354,70 @@ code > span.ot { color: #007020; }
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Year<span class="op">:</span>DayOfWeek)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
 <pre><code>## [1] &quot;Year&quot;       &quot;Quarter&quot;    &quot;Month&quot;      &quot;DayofMonth&quot; &quot;DayOfWeek&quot;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Year, Quarter, </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">    Month, DayofMonth, DayOfWeek)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">names</span>(my.df)</a></code></pre></div>
+<pre><code>## [1] &quot;Year&quot;       &quot;Quarter&quot;    &quot;Month&quot;      &quot;DayofMonth&quot; &quot;DayOfWeek&quot;</code></pre>
 <blockquote>
 <p>We can specify consecutive columns via the <code>thiscolumn:thatcolumn</code> command because the columns are sequential.</p>
 </blockquote>
 <p>What if the columns were not sequentially located? In that case we would need to list each column we want. Say I want Year, FlightDate, UniqueCarrier, and TailNum.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Year, FlightDate<span class="op">:</span>UniqueCarrier, </a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">    TailNum)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">names</span>(my.df)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Year, FlightDate<span class="op">:</span>UniqueCarrier, </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">    TailNum)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">names</span>(my.df)</a></code></pre></div>
 <pre><code>## [1] &quot;Year&quot;          &quot;FlightDate&quot;    &quot;UniqueCarrier&quot; &quot;TailNum&quot;</code></pre>
 <p>Could we have used column numbers instead? Absolutely.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="dv">7</span>))</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">names</span>(my.df)</a></code></pre></div>
 <pre><code>## [1] &quot;Year&quot;          &quot;Month&quot;         &quot;DayOfWeek&quot;     &quot;UniqueCarrier&quot;</code></pre>
 <p>We can also select columns in other ways, by specifying that the column name <code>contain</code> some element. The code below shows you how this is done if I am looking for column names with the phrase “Carrier”, then with “De”, and then with “Num”</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;Carrier&quot;</span>))</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
-<pre><code>## [1] &quot;UniqueCarrier&quot; &quot;Carrier&quot;       &quot;CarrierDelay&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;De&quot;</span>))</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">contains</span>(<span class="st">&quot;Carrier&quot;</span>))</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
+<pre><code>## [1] &quot;UniqueCarrier&quot; &quot;Carrier&quot;       &quot;CarrierDelay&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;De&quot;</span>))</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
 <pre><code>##  [1] &quot;DestAirportID&quot;        &quot;DestAirportSeqID&quot;     &quot;DestCityMarketID&quot;    
 ##  [4] &quot;Dest&quot;                 &quot;DestCityName&quot;         &quot;DestState&quot;           
 ##  [7] &quot;DestStateFips&quot;        &quot;DestStateName&quot;        &quot;DestWac&quot;             
 ## [10] &quot;DepTime&quot;              &quot;DepDelay&quot;             &quot;DepDelayMinutes&quot;     
 ## [13] &quot;DepDel15&quot;             &quot;DepartureDelayGroups&quot; &quot;DepTimeBlk&quot;</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Num&quot;</span>))</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">ends_with</span>(<span class="st">&quot;Num&quot;</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">names</span>(my.df)</a></code></pre></div>
 <pre><code>## [1] &quot;TailNum&quot;     &quot;FlightNum&quot;   &quot;Div1TailNum&quot; &quot;Div2TailNum&quot; &quot;Div3TailNum&quot;
 ## [6] &quot;Div4TailNum&quot; &quot;Div5TailNum&quot;</code></pre>
 </div>
 <div id="filter" class="section level2">
 <h2>filter</h2>
 <p>Recall that with the <code>diamonds</code> data, in Module 3 we used <code>subset()</code> to select particular cases for analysis. With <code>dplyr</code>, the <code>filter()</code> command serves the same purpose. Say we only want records from January, i.e., <code>Month == 1</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">table</span>(my.df<span class="op">$</span>Month)  <span class="co"># Show me a frequency table for Month in my.df</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">table</span>(my.df<span class="op">$</span>Month)  <span class="co"># Show me a frequency table for Month in my.df</span></a></code></pre></div>
 <pre><code>## 
 ##    1 
 ## 3757</code></pre>
 <p>What about only American Airline (UniqueCarrier code for this airline is AA) flights in January?</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;AA&quot;</span>)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">table</span>(my.df<span class="op">$</span>Month, my.df<span class="op">$</span>UniqueCarrier)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;AA&quot;</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">table</span>(my.df<span class="op">$</span>Month, my.df<span class="op">$</span>UniqueCarrier)</a></code></pre></div>
 <pre><code>##    
 ##      AA
 ##   1 387</code></pre>
 <p>What about United Airlines flights in January to CMH (the airport code for Columbus, OH) to any destination?</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">    </span>Dest <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">    </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>)</a></code></pre></div>
 <p>What if I wanted a more complicated filter, say, flights in January or February to CMH or ORD (the airport code for O’Hare in Chicago)?</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">    &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>))</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">table</span>(my.df<span class="op">$</span>Month)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">my.df =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">    </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>))</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw">table</span>(my.df<span class="op">$</span>Month)</a></code></pre></div>
 <pre><code>## 
 ##   1   2 
 ## 106 145</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">table</span>(my.df<span class="op">$</span>UniqueCarrier)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">table</span>(my.df<span class="op">$</span>UniqueCarrier)</a></code></pre></div>
 <pre><code>## 
 ##  UA 
 ## 251</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">table</span>(my.df<span class="op">$</span>Dest)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">table</span>(my.df<span class="op">$</span>Dest)</a></code></pre></div>
 <pre><code>## 
 ## CMH ORD 
 ## 132 119</code></pre>
@@ -297,52 +468,100 @@ code > span.ot { color: #007020; }
 </div>
 <div id="arrange" class="section level2">
 <h2>arrange</h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(DepDelayMinutes)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(DepDelayMinutes)</a></code></pre></div>
 <p>And now in <code>descending order</code> of delays by adding the minus symbol <code>-</code> to the column name.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
 <p>We could tweak this further, perhaps saying sort by departure delays to CMH, and then to ORD.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Dest, <span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">my.df2 =<span class="st"> </span>my.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Dest, <span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
 <p>So far, we have seen each function in isolation. Now we streamline things a bit so that we only end up with the columns we want to work with. That is, we can string together multiple commands to generate a slim data frame composed of selected columns, filtered and arranged as we want them to be.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">my.df3 =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">        </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Month, Dest, <span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">my.df3 =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb32-2" data-line-number="2">    Dest, DepDelayMinutes) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Month, Dest, </a>
+<a class="sourceLine" id="cb32-5" data-line-number="5">    <span class="op">-</span>DepDelayMinutes)</a></code></pre></div>
 <p>Here, the end result is a data frame arranged by Month, then within Month by Destination, and then finally by descending order of flight delays. This is the beauty of <code>dplyr</code>, allowing us to chain together various functions to get what we want. How is this helpful? Well, now you have a data frame that you can analyze.</p>
 </div>
 <div id="group_by" class="section level2">
 <h2>group_by</h2>
 <p>Let us calculate the Mean and Median delay, appropriate given the skewed distributions. To do this, we will lean on the <code>group_by()</code> function to calculate median and mean delays by Month and Destination. While we are at it, let us see the standard deviation as well.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">tab<span class="fl">.01</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">        </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Month, Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Median.Delay =</span> <span class="kw">median</span>(DepDelayMinutes, </a>
-<a class="sourceLine" id="cb31-4" data-line-number="4">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb31-5" data-line-number="5">    <span class="dt">SD.Delay =</span> <span class="kw">sd</span>(DepDelayMinutes, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Month, </a>
-<a class="sourceLine" id="cb31-6" data-line-number="6">    Dest)</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">tab<span class="fl">.01</span> &lt;-<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">    Dest, DepDelayMinutes) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="op">&amp;</span><span class="st"> </span>UniqueCarrier <span class="op">==</span><span class="st"> &quot;UA&quot;</span> <span class="op">&amp;</span><span class="st"> </span>Dest <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>, <span class="st">&quot;ORD&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Month, </a>
+<a class="sourceLine" id="cb33-5" data-line-number="5">    Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Median.Delay =</span> <span class="kw">median</span>(DepDelayMinutes, </a>
+<a class="sourceLine" id="cb33-6" data-line-number="6">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, </a>
+<a class="sourceLine" id="cb33-7" data-line-number="7">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), <span class="dt">SD.Delay =</span> <span class="kw">sd</span>(DepDelayMinutes, </a>
+<a class="sourceLine" id="cb33-8" data-line-number="8">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(Month, Dest)</a>
+<a class="sourceLine" id="cb33-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb33-10" data-line-number="10">tab<span class="fl">.01</span></a></code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+## # Groups:   Month [2]
+##   Month Dest  Median.Delay Mean.Delay SD.Delay
+##   &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+## 1     1 CMH              0       8.96     27.2
+## 2     1 ORD              0       8.11     27.7
+## 3     2 CMH              0      10.3      45.0
+## 4     2 ORD              0      14.5      59.8</code></pre>
 <p>Note that the <code>na.rm = TRUE</code> command tells R to exclude any observation with missing data. Note also that <code>sd()</code> is the <code>standard deviation</code>.</p>
 <p>What if wanted to know how many airports can you fly to from Columbus, and how many flights there were to each in July?</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">tab<span class="fl">.02</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes, </a>
-<a class="sourceLine" id="cb32-2" data-line-number="2">    Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">7</span>) <span class="op">&amp;</span><span class="st"> </span>Origin <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">No.of.Flights =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">tab<span class="fl">.02</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">    Dest, DepDelayMinutes, Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="dv">7</span>) <span class="op">&amp;</span><span class="st"> </span>Origin <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">No.of.Flights =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6">tab<span class="fl">.02</span></a></code></pre></div>
+<pre><code>## # A tibble: 26 x 2
+##    Dest  No.of.Flights
+##    &lt;chr&gt;         &lt;int&gt;
+##  1 ATL             338
+##  2 BNA              62
+##  3 BOS              57
+##  4 BWI             113
+##  5 DAL              31
+##  6 DCA              57
+##  7 DEN             139
+##  8 DFW             148
+##  9 DTW              73
+## 10 EWR              90
+## # ... with 16 more rows</code></pre>
 <p>How many distinct airlines fly out of Columbus?</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">tab<span class="fl">.03</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes, </a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">    Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">No.of.Airlines =</span> <span class="kw">n_distinct</span>(UniqueCarrier))</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">tab<span class="fl">.03</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">    Dest, DepDelayMinutes, Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">No.of.Airlines =</span> <span class="kw">n_distinct</span>(UniqueCarrier))</a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6">tab<span class="fl">.03</span></a></code></pre></div>
+<pre><code>## # A tibble: 7 x 2
+##   UniqueCarrier No.of.Airlines
+##   &lt;chr&gt;                  &lt;int&gt;
+## 1 AA                         1
+## 2 DL                         1
+## 3 EV                         1
+## 4 F9                         1
+## 5 OO                         1
+## 6 UA                         1
+## 7 WN                         1</code></pre>
 <p>And how many flights did each airline operate?</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">tab<span class="fl">.04</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes, </a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">    Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">No.of.Flights =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">tab<span class="fl">.04</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">    Dest, DepDelayMinutes, Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">No.of.Flights =</span> <span class="kw">n</span>())</a></code></pre></div>
 <p>Of all of these airlines, which one has the highest mean departure delay?</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">tab<span class="fl">.05</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, Dest, DepDelayMinutes, </a>
-<a class="sourceLine" id="cb35-2" data-line-number="2">    Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">tab<span class="fl">.05</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Month, UniqueCarrier, </a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">    Dest, DepDelayMinutes, Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">%in%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">    </span><span class="kw">c</span>(<span class="st">&quot;CMH&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, </a>
+<a class="sourceLine" id="cb40-5" data-line-number="5">        <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <p>The answer turns out to be <code>EV</code> – ExpressJet. The airline with the lowest mean departure delay is <code>DL</code> – Delta.</p>
 </div>
 <div id="mutate" class="section level2">
 <h2>mutate</h2>
 <p>Thus far we have been creating a summary data frame containing whatever we calculated – the frequencies, averages, and so on. Some times, however, you may want these calculations to be be appended to the original data frame and stored as new columns. This can be done with <code>mutate()</code>, as shown below. In this particular example I am calculating median departure delay by airline (for each airport it departs from) and then including this as a column called <code>Median.Delay</code> in cmhflights.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">cmhflights =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier, Origin) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">names</span>(cmhflights)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">cmhflights =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier, </a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">    Origin) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Mean.Delay =</span> <span class="kw">mean</span>(DepDelayMinutes, </a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="kw">names</span>(cmhflights)</a></code></pre></div>
 <pre><code>##   [1] &quot;Year&quot;                 &quot;Quarter&quot;              &quot;Month&quot;               
 ##   [4] &quot;DayofMonth&quot;           &quot;DayOfWeek&quot;            &quot;FlightDate&quot;          
 ##   [7] &quot;UniqueCarrier&quot;        &quot;AirlineID&quot;            &quot;Carrier&quot;             
@@ -381,14 +600,15 @@ code > span.ot { color: #007020; }
 ## [106] &quot;Div5TotalGTime&quot;       &quot;Div5LongestGTime&quot;     &quot;Div5WheelsOff&quot;       
 ## [109] &quot;Div5TailNum&quot;          &quot;Mean.Delay&quot;</code></pre>
 <p>Note the 110th column that has been added. Now, if we wanted to add this column but drop all other columns not being used in the calculation, we could do that via <code>transmute()</code>. Be careful with this one though.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">mut.df =<span class="st"> </span>cmhflights</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">mut.df2 =<span class="st"> </span>mut.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier, Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">transmute</span>(<span class="dt">Mean.Arr.Delay =</span> <span class="kw">mean</span>(ArrDelayMinutes, </a>
-<a class="sourceLine" id="cb38-4" data-line-number="4">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="kw">names</span>(mut.df2)</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">mut.df =<span class="st"> </span>cmhflights</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">mut.df2 =<span class="st"> </span>mut.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(UniqueCarrier, </a>
+<a class="sourceLine" id="cb43-4" data-line-number="4">    Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">transmute</span>(<span class="dt">Mean.Arr.Delay =</span> <span class="kw">mean</span>(ArrDelayMinutes, </a>
+<a class="sourceLine" id="cb43-5" data-line-number="5">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb43-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb43-7" data-line-number="7"><span class="kw">names</span>(mut.df2)</a></code></pre></div>
 <pre><code>## [1] &quot;UniqueCarrier&quot;  &quot;Dest&quot;           &quot;Mean.Arr.Delay&quot;</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">head</span>(mut.df2)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">head</span>(mut.df2)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ## # Groups:   UniqueCarrier, Dest [1]
 ##   UniqueCarrier Dest  Mean.Arr.Delay
@@ -403,9 +623,9 @@ code > span.ot { color: #007020; }
 <div id="some-other-dplyr-commands" class="section level2">
 <h2>Some other <code>dplyr()</code> commands</h2>
 <p>Say I want a simple frequency table of flights by carrier.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">tab<span class="fl">.01</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Carrier, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3">tab<span class="fl">.01</span></a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">tab<span class="fl">.01</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Carrier, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3">tab<span class="fl">.01</span></a></code></pre></div>
 <pre><code>## # A tibble: 50 x 4
 ## # Groups:   UniqueCarrier, Origin [50]
 ##    UniqueCarrier Origin Carrier     n
@@ -422,9 +642,10 @@ code > span.ot { color: #007020; }
 ## 10 WN            MCO    WN        931
 ## # ... with 40 more rows</code></pre>
 <p>I want a simple frequency table of flights by carrier and destination?</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">tab<span class="fl">.02</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Carrier, Dest, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3">tab<span class="fl">.02</span></a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">tab<span class="fl">.02</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Carrier, Dest, </a>
+<a class="sourceLine" id="cb49-2" data-line-number="2">    <span class="dt">sort =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">tab<span class="fl">.02</span></a></code></pre></div>
 <pre><code>## # A tibble: 88 x 5
 ## # Groups:   UniqueCarrier, Origin [50]
 ##    UniqueCarrier Origin Carrier Dest      n
@@ -441,7 +662,7 @@ code > span.ot { color: #007020; }
 ## 10 WN            CMH    WN      MCO     929
 ## # ... with 78 more rows</code></pre>
 <p>How many unique aircraft do we have?</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">unique.planes =</span> <span class="kw">n_distinct</span>(TailNum))</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">unique.planes =</span> <span class="kw">n_distinct</span>(TailNum))</a></code></pre></div>
 <pre><code>## # A tibble: 50 x 3
 ## # Groups:   UniqueCarrier [?]
 ##    UniqueCarrier Origin unique.planes
@@ -459,30 +680,33 @@ code > span.ot { color: #007020; }
 ## # ... with 40 more rows</code></pre>
 <p>Note that here I am not saving the results with any name such as tab.03 or what have you. This is useful if you want to see the results on your screen before you decide to save them because they are error-free.</p>
 <p>How many flights do we see per unique aircraft?</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">tab<span class="fl">.03</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(TailNum) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Number =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb48-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="kw">head</span>(tab<span class="fl">.03</span>, <span class="dv">12</span>)  <span class="co"># first 12 rows of tab.03</span></a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">tab<span class="fl">.03</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(TailNum) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">Number =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(TailNum)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>Number)</a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="kw">head</span>(tab<span class="fl">.03</span>, <span class="dv">12</span>)  <span class="co"># first 12 rows of tab.03</span></a></code></pre></div>
 <pre><code>## # A tibble: 12 x 2
 ##    TailNum Number
 ##    &lt;chr&gt;    &lt;int&gt;
-##  1 N008AA       2
-##  2 N013AA       2
-##  3 N015AA       4
-##  4 N020AA       2
-##  5 N024AA       2
-##  6 N028AA       2
-##  7 N032AA       4
-##  8 N103SY      12
-##  9 N10575      34
-## 10 N105SY       6
-## 11 N106SY      12
-## 12 N107SY      12</code></pre>
+##  1 N396SW      74
+##  2 N601WN      66
+##  3 N646SW      64
+##  4 N635SW      62
+##  5 N391SW      61
+##  6 N637SW      60
+##  7 N941FR      60
+##  8 N951FR      60
+##  9 N397SW      58
+## 10 N639SW      58
+## 11 N641SW      58
+## 12 N943FR      58</code></pre>
 <p>The <code>head()</code> command is showing the first 12 rows of tab.03; the entire tab.03 is too big to display on a slide</p>
 <p>If you wanted options in terms of carriers when flying out of Columbus, which destination would give you maximal options?</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">tab<span class="fl">.04</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">unique.carriers =</span> <span class="kw">n_distinct</span>(Carrier)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>unique.carriers)</a>
-<a class="sourceLine" id="cb50-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb50-4" data-line-number="4">tab<span class="fl">.04</span></a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">tab<span class="fl">.04</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Origin <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">    &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">unique.carriers =</span> <span class="kw">n_distinct</span>(Carrier)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>unique.carriers)</a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5">tab<span class="fl">.04</span></a></code></pre></div>
 <pre><code>## # A tibble: 26 x 2
 ##    Dest  unique.carriers
 ##    &lt;chr&gt;           &lt;int&gt;
@@ -498,60 +722,65 @@ code > span.ot { color: #007020; }
 ## 10 LAX                 2
 ## # ... with 16 more rows</code></pre>
 <p>How many flights to each destination, from Columbus, on February 15?</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">tab<span class="fl">.05</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>DayofMonth <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="st">    </span>Origin <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">n.flts =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>n.flts)</a>
-<a class="sourceLine" id="cb52-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb52-5" data-line-number="5">tab<span class="fl">.05</span></a></code></pre></div>
-<pre><code>## # A tibble: 21 x 2
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">tab<span class="fl">.05</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="st">    </span>DayofMonth <span class="op">==</span><span class="st"> </span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>Origin <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(Dest) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">n.flts =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>n.flts)</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb57-6" data-line-number="6">tab<span class="fl">.05</span></a></code></pre></div>
+<pre><code>## # A tibble: 24 x 2
 ##    Dest  n.flts
 ##    &lt;chr&gt;  &lt;int&gt;
-##  1 ATL        7
-##  2 BWI        4
+##  1 ATL       11
+##  2 MDW        5
 ##  3 DFW        4
-##  4 IAH        4
-##  5 MCO        4
-##  6 MDW        4
+##  4 MCO        4
+##  5 BWI        3
+##  6 EWR        3
 ##  7 LAS        3
 ##  8 PHX        3
 ##  9 BNA        2
-## 10 DCA        2
-## # ... with 11 more rows</code></pre>
+## 10 BOS        2
+## # ... with 14 more rows</code></pre>
 <p>What if we want the preceding by airline?</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">tab<span class="fl">.06</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>DayofMonth <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="st">    </span>Origin <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Dest, Carrier) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">n.flts =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-3" data-line-number="3"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>n.flts)</a>
-<a class="sourceLine" id="cb54-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb54-5" data-line-number="5">tab<span class="fl">.06</span></a></code></pre></div>
-<pre><code>## # A tibble: 28 x 3
-## # Groups:   Dest [21]
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">tab<span class="fl">.06</span> =<span class="st"> </span>cmhflights <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Month <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="st">    </span>DayofMonth <span class="op">==</span><span class="st"> </span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>Origin <span class="op">==</span><span class="st"> &quot;CMH&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(Dest, Carrier) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">n.flts =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>n.flts)</a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">tab<span class="fl">.06</span></a></code></pre></div>
+<pre><code>## # A tibble: 29 x 3
+## # Groups:   Dest [24]
 ##    Dest  Carrier n.flts
 ##    &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;
-##  1 ATL   DL           5
-##  2 BWI   WN           4
+##  1 ATL   DL           8
+##  2 MDW   WN           5
 ##  3 DFW   AA           4
-##  4 MDW   WN           4
-##  5 IAH   EV           3
-##  6 MCO   WN           3
-##  7 ATL   WN           2
+##  4 MCO   WN           4
+##  5 ATL   WN           3
+##  6 BWI   WN           3
+##  7 EWR   EV           3
 ##  8 BNA   WN           2
-##  9 DCA   WN           2
-## 10 EWR   EV           2
-## # ... with 18 more rows</code></pre>
+##  9 BOS   WN           2
+## 10 DCA   WN           2
+## # ... with 19 more rows</code></pre>
 <p>Notice how we are able to easily calculate any quantity of interest – means, standard deviations, the number of flights per aircraft, and so on.</p>
 </div>
 </div>
 <div id="unnest" class="section level1">
 <h1>unnest</h1>
 <p>Every now and then the data you have to work with includes some list-columns – columns that are like mini-data frames themselves. Suddenly R functions that would otherwise work will not execute as desired. The <code>unnest</code> function from the <code>tidyverse</code> unpacks these list-columns into a <a href="https://tibble.tidyverse.org">tibble</a>. First a small data frame that shows a list-column.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb56-2" data-line-number="2">bad.df =<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;d,e,f&quot;</span>, <span class="st">&quot;g,h&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">bad.df =<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;d,e,f&quot;</span>, </a>
+<a class="sourceLine" id="cb61-3" data-line-number="3">    <span class="st">&quot;g,h&quot;</span>))</a></code></pre></div>
 <p>If I want to clean up list-column <code>y</code>, I can do that as shown below.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">good.df =<span class="st"> </span>bad.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">transform</span>(<span class="dt">y =</span> <span class="kw">strsplit</span>(y, <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(y)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">good.df =<span class="st"> </span>bad.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">transform</span>(<span class="dt">y =</span> <span class="kw">strsplit</span>(y, </a>
+<a class="sourceLine" id="cb62-2" data-line-number="2">    <span class="st">&quot;,&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(y)</a></code></pre></div>
 <p>Now see a slightly more complicated list-column, with <code>y</code> made of named rows …. a and b, a with 1 value and b with 2 values.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">badder.df =<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">y =</span> <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">badder.df =<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dt">y =</span> <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb63-2" data-line-number="2">    <span class="dt">b =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>))</a></code></pre></div>
 <p>To clean this up we could do:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">gooder.df =<span class="st"> </span>badder.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(., <span class="dt">.id =</span> <span class="st">&quot;name&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">gooder.df =<span class="st"> </span>badder.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(., <span class="dt">.id =</span> <span class="st">&quot;name&quot;</span>)</a></code></pre></div>
 </div>
 <div id="tidyr" class="section level1">
 <h1>tidyr</h1>
@@ -565,10 +794,11 @@ code > span.ot { color: #007020; }
 <ol style="list-style-type: lower-alpha">
 <li>The Pew survey data</li>
 </ol>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">pew =<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file =</span> <span class="st">&quot;http://stat405.had.co.nz/data/pew.txt&quot;</span>, </a>
-<a class="sourceLine" id="cb60-2" data-line-number="2">    <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, <span class="dt">check.names =</span> F)</a>
-<a class="sourceLine" id="cb60-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb60-4" data-line-number="4">pew</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">pew =<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file =</span> <span class="st">&quot;http://stat405.had.co.nz/data/pew.txt&quot;</span>, </a>
+<a class="sourceLine" id="cb65-2" data-line-number="2">    <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, </a>
+<a class="sourceLine" id="cb65-3" data-line-number="3">    <span class="dt">check.names =</span> F)</a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5">pew</a></code></pre></div>
 <pre><code>##                   religion &lt;$10k $10-20k $20-30k $30-40k $40-50k $50-75k
 ## 1                 Agnostic    27      34      60      81      76     137
 ## 2                  Atheist    12      27      37      52      35      70
@@ -610,8 +840,8 @@ code > span.ot { color: #007020; }
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Here are some more examples</li>
 </ol>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">library</span>(DSR)</a>
-<a class="sourceLine" id="cb62-2" data-line-number="2">table2</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">library</span>(DSR)</a>
+<a class="sourceLine" id="cb67-2" data-line-number="2">table2</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ##    country      year key             value
 ##    &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;           &lt;int&gt;
@@ -627,7 +857,7 @@ code > span.ot { color: #007020; }
 ## 10 China        1999 population 1272915272
 ## 11 China        2000 cases          213766
 ## 12 China        2000 population 1280428583</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">table3</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">table3</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   country      year rate             
 ##   &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;            
@@ -637,14 +867,14 @@ code > span.ot { color: #007020; }
 ## 4 Brazil       2000 80488/174504898  
 ## 5 China        1999 212258/1272915272
 ## 6 China        2000 213766/1280428583</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">table4</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">table4</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   country     `1999` `2000`
 ##   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;
 ## 1 Afghanistan    745   2666
 ## 2 Brazil       37737  80488
 ## 3 China       212258 213766</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">table5</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">table5</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   country         `1999`     `2000`
 ##   &lt;fct&gt;            &lt;int&gt;      &lt;int&gt;
@@ -652,7 +882,7 @@ code > span.ot { color: #007020; }
 ## 2 Brazil       172006362  174504898
 ## 3 China       1272915272 1280428583</code></pre>
 <p>What would a tidy version of the examples in (b) look like?</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">table1</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">table1</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
 ##   &lt;fct&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
@@ -672,11 +902,12 @@ code > span.ot { color: #007020; }
 <div id="separate" class="section level2">
 <h2>separate</h2>
 <p>You will run into variables that you want to break into smaller pieces. For instance, take <code>table3</code> where <code>rate</code> is a ratio of two variables, <code>cases</code> and <code>population</code>, each of which should be in their own columns. How can we achieve that?</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb72-2" data-line-number="2">s.table3 =<span class="st"> </span>table3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> rate, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, </a>
-<a class="sourceLine" id="cb72-3" data-line-number="3">    <span class="st">&quot;population&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>, <span class="dt">remove =</span> <span class="ot">TRUE</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb72-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb72-5" data-line-number="5">s.table3</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb77-2" data-line-number="2">s.table3 =<span class="st"> </span>table3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> rate, </a>
+<a class="sourceLine" id="cb77-3" data-line-number="3">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;cases&quot;</span>, <span class="st">&quot;population&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>, </a>
+<a class="sourceLine" id="cb77-4" data-line-number="4">    <span class="dt">remove =</span> <span class="ot">TRUE</span>, <span class="dt">convert =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb77-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb77-6" data-line-number="6">s.table3</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
 ##   &lt;fct&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
@@ -697,10 +928,10 @@ code > span.ot { color: #007020; }
 <div id="unite" class="section level2">
 <h2>unite</h2>
 <p>The <code>unite</code> command does the exact opposite of separate, combining columns</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">u.table3 =<span class="st"> </span>s.table3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(<span class="st">&quot;rate&quot;</span>, cases, population, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>, </a>
-<a class="sourceLine" id="cb74-2" data-line-number="2">    <span class="dt">remove =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb74-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb74-4" data-line-number="4">u.table3</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1">u.table3 =<span class="st"> </span>s.table3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unite</span>(<span class="st">&quot;rate&quot;</span>, cases, </a>
+<a class="sourceLine" id="cb79-2" data-line-number="2">    population, <span class="dt">sep =</span> <span class="st">&quot;:&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb79-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb79-4" data-line-number="4">u.table3</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   country      year rate               cases population
 ##   &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;              &lt;int&gt;      &lt;int&gt;
@@ -710,12 +941,12 @@ code > span.ot { color: #007020; }
 ## 4 Brazil       2000 80488:174504898    80488  174504898
 ## 5 China        1999 212258:1272915272 212258 1272915272
 ## 6 China        2000 213766:1280428583 213766 1280428583</code></pre>
-<p>Here you specify the name of the new column first, and then list the columns to be combined, specify the separator, and whether the original columns should be removed or not.</p>
+<p>Here you specify the name of the new column first <code>(here it is &quot;rate&quot;)</code>, and then list the columns to be combined <code>(cases, population)</code>, specify the separator <code>(sep = &quot;:&quot;)</code>, and whether the original columns should be removed or not <code>(remove = TRUE or remove = FALSE)</code>.</p>
 </div>
 <div id="spread" class="section level2">
 <h2>spread</h2>
 <p>Revisit <code>table2</code></p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">table2</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">table2</a></code></pre></div>
 <pre><code>## # A tibble: 12 x 4
 ##    country      year key             value
 ##    &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;           &lt;int&gt;
@@ -732,9 +963,9 @@ code > span.ot { color: #007020; }
 ## 11 China        2000 cases          213766
 ## 12 China        2000 population 1280428583</code></pre>
 <p>I want to flip this into a format where the data frame has two columns per country per year – <code>cases</code> and <code>population</code>. How can I do this?</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">sp.table2 =<span class="st"> </span>table2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(key, value)</a>
-<a class="sourceLine" id="cb78-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb78-3" data-line-number="3">sp.table2</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">sp.table2 =<span class="st"> </span>table2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">spread</span>(key, value)</a>
+<a class="sourceLine" id="cb83-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb83-3" data-line-number="3">sp.table2</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   country      year  cases population
 ##   &lt;fct&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
@@ -749,7 +980,7 @@ code > span.ot { color: #007020; }
 <div id="gather" class="section level2">
 <h2>gather</h2>
 <p><code>gather</code> does the opposite of <code>spread</code>, converting wide data into what we call the long form. Revisit <code>table4</code></p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">table4</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">table4</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   country     `1999` `2000`
 ##   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;
@@ -757,9 +988,10 @@ code > span.ot { color: #007020; }
 ## 2 Brazil       37737  80488
 ## 3 China       212258 213766</code></pre>
 <p>Note that each country has two columns, one per year. This is untidy. So we’ll flip this tibble as follows:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">g.table4 =<span class="st"> </span>table4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;cases&quot;</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb82-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb82-3" data-line-number="3">g.table4</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">g.table4 =<span class="st"> </span>table4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;cases&quot;</span>, </a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">    <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb87-4" data-line-number="4">g.table4</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   country     year   cases
 ##   &lt;fct&gt;       &lt;chr&gt;  &lt;int&gt;
@@ -786,12 +1018,13 @@ code > span.ot { color: #007020; }
 </ul>
 <p>Read the data dictionary carefully. Then read-in the case notifications data.</p>
 <p>The database has too many variables (175 or so) and so I’ll have you use just a few for this practice task.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb84-2" data-line-number="2">tb =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;../data/TB_notifications_2018-02-07.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb89-2" data-line-number="2">tb =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;../data/TB_notifications_2018-02-07.csv&quot;</span>)</a></code></pre></div>
 <p>Let us use <code>dplyr</code> to select and filter the tb database so that it meets the following criteria: (i) observations from 2012 or earlier years are kept, and (ii) keep only columns 1 through 6 and 25 (new_sp_m04) through 44 (new_sp_fu).</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb85-2" data-line-number="2">tb2 =<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">25</span><span class="op">:</span><span class="dv">44</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2012</span>)</a>
-<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="kw">names</span>(tb2)</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">tb2 =<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">25</span><span class="op">:</span><span class="dv">44</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&lt;=</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-3" data-line-number="3"><span class="st">    </span><span class="dv">2012</span>)</a>
+<a class="sourceLine" id="cb90-4" data-line-number="4"><span class="kw">names</span>(tb2)</a></code></pre></div>
 <pre><code>##  [1] &quot;country&quot;      &quot;iso2&quot;         &quot;iso3&quot;         &quot;iso_numeric&quot; 
 ##  [5] &quot;g_whoregion&quot;  &quot;year&quot;         &quot;new_sp_m04&quot;   &quot;new_sp_m514&quot; 
 ##  [9] &quot;new_sp_m014&quot;  &quot;new_sp_m1524&quot; &quot;new_sp_m2534&quot; &quot;new_sp_m3544&quot;
@@ -799,7 +1032,7 @@ code > span.ot { color: #007020; }
 ## [17] &quot;new_sp_f04&quot;   &quot;new_sp_f514&quot;  &quot;new_sp_f014&quot;  &quot;new_sp_f1524&quot;
 ## [21] &quot;new_sp_f2534&quot; &quot;new_sp_f3544&quot; &quot;new_sp_f4554&quot; &quot;new_sp_f5564&quot;
 ## [25] &quot;new_sp_f65&quot;   &quot;new_sp_fu&quot;</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">head</span>(tb2)</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">head</span>(tb2)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 26
 ##   country iso2  iso3  iso_numeric g_whoregion  year new_sp_m04 new_sp_m514
 ##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt;      &lt;int&gt;       &lt;int&gt;
@@ -818,9 +1051,9 @@ code > span.ot { color: #007020; }
 ## #   new_sp_fu &lt;int&gt;</code></pre>
 <p>Now, <code>new_sp_xx</code> refer to new pulmonary smear-positive cases. The <code>m</code> refers to males and <code>f</code> refers to females. Finally, <code>04</code> is the 0-4 age group, <code>514</code> is the 5-14 age group, and so on. <code>new_sp_mu</code> is males with an unknown age-group and <code>new_sp_fu</code> is females with an unknown age-group. This is the messy part of the data. Ideally we’d have a column for gender, flagged as <code>Male, Female, Unknown</code>, and a separate column for age-groups flagged <code>0-4, 5-14, 0-14, and so on</code>. Time to tidy these data.</p>
 <p>Since the data are in the wide format we can use gather to flip it into the long format.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">tb3 =<span class="st"> </span>tb2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;cases&quot;</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">26</span>)</a>
-<a class="sourceLine" id="cb89-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb89-3" data-line-number="3"><span class="kw">head</span>(tb3)</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">tb3 =<span class="st"> </span>tb2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;cases&quot;</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">26</span>)</a>
+<a class="sourceLine" id="cb94-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="kw">head</span>(tb3)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 8
 ##   country     iso2  iso3  iso_numeric g_whoregion  year group      cases
 ##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;      &lt;int&gt;
@@ -831,42 +1064,45 @@ code > span.ot { color: #007020; }
 ## 5 Afghanistan AF    AFG   004         EMR          1984 new_sp_m04    NA
 ## 6 Afghanistan AF    AFG   004         EMR          1985 new_sp_m04    NA</code></pre>
 <p>Now we split the <code>new_sp_xx</code> values into three columns</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">tb4 =<span class="st"> </span>tb3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> group, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;new&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;sexage&quot;</span>), </a>
-<a class="sourceLine" id="cb91-2" data-line-number="2">    <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
-<a class="sourceLine" id="cb91-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="kw">head</span>(tb4)</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">tb4 =<span class="st"> </span>tb3 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> group, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;new&quot;</span>, </a>
+<a class="sourceLine" id="cb96-2" data-line-number="2">    <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;sexage&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</a>
+<a class="sourceLine" id="cb96-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb96-4" data-line-number="4"><span class="kw">head</span>(tb4)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 10
-##   country     iso2  iso3  iso_numeric g_whoregion  year new   sp    sexage
-##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; 
-## 1 Afghanistan AF    AFG   004         EMR          1980 new   sp    m04   
-## 2 Afghanistan AF    AFG   004         EMR          1981 new   sp    m04   
-## 3 Afghanistan AF    AFG   004         EMR          1982 new   sp    m04   
-## 4 Afghanistan AF    AFG   004         EMR          1983 new   sp    m04   
-## 5 Afghanistan AF    AFG   004         EMR          1984 new   sp    m04   
-## 6 Afghanistan AF    AFG   004         EMR          1985 new   sp    m04   
+##   country iso2  iso3  iso_numeric g_whoregion  year new   sp    sexage
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; 
+## 1 Afghan… AF    AFG   004         EMR          1980 new   sp    m04   
+## 2 Afghan… AF    AFG   004         EMR          1981 new   sp    m04   
+## 3 Afghan… AF    AFG   004         EMR          1982 new   sp    m04   
+## 4 Afghan… AF    AFG   004         EMR          1983 new   sp    m04   
+## 5 Afghan… AF    AFG   004         EMR          1984 new   sp    m04   
+## 6 Afghan… AF    AFG   004         EMR          1985 new   sp    m04   
 ## # ... with 1 more variable: cases &lt;int&gt;</code></pre>
 <p>and then split <code>sexage</code> into two columns by specifying that the split should occur after the first value (which in our case will be after <code>m</code> or <code>f</code>).</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1">tb5 =<span class="st"> </span>tb4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> sexage, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;agegroup&quot;</span>), </a>
-<a class="sourceLine" id="cb93-2" data-line-number="2">    <span class="dt">sep =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb93-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="kw">head</span>(tb5)</a></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">tb5 =<span class="st"> </span>tb4 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> sexage, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, </a>
+<a class="sourceLine" id="cb98-2" data-line-number="2">    <span class="st">&quot;agegroup&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb98-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb98-4" data-line-number="4"><span class="kw">head</span>(tb5)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
-##   country     iso2  iso3  iso_numeric g_whoregion  year new   sp    sex  
-##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 Afghanistan AF    AFG   004         EMR          1980 new   sp    m    
-## 2 Afghanistan AF    AFG   004         EMR          1981 new   sp    m    
-## 3 Afghanistan AF    AFG   004         EMR          1982 new   sp    m    
-## 4 Afghanistan AF    AFG   004         EMR          1983 new   sp    m    
-## 5 Afghanistan AF    AFG   004         EMR          1984 new   sp    m    
-## 6 Afghanistan AF    AFG   004         EMR          1985 new   sp    m    
+##   country iso2  iso3  iso_numeric g_whoregion  year new   sp    sex  
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+## 1 Afghan… AF    AFG   004         EMR          1980 new   sp    m    
+## 2 Afghan… AF    AFG   004         EMR          1981 new   sp    m    
+## 3 Afghan… AF    AFG   004         EMR          1982 new   sp    m    
+## 4 Afghan… AF    AFG   004         EMR          1983 new   sp    m    
+## 5 Afghan… AF    AFG   004         EMR          1984 new   sp    m    
+## 6 Afghan… AF    AFG   004         EMR          1985 new   sp    m    
 ## # ... with 2 more variables: agegroup &lt;chr&gt;, cases &lt;int&gt;</code></pre>
 <p>The beauty of dplyr and tidyr is the ability to combine all these steps into a single piped command!</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1">tb.df =<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">25</span><span class="op">:</span><span class="dv">44</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2012</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="st">    </span><span class="kw">gather</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;cases&quot;</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">26</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> group, </a>
-<a class="sourceLine" id="cb95-3" data-line-number="3">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;new&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;sexage&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> sexage, </a>
-<a class="sourceLine" id="cb95-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, <span class="st">&quot;agegroup&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">9</span><span class="op">:</span><span class="dv">11</span>))</a>
-<a class="sourceLine" id="cb95-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb95-6" data-line-number="6"><span class="kw">head</span>(tb.df)</a></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">tb.df =<span class="st"> </span>tb <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">25</span><span class="op">:</span><span class="dv">44</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="st">    </span><span class="kw">filter</span>(year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2012</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">gather</span>(<span class="st">&quot;group&quot;</span>, </a>
+<a class="sourceLine" id="cb100-3" data-line-number="3">    <span class="st">&quot;cases&quot;</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">26</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">separate</span>(<span class="dt">col =</span> group, </a>
+<a class="sourceLine" id="cb100-4" data-line-number="4">    <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;new&quot;</span>, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;sexage&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="st">    </span><span class="kw">separate</span>(<span class="dt">col =</span> sexage, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;sex&quot;</span>, </a>
+<a class="sourceLine" id="cb100-6" data-line-number="6">        <span class="st">&quot;agegroup&quot;</span>), <span class="dt">sep =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, </a>
+<a class="sourceLine" id="cb100-7" data-line-number="7">    <span class="dv">9</span><span class="op">:</span><span class="dv">11</span>))</a>
+<a class="sourceLine" id="cb100-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb100-9" data-line-number="9"><span class="kw">head</span>(tb.df)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
 ##   country   iso2  iso3  iso_numeric g_whoregion  year sex   agegroup cases
 ##   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;
@@ -877,17 +1113,21 @@ code > span.ot { color: #007020; }
 ## 5 Afghanis… AF    AFG   004         EMR          1984 m     04          NA
 ## 6 Afghanis… AF    AFG   004         EMR          1985 m     04          NA</code></pre>
 <p>Now, we can clean-up the codes for easier interpretation.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">tb.df<span class="op">$</span>sex =<span class="st"> </span><span class="kw">ifelse</span>(tb.df<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;m&quot;</span>, <span class="st">&quot;Males&quot;</span>, <span class="st">&quot;Females&quot;</span>)</a>
-<a class="sourceLine" id="cb97-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb97-3" data-line-number="3">tb.df<span class="op">$</span>agegroup =<span class="st"> </span><span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;04&quot;</span>, <span class="st">&quot;0-4&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb97-4" data-line-number="4"><span class="st">    &quot;014&quot;</span>, <span class="st">&quot;0-14&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;1524&quot;</span>, <span class="st">&quot;15-24&quot;</span>, </a>
-<a class="sourceLine" id="cb97-5" data-line-number="5">    <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;2534&quot;</span>, <span class="st">&quot;25-34&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb97-6" data-line-number="6"><span class="st">        &quot;3544&quot;</span>, <span class="st">&quot;35-44&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;4554&quot;</span>, <span class="st">&quot;45-54&quot;</span>, </a>
-<a class="sourceLine" id="cb97-7" data-line-number="7">        <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;514&quot;</span>, <span class="st">&quot;5-14&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb97-8" data-line-number="8"><span class="st">            &quot;5564&quot;</span>, <span class="st">&quot;55-64&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> &quot;65&quot;</span>, <span class="st">&quot;65+&quot;</span>, </a>
-<a class="sourceLine" id="cb97-9" data-line-number="9">            <span class="st">&quot;Uknown&quot;</span>)))))))))</a>
-<a class="sourceLine" id="cb97-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb97-11" data-line-number="11"><span class="kw">head</span>(tb.df)</a></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">tb.df<span class="op">$</span>sex =<span class="st"> </span><span class="kw">ifelse</span>(tb.df<span class="op">$</span>sex <span class="op">==</span><span class="st"> &quot;m&quot;</span>, <span class="st">&quot;Males&quot;</span>, </a>
+<a class="sourceLine" id="cb102-2" data-line-number="2">    <span class="st">&quot;Females&quot;</span>)</a>
+<a class="sourceLine" id="cb102-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb102-4" data-line-number="4">tb.df<span class="op">$</span>agegroup =<span class="st"> </span><span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-5" data-line-number="5"><span class="st">    &quot;04&quot;</span>, <span class="st">&quot;0-4&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-6" data-line-number="6"><span class="st">    &quot;014&quot;</span>, <span class="st">&quot;0-14&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-7" data-line-number="7"><span class="st">    &quot;1524&quot;</span>, <span class="st">&quot;15-24&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-8" data-line-number="8"><span class="st">    &quot;2534&quot;</span>, <span class="st">&quot;25-34&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-9" data-line-number="9"><span class="st">    &quot;3544&quot;</span>, <span class="st">&quot;35-44&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-10" data-line-number="10"><span class="st">    &quot;4554&quot;</span>, <span class="st">&quot;45-54&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-11" data-line-number="11"><span class="st">    &quot;514&quot;</span>, <span class="st">&quot;5-14&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-12" data-line-number="12"><span class="st">    &quot;5564&quot;</span>, <span class="st">&quot;55-64&quot;</span>, <span class="kw">ifelse</span>(tb.df<span class="op">$</span>agegroup <span class="op">==</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb102-13" data-line-number="13"><span class="st">    &quot;65&quot;</span>, <span class="st">&quot;65+&quot;</span>, <span class="st">&quot;Uknown&quot;</span>)))))))))</a>
+<a class="sourceLine" id="cb102-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb102-15" data-line-number="15"><span class="kw">head</span>(tb.df)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
 ##   country   iso2  iso3  iso_numeric g_whoregion  year sex   agegroup cases
 ##   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;int&gt;
@@ -898,11 +1138,12 @@ code > span.ot { color: #007020; }
 ## 5 Afghanis… AF    AFG   004         EMR          1984 Males 0-4         NA
 ## 6 Afghanis… AF    AFG   004         EMR          1985 Males 0-4         NA</code></pre>
 <p>How many cases per country in the 1980-1990 period?</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">tbtab<span class="fl">.01</span> =<span class="st"> </span>tb.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span> <span class="op">|</span><span class="st"> </span>year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Ncases =</span> <span class="kw">sum</span>(cases, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>Ncases)</a>
-<a class="sourceLine" id="cb99-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb99-5" data-line-number="5"><span class="kw">head</span>(tbtab<span class="fl">.01</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">tbtab<span class="fl">.01</span> =<span class="st"> </span>tb.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span> <span class="op">|</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">    </span>year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">Ncases =</span> <span class="kw">sum</span>(cases, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb104-4" data-line-number="4"><span class="st">    </span><span class="kw">arrange</span>(<span class="op">-</span>Ncases)</a>
+<a class="sourceLine" id="cb104-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb104-6" data-line-number="6"><span class="kw">head</span>(tbtab<span class="fl">.01</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   country       Ncases
 ##   &lt;chr&gt;          &lt;int&gt;
@@ -913,11 +1154,12 @@ code > span.ot { color: #007020; }
 ## 5 Bangladesh   1072431
 ## 6 Viet Nam      915525</code></pre>
 <p>What about by sex and age-group?</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">tbtab<span class="fl">.02</span> =<span class="st"> </span>tb.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span> <span class="op">|</span><span class="st"> </span>year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="st">    </span><span class="kw">group_by</span>(country, sex, agegroup) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Ncases =</span> <span class="kw">sum</span>(cases, </a>
-<a class="sourceLine" id="cb101-3" data-line-number="3">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>Ncases)</a>
-<a class="sourceLine" id="cb101-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb101-5" data-line-number="5"><span class="kw">head</span>(tbtab<span class="fl">.02</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">tbtab<span class="fl">.02</span> =<span class="st"> </span>tb.df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1980</span> <span class="op">|</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb106-2" data-line-number="2"><span class="st">    </span>year <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(country, sex, </a>
+<a class="sourceLine" id="cb106-3" data-line-number="3">    agegroup) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">Ncases =</span> <span class="kw">sum</span>(cases, </a>
+<a class="sourceLine" id="cb106-4" data-line-number="4">    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="op">-</span>Ncases)</a>
+<a class="sourceLine" id="cb106-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb106-6" data-line-number="6"><span class="kw">head</span>(tbtab<span class="fl">.02</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ## # Groups:   country, sex [2]
 ##   country sex   agegroup Ncases
@@ -940,8 +1182,8 @@ code > span.ot { color: #007020; }
 <div id="weather" class="section level2">
 <h2>Weather</h2>
 <p>Tidy these weather data</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file =</span> <span class="st">&quot;http://stat405.had.co.nz/data/weather.txt&quot;</span>, </a>
-<a class="sourceLine" id="cb103-2" data-line-number="2">    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">weather &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="dt">file =</span> <span class="st">&quot;http://stat405.had.co.nz/data/weather.txt&quot;</span>, </a>
+<a class="sourceLine" id="cb108-2" data-line-number="2">    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>The tidy data should have the days as rows and TMIN and TMAX as columns (i.e., you are going from wide to long). Drop all rows where both TMIN and TMAX are <code>NA</code>, remove the <code>d</code> from the values in the <code>day</code> column, and sort in increasing order of <code>month</code> and <code>day</code>.</p>
 </div>
 <div id="climate-change" class="section level2">
@@ -954,18 +1196,19 @@ code > span.ot { color: #007020; }
 <div id="dates-and-times" class="section level1">
 <h1>Dates and Times</h1>
 <p>If you want to do anything with dates, it helps to have them formatted correctly, and that is not always the case with secondary data we grab for analysis. Consequently, in this module we will see ways to work with date and time variables via <code>base R</code> and <code>lubridate</code>, a special package to work with date/time data. We’ll start by creating some data values.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">basedate =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;1970-1-1&quot;</span>)</a>
-<a class="sourceLine" id="cb104-2" data-line-number="2">today =<span class="st"> </span><span class="kw">Sys.Date</span>()</a>
-<a class="sourceLine" id="cb104-3" data-line-number="3">tomorrow =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2018-07-17&quot;</span>)</a>
-<a class="sourceLine" id="cb104-4" data-line-number="4">yesterday1 =<span class="st"> &quot;12/16/2017&quot;</span></a>
-<a class="sourceLine" id="cb104-5" data-line-number="5">yesterday2 =<span class="st"> &quot;12-16-17&quot;</span></a>
-<a class="sourceLine" id="cb104-6" data-line-number="6">yesterday3 =<span class="st"> &quot;12 16 17&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">basedate =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;1970-1-1&quot;</span>)</a>
+<a class="sourceLine" id="cb109-2" data-line-number="2">today =<span class="st"> </span><span class="kw">Sys.Date</span>()</a>
+<a class="sourceLine" id="cb109-3" data-line-number="3">tomorrow =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2018-07-17&quot;</span>)</a>
+<a class="sourceLine" id="cb109-4" data-line-number="4">yesterday1 =<span class="st"> &quot;12/16/2017&quot;</span></a>
+<a class="sourceLine" id="cb109-5" data-line-number="5">yesterday2 =<span class="st"> &quot;12-16-17&quot;</span></a>
+<a class="sourceLine" id="cb109-6" data-line-number="6">yesterday3 =<span class="st"> &quot;12 16 17&quot;</span></a></code></pre></div>
 <p>Now let us see how R treats each of these.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="kw">str</span>(<span class="kw">list</span>(basedate, today, tomorrow, yesterday1, yesterday2, yesterday3))</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">str</span>(<span class="kw">list</span>(basedate, today, tomorrow, yesterday1, </a>
+<a class="sourceLine" id="cb110-2" data-line-number="2">    yesterday2, yesterday3))</a></code></pre></div>
 <pre><code>## List of 6
 ##  $ : Date[1:1], format: &quot;1970-01-01&quot;
-##  $ : Date[1:1], format: &quot;2018-06-22&quot;
-##  $ : Date[1:1], format: &quot;2017-12-18&quot;
+##  $ : Date[1:1], format: &quot;2018-08-02&quot;
+##  $ : Date[1:1], format: &quot;2018-07-17&quot;
 ##  $ : chr &quot;12/16/2017&quot;
 ##  $ : chr &quot;12-16-17&quot;
 ##  $ : chr &quot;12 16 17&quot;</code></pre>
@@ -973,14 +1216,14 @@ code > span.ot { color: #007020; }
 <div id="base-r" class="section level2">
 <h2>base R</h2>
 <p>This latter group can be flipped into date fields:</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">yesterday1d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday1, <span class="dt">format =</span> <span class="st">&quot;%m/%d/%Y&quot;</span>)</a>
-<a class="sourceLine" id="cb107-2" data-line-number="2">yesterday2d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday2, <span class="dt">format =</span> <span class="st">&quot;%m-%d-%y&quot;</span>)</a>
-<a class="sourceLine" id="cb107-3" data-line-number="3">yesterday3d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday3, <span class="dt">format =</span> <span class="st">&quot;%m %d %y&quot;</span>)</a>
-<a class="sourceLine" id="cb107-4" data-line-number="4">yesterday1d</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1">yesterday1d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday1, <span class="dt">format =</span> <span class="st">&quot;%m/%d/%Y&quot;</span>)</a>
+<a class="sourceLine" id="cb112-2" data-line-number="2">yesterday2d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday2, <span class="dt">format =</span> <span class="st">&quot;%m-%d-%y&quot;</span>)</a>
+<a class="sourceLine" id="cb112-3" data-line-number="3">yesterday3d =<span class="st"> </span><span class="kw">as.Date</span>(yesterday3, <span class="dt">format =</span> <span class="st">&quot;%m %d %y&quot;</span>)</a>
+<a class="sourceLine" id="cb112-4" data-line-number="4">yesterday1d</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-16&quot;</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">yesterday2d</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">yesterday2d</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-16&quot;</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">yesterday3d</a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">yesterday3d</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-16&quot;</code></pre>
 <p>There are special switches that indicate date components when you <code>format = &quot;&quot;</code></p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1090,71 +1333,73 @@ Year (4-digits)
 </table>
 <p>So if you ever run into a date field that needs formatting, what we have covered should help you convert it into a proper date formatted variable.</p>
 <p>Once you convert them to the date format, you can extract other quantities.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">weekdays</span>(yesterday1d)</a></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">weekdays</span>(yesterday1d)</a></code></pre></div>
 <pre><code>## [1] &quot;Saturday&quot;</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">months</span>(today)</a></code></pre></div>
-<pre><code>## [1] &quot;June&quot;</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">quarters</span>(today)</a></code></pre></div>
-<pre><code>## [1] &quot;Q2&quot;</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">months</span>(today)</a></code></pre></div>
+<pre><code>## [1] &quot;August&quot;</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">quarters</span>(today)</a></code></pre></div>
+<pre><code>## [1] &quot;Q3&quot;</code></pre>
 <p>Sometimes you will have a number representing the date, with the number representing the number of days since (if positive) or before (if negative) some date of origin. R uses <code>1970-01-01</code> but other software packages may (and some do) use different days. Thus, for example, if the dates are listed as</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">17651</span>, <span class="dv">-2345</span>, <span class="dv">19760</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">17651</span>, <span class="dv">-2345</span>, <span class="dv">19760</span>)</a></code></pre></div>
 <p>Then these numbers represent the following dates:</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">x.dates =<span class="st"> </span><span class="kw">as.Date</span>(x, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>)</a>
-<a class="sourceLine" id="cb120-2" data-line-number="2">x.dates</a></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">x.dates =<span class="st"> </span><span class="kw">as.Date</span>(x, <span class="dt">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>)</a>
+<a class="sourceLine" id="cb125-2" data-line-number="2">x.dates</a></code></pre></div>
 <pre><code>## [1] &quot;2018-04-30&quot; &quot;1963-08-01&quot; &quot;2024-02-07&quot;</code></pre>
 <p>You can also convert dates into the numbers representing dates.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1">x.julian =<span class="st"> </span><span class="kw">julian</span>(x.dates, <span class="dt">origin =</span> <span class="kw">as.POSIXct</span>(<span class="st">&quot;1970-01-01&quot;</span>, </a>
-<a class="sourceLine" id="cb122-2" data-line-number="2">    <span class="dt">tz =</span> <span class="st">&quot;UCT&quot;</span>))</a>
-<a class="sourceLine" id="cb122-3" data-line-number="3">x.julian</a></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">x.julian =<span class="st"> </span><span class="kw">julian</span>(x.dates, <span class="dt">origin =</span> <span class="kw">as.POSIXct</span>(<span class="st">&quot;1970-01-01&quot;</span>, </a>
+<a class="sourceLine" id="cb127-2" data-line-number="2">    <span class="dt">tz =</span> <span class="st">&quot;UCT&quot;</span>))</a>
+<a class="sourceLine" id="cb127-3" data-line-number="3">x.julian</a></code></pre></div>
 <pre><code>## [1] 17651 -2345 19760
 ## attr(,&quot;origin&quot;)
 ## [1] &quot;1970-01-01 UCT&quot;</code></pre>
 <p>What if I wanted to create a sequence of dates, starting with Feb 8, 2018 but increasing by 1 day at a time or by every 5th day?</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">start.date =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">as.character</span>(<span class="st">&quot;2018-02-08&quot;</span>), <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)</a>
-<a class="sourceLine" id="cb124-2" data-line-number="2">date.seq1 =<span class="st"> </span><span class="kw">seq</span>(start.date, <span class="dt">by =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">7</span>)</a>
-<a class="sourceLine" id="cb124-3" data-line-number="3">date.seq1</a></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">start.date =<span class="st"> </span><span class="kw">as.Date</span>(<span class="kw">as.character</span>(<span class="st">&quot;2018-02-08&quot;</span>), </a>
+<a class="sourceLine" id="cb129-2" data-line-number="2">    <span class="dt">format =</span> <span class="st">&quot;%Y-%m-%d&quot;</span>)</a>
+<a class="sourceLine" id="cb129-3" data-line-number="3">date.seq1 =<span class="st"> </span><span class="kw">seq</span>(start.date, <span class="dt">by =</span> <span class="dv">1</span>, <span class="dt">length.out =</span> <span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb129-4" data-line-number="4">date.seq1</a></code></pre></div>
 <pre><code>## [1] &quot;2018-02-08&quot; &quot;2018-02-09&quot; &quot;2018-02-10&quot; &quot;2018-02-11&quot; &quot;2018-02-12&quot;
 ## [6] &quot;2018-02-13&quot; &quot;2018-02-14&quot;</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">date.seq5 =<span class="st"> </span><span class="kw">seq</span>(start.date, <span class="dt">by =</span> <span class="dv">5</span>, <span class="dt">length.out =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2">date.seq5</a></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">date.seq5 =<span class="st"> </span><span class="kw">seq</span>(start.date, <span class="dt">by =</span> <span class="dv">5</span>, <span class="dt">length.out =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">date.seq5</a></code></pre></div>
 <pre><code>## [1] &quot;2018-02-08&quot; &quot;2018-02-13&quot; &quot;2018-02-18&quot;</code></pre>
 <p>Note that <code>length.out =</code> is specifying how many you dates want to create.</p>
 <p>Now, what if I want to know the date 30 days from today? 19 days ago?</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">date<span class="fl">.30</span> =<span class="st"> </span>today <span class="op">+</span><span class="st"> </span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb128-2" data-line-number="2">date<span class="fl">.19</span> =<span class="st"> </span>today <span class="op">-</span><span class="st"> </span><span class="dv">19</span></a></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">date<span class="fl">.30</span> =<span class="st"> </span>today <span class="op">+</span><span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">date<span class="fl">.19</span> =<span class="st"> </span>today <span class="op">-</span><span class="st"> </span><span class="dv">19</span></a></code></pre></div>
 <p>How many days lapsed between two dates?</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">date1 =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2017-04-28&quot;</span>)</a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">date2 =<span class="st"> </span><span class="kw">Sys.Date</span>()</a>
-<a class="sourceLine" id="cb129-3" data-line-number="3">lapsed.time =<span class="st"> </span>date2 <span class="op">-</span><span class="st"> </span>date1</a>
-<a class="sourceLine" id="cb129-4" data-line-number="4">lapsed.time</a></code></pre></div>
-<pre><code>## Time difference of 420 days</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">date1 =<span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2017-04-28&quot;</span>)</a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">date2 =<span class="st"> </span><span class="kw">Sys.Date</span>()</a>
+<a class="sourceLine" id="cb134-3" data-line-number="3">lapsed.time =<span class="st"> </span>date2 <span class="op">-</span><span class="st"> </span>date1</a>
+<a class="sourceLine" id="cb134-4" data-line-number="4">lapsed.time</a></code></pre></div>
+<pre><code>## Time difference of 461 days</code></pre>
 <p>Say I want to create a vector of dates that starts and ends on specific dates, and the step function is 1 day, a week, 4 months, etc. The step is indicated with the <code>by = &quot;&quot;</code> command</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">my.dates1 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-2" data-line-number="2">    <span class="dt">by =</span> <span class="st">&quot;day&quot;</span>)</a>
-<a class="sourceLine" id="cb131-3" data-line-number="3">my.dates2 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-4" data-line-number="4">    <span class="dt">by =</span> <span class="st">&quot;week&quot;</span>)</a>
-<a class="sourceLine" id="cb131-5" data-line-number="5">my.dates3 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-6" data-line-number="6">    <span class="dt">by =</span> <span class="st">&quot;month&quot;</span>)</a>
-<a class="sourceLine" id="cb131-7" data-line-number="7">my.dates4 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-8" data-line-number="8">    <span class="dt">by =</span> <span class="st">&quot;3 days&quot;</span>)</a>
-<a class="sourceLine" id="cb131-9" data-line-number="9">my.dates5 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-10" data-line-number="10">    <span class="dt">by =</span> <span class="st">&quot;2 weeks&quot;</span>)</a>
-<a class="sourceLine" id="cb131-11" data-line-number="11">my.dates6 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-12" data-line-number="12">    <span class="dt">by =</span> <span class="st">&quot;4 months&quot;</span>)</a>
-<a class="sourceLine" id="cb131-13" data-line-number="13">my.dates7 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2019-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-14" data-line-number="14">    <span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</a>
-<a class="sourceLine" id="cb131-15" data-line-number="15">my.dates8 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2022-12-16&quot;</span>), </a>
-<a class="sourceLine" id="cb131-16" data-line-number="16">    <span class="dt">by =</span> <span class="st">&quot;2 years&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">my.dates1 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-2" data-line-number="2">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;day&quot;</span>)</a>
+<a class="sourceLine" id="cb136-3" data-line-number="3">my.dates2 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-4" data-line-number="4">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;week&quot;</span>)</a>
+<a class="sourceLine" id="cb136-5" data-line-number="5">my.dates3 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-6" data-line-number="6">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;month&quot;</span>)</a>
+<a class="sourceLine" id="cb136-7" data-line-number="7">my.dates4 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-8" data-line-number="8">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;3 days&quot;</span>)</a>
+<a class="sourceLine" id="cb136-9" data-line-number="9">my.dates5 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-10" data-line-number="10">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;2 weeks&quot;</span>)</a>
+<a class="sourceLine" id="cb136-11" data-line-number="11">my.dates6 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-12" data-line-number="12">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2018-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;4 months&quot;</span>)</a>
+<a class="sourceLine" id="cb136-13" data-line-number="13">my.dates7 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-14" data-line-number="14">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2019-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;year&quot;</span>)</a>
+<a class="sourceLine" id="cb136-15" data-line-number="15">my.dates8 =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2017-12-17&quot;</span>), </a>
+<a class="sourceLine" id="cb136-16" data-line-number="16">    <span class="dt">to =</span> <span class="kw">as.Date</span>(<span class="st">&quot;2022-12-16&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;2 years&quot;</span>)</a></code></pre></div>
 <p>We can also extract components, say from dates in the <code>economics</code> data-set.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="kw">data</span>(economics)</a>
-<a class="sourceLine" id="cb132-3" data-line-number="3"><span class="kw">names</span>(economics)</a></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="kw">data</span>(economics)</a>
+<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="kw">names</span>(economics)</a></code></pre></div>
 <pre><code>## [1] &quot;date&quot;     &quot;pce&quot;      &quot;pop&quot;      &quot;psavert&quot;  &quot;uempmed&quot;  &quot;unemploy&quot;</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">economics<span class="op">$</span>year =<span class="st"> </span><span class="kw">format</span>(economics<span class="op">$</span>date, <span class="st">&quot;%Y&quot;</span>)</a>
-<a class="sourceLine" id="cb134-2" data-line-number="2">economics<span class="op">$</span>month =<span class="st"> </span><span class="kw">format</span>(economics<span class="op">$</span>date, <span class="st">&quot;%B&quot;</span>)</a>
-<a class="sourceLine" id="cb134-3" data-line-number="3">economics<span class="op">$</span>quarter =<span class="st"> </span><span class="kw">quarters</span>(economics<span class="op">$</span>date)</a>
-<a class="sourceLine" id="cb134-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb134-5" data-line-number="5"><span class="kw">head</span>(economics[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">economics<span class="op">$</span>year =<span class="st"> </span><span class="kw">format</span>(economics<span class="op">$</span>date, <span class="st">&quot;%Y&quot;</span>)</a>
+<a class="sourceLine" id="cb139-2" data-line-number="2">economics<span class="op">$</span>month =<span class="st"> </span><span class="kw">format</span>(economics<span class="op">$</span>date, </a>
+<a class="sourceLine" id="cb139-3" data-line-number="3">    <span class="st">&quot;%B&quot;</span>)</a>
+<a class="sourceLine" id="cb139-4" data-line-number="4">economics<span class="op">$</span>quarter =<span class="st"> </span><span class="kw">quarters</span>(economics<span class="op">$</span>date)</a>
+<a class="sourceLine" id="cb139-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb139-6" data-line-number="6"><span class="kw">head</span>(economics[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)])</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 4
 ##   date       year  month     quarter
 ##   &lt;date&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;  
@@ -1168,41 +1413,41 @@ Year (4-digits)
 <div id="lubridate" class="section level2">
 <h2>lubridate</h2>
 <p>This package makes working with dates and times quite easy because it does what base R does but in more intuitive ways and perhaps more flexibly. Let us start with some date fields.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">today1 =<span class="st"> &quot;20171217&quot;</span></a>
-<a class="sourceLine" id="cb136-2" data-line-number="2">today2 =<span class="st"> &quot;2017-12-17&quot;</span></a>
-<a class="sourceLine" id="cb136-3" data-line-number="3">today3 =<span class="st"> &quot;2017 December 17&quot;</span></a>
-<a class="sourceLine" id="cb136-4" data-line-number="4">today4 =<span class="st"> &quot;20171217143241&quot;</span></a>
-<a class="sourceLine" id="cb136-5" data-line-number="5">today5 =<span class="st"> &quot;2017 December 17 14:32:41&quot;</span></a>
-<a class="sourceLine" id="cb136-6" data-line-number="6">today6 =<span class="st"> &quot;December 17 2017 14:32:41&quot;</span></a>
-<a class="sourceLine" id="cb136-7" data-line-number="7">today7 =<span class="st"> &quot;17-Dec, 2017 14:32:41&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">today1 =<span class="st"> &quot;20171217&quot;</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2">today2 =<span class="st"> &quot;2017-12-17&quot;</span></a>
+<a class="sourceLine" id="cb141-3" data-line-number="3">today3 =<span class="st"> &quot;2017 December 17&quot;</span></a>
+<a class="sourceLine" id="cb141-4" data-line-number="4">today4 =<span class="st"> &quot;20171217143241&quot;</span></a>
+<a class="sourceLine" id="cb141-5" data-line-number="5">today5 =<span class="st"> &quot;2017 December 17 14:32:41&quot;</span></a>
+<a class="sourceLine" id="cb141-6" data-line-number="6">today6 =<span class="st"> &quot;December 17 2017 14:32:41&quot;</span></a>
+<a class="sourceLine" id="cb141-7" data-line-number="7">today7 =<span class="st"> &quot;17-Dec, 2017 14:32:41&quot;</span></a></code></pre></div>
 <p>The formats are quite varied but <code>lubridate</code> deals with them quite seamlessly so long as you pay attention to the order – is year first or last? What about month? day? Is time given in hours, minutes and seconds?.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
-<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="kw">ymd</span>(today1)</a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">ymd</span>(today1)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17&quot;</code></pre>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">ymd</span>(today2)</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">ymd</span>(today2)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17&quot;</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">ymd</span>(today3)</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">ymd</span>(today3)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17&quot;</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">ymd_hms</span>(today4)</a></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">ymd_hms</span>(today4)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">ymd_hms</span>(today5)</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">ymd_hms</span>(today5)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">mdy_hms</span>(today6)</a></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">mdy_hms</span>(today6)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">dmy_hms</span>(today7)</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">dmy_hms</span>(today7)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 UTC&quot;</code></pre>
 <p>The default time zone will be <code>UTC</code>, the Coordinated Universal Time clock. If you want to change it you must specify the time zone.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">dmy_hms</span>(today7, <span class="dt">tz =</span> <span class="st">&quot;EST&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="kw">dmy_hms</span>(today7, <span class="dt">tz =</span> <span class="st">&quot;EST&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 EST&quot;</code></pre>
 <p>I am planning my spring break travel to Italy and want to know when my flight departs on March 10.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">now.charleston =<span class="st"> </span><span class="kw">now</span>(<span class="st">&quot;America/New_York&quot;</span>)</a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">now.charleston</a></code></pre></div>
-<pre><code>## [1] &quot;2018-06-22 09:18:15 EDT&quot;</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">my.departure =<span class="st"> </span>now.charleston <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">30</span>)</a>
-<a class="sourceLine" id="cb155-2" data-line-number="2">my.departure</a></code></pre></div>
-<pre><code>## [1] &quot;2018-07-22 09:18:15 EDT&quot;</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">now.charleston =<span class="st"> </span><span class="kw">now</span>(<span class="st">&quot;America/New_York&quot;</span>)</a>
+<a class="sourceLine" id="cb158-2" data-line-number="2">now.charleston</a></code></pre></div>
+<pre><code>## [1] &quot;2018-08-02 08:47:32 EDT&quot;</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">my.departure =<span class="st"> </span>now.charleston <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">30</span>)</a>
+<a class="sourceLine" id="cb160-2" data-line-number="2">my.departure</a></code></pre></div>
+<pre><code>## [1] &quot;2018-09-01 08:47:32 EDT&quot;</code></pre>
 <p>To look-up time zones, run</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">grep</span>(<span class="st">&quot;America&quot;</span>, <span class="kw">OlsonNames</span>(), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw">grep</span>(<span class="st">&quot;America&quot;</span>, <span class="kw">OlsonNames</span>(), <span class="dt">value =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>##   [1] &quot;America/Adak&quot;                     &quot;America/Anchorage&quot;               
 ##   [3] &quot;America/Anguilla&quot;                 &quot;America/Antigua&quot;                 
 ##   [5] &quot;America/Araguaina&quot;                &quot;America/Argentina/Buenos_Aires&quot;  
@@ -1287,59 +1532,59 @@ Year (4-digits)
 ## [163] &quot;America/Whitehorse&quot;               &quot;America/Winnipeg&quot;                
 ## [165] &quot;America/Yakutat&quot;                  &quot;America/Yellowknife&quot;</code></pre>
 <p>Hang on a second, the boarding pass shows departure time to be at 11:41 AM. Ah, easily corrected:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">corrected.departure =<span class="st"> </span><span class="kw">update</span>(my.departure, <span class="dt">hours =</span> <span class="dv">11</span>, <span class="dt">minutes =</span> <span class="dv">41</span>, </a>
-<a class="sourceLine" id="cb159-2" data-line-number="2">    <span class="dt">seconds =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb159-3" data-line-number="3">corrected.departure</a></code></pre></div>
-<pre><code>## [1] &quot;2018-07-22 11:41:00 EDT&quot;</code></pre>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">corrected.departure =<span class="st"> </span><span class="kw">update</span>(my.departure, </a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">    <span class="dt">hours =</span> <span class="dv">11</span>, <span class="dt">minutes =</span> <span class="dv">41</span>, <span class="dt">seconds =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">corrected.departure</a></code></pre></div>
+<pre><code>## [1] &quot;2018-09-01 11:41:00 EDT&quot;</code></pre>
 <p>If I need to extract data/time elements, I can do that as well.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1">today =<span class="st"> </span><span class="kw">dmy_hms</span>(today7)</a>
-<a class="sourceLine" id="cb161-2" data-line-number="2">today  <span class="co"># a date and time set in today7 </span></a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">today =<span class="st"> </span><span class="kw">dmy_hms</span>(today7)</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2">today  <span class="co"># a date and time set in today7 </span></a></code></pre></div>
 <pre><code>## [1] &quot;2017-12-17 14:32:41 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">today.y =<span class="st"> </span><span class="kw">year</span>(today)</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2">today.y  <span class="co"># The year </span></a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">today.y =<span class="st"> </span><span class="kw">year</span>(today)</a>
+<a class="sourceLine" id="cb168-2" data-line-number="2">today.y  <span class="co"># The year </span></a></code></pre></div>
 <pre><code>## [1] 2017</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">today.m1 =<span class="st"> </span><span class="kw">month</span>(today)</a>
-<a class="sourceLine" id="cb165-2" data-line-number="2">today.m1  <span class="co"># the month, as a number  </span></a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">today.m1 =<span class="st"> </span><span class="kw">month</span>(today)</a>
+<a class="sourceLine" id="cb170-2" data-line-number="2">today.m1  <span class="co"># the month, as a number  </span></a></code></pre></div>
 <pre><code>## [1] 12</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">today.m2 =<span class="st"> </span><span class="kw">month</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2">today.m2  <span class="co"># labeling the month but with an abbreviation </span></a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">today.m2 =<span class="st"> </span><span class="kw">month</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb172-2" data-line-number="2">today.m2  <span class="co"># labeling the month but with an abbreviation </span></a></code></pre></div>
 <pre><code>## [1] Dec
 ## 12 Levels: Jan &lt; Feb &lt; Mar &lt; Apr &lt; May &lt; Jun &lt; Jul &lt; Aug &lt; Sep &lt; ... &lt; Dec</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">today.m3 =<span class="st"> </span><span class="kw">month</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb169-2" data-line-number="2">today.m3  <span class="co"># fully labelling the month </span></a></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1">today.m3 =<span class="st"> </span><span class="kw">month</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb174-2" data-line-number="2">today.m3  <span class="co"># fully labelling the month </span></a></code></pre></div>
 <pre><code>## [1] December
 ## 12 Levels: January &lt; February &lt; March &lt; April &lt; May &lt; June &lt; ... &lt; December</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">today.w =<span class="st"> </span><span class="kw">week</span>(today)</a>
-<a class="sourceLine" id="cb171-2" data-line-number="2">today.w  <span class="co"># what week of the year is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1">today.w =<span class="st"> </span><span class="kw">week</span>(today)</a>
+<a class="sourceLine" id="cb176-2" data-line-number="2">today.w  <span class="co"># what week of the year is it? </span></a></code></pre></div>
 <pre><code>## [1] 51</code></pre>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">today.doy =<span class="st"> </span><span class="kw">yday</span>(today)</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2">today.doy  <span class="co"># what day of the year is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1">today.doy =<span class="st"> </span><span class="kw">yday</span>(today)</a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">today.doy  <span class="co"># what day of the year is it? </span></a></code></pre></div>
 <pre><code>## [1] 351</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1">today.dom =<span class="st"> </span><span class="kw">mday</span>(today)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">today.dom  <span class="co"># what day of the month is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">today.dom =<span class="st"> </span><span class="kw">mday</span>(today)</a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">today.dom  <span class="co"># what day of the month is it? </span></a></code></pre></div>
 <pre><code>## [1] 17</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1">today.dow1 =<span class="st"> </span><span class="kw">wday</span>(today)</a>
-<a class="sourceLine" id="cb177-2" data-line-number="2">today.dow1  <span class="co"># what day of the week is it,  as a number? </span></a></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">today.dow1 =<span class="st"> </span><span class="kw">wday</span>(today)</a>
+<a class="sourceLine" id="cb182-2" data-line-number="2">today.dow1  <span class="co"># what day of the week is it,  as a number? </span></a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1">today.dow2 =<span class="st"> </span><span class="kw">wday</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb179-2" data-line-number="2">today.dow2  <span class="co">#  day of the week labelled but abbreviated </span></a></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">today.dow2 =<span class="st"> </span><span class="kw">wday</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb184-2" data-line-number="2">today.dow2  <span class="co">#  day of the week labelled but abbreviated </span></a></code></pre></div>
 <pre><code>## [1] Sun
 ## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">today.dow3 =<span class="st"> </span><span class="kw">wday</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb181-2" data-line-number="2">today.dow3  <span class="co"># day of the week fully labelled  </span></a></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1">today.dow3 =<span class="st"> </span><span class="kw">wday</span>(today, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb186-2" data-line-number="2">today.dow3  <span class="co"># day of the week fully labelled  </span></a></code></pre></div>
 <pre><code>## [1] Sunday
 ## 7 Levels: Sunday &lt; Monday &lt; Tuesday &lt; Wednesday &lt; Thursday &lt; ... &lt; Saturday</code></pre>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1">today.h =<span class="st"> </span><span class="kw">hour</span>(today)</a>
-<a class="sourceLine" id="cb183-2" data-line-number="2">today.h  <span class="co"># what hour is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1">today.h =<span class="st"> </span><span class="kw">hour</span>(today)</a>
+<a class="sourceLine" id="cb188-2" data-line-number="2">today.h  <span class="co"># what hour is it? </span></a></code></pre></div>
 <pre><code>## [1] 14</code></pre>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1">today.m =<span class="st"> </span><span class="kw">minute</span>(today)</a>
-<a class="sourceLine" id="cb185-2" data-line-number="2">today.m  <span class="co"># what minute is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">today.m =<span class="st"> </span><span class="kw">minute</span>(today)</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2">today.m  <span class="co"># what minute is it? </span></a></code></pre></div>
 <pre><code>## [1] 32</code></pre>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1">today.s =<span class="st"> </span><span class="kw">second</span>(today)</a>
-<a class="sourceLine" id="cb187-2" data-line-number="2">today.s  <span class="co"># what second is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">today.s =<span class="st"> </span><span class="kw">second</span>(today)</a>
+<a class="sourceLine" id="cb192-2" data-line-number="2">today.s  <span class="co"># what second is it? </span></a></code></pre></div>
 <pre><code>## [1] 41</code></pre>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1">today.tz =<span class="st"> </span><span class="kw">tz</span>(today)</a>
-<a class="sourceLine" id="cb189-2" data-line-number="2">today.tz  <span class="co"># what time zone is it? </span></a></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">today.tz =<span class="st"> </span><span class="kw">tz</span>(today)</a>
+<a class="sourceLine" id="cb194-2" data-line-number="2">today.tz  <span class="co"># what time zone is it? </span></a></code></pre></div>
 <pre><code>## [1] &quot;UTC&quot;</code></pre>
 <p>See <a href="https://people.ohio.edu/ruhil/Rbook/working-with-dates-and-times.html#exercises">the book chapter</a> for more advanced work with dates and times and some practice exercises.</p>
 </div>
