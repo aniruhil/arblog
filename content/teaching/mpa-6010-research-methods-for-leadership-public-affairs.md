@@ -14,7 +14,7 @@ tags = ["Teaching"]
 - The syllabus can be [found here](https://aniruhil.org/teaching/mpa1/syllabus.pdf)
 
 - The slides are here: 
-  - [bloc 1](https://aniruhil.org/teaching/mpa1/slides/mpa60101.pdf) 
+  - [bloc 1](https://aniruhil.org/teaching/mpa1/slides/module01.html) 
   - [bloc 2](https://aniruhil.org/teaching/mpa1/slides/mpa60102.pdf)   
   - [bloc 3](https://aniruhil.org/teaching/mpa1/slides/mpa60103.pdf)  
  
