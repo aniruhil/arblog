@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module 02</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 02
+## MPA 6010
+### Ani Ruhil
+### (updated: 2018-08-20)
+
+---
+
+
+&lt;script type="text/x-mathjax-config"&gt;
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+  MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+    cancel: ["Extension","cancel"],
+    bcancel: ["Extension","cancel"],
+    xcancel: ["Extension","cancel"],
+    cancelto: ["Extension","cancel"]
+  });
+});
+&lt;/script&gt;
+
+
+
+# Agenda 
+
+1. Basic probability theory 
+
+2. Probability distributions 
+
+3. The Bionomial distribution 
+
+4. The Poisson distribution
+
+5. The Normal and Standard Normal distributions 
+
+---
+
+class: inverse, center, middle
+
+# Probability 
+
+---
+
+`Probability` --  a numerical measure of the likelihood that an event will occur. It is, essentially, the proportion of times the event would occur if we repeated the `random trial under identical conditions an infinite number of times`.
+
+By definition, `\(0 \le P(Event) \le 1\)`
+
+* What is the probability that a song selected at random from your mp3 device will be your favorite song? 
+
+* What proportion of the products in a production lot will be defective?
+
+* What is the probability of drawing an Ace of `\(\spadesuit\)` from a single deck of cards?
+
+* What is the probability that an individual exposed to a health information campaign changes his/her behavior?
+
+* What is the probability that a randomly selected Gliding Snake undulates at 1.38 Hz? 
+
+* What is the probability a Freshman at Ohio University, chosen at random, has green eyes? What is the probability that this individual is a male? 
+
+* A child tests positive for some disease; what is the probability that the child does indeed have the disease? 
+
+---
+
+## Experiments (Random Trials)
+
+An `experiment` is defined as a process that generates well-defined outcomes 
+
+Each experimental outcome is a `sample point` 
+
+The `sample space` for an experiment is the set of all experimental outcomes (i.e., all the sample points)
+
+Outcomes are assumed to be `mutually exhaustive` 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Some Experiments and their Outcomes&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Experiment &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Outcomes &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coin Toss &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Head, Tail) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Sales Call &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Sale, No Sale) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Roll a Die &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (1,2,3,4,5,6) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Product Test &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Defective, Not defective) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Health Campaign &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Behavior modified, Not modified) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Green Eyes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (Yes, No) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+Probability as the proportion of times the event would occur `if we repeated the random trial under identical conditions an infinite number of times`
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/coinflips-1.png" alt="Simulated Coin Flips" width="45%" /&gt;
+&lt;p class="caption"&gt;Simulated Coin Flips&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+## Counting Rules
+
+### Multiple-step Experiments
+Consider tossing two coins and note that each time you do so you would get one of the following outcomes: `$$S=\{H,H\},\{H,T\},\{T,H\},\{T,T\}$$`
+
+Generally, in a multi-step experiment with `\(k\)` sequential steps with `\(n_{1}\)` outcomes in Step 1, `\(n_{2}\)` outcomes in Step 2, `\(n_{3}\)` outcomes in Step 3, ... and `\(n_{k}\)` outcomes in Step `\(k\)`, the total number of experimental outcomes is given by
+
+`$$(n_{1})(n_{2})(n_{3})\cdots(n_{k})$$`
+
+For e.g., tossing two coins yields `\((n_{1})(n_{2})=(2)(2)=4\)` outcomes 
+
+Likewise, tossing six coins yields `\((n_{1})(n_{2})(n_{3})(n_{4})(n_{5})(n_{6})=(2)(2)(2)(2)(2)(2)=64\)` outcomes
+
+---
+
+Another counting rule allows us to calculate the number of experimental outcomes when the experiment involves `drawing` **n** `objects from a finite set of` **N** `objects` 
+
+
+`$$C^{N}_{n} = \left(^{N}_{n}\right) = \dfrac{N!}{n!(N-n)!}$$`
+
+
+
+where `$$N! = N(N-1)(N-2)\cdots(2)(1) \text{, and}$$`
+
+`$$n! = n(n-1)(n-2)\cdots(2)(1)$$` 
+
+Note that `\(!\)` stands for `factorial`, as in ... 
+
+* `\(0! = 1\)`
+
+* `\(3! = 3 \times 2 \times 1 = 6\)`
+
+* `\(5! = 5 \times 4 \times 3 \times 2 \times 1 = 120\)`
+
+---
+
+## Example of Counting Rules in Action
+
+(a) Assume a quality control inspector at Apple's iPhone facility in Taiwan selects 2 iPhone 6 units for inspection out of a batch of 5 phones. In how many combinations can these 2 be selected? 
+
+Applying the counting rule, `$$C^{5}_{2} = \left(^{5}_{2}\right) = \dfrac{5!}{2!(5-2)!}$$`
+
+`$$= \dfrac{(5)(4)(3)(2)(1)}{(2)(1)(3)(2)(1)} = \dfrac{(5)(4)\cancel{(3)}\cancel{(2)}\cancel{(1)}}{(2)(1)\cancel{(3)}\cancel{(2)}\cancel{(1)}} = \dfrac{(5)(4)}{(2)(1)} = (5)(2) = 10$$`
+
+Seen another way, let the iPhones be labeled A, B, C, D, and E. Then the selections can be ... AB, AC, AD, AE, BC, BD, BE, CD, CE, DE ... This is the Sample Space 
+
+---
+
+(b) The Ohio lottery randomly draws 6 integers from a group of 47 to draw the winner. How many winning combinations are possible?
+
+`$$C^{47}_{6} = \left(^{47}_{6}\right) = \dfrac{47!}{6!(47-6)!}$$`
+
+`$$= \dfrac{(47)(46)(45)(44)(43)(42)\cancel{(41)}\cancel{(40)}\cancel{(\ldots)}\cancel{(1)}}{(6)(5)(4)(3)(2)(1)\cancel{(41)}\cancel{(40)}\cancel{(\ldots)}\cancel{(1)}} = 10,737,573$$`
+
+If only one winner is possible and you can only buy one ticket each, what is the probability you have the winning ticket? 
+
+`$$\dfrac{1}{10737573} = 9.313092e-08 = 0.00000009313092$$`
+
+---
+
+A third counting rule is the counting rule for `permutations` that allows us to calculate the number of experimental outcomes when `\(n\)` objects are to be selected from a total of `\(N\)` objects in a particular order: 
+
+`$$P_{n}^{N} = n!\left(^{N}_{n}\right) = \dfrac{N!}{(N-n)!}$$`
+
+Let us assume 2 iPhone 6 units are to be drawn from 5 for quality control tests. 
+
+In how many ways can we do this `if the order matters?`
+
+`$$P^{5}_{2} = \dfrac{5!}{(5-2)!} = \dfrac{5!}{3!} = \dfrac{(5)(4)(3)(2)(1)}{(3)(2)(1)} = \dfrac{(5)(4)\cancel{(3)}\cancel{(2)}\cancel{(1)}}{\cancel{(3)}\cancel{(2)}\cancel{(1)}} = 20$$`
+
+The 20 permutations are `\(\ldots\)` AB, BA, AC, CA, AD, DA, AE, EA, BC, CB, BD, DB, BE, EB, CD, DC, CE, EC, DE, and ED ... This is the Sample Space
+
+---
+
+## Assigning Probabilities
+
+### (a) The Classical Method
+
+Thus far we've seen how to use counting rules to establish the Sample Space. Now let us think about the probabilities associated with each outcome. We can assign probabilities to outcomes so long as we use `two rules` 
+
+(1) For an event `\(E_{i}\)`, `\(0\leq P(E_{i})\leq 1\)`
+
+(2) Given `\(n\)` outcomes, `\(P(E_{1})+P(E_{2})+P(E_{3})+\cdots + P(E_{n}) = 1\)`
+
+For e.g., in tossing a fair coin, `\(P(H) = 0.5; P(T) = 0.5; \therefore P(H)+P(T)=1\)` 
+
+Likewise, in tossing a fair dice, `\(P(1) = \dfrac{1}{6}; P(2) = \dfrac{1}{6}; \cdots P(6) = \dfrac{1}{6}\)`.  Therefore, `\(P(1)+P(2)+\cdots+P(6)=1\)` 
+
+This method of assigning probabilities is known as the `classical method` ... i.e., all outcomes are equally likely
+
+---
+
+### (b) The Relative Frequency Method
+
+Assume a clerk in the Obleness Hospital's X-ray unit tracks how many patients are on the waiting list at 9:00AM on 20 successive days. These data are given below ...
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;The Relative Frequency Method&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; No. Waiting &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; No. of Days &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Proportion &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2/20 = 0.10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5/20 = 0.25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6/20 = 0.30 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4/20 = 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3/20 = 0.15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20/20 = 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+It seems, based on his observations, that on any given day he should expect 2 patients on the waiting list since this outcome has the highest relative frequency of `\(0.30\)`.
+
+---
+
+#### Another example ... 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Bridge-building and Relative Frequencies&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Design &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Construction &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Time/Phase &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total Time &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Frequency &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; P(Time) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (2,6) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6/40 = 0.15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (2,7) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6/40 = 0.15 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (2,8) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2/20 = 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (3,6) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4/40 = 0.10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (3,7) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8/40 = 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (3,8) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2/40 = 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (4,6) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2/40 = 0.05 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (4,7) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4/40 = 0.10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; (4,8) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6/40 = 0.15 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Note that most projects seem to have taken three months for design and seven months for construction; hence the company feels this is the most likely outcome for its own project.
+
+---
+
+### (c) The Subjective method 
+
+In most situations where hard data are lacking, we rely on theories or then on our `subjective beliefs` to assign probabilities to likely outcomes. Assume, for example, that a couple makes an offer on a house but each holds different probabilities of bid acceptance and rejection 
+
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Subjective Probabilities&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Person &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P(Acceptance) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; P(Rejection) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Sum &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Pat &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chris &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+### Example 1
+
+Of 2,374 venture capital awards disbursed nationwide in 2016, 1,434 went to CA, 390 to MA, 217 to NY, and 112 to CO. Some 22% went to companies in early stages and 55% to expanding companies. 
+
+What is P(Company from CA)? ... `\(P(California)=\dfrac{1434}{2374}=0.60\)` 
+
+What is P(Company from other state)? ... Number that went to other than these 4 states `\(=2374 - \{1434++390+217+112)=221\)`. So, P(Other states) `\(=\dfrac{221}{2374} = 0.09\)`. 
+
+What is P(Company not in early stage)? ... P(Not in early stage) `\(=1-0.22 = 0.78\)` 
+
+P(How many MA companies were in early stages, assuming early stage companies were evenly distributed across states)? ... Approximate number of MA companies in early stages `\(=(0.22)(390) \approx 86\)` 
+
+If the total amount was $32.4 million, how much went to CO? ... Assume fund amounts were distributed in proportion to the relative distribution of awards. Then, 
+
+`\(=\dfrac{112}{2374}(32.4 \text{ billion}) = 1.53 \text{ billion}\)`
+
+---
+
+### Example 2: Powerball 
+
+Powerball played twice per week in 23 states, VI, and DC. Player must buy $1 ticket and pick five numbers from `\(1 \ldots 53\)` and one Powerball number from `\(1 \ldots 42\)`.
+
+Lottery officials draw (i) 5 White balls out of drum with 53 White balls, and (ii) 1 Red ball from drum with 42 Red balls. The winner must match 5 numbers on White balls (any order) and the number on the Red Powerball. In Augusts 2001,  4 winners shared $295 million by matching `\(8, 17, 22, 42, 47\)` plus Powerball number `\(21\)`. Minor prizes of $100,000 given if 5 White ball numbers matched. In how many ways can five numbers be selected? 
+
+`$$C^{53}_{5}=\dfrac{53!}{5!(53-5)!}=\dfrac{53!}{5!(48)!} = \dfrac{(53)(52)(51)(50)(49)}{(5)(4)(3)(2)(1)}=2,869,685$$`
+
+What is P(winning $100,000)? `\(=\dfrac{1}{2,869,685}\)` 
+
+Odds of picking the Red Powerball? `\(C^{42}_{1}=\dfrac{42!}{1!(42-1)!}=\dfrac{42!}{41!} = 42; \therefore \mbox  {Odds of picking Red ball} = \dfrac{1}{42}\)`
+
+Odds of winning Powerball jackpot? `\(P(A) \mbox{and} P(B) = P(A) \times P(B) = \left(\dfrac{1}{2869685}\right)\times\left(\dfrac{1}{42}\right)=\dfrac{1}{120,526,770}\)`
+
+---
+
+### Example 3: Rolling Two Dice 
+
+Two dice are rolled and we are interested in the `sum of face values showing on the 2` dice. Possible outcomes are (1,1), (1,2), (1,3), (1,4), (1,5), (1,6) ... (6,1), (6,2), (6,3), (6,4), (6,5), (6,6). In other words, `\(C^{6}_{1} \times C^{6}_{1} =(6)(6)=36\)` outcomes 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Sum of Two Dice&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+* What is P(value of 7)? `\(P(7)=\dfrac{\{(1,6), (6,1), (2,5), (5,2), (3,4), (4,3)\}}{36} = \dfrac{6}{36}=\dfrac{1}{6}\)` 
+* What is P(value `\(\geq 9\)`)? `\(P(\geq 9)=\dfrac{10}{36}=\dfrac{5}{18}\)` 
+* Will the sum of the two dice show even values more often than odd values? No because P(Odd) = P(Even) = `\(\dfrac{18}{36} = \dfrac{1}{2}\)` 
+
+---
+
+### Example 4: Fortune 500 Companies 
+
+The table below shows the registration of Fortune 500 companies in some states.
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Headquarters of Fortune 500 Companies&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; State Headquartered &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; No. of Fortune 500 Cos. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Proportion &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; New York &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.112 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; California &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.106 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Texas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.086 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Illinois &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.074 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.056 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Pennsylvania &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.056 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+If I pick a company at random, 
+
+* What is P(NY)? `\(P(NY)=\dfrac{56}{500}=0.112\)` 
+* What is P(TX)? `\(P(TX)=\dfrac{43}{500}=0.086\)` 
+* What is P(in any of these six states)? `\(=\dfrac{(56+53+43+37+28+28)}{500}=\dfrac{245}{500}=0.49\)`
+
+---
+
+## The Complement of an Event 
+
+Given an event A, its `complement` is defined as the event consisting of all sample points that do not belong to (i.e., are not in) event A, and is denoted as `\(A^c\)`.
+
+`$$P(A) + P(A^c) = 1 \\
+\therefore P(A) = 1 - P(A^c) \\
+\therefore P(A^c) = 1 - P(A)$$`
+
+Toss a coin once: `\(P(H) = 0.5; P(H^c) = 1- P(H) = 1-0.5 = 0.5\)` 
+
+Roll two dice: `\(P(\text{value } \geq 9) = \dfrac{5}{18}\)` 
+
+`\(P(\text{value } &lt; 9) = 1 -  P(\text{value } \geq 9) = 1 - \dfrac{5}{18} = \dfrac{13}{18}\)`
+
+---
+
+## Mutually Exclusive Events 
+Two events are `mutually exclusive` if both cannot occur simultaneously. That is, if event A occurs then event B cannot occur, and vice-versa. Say I toss a coin once. It can only come up Heads or Tails. Let, for example,
+
+`$$P(A) = Heads; P(B) = Tails \\
+	P(A \text{ and } B) = 0 \\
+	\ldots \text{ because there is no overlap  ... A and B are mutually exclusive}$$`
+
+Similarly, say I roll a dice once. Let, for example, 
+
+`$$P(A) = \{1, 3, 5\}; P(B) = \{2, 4, 6\} \\
+	P(A \text{ and } B) = 0 \\
+	\ldots \text{ because there is no overlap  ... A and B are mutually exclusive}$$`
+
+What if I again roll a dice once and this time
+
+`$$P(A) = \{2, 4, 6\}; P(B) = \{1, 4\} \\
+	P(A \text{ and } B) \neq 0 \\
+	\ldots \text{ because there is an overlap ... A and B are not mutually exclusive}$$`
+
+---
+
+## Addition Rule for Non-Mutually Exclusive Events 
+
+For `non-mutually exclusive events` we calculate the probability that event A or B occurs as `\(P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)\)`
+
+Assume on a typical day in a plant, of 50 workers 5 complete the work late, 6 assemble a defective product, and 2 both complete the work late and produce a defective product
+
+Let L = Late completion. Then, `\(P(L)=\dfrac{5}{50} =0.10\)` 
+
+Let D = Defective product. Then, `\(P(D)=\dfrac{6}{50} =0.12\)` 
+
+`\(P(L \text{ and } D) = \dfrac{2}{50}=0.04\)` 
+
+What is the probability that a randomly selected worker either is late or produces a defective product? `$$P(L \text{ or } D)=P(L)+P(D)-P(L \text{ and } D) = 0.10 + 0.12 - 0.04 = 0.18$$`
+
+---
+
+## Independent Events and the Multiplication Rule 
+
+If two events A and B are independent, then the probability that both A and B occur is given by `$$P(A \text{ and } B) = P(A) \times P(B)$$`
+
+For example, assume we are told that for a randomly chosen adult, 
+
+`$$P(\text{smoking})=0.17 \text{ and } P(\text{high blood pressure}) = 0.22$$` 
+
+If smoking and high blood pressure are independent, what is `\(P(\text{smoking and high blood pressure})\)`? 
+
+This would be `\(P(A \text{ and } B) = P(A) \times P(B) = 0.17 \times 0.22 = 0.037\)`. 
+
+
+`If you ran a survey and asked folks whether they smoke and if they have high blood pressure, and then found that the proportion of respondents who smoked and had high blood pressure was much higher, that would suggest that perhaps smoking and high blood pressure are not independent.` 
+
+---
+
+## Conditional Probability
+
+The conditional probability of an event is the probability of that event occurring given that a condition is met (i.e., some other event is known to have occurred). Conditional probabilities are denoted as `\(P(A | B)\)` (i.e., the probability of A `given that B has occurred`) and `\(P(A | B) = \dfrac{P(A \text{ and } B)}{P(B)}\)`. Similarly, we have `\(P(B | A) = \dfrac{P(A \text{ and } B)}{P(A)}\)`, (i.e., the probability of B `given that A has occurred`).  
+
+For example, let B be an event of getting a perfect square when a dice is rolled. Let A be the event that the number on the dice is an odd number. What is `\(P(B|A)\)`? The Sample Space is `\(S=\{1,2,3,4,5,6\}\)`; `\(A =\{1,3,5\}\)`; `\(B=\{1,4\}\)`. Then, `\(P(A \text{ and } B)=\dfrac{1}{6}; P(A)=\dfrac{1}{2}; P(B)=\dfrac{1}{3}\)` and hence `\(P(B|A)=\dfrac{P(A \text{ and } B)}{P(A)}=\dfrac{\dfrac{1}{6}}{\dfrac{1}{2}}=\dfrac{1}{6} \times \dfrac{2}{1}=\dfrac{2}{6}=\dfrac{1}{3}\)`
+
+For dependent events, the `multiplication rule` that determines the probability that `both A and B occur` becomes: 
+
+`$$\begin{array}{l}
+P(A \text{ and } B) = P(A) \times P(B | A), \text{ and} \\ 
+P(A \text{ and } B) = P(B) \times P(A | B)
+\end{array}$$`
+
+---
+
+### The Gender-bias Example 
+Say we have a city police department and there have been claims that men and women are not promoted at the same rate. Let us assume that when candidates are eligible for promotion they are equally qualified, regardless of sex. You are hired to investigate whether this claim of a gender bias has any merit to it. You ask for data on all officers currently serving in the city and for each officer whether they were promoted or not. The data are shown below. 
+
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;An Example of Conditional Probability&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Action &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Men &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Women &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Promoted &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 288 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 324 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Denied Promotion &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 672 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 204 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 876 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 960 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 240 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1200 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+If Men and Women had the same probability of being promoted each group should have `\(P(A)=\dfrac{324}{1200}= 0.27\)`. This means we should have  `\(P(A \text{ and } M) = P(A \text{ and } W) = 0.27\)`. 
+
+---
+
+We can now ask: What is the probability that an officer is promoted `given that the officer is a man`?  `\(P(A|M) = \dfrac{P(A \text{ and } M)}{P(M)} = \dfrac{288/1200}{960/1200} = \dfrac{288}{960} = 0.30\)`
+
+Similarly, we might ask: What is the probability of being denied a promotion `given that the officer is a woman`?  `\(P(A^{c}|W) = \dfrac{P(A^{c} \text{ and } W)}{P(W)} = \dfrac{204/1200}{240/1200} = \dfrac{204}{240} = 0.85\)` 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Probabilities for the preceding table&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Action &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Men &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Women &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Total &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Promoted &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.56 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.80 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Denied Promotion &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.03 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 0.73 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; P(.) = 1.00 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+What would you conclude and report back to the city? Unfortunately, that female officers do not seem to be promoted at the same rate as are male officers. Notice how the notion of `conditional probability` and `independent events` allowed you to tackle this question! 
+
+---
+
+## Dependent Events 
+Many events are not independent of one another; the `odds of event A change if event B has occurred (and vice versa)`. 
+
+Take the Nasonia's fascinating behavior, for example. The jewel wasp *Nasonia vitripennis* is a parasite laying its eggs on the pupae of flies. The larval Nasonia hatch inside the pupal case, feed on the live host, and grow until they emerge as adults from the now dead, emaciated host. Emerging males and females, possibly brother and sister, mate on the spot. 
+
+Nasonia females have a remarkable ability to manipulate the sex of the eggs that they lay; if they fertilize the egg with stored sperm the offspring will be a female. When a female finds a fresh host (i.e., not parasitized), she lays mainly female eggs and a few sons needed to fertilize all her daughters. If the female finds the host to be parasitized she produces a higher proportion of sons. Thus the state of the host (parasitized or not) and the sex of an egg are dependent events. 
+
+Let the probability a host already has eggs be = 0.20. If it is a fresh host, the female lays a male egg with a probability of 0.05 and a female egg with a probability of 0.95. If the host already has eggs the female lays a male egg with a probability of 0.90 and a female egg with a probability of 0.10.
+
+What is the probability that an egg, chosen at random, is male?
+
+---
+
+&lt;img src="nasonia.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+* What is `\(P(\text{egg is male})\)`? ... `\(0.18 + 0.04 = 0.22\)` 
+* What is `\(P(\text{egg is female})\)`? ... `\(0.02 + 0.76 = 0.78\)` 
+
+---
+
+`The Law of Total Probability` stipulates that the total probability of an event `\(A\)` is given by 
+
+`$$P(A) = \left[P(A|B) \times P(B)\right] + \left[ P(A|B^c) \times P(B^c)\right]$$`
+
+`The Multiplication Rule:` probability of both of two events occurring is  `\(P(A \text{ and } B) = P(A) \times P(B | A)\)`. 
+
+If the two events are independent then we know that `\(P(A \text{ and } B) = P(A) \times P(B)\)` 
+
+* What is `\(P(\text{egg is male})\)`? We don't know if the host is parasitized so ... 
+
+`\(P(\text{egg is male}) = P(\text{host parasitized}) \times P(\text{egg is male } | \text{ host parasitized}) + \\ P(\text{host not parasitized}) \times P(\text{egg is male } | \text{ host is not parasitized})\)` 
+
+`\(\therefore P(\text{egg is male}) = (0.20 \times 0.90) + (0.80 \times 0.05) = 0.22\)` 
+
+* What is `\(P(\text{egg is female})\)`? We don't know if the host is parasitized so ... 
+
+`\(P(\text{egg is female}) = P(\text{host parasitized}) \times P(\text{egg is female } | \text{ host parasitized}) + \\ P(\text{host not parasitized}) \times P(\text{egg is female } | \text{ host is not parasitized})\)` 
+
+`\(\therefore P(\text{egg is female}) = (0.20 \times 0.10) + (0.80 \times 0.95) = 0.78\)` 
+
+---
+
+## Bayes' Theorem
+
+Say I present you with the following information: 
+
+&gt; 1% of women at age forty who participate in routine screening have breast cancer.  80% of women with breast cancer will get positive mammographies.  9.6% of women without breast cancer will also get positive mammographies.  A 40-year old woman had a positive mammography in a routine screening.  
+
+&gt;`What is the probability that she actually has breast cancer?` 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Breast Cancer and Bayes Theorem&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Test result &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Has cancer &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Does not have cancer &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tests Positive &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.800 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.096 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Tests Negative &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; ? &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+Start by assuming a certain population size of 40-year old women who are tested, i.e., `\(N = 100,000\)`. We know that 1% of these will have breast cancer, which amounts to `\(1,000\)` women
+
+Some 80% of these women will have breast cancer, i.e, `\(0.80 \times 1000 = 800\)`, which means `\(200\)` women who `have breast cancer will test negative` 
+
+We are also told that 9.6% of women without breast cancer will also get a positive test result. This amounts to `\(0.096 \times 99000 = 9,504\)`. This means that `\(86,696\)` women will have a `negative test and have no breast cancer` 
+
+Entering these values into the table we can calculate the probability that a woman with a positive test result actually has breast cancer to be `\(\dfrac{800}{10304} = 0.0776\)` or 7.76% 
+
+What about the probability that the woman has a negative test result and yet has breast cancer? This would be `\(\dfrac{200}{89696} = 0.0022\)` or 0.22% 
+
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Breast Cancer and Bayes Theorem (Part 3)&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Test Result &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Will have cancer &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Will not have cancer &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Probability &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Positive &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 200 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 800/10304 = 0.0776 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Negative &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9504 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89496 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 200/89696 = 0.0022 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 89696 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+Once could arrive at the same conclusion via applying Bayes' Theorem, as shown below. 
+
+`$$P(B | A) = \dfrac{P(A | B) \times P(B)}{\left[ P(A | B) \times P(B) \right] + \left[ P(A | B^c) \times P(B^c)  \right]} \\
+ = \dfrac{0.800 \times 0.01}{\left[ 0.800 \times 0.01 \right] + \left[0.096 \times 0.990 \right]} = \dfrac{0.008}{\left[0.008 + 0.09504 \right]} = \dfrac{0.008}{0.10304} = 0.0776$$`
+
+`\(P(B|A) = \dfrac{P(A|B) \times P(B)}{P(A)}\)` 
+
+* What is `\(P(A|B)\)` ... the probability that a woman has Breast Cancer and gets a positive mammography? `\(= 0.80\)`? 
+* What is `\(P(B)\)`? ... this is 0.01 
+* What is `\(P(A)\)`? ... This is the probability of getting a positive mammography, which can happen as follows: 
+
+(1) when she has Breast Cancer ... `\((0.80 \times 0.01)\)`, or  
+(2) when she doesn't have Breast Cancer ... `\((0.096 \times 0.99)\)` 
+
+`$$P(A) = (0.80 \times 0.01) + (0.096 \times 0.99) = 0.10304 \\
+P(B|A) = \dfrac{P(A|B) \times P(B)}{P(A)} \\ 
+= \dfrac{0.80 \times 0.01}{0.10304} = \dfrac{0.008}{0.10304} = 0.07763975$$`
+
+---
+
+## Another Example
+Suppose a patient exhibits symptoms that make her physician concerned that she may have a particular disease. The disease is relatively rare in this population, with a prevalence of 0.2% (meaning it affects 2 out of every 1,000 persons). The physician recommends a screening test that costs $250 and requires a blood sample. Before agreeing to the screening test, the patient wants to know what will be learned from the test, specifically she wants to know the probability of disease, given a positive test result, i.e., P(Disease | Screen Positive). The physician reports that the screening test is widely used and has a reported sensitivity of 85%. In addition, the test comes back positive 8% of the time and negative 92% of the time. [Source](http://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/bs704_probability_print.html)
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Testing Positive and Bayes Theorem&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Test Result &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Sick &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Healthy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Total &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Probability &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Positive &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7830 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 170/8000 = 0.02125 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Negative &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 91970 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 92000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 30/92000 = 0.000326087 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Total &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 200 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 99800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 100000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+What is `\(P(Sick | +Test)\)`? 
+
+We know that `\(P(Sick | +Test) = \dfrac{P(+{Test} | S) \times P(Sick)}{P(+{Test})}\)` 
+
+We know that `\(P(+{Test} | Sick) = 0.85\)`, that `\(P(Sick) = 0.002\)`, and that `\(P(+{Test}) = 0.08\)` 
+
+Therefore, `\(P(Sick | +Test) = \dfrac{0.85 \times 0.002}{0.08} = 0.021\)` ... There is a 2.1% chance the patient is actually sick if the test comes back positive. 
+
+What if the test comes back as a false positive ... i.e., What is the chance the patient is actually healthy but the test is positive? This requires calculating
+
+`$$P(+Test | \text{ Not Sick }) = \dfrac{P(\text{Healthy } | +{Test}) \times P(+Test)}{P(Healthy)} = \dfrac{1 - 0.021 \times (0.08)}{1 - 0.002} = 0.078$$` or 7.8%; a healthy patient can still test positive for the disease 7.8% of the time. 
+
+---
+
+## Key Things to Remember 
+
+(a) The Addition Rule  
+  + Non-Mutually Exclusive Events: `\(P(\text{A or B}) = P(A) + P(B) - P(\text{A and B})\)`
+  + Mutually Exclusive Events: `\(P(\text{A or B}) = P(A) + P(B)\)`
+
+(b) Multiplication Rule 
+
+  + Independent Events: `\(P(\text{A and B}) = P(A) \times P(B)\)`
+  + Dependent Events: `\(P(\text{A and B}) = P(A) \times P(B | A)\)` and `\(P(\text{B and A}) = P(B) \times P(A | B)\)` 
+
+(c) A and B are mutually exclusive if `\(P(\text{A and B}) = 0\)`
+
+(d) A and B are independent if `\(P(A|B) = P(A)\)`; `\(P(B|A) = P(B)\)`
+
+(e) Total Probability: `\(P(B) = P(A)\times P(B|A) + P(A^c)\times P(B|A^c)\)`
+
+(f) Bayes' Rule: `\(P(A|B) = \dfrac{P(A)\times P(B|A)}{P(B)}\)`; and `\(P(B|A) = \dfrac{P(B)\times P(A|B)}{P(A)}\)`
+
+---
+
+class:  inverse, middle, center
+
+# Probability Distributions 
+
+---
+
+##  Understanding `random variables` 
+
+A random variable is a numerical description of the outcome of an experiment. 
+
+* a discrete random variable assumes discrete values 
+* a continuous random variable} may assume any value in an interval or collection of intervals 
+
+
+| **Discrete Random Variable (x)**  | **Possible values** | 
+| -:-                             | -:-             |
+|    No. of defective iPhones |   `\(0,1,2,3,\cdots,49\)` | 
+|    Sex of car buyer      |   0 (Male); 1 (Female) |
+|    No. of Mountain Lions seen   |  `\(0,1,2,3,\cdots,419\)` | 
+|   Gene Length (number of nucleotides) | `\(60 \leq x \leq 100000\)`	|
+|    **Continuous Random Variable (x)**   |   **Possible Values** |
+|    Spending per week |   `\(0 \leq x \leq +\infty\)` |
+|    Travel times to CMH (minutes)   |   `\(55.3 \leq x \leq 118.5\)` |
+|    Undulation rates of Gliding Snakes |   `\(0 \leq x \leq 1.9\)` |
+|    Petal Length of the virginica Iris (in cm) | `\(1 \leq x \leq 6.7\)`  | 
+
+---
+
+## Probability Distributions
+
+A probability distribution is a list of the probabilities of all mutually exclusive events (aka outcomes) of a random trial.
+
+* A probability distribution of a discrete random variable `\((Y)\)` describes how probabilities are distributed over the values of the random variable, and is denoted by `\(f(Y)\)`. Discrete probability functions must meet two conditions ...
+
+(1) `\(f(Y) \geq 0 \cdots\)` every outcome must have a probability of occurring  
+(2) `\(\sum f(Y) = 1 \cdots\)` the sum of the probabilities of all outcomes must be `\(=1\)` 
+
+
+| Mountain Lion Sightings `\((Y)\)`    |   Days    |   `\(f(Y)\)` |
+| :-------  | :----   |  :------      | 
+|    0      |   54    |   `\(f(0)=0.18\)` |
+|    1      |   117   |   `\(f(1)=0.39\)` |
+|    2      |   72    |   `\(f(2)=0.24\)` |
+|    3      |   42    |   `\(f(3)=0.14\)` |
+|    4      |   12    |   `\(f(4)=0.04\)` |
+|    5      |   3     |   `\(f(5)=0.01\)` |
+|    Total  |   300   |   `\(\sum f(Y)=1.00\)` |
+
+---
+
+.pull-left[
+&lt;img src="module02_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="module02_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Rolling two dice 
+
+&lt;img src="module02_files/figure-html/dice-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+.pull-left[
+&lt;img src="module02_files/figure-html/sumdice-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+&lt;table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Sum of Two Dice&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt;  &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+## The Binomial Distribution 
+
+1. The number of trials ($n$) is fixed  
+2. Each trial is independent of all other trials  
+3. Only two mutually exclusive and mutually exhaustive outcomes likely to occur in any given trial, with one outcome defined as `success` and the other defined as `failure`  
+4. The probability of observing a success ($p$) does not vary across trials. Because there are only two outcomes, this means the probability of observing a failure  ($q$) also does not vary across trials. Further, `\(p = 1 - q\)` and `\(q = 1 - p\)`  
+
+Mathematically, the probability of observing `\(x\)` successes in `\(n\)` trials of a binomial process is given by 
+
+`$$P\left[x \text{ successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
+\text{where } \binom{n}{x} = \dfrac{n!}{x!(n-x)!} \text{ and } n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1$$`
+
+---
+
+I toss a coin 2 times, what is the probability of getting exactly 1 head? 
+
+success `\(= x\)`; `\(x=1\)`, and `\(n=2\)` independent trials 
+
+How many outcomes are likely in our 2 independent trials? We know this to be `\((2)^{2} = 4\)` and these are `\(\left[HH, HT, TH, TT \right]\)`
+
+In how many ways can we get 1 head out of 2 tosses? ... `\(\left[HT, TH \right]\)` and hence probability of getting exactly 1 head in 2 tosses is `\(\dfrac{2}{4} = 0.5\)` 
+
+`$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
+	\therefore P\left[1 \text{ Success}\right] = \binom{2}{1}(0.50)^{1}\left(1 - 0.50\right)^{2-1} = \binom{2}{1}(0.50)^{1}\left(0.50\right)^{1} \\
+	\binom{2}{1} = \dfrac{2\times 1}{\left(1\right) \left(1 \right)} = 2 \\
+	\therefore, P\left[1 \text{ Success}\right] = (2) \times (0.5) \times (0.5) = 0.50$$`
+
+---
+
+If I toss a coin 3 times, what is the probability of getting exactly 1 head? How many outcomes are likely in 3 independent trials? 
+
+We know this to be `\((2)^{3} = 8\)` ... these are `\(\left[HHH, HHT, HTH, HTT, TTT, TTH, THT, THH \right]\)`
+
+In how many ways can we get 1 Head out of 3 tosses? ... `\(\left[HTT, THT, TTH \right]\)` and hence probability of getting exactly 1 Head in 3 tosses is `\(\dfrac{3}{8} = 0.375\)` 
+
+`$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
+	\therefore P\left[1 \text{ Success}\right] = \binom{3}{1}(0.50)^{1}\left(1 - 0.50\right)^{3-1} = \binom{3}{1}(0.50)^{1}\left(0.50\right)^{2} \\
+	\binom{3}{1} = \dfrac{3 \times 2\times 1}{\left(1\right) \left(2 \times 1 \right)} = 3 \\
+	\therefore, P\left[1 \text{ Success}\right] = (3) \times (0.5) \times (0.25) = 0.375$$`
+
+---
+
+What would the distribution of heads look like if I flipped a coin 10 times? 
+
+0 heads? 
+`$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
+	\therefore P\left[0 \text{ Success}\right] = \binom{10}{0}(0.50)^{0}\left(1 - 0.50\right)^{10-0} = \binom{10}{0}(0.50)^{0}\left(0.50\right)^{10} \\
+	\binom{10}{0} = \dfrac{10 \times 9 \times 8 \times \ldots\times 2\times 1}{\left(0\right) \left(10 \times 9 \times 8 \times \ldots \times 2 \times 1 \right)} = 1 \\
+	\therefore, P\left[0 \text{ Successes}\right] = (1) \times (0.5) \times (0.0009765625) = 0.0009765625$$`
+
+
+1 head? 
+
+`$$P\left[1 \text{ Success}\right] = \binom{10}{1}(0.50)^{1}\left(1 - 0.50\right)^{10-1} = \binom{10}{1}(0.50)^{1}\left(0.50\right)^{9} \\
+	\binom{10}{1} = \dfrac{10 \times 9 \times 8 \times \ldots\times 2\times 1}{\left(1\right) \left(9 \times 8 \times \ldots \times 2 \times 1 \right)} = 10 \\
+	\therefore, P\left[1 \text{ Success}\right] = (10) \times (0.5) \times (0.001953125) = 0.009765625$$`
+
+---
+
+
+
+
+.pull-left[
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Number of Heads in 10 Coin Flips&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; No. of Heads (x) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Relative Frequency (f(x)) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0098 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0439 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1172 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2051 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2461 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2051 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1172 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0439 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0098 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+
+&lt;img src="module02_files/figure-html/flips-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+If you flip a coin 10 times, how many heads should you expect to see, on average? 
+
+We speak of probabilistic outcomes in terms of `expected value` where the expected value of a random variable is a measure of the `central tendency` of the random variable, and is given by `\(E(x) = \mu = \Sigma xf(x)\)` 
+
+For our 10 flips, the expected value would be ...
+
+
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Number of Heads in 10 Coin Flips&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; No. of Heads (x) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Relative Frequency (f(x)) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Expected Value (x * fx()) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0098 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0097656 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0439 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0878906 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1172 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3515625 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2051 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8203125 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2461 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.2304688 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2051 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.2304687 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1172 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8203125 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0439 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3515625 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0098 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0878906 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0097656 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Gender bias? 
+
+Your city council has been charged with sex discrimination in hiring. In the last fiscal year your city council hired only 3 women out of a candidate pool numbering 12 qualified applicants. On average, some 40% of women tend to make up the qualified applicant pool for these positions. If the city council was not discriminating based on the applicant's sex, what is the `probability of the city hiring three or fewer women?` 
+We have `\(n=12\)`, `\(x=3\)`, and `\(p=0.40\)` 
+
+`$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
+	\therefore P\left[0 \text{ Successes}\right] = \binom{12}{0}(0.40)^{0}\left(1 - 0.40\right)^{12-0} = \binom{12}{0}(0.40)^{0}\left(0.60\right)^{12} \\
+	\binom{12}{0} = \dfrac{12 \times 10 \times 9 \times \ldots\times 2\times 1}{\left(0\right) \left(12 \times 10 \times 9 \times \ldots \times 2 \times 1 \right)} = 1 \\
+	\therefore P\left[0 \text{ Successes}\right] = (1) \times (1) \times (0.002176782) = 0.002176782$$`
+
+Similarly, calculating probability of 1, 2 and 3 successes yields 0.01741426, 0.06385228 and 0.141894, respectively
+
+`\(\therefore P(x \leq 3) = 0.002176782 + 0.01741426 + 0.06385228 + 0.141894 = 0.2253373\)`
+
+---
+
+Online [binomial calculator](http://stattrek.com/m/online-calculator/binomial.aspx) 
+
+Visually comprehend the problem by seeing the distribution of hiring assuming no discrimination 
+
+.pull-left[
+&lt;img src="module02_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Hired? (x) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p(x &amp;lt;=) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; p(x &amp;gt;=) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.002177 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.997823 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.019591 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.980409 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.083443 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.916557 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.225337 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.774663 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.438178 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.561822 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.665209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.334791 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.841788 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.158212 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.942690 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.057310 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.984733 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.015267 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.997190 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.002810 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.999681 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000319 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.999983 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000017 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.000000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+## The Poisson Distribution 
+
+&lt;img src="module02_files/figure-html/unnamed-chunk-8-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+The number of shark incidents per country per year -- is a discrete variable that can never drop below 0 but can assume any value `\(x = 0, 1, 2, 3, 4, 5, \ldots, n\)`
+
+Variables such as this are `count variables` and belong to a specific distribution: The `Poisson distribution`. Mathematically, the Poisson probability distribution is expressed as: 
+ 
+`$$f(x) = \dfrac{e^{-x}\lambda^{x}}{x!}$$`
+
+where `\(x = 0, 1, 2, 3, \ldots\)`, `\(\lambda &gt; 0\)` is the mean and variance of the distribution, and `\(e=2.71828\)`. 
+
+---
+
+On average 10 complaints are filed per month with the City Clerk. If you pick a month at random, what would be the probability of seeing no complaint?; 1 complaint?; 2 complaints; `\(\ldots\)` 20 complaints? These turn out to be: 
+
+.pull-left[
+&lt;table class="table table-striped" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Probability of Complaints&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; No. of Complaints &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Probability &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00673795 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03368973 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.08422434 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.14037390 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17546737 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.17546737 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.14622281 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.10444486 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.06527804 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.03626558 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01813279 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00824218 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00343424 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00132086 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00047174 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00015725 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+.pull-right[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/complaints-1.png" alt="Probability Distribution of Complaints" width="100%" /&gt;
+&lt;p class="caption"&gt;Probability Distribution of Complaints&lt;/p&gt;
+&lt;/div&gt;
+]
+
+---
+
+Mean number of crime reports filed per hour during Halloween by the Athens City Police Department is 0.833. 
+
+(a) What is the probability that in a 24 hour period the ACPD will see 10 or fewer crime reports filed? 
+
+`$$f(x) = \dfrac{e^{-x}\lambda^{x}}{x!} = \dfrac{e^{-10}0.833^{10}}{10!}$$`
+
+Use the [online calculator for the poisson distribution](http://stattrek.com/m/online-calculator/poisson.aspx) 
+
+`\(\lambda=19.992\)` since the mean for a 24-hour period would be `\(= 0.833 \times 24 = 19.992\)`, and are given `\(x = 10\)` 
+
+Calculator yields `\(P(x \leq 10) = 0.0108583424514613 \approx 0.0108 =\)` 1.08% chance of seeing 10 or fewer reports filed within a 24-hour period
+
+Note other probabilities: 
+
+* `\(P(x = 10) = 0.0058396136640344\)`
+* `\(P(x &lt; 10) = 0.0050187287874269\)`
+* `\(P(x &gt; 10) = 0.989141657548539\)`
+* `\(P(x \geq 10) = 0.9949812712125\)` 
+
+(b) Probability of 20 or more crime reports being filed in the 24 hour period? ... `\(P(x \geq 20) = 0.529031908826421\)`
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/pois2-1.png" alt="Some Poisson Distributions" width="60%" /&gt;
+&lt;p class="caption"&gt;Some Poisson Distributions&lt;/p&gt;
+&lt;/div&gt;
+---
+
+When `\(n \rightarrow \infty\)` and `\(p \rightarrow 0\)`, the Poisson distribution approximates the Binomial distribution.
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/pois3-1.png" alt="Some Poisson Distributions tending to the Binomial" width="60%" /&gt;
+&lt;p class="caption"&gt;Some Poisson Distributions tending to the Binomial&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+As `\(\lambda \rightarrow \infty\)`, the Poisson distribution approximates the Normal distribution 
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/pois4-1.png" alt="Some Poisson Distributions tending to the Normal" width="60%" /&gt;
+&lt;p class="caption"&gt;Some Poisson Distributions tending to the Normal&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+## Continuous Probability Distributions 
+
+A `continuous random variables` takes on an uncountably infinite number of values 
+
+Unlike in the case of discrete random variables, where we could calculate `\(P(X = x)\)`, now we calculate the probability of a value of `\(x\)` falling in an interval, i.e., `\(P(a \leq x \leq b)\)` 
+
+Why? because  `\(P(X = x) = \dfrac{x}{\infty} = 0\)`
+
+A widely used continuous probability distribution is `the Normal distribution` 
+
+a continuous random variable `\(X\)` follows a normal distribution if its probability density function is defined as: 
+
+`$$f(X) =\dfrac{1}{\sigma{\sqrt{2\pi}}}e^{-(X-\mu)^{2}/2\sigma^{2}}$$` 
+
+where `\(\mu\)` is the mean of `\(X\)`, `\(\sigma\)` is the standard deviation of `\(X\)`, `\(\pi=3.14159\)`, and `\(e=2.71828\)` 
+
+---
+
+Two parameters describe a Normal distribution -- the mean and the standard deviation
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/norm1-1.png" alt="Three Normal Distributions: Different Means, Equal Standard Deviations" width="60%" /&gt;
+&lt;p class="caption"&gt;Three Normal Distributions: Different Means, Equal Standard Deviations&lt;/p&gt;
+&lt;/div&gt;
+
+
+---
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/norm2-1.png" alt="Three Normal Distributions: Different Means, Different Standard Deviations" width="60%" /&gt;
+&lt;p class="caption"&gt;Three Normal Distributions: Different Means, Different Standard Deviations&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+## The Standard Normal Distribution 
+
+Given this multitude of Normal distributions it would be impossible to know which Normal distribution our sample came from and hence we rely on the `Standard Normal Distribution`, also known as the `z-score Distribution` where 
+
+`$$z = \dfrac{x - \mu}{\sigma}$$`
+
+* z-scores guaranteed to have `\(\mu = 0\)` and `\(\sigma = 1\)` 
+* `\(+z\)` thus means that score lies `above the mean` 
+* `\(-z\)` thus means that score lies `below the mean` 
+* Usefulness? see below ...
+
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Comparing Snowfall in Disparate Locations&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Place &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std.Dev. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; December.2016 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Caribou (ME) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 110 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 125 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Boston (MA) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+One of the additional strengths of the Standard Normal Distribution is the fact that we can safely assume: 
+
+* about 68% of the data values fall within `\(\pm\)` 1 standard deviation
+* about 95% of the data values fall within `\(\pm\)` 2 standard deviation
+* about 99% of the data values fall within `\(\pm\)` 3 standard deviation
+* z-scores greater/smaller than `\(\pm{3}\)` are indicative of `outliers` 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/1sd-1.png" alt="Area of the Standard Normal Distribution within 1 Standard Deviation" width="60%" /&gt;
+&lt;p class="caption"&gt;Area of the Standard Normal Distribution within 1 Standard Deviation&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/2sd-1.png" alt="Area of the Standard Normal Distribution within 2 Standard Deviations" width="60%" /&gt;
+&lt;p class="caption"&gt;Area of the Standard Normal Distribution within 2 Standard Deviations&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/3sd-1.png" alt="Area of the Standard Normal Distribution within 3 Standard Deviations" width="60%" /&gt;
+&lt;p class="caption"&gt;Area of the Standard Normal Distribution within 3 Standard Deviations&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+The [standard normal table](http://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/standardnormaltable.pdf) shows you the `area below a specific z-score` 
+
+For example, area below `\(z = -3.40\)` is 0.0003369, denoted as `\(P(z \leq -3.40) = 0.0003369\)`  
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/area1-1.png" alt="Areas Under the Standard Normal Curve" width="60%" /&gt;
+&lt;p class="caption"&gt;Areas Under the Standard Normal Curve&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+`\(P(-0.52 \leq z \leq +1.26)=\)`? 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module02_files/figure-html/area2-1.png" alt="Areas Under the Standard Normal Curve" width="60%" /&gt;
+&lt;p class="caption"&gt;Areas Under the Standard Normal Curve&lt;/p&gt;
+&lt;/div&gt;
+
+Online tables/calculators are available: [David M. Lane](http://davidmlane.com/hyperstat/z_table.html) or then [surfstat](https://surfstat.anu.edu.au/surfstat-home/tables/normal.php)
+
+---
+
+Assume that for all traditional public schools in your state, the mean dropout rate in 2017 was `\(\mu = 5\)`, and the standard deviation was `\(\sigma = 1.25\)`. Given these parameters, if a school had a dropout rate of 7%, what percent of schools in the state did as badly or worse? The answer could be obtained as follows: 
+
+`$$\left.\begin{aligned}
+z = \dfrac{x - \mu}{\sigma} \\
+z = \dfrac{7 - 5}{1.25} = 1.6 \\ 
+\text{What is } P(z \geq 1.6)? \\
+P(z \geq 1.6) = 0.05480
+\end{aligned}\right.$$`
+
+and thus some 5.48% of schools in the state had dropout rates of 7% or worse (i.e., higher dropout rates). 
+
+What if the school had a dropout rate of 9%? 
+
+`$$\left.\begin{aligned}
+z = \dfrac{x - \mu}{\sigma} \\
+z = \dfrac{9 - 5}{1.25} = 3.2 \\ 
+\text{What is } P(z \geq 3.2)? \\
+P(z \geq 3.2) = 0.00069
+\end{aligned}\right.$$`
+
+i.e., 0.069% of schools in the states had dropout rates of 9% or worse 
+
+---
+
+What dropout rates demarcate the top 10 and the bottom 10 percent of schools, respectively?
+
+`$$\left.\begin{aligned} 
+z = \dfrac{x - \mu}{\sigma} \\ 
+x = \left(z \times \sigma \right) + \mu \\ 
+x = \mu + \left(z \times \sigma \right) \\  
+x_{top} = 5 + \left(1.28 \times 1.25 \right) = 5 + 1.6 = 6.6 \\  
+x_{bottom} = 5 + \left(-1.28 \times 1.25 \right) = 5 - 1.6 = 3.4 
+\end{aligned}\right.$$`
+
+i.e., dropout rates of 6.6% and 3.4% separate the top 10% and bottom 10% of schools from all schools in the state 
+
+---
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

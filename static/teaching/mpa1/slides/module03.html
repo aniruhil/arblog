@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module 03</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 03
+## MPA 6010
+### Ani Ruhil
+### (updated: 2018-08-20)
+
+---
+
+
+  &lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+      cancel: ["Extension","cancel"],
+      bcancel: ["Extension","cancel"],
+      xcancel: ["Extension","cancel"],
+      cancelto: ["Extension","cancel"]
+    });
+  });
+&lt;/script&gt;
+
+
+
+# Agenda 
+
+1. Sampling distributions 
+
+2. Interval estimation 
+
+3. Student's `t` distribution 
+
+---
+
+class: inverse, middle, center
+
+# Sampling 
+
+---
+
+`Sampling` is all about the science of drawing samples 
+
+Many ways to do it but at its most basic, we could say it is about upholding two principles: 
+
+(1) Each and every observation in the population has the same chance of being drawn into the sample  
+(2) Each observation is drawn into the sample independently of all other observations  
+
+Samples that meet criteria (1) and (2) are `simple random samples` 
+
+Draw a distinction between `finite populations` (where we know the population size) and `infinite populations` (where we do not the population size) 
+
+* Finite Population: Draw a sample of size `\(n\)` from the population such that each possible sample of size `\(n\)` has an identical probability of selection 
+    * We may sample with replacement (recommended), or 
+    * sample without replacement (the more common -- but not necessarily better -- approach) 
+    
+* Infinite Population: We sample such that 
+    * Each element is selected independently of all other elements 
+    * Each element has the same probability of being selected 
+
+---
+
+.pull-left[
+A population of four numbers -- 2, 4, 6, and 8. 
+
+All possible unique samples with `\(n = 2\)`? 
+
+What sample means shows up most often? 
+
+So the next time I draw a sample of `\(n = 2\)` from this population, what sample mean should I `expect` to see? 
+
+Formally, the Sampling Distribution of `\(\bar{x}\)` is the probability distribution of all possible values of the sample mean `\(\bar{x}\)` 
+
+`Expected Value` of `\(\bar{x}\)` is `\(E(\bar{x})=\mu\)` and 
+
+Standard Deviation of `\(\bar{x}\)` is ... 
+
+`Standard Error` of `\(\bar{x}\)`, calculated as `\(\sigma_{\bar{x}}=\dfrac{\sigma}{\sqrt{n}}\)` 
+]
+
+.pull-right[
+&lt;table class="table table-striped" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;An Example of Sampling Distributions&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Sample No. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; x1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; x2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Mean &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+---
+
+## The Human Genome 
+
+Let us see the length of the [human genome](http://phylo.bio.ku.edu/biostats/geneLenDemo.html) 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module03_files/figure-html/genes1-1.png" alt="Population Distribution of Human Gene Lengths" width="45%" /&gt;
+&lt;p class="caption"&gt;Population Distribution of Human Gene Lengths&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+## `The Standard Error` 
+
+A gauge of how much error should we expect to make because we  are using a sample instead of population 
+
+`$$\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$$` 
+
+Meaning? ... the average distance of a sample mean from the population mean for all samples of a given sample size drawn from a common population with standard deviation of `\(\sigma\)` 
+
+Two things drive it ...
+
+(i) how much variability there is in the population, i.e., the population standard deviation `\((\sigma)\)`, and  
+(ii) how large a sample we draw, i.e., `\((n)\)`  
+
+Cannot influence `\(\sigma\)` but `\(n\)` is under our control. All else being equal, 
+
+(i) the larger the `\(n\)` the smaller will `\(\sigma_{\bar{x}}\)` be, and  
+(ii) the larger the `\(\sigma\)` the larger will `\(\sigma_{\bar{x}}\)` be  
+
+
+---
+
+## `The Central Limit Theorem` 
+
+&gt; For any population with mean `\(\mu\)` and standard deviation `\(\sigma\)`, the distribution of sample means for samples of size `\(n\)` will approach the normal distribution with a mean of `\(\mu\)` and standard error of `\(\sigma_{\bar{x}}=\dfrac{\sigma}{\sqrt{n}}\)` as `\(n \rightarrow \infty\)`
+
+Since you never see the population, it turns out that if we have `\(n \geq 30\)` we can rely on this theorem to carry out some basic statistical tests with the `z-score` distribution 
+
+---
+
+Tuition costs at state universities is `\(\sim \mu=4260; \sigma=900\)`. Sample of `\(n=50\)` is drawn at random.
+
+(1) What is sampling distribution of mean tuition costs?  `\(\mu = 4260; \sigma_{\bar{x}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{900}{\sqrt{50}}= 127.28\)`
+
+(2) What is `\(P(\bar{x})\)` within 250 of `\(\mu\)`? 
+
+Sampling distribution is `\(\mu = 4260; \sigma_{\bar{x}} = 127.28\)` 
+
+Within `\(250\)` implies `\(P(4010 \leq \mu \leq 4510)\)`  
+`$$z_{4510}=\dfrac{4510-4260}{127.28}=1.96$$`  
+`$$z_{4010} = \dfrac{4010-4260}{127.28} = - 1.96$$`  
+`$$P(4010 \leq \mu \leq 4510) = 0.95$$`  
+
+(3) What is `\(P(\bar{x})\)` within `\(100\)` of `\(\mu\)`? ... `\(P(4160 \leq \mu \leq 4360) = 0.5704\)`
+
+---
+
+## `What about proportions?` 
+
+The theory of sampling distributions applies to proportions as well  
+
+Sample proportion is `\(\bar{p}=\dfrac{x}{n}\)` and on average `\(E(\bar{p}) = p\)`.
+
+The standard error (aka the standard deviation of `\(\bar{p}\)`) is  `\(\sigma_{\bar{p}}={\sqrt{\dfrac{p(1-p)}{n}}}\)`
+
+We can assume sampling distribution of `\(\bar{p}\)` is approximately normally distributed if `\(np \geq 5\)` AND `\(n(1-p) \geq 5\)` (both conditions must be met)&lt;sup&gt;1&lt;/sup&gt; 
+
+**Note:** When population proportion `\(p\)` is unknown, standard error is calculated as `\(s_{\bar{p}}={\sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}}\)` 
+
+.footnote[[1] Technically, for a finite population, `\(\sigma_{\bar{p}}={\sqrt{\dfrac{N-n}{N-1}}}{\sqrt{\dfrac{p(1-p)}{n}}}\)` and for an infinite population `\(\sigma_{\bar{p}}={\sqrt{\dfrac{p(1-p)}{n}}}\)`
+]
+
+---
+
+The Governor's office reports 56% of US households have internet access. If `\(p=0.56\)` and `\(n=300\)`, what is:
+
+(1) The sampling distribution of `\(\bar{p}\)`? 
+
+Given `\(n=300; p=0.56\)`, `\(\sigma_{\bar{p}}={\sqrt{\dfrac{0.56(1-0.56)}{300}}}=0.0287\)`
+
+(2) What is `\(Probability (\bar{p})\)` within `\(\pm 0.03\)`? 
+
+We are looking for the interval `\((0.53,0.59)\)` and so we calculate: 
+
+`$$z_{0.59}=\dfrac{0.59-0.56}{0.0287}=1.035$$` 
+`$$z_{0.53}=\dfrac{0.53-0.56}{0.0287}=-1.035$$` 
+
+and hence `\(P(0.53 \leq \bar{p} \leq 0.59)=0.7062\)` 
+
+(3) Calculate (1) and (2) for `\(n=600\)` and `\(n=1000\)`, respectively 
+
+---
+
+class: inverse, middle, center
+
+# Point Estimates  
+
+---
+
+Statistics calculated for a population are `population parameters` (for e.g., `\(\mu\)`; `\(\sigma^{2}\)`; `\(\sigma\)`) 
+
+Statistics calculated for a sample are `sample statistics` (for e.g., `\({\bar{x}}\)`; `\(s^{2}\)`; `\(s\)`) 
+
+Desirable point estimators have the following properties:
+
+(1) The sampling distribution of the point estimator is `unbiased` -- it is centered around the population parameter  
+(2) The point estimator is `efficient` -- it has the smallest possible variance  
+(3) The point estimator is `consistent` -- it tends towards the population parameter as the sample size increases  
+
+The easiest way to understand bias and efficiency is via the following graphic [authored by Sebastian Raschka](https://sebastianraschka.com): 
+
+&lt;img src="bias.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##  Interval Estimates 
+
+While point estimators may be ideal, they are not foolproof 
+
+`Interval Estimates` allow us to place more confidence in our estimates via the `margin of error` 
+
+Formally, the interval estimate of `\(\mu\)` is 
+
+`$$\mu =  \bar{x} \pm \text{ Margin of error}$$` 
+
+and the interval estimate of `\(p\)` is 
+
+`$$p = \bar{p} \pm \text{ Margin of error}$$` 
+
+where the margin of error is 
+
+`$$\left(z \times \sigma \right)$$` 
+
+---
+
+## Confidence Intervals 
+
+`$$\mu =  \bar{x} \pm \text{ Margin of error}$$` 
+
+When you calculate the interval estimate for a specific `\(z\)`, you get two values ... 
+
+`$$\bar{x} - (z \times \sigma)$$` 
+
+`$$\bar{x} + (z \times \sigma)$$` 
+
+These are the lower and upper confidence interval limits, respectively 
+
+If `\(z = 1.645\)` you get the 90% confidence intervals 
+
+If `\(z = 1.960\)` you get the 95% confidence intervals 
+
+If `\(z = 2.576\)` you get the 99% confidence intervals 
+
+---
+
+Let `\(\bar{x}=32; \sigma=6\)`. Let also `\(n=50\)`. 
+
+(1) What is the standard error? 
+
+`$$\sigma_{\bar{x}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{6}{\sqrt{50}}=0.8485$$`  
+
+(2) Find `\(90\%\)`CI 
+
+`$$= 32 \pm 1.645(0.8485)=32 \pm 1.3957=(30.6043; 33.3957)$$` 
+
+(3) Find `\(95\%\)`CI 
+
+`$$= 32 \pm 1.960(0.8485)=32 \pm 1.6630=(30.3370; 33.6630)$$` 
+
+(4) Find `\(99\%\)`CI 
+
+`$$= 32 \pm 2.576(0.8485)=32 \pm 2.1857=(29.8143; 34.1857)$$`
+
+The more confident you want to be, the wider the interval will be 
+
+---
+
+Let household mean television viewing time be `\(\sim \bar{x}=8.5; \sigma=3.5\)` and `\(n=300\)` 
+
+Therefore  `\(\sigma_{\bar{x}}=\dfrac{\sigma}{\sqrt{n}}=\dfrac{3.5}{\sqrt{300}}=0.2020\)` 
+
+(1) Find the `\(95\)`% CI 
+
+`$$= 8.5 \pm 1.960(0.2020)=8.5 \pm 0.3959 = (8.1041; 8.8959)$$` 
+
+
+(2) What is the `\(99\)`% CI? 
+
+`$$= 8.5 \pm 2.576(0.2020) = 8.5 \pm 0.520352 = (7.979648; 9.020352)$$`
+
+---
+
+## Confidence Intervals for Proportions
+
+Since we don't know the population proportion `\(p\)` we calculate the standard error  `\(s_{\bar{p}}\)` as 
+
+`$$s_{\bar{p}} = {\sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}}$$` 
+
+Several formulas but most common are 
+
+(1) Agresti-Coull confidence interval -- first calculate `\(p^{'} = \dfrac{x + 2}{n + 4}\)` and then calculate 
+
+`$$p^{'} - z_{\alpha/2}\sqrt{ \dfrac{p^{'} \left(1-p^{'} \right) } {n+4} } \leq p \leq p^{'} + z _{\alpha/2}\sqrt{ \dfrac{p^{'} \left(1-p^{'} \right) } {n+4} }$$`
+
+(2) Wald confidence intervals are calculated with the usual standard error and as:
+
+`$$\bar{p} - z_{\alpha/2}\sqrt{ \dfrac{\bar{p} \left(1-\bar{p} \right) } {n} } \leq p \leq \bar{p} + z_{\alpha/2}\sqrt{ \dfrac{\bar{p} \left(1-\bar{p} \right) } {n} }$$`
+
+---
+
+Agresti-Coull and Wald too conservative (i.e., too wide) when 
+
+(i) `\(n\)` is small or  
+(ii) `\(p\)` is close to `\(0\)` or `\(1\)`  
+
+In these situations Wilson's Interval is preferred 
+
+`$$\dfrac{n}{n + z^2_{\alpha/2}}\left[ \left(\bar{p} + \dfrac{z^2_{\alpha/2}}{2n} \right) \pm z_{\alpha/2} \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n} + \dfrac{z^2_{\alpha/2}}{4n^2}} \right ]$$`
+
+which converts to 
+
+`$$\dfrac{n}{n + z^2_{\alpha/2}}\left[ \left(\bar{p} + \dfrac{z^2_{\alpha/2}}{2n} \right) - z_{\alpha/2} \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n} + \dfrac{z^2_{\alpha/2}}{4n^2}} \right ] \leq p \leq \dfrac{n}{n + z^2_{\alpha/2}}\left[ \left(\bar{p} + \dfrac{z^2_{\alpha/2}}{2n} \right) + z_{\alpha/2} \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n} + \dfrac{z^2_{\alpha/2}}{4n^2}} \right ]$$`
+
+---
+
+#### `An interesting issue` 
+
+.pull-left[
+&lt;table class="table table-striped" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;The Binomial Proportion Revisited&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Proportion &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 1 - Proportion &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; (Proportion) * (1 - Proportion) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0900 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1275 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1600 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1875 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.70 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2275 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2475 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2500 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.55 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.45 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2475 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2275 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.70 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1875 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1600 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.1275 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0900 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0475 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+.pull-right[
+Note happens when `\(\bar{p}=0\)` and `\(\bar{p}=1\)`: Your numerator in the formula `\(s_{\bar{p}} = \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}\)` is driven to `\(0\)` and hence so is the standard error 
+
+Where the numerator `\(\bar{p}(1 - \bar{p})\)` is the widest is when `\(\bar{p}=0.50\)`; as `\(\bar{p}\)` moves away towards `\(0\)` or `\(1\)`, `\(\bar{p}(1 - \bar{p})\)` steadily decreases 
+
+At the extremes, the Wilson will do well but not so the Wald or Agresti-Coull 
+
+Use Wilson when `\(p\)` is close to `\(0\)` or `\(1\)` 
+]
+
+---
+
+In a survey of a small town in Vermont, voters were asked if they would support closing the local schools and sending the local kids to schools in the neighboring town to more efficiently utilize local tax dollars. A random sample of 153 voters yields 43.1% favoring school closures. What is the 95% confidence interval for the population proportion? Use the Wald approach. 
+
+We have `\(\bar{p}=0.431\)` and `\(n = 153\)`, yielding a standard error of 
+
+`$$s_{\bar{p}} = \sqrt{\dfrac{0.431(1-0.431)}{153}} = 0.04003585$$` 
+
+Given `\(z = \pm 1.96\)` the confidence interval is: 
+
+`$$0.431 \pm 1.96(0.04003585) = 0.3525297 \text{ and } 0.5094703$$` 
+
+Loosely interpreted as: We are about 95% confident that the population proportion of the town's voters that support school closures lies in the interval given by 0.3525 and 0.5094 
+
+If  you need to, you can [use this online calculator for exact confidence intervals](http://statpages.info/confint.html)
+
+---
+
+class: inverse, middle, center 
+
+# Student's `t-distribution` 
+
+&lt;img src="gosset-plaque.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+Extension of the large sample theory of sampling distributions to small samples 
+
+Assume `\(X \sim N(13,2)\)`. If `\(x = 12, n=16\)`, what is `\(z_{x=12}\)`? 
+
+It turns out that `\(z_{x=12}=2\)`. 
+
+Now, if we don't know `\(\mu\)` and `\(\sigma\)` and draw three samples of `\(n=16\)` each but `\(s\)` differs in each sample? What is `\(z\)` in each? 
+
+&lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;The t distribution: An Example&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Sample No. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std. Dev. &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Std. Error &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; z-score &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Notice what happens here: Each sample yields a different value of `\(z\)` for the same `\(x=12\)` simply because each sample is generating differing `\(\bar{x}\)` and `\(s\)`. If you use `\(t\)` instead of `\(z\)` you gain some precision 
+
+`$$t = \dfrac{x - \bar{x}}{s_{\bar{x}}}$$` where `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)` and `\(t\)` is distributed with `\(n-1\)` degrees of freedom 
+
+---
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module03_files/figure-html/unnamed-chunk-3-1.png" alt="Student's t versus the Standard Normal z Distribution" width="55%" /&gt;
+&lt;p class="caption"&gt;Student's t versus the Standard Normal z Distribution&lt;/p&gt;
+&lt;/div&gt;
+
+* Use `\(t\)` distribution whenever `\(\sigma\)` is unknown and hence `\(s\)` must be used, `regardless of the sample size`  
+* Use the `\(t\)` distribution whenever `\(n &lt; 30\)` even if `\(\sigma\)` is known 
+
+---
+
+Find the following `\(t\)` score(s): 
+
+(1) `\(t\)` leaves `\(0.025\)` in the Upper Tail with `\(df=12\)` 
+
+Answer: `\(t=2.179\)`  
+
+(2) `\(t\)` leaves `\(0.05\)` in the Lower Tail with `\(df=50\)` 
+
+Answer: `\(t=1.676\)`  
+
+(3) `\(t\)` leaves `\(0.01\)` in the Upper Tail with `\(df=30\)` 
+
+Answer: `\(t=2.457\)`  
+
+(4) `\(90\%\)` of the area falls between these `\(t\)` values with `\(df = 25\)` 
+
+Answer: `\(t= \pm 1.708\)`  
+
+(5) `\(95\%\)` of the area falls between these `\(t\)` values with `\(df = 45\)` 
+
+Answer: `\(t= \pm 2.104\)`  
+
+---
+
+Simple random sample with `\(n=54\)` yielded `\(\bar{x} = 22.5\)` and `\(s=4.4\)`. 
+
+(1) Calculate the standard error. 
+
+`$$s_{\bar{x}}=\dfrac{s}{\sqrt{n}}=\dfrac{4.4}{\sqrt{54}}=\dfrac{4.4}{7.34}=0.59$$` 
+
+(2) What is the `\(90\%\)` confidence interval? 
+
+`$$\bar{x}\pm t(s_{\bar{x}})=22.5 \pm 1.674(0.59)=22.5 \pm 0.98=21.52; 23.48$$` 
+
+(3) What is the `\(95\%\)` confidence interval? 
+
+`$$\bar{x}\pm t(s_{\bar{x}})=22.5 \pm 2.006(0.59)=22.5 \pm 1.18=21.32; 23.68$$` 
+
+(4) What is the `\(99\%\)` confidence interval? 
+
+`$$\bar{x}\pm t(s_{\bar{x}})=22.5 \pm 2.672(0.59)=22.5 \pm 1.57=20.93; 24.07$$` 
+
+(5) What happens to the margin of error and the width of the interval as we increase how "confident" we want to be?  
+
+Answer: The margin of error increases and the confidence interval widens
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
