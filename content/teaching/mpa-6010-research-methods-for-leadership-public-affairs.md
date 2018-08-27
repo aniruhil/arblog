@@ -13,7 +13,7 @@ tags = ["Teaching"]
 
 The syllabus can be [found here](https://aniruhil.org/teaching/mpa1/syllabus.pdf)  
 
-The textbook can be [found here](https://people.ohio.edu/ruhil/statasbook/)
+The textbook can be [found here](https://people.ohio.edu/ruhil/statsbook/)
 
 | Slides | Data | SPSS Tutorials |
 | :---   | :--- | :----          |
