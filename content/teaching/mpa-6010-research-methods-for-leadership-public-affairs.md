@@ -13,8 +13,8 @@ tags = ["Teaching"]
 
 The syllabus can be [found here](https://aniruhil.org/teaching/mpa1/syllabus.pdf)
 
-| Slides | Data | 
-| :---   | :--- | 
+| Slides | Data |
+| :---   | :--- |
 | [Module 1](https://aniruhil.org/teaching/mpa1/slides/mpa60101.html) | [Agresti &  Finlay data](https://aniruhil.org/teaching/mpa1/Agresti_Finlay_Data.zip) [Agresti &  Finlay Variables](Agresti_Finlay_Data_Variables.pdf) |
 | [Module 2](https://aniruhil.org/teaching/mpa1/slides/mpa60102.html) |  |
 | [Module 3](https://aniruhil.org/teaching/mpa1/slides/mpa60103.html) |  |
