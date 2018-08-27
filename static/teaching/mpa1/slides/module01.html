@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 # Module 01
 ## MPA 6010
 ### Ani Ruhil
-### (updated: 2018-08-14)
+### (updated: 2018-08-27)
 
 ---
 
@@ -147,6 +147,25 @@ Six variables  ...
     - number of children in a household, 
     - number of visits to the Emergency Room in a year  
   
+---
+
+### Learning-check 
+
+Open up the `vehicles.csv.zip` data s ent to you via Slack 
+
+Identify whether the following variables are numeric or categorical, and their level of measurement. Read the documentation about the variables [available here](https://www.fueleconomy.gov/feg/ws/index.shtml)
+
+1. fuelType1 
+2. charge120 
+3. cylinders 
+4. drive 
+5. year 
+6. ghgScore 
+7. highway08 
+8. model 
+9. trany 
+10. youSaveSpend 
+
 ---
 
 ## Data Types 
@@ -286,6 +305,19 @@ background-size: contain
 
 ---
 
+### Learning-check
+
+Using the `vehicles.csv` data, construct (1) frequency tables and (ii) bar-charts for the following variables. 
+
+`Note:` Make sure you have set the variable type correctly in  SPSS and have labeled these variables as well. Also, make sure  the x-axis/y-axis are labeled, and the chart has a title. 
+
+1. trany 
+2. cylinders 
+3. drive 
+4. fuelType1 
+
+---
+
 ## Grouped frequency tables 
 
 * special frequency tables used with numerical variables 
@@ -348,6 +380,19 @@ background-size: contain
 ## Symmetric versus skewed distributions 
 
 &lt;img src="module01_files/figure-html/unnamed-chunk-12-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Learning-check 
+
+Construct a grouped frequency table for the following variables: 
+
+1. city08 
+2. highway08
+
+Now construct histograms for both variables  
+
+`Question:` Does either variable exhibit a skewed distribution? Which one? In what direction? 
 
 ---
 
@@ -877,11 +922,36 @@ background-size: contain
 
 ---
 
+### Learning-check 
+
+Create a cross-tabulation and stacked bar-chart of drive by fuleType1 
+
+What drive seems most popular for diesel cars? What percent is this? 
+
+What drive is most common for electric cars? What percent is this? 
+
+What percent of the cars in the dataset are electric cars? 
+
+
+---
+
 ## Scatterplots 
 
 &lt;img src="module01_files/figure-html/unnamed-chunk-23-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 * useful for  exploring how two quantitative variables are related  
+
+---
+
+### Learning-check 
+
+Construct a scatterplot of highway08 versus city08 
+
+What patterns are evident here? 
+
+Do these patterns differ by drive? How so? 
+
+Do these patterns differ by fuelType1? How so? 
 
 ---
 
@@ -1409,6 +1479,20 @@ Mode of little practical use with quantitative variables
   * are `skewed` (because the mean will be distorted by extreme values) 
   * have `open-ended responses` (typical survey-based income groups, for example) 
   * have `undetermined values` at one end of the distribution (time on task, for example) 
+
+---
+
+### Learning-check
+
+Calculate the following statistics for city08, highway08, and youSaveSpend  
+
+1. Mean 
+2. Median 
+
+What measure -- Mean or Median --  would you choose for youSaveSpend and why? Be  sure to justify your decision. 
+
+What measure would be an ideal descriptor of `the average` if the variable in question were drive or cylinders? Why? 
+
 ---
 
 class: inverse, middle, center 
@@ -1706,6 +1790,24 @@ The `five-number summary` comprises the
 ---
 
 &lt;img src="module01_files/figure-html/unnamed-chunk-31-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Learning-check
+
+Calculate the following statistics for city08, highway08, and youSaveSpend  
+
+1. Variance  
+2. Standard Deviation 
+3. Five-number summary  
+4. Range 
+5. Interquartile Range 
+
+Now construct boxplots of youSaveSpend overall, and then for each drive. 
+
+* How does the overall distribution look: skewed or not  skewed?   
+* If skewed, in what direction? 
+* What about when you break the overall distribution down into separate box-plots for each drive?
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
