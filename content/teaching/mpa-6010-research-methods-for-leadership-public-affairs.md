@@ -17,7 +17,7 @@ The textbook can be [found here](https://people.ohio.edu/ruhil/statsbook/)
 
 | Slides | Data | SPSS Tutorials |
 | :---   | :--- | :----          |
-| [Module 1](https://aniruhil.org/teaching/mpa1/slides/module01.html) | [Agresti &  Finlay data](https://aniruhil.org/teaching/mpa1/Agresti_Finlay_Data.zip) and [Agresti &  Finlay Variables](Agresti_Finlay_Data_Variables.pdf) | [lab 1](https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_01.html) and [lab 2] (https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_02.html) |
+| [Module 1](https://aniruhil.org/teaching/mpa1/slides/module01.html) | [Agresti &  Finlay data](https://aniruhil.org/teaching/mpa1/data/Agresti_Finlay_Data.zip) and [Agresti &  Finlay Variables](https://aniruhil.org/teaching/mpa1/data/Agresti_Finlay_Data_Variables.pdf) | [lab 1](https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_01.html) and [lab 2] (https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_02.html) |
 | [Module 2](https://aniruhil.org/teaching/mpa1/slides/module02.html) |  | |
 | [Module 3](https://aniruhil.org/teaching/mpa1/slides/module03.html) |  | [lab 3](https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_03.html) and [lab 4](https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_04.html) |
 | [Module 4](https://aniruhil.org/teaching/mpa1/slides/module04.html) |  | [lab 5](https://aniruhil.org/teaching/mpa1/labs/SPSS_Tutorial_05.html) |
