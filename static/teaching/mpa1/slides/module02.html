@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Module 02
 ## MPA 6010
 ### Ani Ruhil
-### (updated: 2018-08-27)
+### (updated: 2018-09-23)
 
 ---
 
@@ -121,7 +121,7 @@ Outcomes are assumed to be `mutually exhaustive`
 
 ---
 
-Probability as the proportion of times the event would occur `if we repeated the random trial under identical conditions an infinite number of times`
+Probability is the proportion of times the event would occur `if we repeated the random trial under identical conditions an infinite number of times`
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="module02_files/figure-html/coinflips-1.png" alt="Simulated Coin Flips" width="45%" /&gt;
@@ -210,9 +210,9 @@ The 20 permutations are `\(\ldots\)` AB, BA, AC, CA, AD, DA, AE, EA, BC, CB, BD,
 
 Thus far we've seen how to use counting rules to establish the Sample Space. Now let us think about the probabilities associated with each outcome. We can assign probabilities to outcomes so long as we use `two rules` 
 
-(1) For an event `\(E_{i}\)`, `\(0\leq P(E_{i})\leq 1\)`
+(1) For an event `\(E_{i}\)`, the probability must lie in the `\([0,1]\)` range; `\(0\leq P(E_{i})\leq 1\)`
 
-(2) Given `\(n\)` outcomes, `\(P(E_{1})+P(E_{2})+P(E_{3})+\cdots + P(E_{n}) = 1\)`
+(2) Given `\(n\)` outcomes, the sum of the probabilities of these outcomes must be `\(1\)`; `\(P(E_{1})+P(E_{2})+P(E_{3})+\cdots + P(E_{n}) = 1\)`
 
 For e.g., in tossing a fair coin, `\(P(H) = 0.5; P(T) = 0.5; \therefore P(H)+P(T)=1\)` 
 
@@ -247,9 +247,9 @@ Assume a clerk in the Obleness Hospital's X-ray unit tracks how many patients ar
    &lt;td style="text-align:left;"&gt; 5/20 = 0.25 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 6/20 = 0.30 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white;background-color: #D7261E;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white;background-color: #D7261E;"&gt; 6/20 = 0.30 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
@@ -321,12 +321,12 @@ It seems, based on his observations, that on any given day he should expect 2 pa
    &lt;td style="text-align:left;"&gt; 4/40 = 0.10 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; (3,7) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; 8/40 = 0.20 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white;background-color: #D7261E;"&gt; (3,7) &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white;background-color: #D7261E;"&gt; 8/40 = 0.20 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
@@ -418,23 +418,7 @@ If the total amount was $32.4 million, how much went to CO? ... Assume fund amou
 
 ---
 
-### Example 2: Powerball 
-
-Powerball played twice per week in 23 states, VI, and DC. Player must buy $1 ticket and pick five numbers from `\(1 \ldots 53\)` and one Powerball number from `\(1 \ldots 42\)`.
-
-Lottery officials draw (i) 5 White balls out of drum with 53 White balls, and (ii) 1 Red ball from drum with 42 Red balls. The winner must match 5 numbers on White balls (any order) and the number on the Red Powerball. In Augusts 2001,  4 winners shared $295 million by matching `\(8, 17, 22, 42, 47\)` plus Powerball number `\(21\)`. Minor prizes of $100,000 given if 5 White ball numbers matched. In how many ways can five numbers be selected? 
-
-`$$C^{53}_{5}=\dfrac{53!}{5!(53-5)!}=\dfrac{53!}{5!(48)!} = \dfrac{(53)(52)(51)(50)(49)}{(5)(4)(3)(2)(1)}=2,869,685$$`
-
-What is P(winning $100,000)? `\(=\dfrac{1}{2,869,685}\)` 
-
-Odds of picking the Red Powerball? `\(C^{42}_{1}=\dfrac{42!}{1!(42-1)!}=\dfrac{42!}{41!} = 42; \therefore \mbox  {Odds of picking Red ball} = \dfrac{1}{42}\)`
-
-Odds of winning Powerball jackpot? `\(P(A) \mbox{and} P(B) = P(A) \times P(B) = \left(\dfrac{1}{2869685}\right)\times\left(\dfrac{1}{42}\right)=\dfrac{1}{120,526,770}\)`
-
----
-
-### Example 3: Rolling Two Dice 
+### Example 2: Rolling Two Dice 
 
 Two dice are rolled and we are interested in the `sum of face values showing on the 2` dice. Possible outcomes are (1,1), (1,2), (1,3), (1,4), (1,5), (1,6) ... (6,1), (6,2), (6,3), (6,4), (6,5), (6,6). In other words, `\(C^{6}_{1} \times C^{6}_{1} =(6)(6)=36\)` outcomes 
 
@@ -524,7 +508,7 @@ Two dice are rolled and we are interested in the `sum of face values showing on 
 
 ---
 
-### Example 4: Fortune 500 Companies 
+### Example 3: Fortune 500 Companies 
 
 The table below shows the registration of Fortune 500 companies in some states.
 
@@ -539,9 +523,9 @@ The table below shows the registration of Fortune 500 companies in some states.
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; New York &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 56 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.112 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: white;background-color: #D7261E;"&gt; New York &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 56 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.112 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; California &lt;/td&gt;
@@ -649,6 +633,22 @@ This would be `\(P(A \text{ and } B) = P(A) \times P(B) = 0.17 \times 0.22 = 0.0
 
 ---
 
+### Example: Powerball 
+
+Powerball played twice per week in 23 states, VI, and DC. Player must buy $1 ticket and pick five numbers from `\(1 \ldots 53\)` and one Powerball number from `\(1 \ldots 42\)`.
+
+Lottery officials draw (i) 5 White balls out of drum with 53 White balls, and (ii) 1 Red ball from drum with 42 Red balls. The winner must match 5 numbers on White balls (any order) and the number on the Red Powerball.&lt;sup&gt;1&lt;/sup&gt; Minor prizes of $100,000 given if 5 White ball numbers matched. In how many ways can five numbers be selected? 
+
+`$$C^{53}_{5}=\dfrac{53!}{5!(53-5)!}=\dfrac{53!}{5!(48)!} = \dfrac{(53)(52)(51)(50)(49)}{(5)(4)(3)(2)(1)}=2,869,685$$`
+
+What is P(winning $100,000)? `\(=\dfrac{1}{2,869,685}\)` 
+
+Odds of picking the Red Powerball? `\(C^{42}_{1}=\dfrac{42!}{1!(42-1)!}=\dfrac{42!}{41!} = 42; \therefore \mbox  {Odds of picking Red ball} = \dfrac{1}{42}\)`
+
+Odds of winning Powerball jackpot? `\(P(A) \mbox{ and } P(B) = P(A) \times P(B) = \left(\dfrac{1}{2869685}\right)\times\left(\dfrac{1}{42}\right)=\dfrac{1}{120,526,770}\)`
+
+.footnote[[1]  In Augusts 2001,  4 winners shared USD 295 million by matching `\(8, 17, 22, 42, 47\)` plus Powerball number `\(21\)`.]
+---
 ## Conditional Probability
 
 The conditional probability of an event is the probability of that event occurring given that a condition is met (i.e., some other event is known to have occurred). Conditional probabilities are denoted as `\(P(A | B)\)` (i.e., the probability of A `given that B has occurred`) and `\(P(A | B) = \dfrac{P(A \text{ and } B)}{P(B)}\)`. Similarly, we have `\(P(B | A) = \dfrac{P(A \text{ and } B)}{P(A)}\)`, (i.e., the probability of B `given that A has occurred`).  
@@ -700,13 +700,19 @@ Say we have a city police department and there have been claims that men and wom
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-If Men and Women had the same probability of being promoted each group should have `\(P(A)=\dfrac{324}{1200}= 0.27\)`. This means we should have  `\(P(A \text{ and } M) = P(A \text{ and } W) = 0.27\)`. 
+If Men and Women had the same probability of being promoted each group should have `\(P(A)=\dfrac{324}{1200}= 0.27\)` 
+
+This means we should have  `\(P(A \text{ and } M) = P(A \text{ and } W) = 0.27\)`. 
 
 ---
 
-We can now ask: What is the probability that an officer is promoted `given that the officer is a man`?  `\(P(A|M) = \dfrac{P(A \text{ and } M)}{P(M)} = \dfrac{288/1200}{960/1200} = \dfrac{288}{960} = 0.30\)`
+We can now ask: What is the probability that an officer is promoted `given that the officer is a man`? 
 
-Similarly, we might ask: What is the probability of being denied a promotion `given that the officer is a woman`?  `\(P(A^{c}|W) = \dfrac{P(A^{c} \text{ and } W)}{P(W)} = \dfrac{204/1200}{240/1200} = \dfrac{204}{240} = 0.85\)` 
+`$$P(A|M) = \dfrac{P(A \text{ and } M)}{P(M)} = \dfrac{288/1200}{960/1200} = \dfrac{288}{960} = 0.30$$`
+
+Similarly, we might ask: What is the probability of being denied a promotion `given that the officer is a woman`?  
+
+`$$P(A^{c}|W) = \dfrac{P(A^{c} \text{ and } W)}{P(W)} = \dfrac{204/1200}{240/1200} = \dfrac{204}{240} = 0.85$$` 
 
 &lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
 &lt;caption style="font-size: initial !important;"&gt;Probabilities for the preceding table&lt;/caption&gt;
@@ -740,7 +746,7 @@ Similarly, we might ask: What is the probability of being denied a promotion `gi
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-What would you conclude and report back to the city? Unfortunately, that female officers do not seem to be promoted at the same rate as are male officers. Notice how the notion of `conditional probability` and `independent events` allowed you to tackle this question! 
+What would you conclude and report back to the city? Unfortunately, that female officers do not seem to be promoted at the same rate as are male officers. Notice how the `conditional probability` and `independent events` allowed you to tackle this question! 
 
 ---
 
@@ -757,7 +763,7 @@ What is the probability that an egg, chosen at random, is male?
 
 ---
 
-&lt;img src="nasonia.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="nasonia.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 * What is `\(P(\text{egg is male})\)`? ... `\(0.18 + 0.04 = 0.22\)` 
 * What is `\(P(\text{egg is female})\)`? ... `\(0.02 + 0.76 = 0.78\)` 
@@ -774,13 +780,13 @@ If the two events are independent then we know that `\(P(A \text{ and } B) = P(A
 
 * What is `\(P(\text{egg is male})\)`? We don't know if the host is parasitized so ... 
 
-`\(P(\text{egg is male}) = P(\text{host parasitized}) \times P(\text{egg is male } | \text{ host parasitized}) + \\ P(\text{host not parasitized}) \times P(\text{egg is male } | \text{ host is not parasitized})\)` 
+`\(P(\text{egg is male}) = \\ P(\text{host parasitized}) \times P(\text{egg is male } | \text{ host parasitized}) + P(\text{host not parasitized}) \times P(\text{egg is male } | \text{ host is not parasitized})\)` 
 
 `\(\therefore P(\text{egg is male}) = (0.20 \times 0.90) + (0.80 \times 0.05) = 0.22\)` 
 
 * What is `\(P(\text{egg is female})\)`? We don't know if the host is parasitized so ... 
 
-`\(P(\text{egg is female}) = P(\text{host parasitized}) \times P(\text{egg is female } | \text{ host parasitized}) + \\ P(\text{host not parasitized}) \times P(\text{egg is female } | \text{ host is not parasitized})\)` 
+`\(P(\text{egg is female}) = \\ P(\text{host parasitized}) \times P(\text{egg is female } | \text{ host parasitized}) + P(\text{host not parasitized}) \times P(\text{egg is female } | \text{ host is not parasitized})\)` 
 
 `\(\therefore P(\text{egg is female}) = (0.20 \times 0.10) + (0.80 \times 0.95) = 0.78\)` 
 
@@ -819,15 +825,15 @@ Say I present you with the following information:
 
 ---
 
-Start by assuming a certain population size of 40-year old women who are tested, i.e., `\(N = 100,000\)`. We know that 1% of these will have breast cancer, which amounts to `\(1,000\)` women
+Start by assuming a certain population size of 40-year old women who are tested, say, `\(N = 100,000\)`. We know that 1% of these will have breast cancer, which amounts to `\(1,000\)` women
 
-Some 80% of these women will have breast cancer, i.e, `\(0.80 \times 1000 = 800\)`, which means `\(200\)` women who `have breast cancer will test negative` 
+Some 80% of women with breast cancer will get a positive test result, i.e, `\(0.80 \times 1000 = 800\)`, which implies that the other `\(200\)` women who `have breast cancer will test negative` 
 
-We are also told that 9.6% of women without breast cancer will also get a positive test result. This amounts to `\(0.096 \times 99000 = 9,504\)`. This means that `\(86,696\)` women will have a `negative test and have no breast cancer` 
+We are also told that 9.6% of women without breast cancer will still get a positive test result. This amounts to `\(0.096 \times 99000 = 9,504\)`. This means that `\(86,696\)` women will have a `negative test and have no breast cancer` 
 
-Entering these values into the table we can calculate the probability that a woman with a positive test result actually has breast cancer to be `\(\dfrac{800}{10304} = 0.0776\)` or 7.76% 
+Entering these values into the table we can calculate `the probability that a woman with a positive test result actually has breast cancer` to be `\(\dfrac{800}{10304} = 0.0776\)` or 7.76% 
 
-What about the probability that the woman has a negative test result and yet has breast cancer? This would be `\(\dfrac{200}{89696} = 0.0022\)` or 0.22% 
+What about `the probability that the woman has a negative test result and yet has breast cancer?` This would be `\(\dfrac{200}{89696} = 0.0022\)` or 0.22% 
 
 
 &lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
@@ -994,11 +1000,13 @@ A probability distribution is a list of the probabilities of all mutually exclus
 
 * A probability distribution of a discrete random variable `\((Y)\)` describes how probabilities are distributed over the values of the random variable, and is denoted by `\(f(Y)\)`. Discrete probability functions must meet two conditions ...
 
-(1) `\(f(Y) \geq 0 \cdots\)` every outcome must have a probability of occurring  
+.pull-left[
+(1) `\(f(Y) \geq 0 \cdots\)` every outcome must have some probability of occurring  
+
 (2) `\(\sum f(Y) = 1 \cdots\)` the sum of the probabilities of all outcomes must be `\(=1\)` 
-
-
-| Mountain Lion Sightings `\((Y)\)`    |   Days    |   `\(f(Y)\)` |
+]
+.pull-right[
+| Red Fox Sightings `\((Y)\)`    |   Days    |   `\(f(Y)\)` |
 | :-------  | :----   |  :------      | 
 |    0      |   54    |   `\(f(0)=0.18\)` |
 |    1      |   117   |   `\(f(1)=0.39\)` |
@@ -1007,6 +1015,7 @@ A probability distribution is a list of the probabilities of all mutually exclus
 |    4      |   12    |   `\(f(4)=0.04\)` |
 |    5      |   3     |   `\(f(5)=0.01\)` |
 |    Total  |   300   |   `\(\sum f(Y)=1.00\)` |
+]
 
 ---
 
@@ -1116,12 +1125,12 @@ A probability distribution is a list of the probabilities of all mutually exclus
 
 ## The Binomial Distribution 
 
-1. The number of trials ($n$) is fixed  
+1. The number of trials `\((n)\)` is fixed  
 2. Each trial is independent of all other trials  
 3. Only two mutually exclusive and mutually exhaustive outcomes likely to occur in any given trial, with one outcome defined as `success` and the other defined as `failure`  
-4. The probability of observing a success ($p$) does not vary across trials. Because there are only two outcomes, this means the probability of observing a failure  ($q$) also does not vary across trials. Further, `\(p = 1 - q\)` and `\(q = 1 - p\)`  
+4. The probability of observing a success `\((p)\)` does not vary across trials. Because there are only two outcomes, this means the probability of observing a failure  `\((q)\)` also does not vary across trials. Further, `\(p = 1 - q\)` and `\(q = 1 - p\)`  
 
-Mathematically, the probability of observing `\(x\)` successes in `\(n\)` trials of a binomial process is given by 
+Mathematically, `the probability of observing `\(x\)` successes in `\(n\)` trials of a binomial process is given by`  
 
 `$$P\left[x \text{ successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
 \text{where } \binom{n}{x} = \dfrac{n!}{x!(n-x)!} \text{ and } n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1$$`
@@ -1132,9 +1141,13 @@ I toss a coin 2 times, what is the probability of getting exactly 1 head?
 
 success `\(= x\)`; `\(x=1\)`, and `\(n=2\)` independent trials 
 
-How many outcomes are likely in our 2 independent trials? We know this to be `\((2)^{2} = 4\)` and these are `\(\left[HH, HT, TH, TT \right]\)`
+How many outcomes are likely in our 2 independent trials? 
 
-In how many ways can we get 1 head out of 2 tosses? ... `\(\left[HT, TH \right]\)` and hence probability of getting exactly 1 head in 2 tosses is `\(\dfrac{2}{4} = 0.5\)` 
+We know this to be `\((2)^{2} = 4\)` and these outcomes will be `\(\left[HH, HT, TH, TT \right]\)`
+
+In how many ways can we get 1 head out of 2 tosses? ... `\(\left[HT, TH \right]\)` 
+
+and hence probability of getting exactly 1 head in 2 tosses is `\(\dfrac{2}{4} = 0.5\)` 
 
 `$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
 	\therefore P\left[1 \text{ Success}\right] = \binom{2}{1}(0.50)^{1}\left(1 - 0.50\right)^{2-1} = \binom{2}{1}(0.50)^{1}\left(0.50\right)^{1} \\
@@ -1143,11 +1156,15 @@ In how many ways can we get 1 head out of 2 tosses? ... `\(\left[HT, TH \right]\
 
 ---
 
-If I toss a coin 3 times, what is the probability of getting exactly 1 head? How many outcomes are likely in 3 independent trials? 
+If I toss a coin 3 times, what is the probability of getting exactly 1 head? 
 
-We know this to be `\((2)^{3} = 8\)` ... these are `\(\left[HHH, HHT, HTH, HTT, TTT, TTH, THT, THH \right]\)`
+How many outcomes are likely in 3 independent trials? 
 
-In how many ways can we get 1 Head out of 3 tosses? ... `\(\left[HTT, THT, TTH \right]\)` and hence probability of getting exactly 1 Head in 3 tosses is `\(\dfrac{3}{8} = 0.375\)` 
+We know this to be `\((2)^{3} = 8\)` ... `\(\left[HHH, HHT, HTH, HTT, TTT, TTH, THT, THH \right]\)`
+
+In how many ways can we get 1 Head out of 3 tosses? ... `\(\left[HTT, THT, TTH \right]\)` 
+
+and hence probability of getting exactly 1 Head in 3 tosses is `\(\dfrac{3}{8} = 0.375\)` 
 
 `$$P\left[x \text{ Successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
 	\therefore P\left[1 \text{ Success}\right] = \binom{3}{1}(0.50)^{1}\left(1 - 0.50\right)^{3-1} = \binom{3}{1}(0.50)^{1}\left(0.50\right)^{2} \\
@@ -1207,8 +1224,8 @@ What would the distribution of heads look like if I flipped a coin 10 times?
    &lt;td style="text-align:right;"&gt; 0.2051 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2461 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.2461 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
@@ -1285,9 +1302,9 @@ For our 10 flips, the expected value would be ...
    &lt;td style="text-align:right;"&gt; 0.8203125 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2461 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.2304688 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.2461 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 1.2304688 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
@@ -1379,9 +1396,9 @@ Visually comprehend the problem by seeing the distribution of hiring assuming no
    &lt;td style="text-align:right;"&gt; 0.561822 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.665209 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.334791 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.665209 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.334791 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
@@ -1430,17 +1447,23 @@ Visually comprehend the problem by seeing the distribution of hiring assuming no
 
 ---
 
-The number of shark incidents per country per year -- is a discrete variable that can never drop below 0 but can assume any value `\(x = 0, 1, 2, 3, 4, 5, \ldots, n\)`
+The number of shark incidents per country per year -- is a discrete variable that can never drop below 0 but can assume any negative non-value `\(x = 0, 1, 2, 3, 4, 5, \ldots, n\)` 
 
-Variables such as this are `count variables` and belong to a specific distribution: The `Poisson distribution`. Mathematically, the Poisson probability distribution is expressed as: 
+Variables such as this are `count variables` and belong to a specific distribution: The `Poisson distribution` 
+
+Mathematically, the Poisson probability distribution is expressed as: 
  
 `$$f(x) = \dfrac{e^{-x}\lambda^{x}}{x!}$$`
 
-where `\(x = 0, 1, 2, 3, \ldots\)`, `\(\lambda &gt; 0\)` is the mean and variance of the distribution, and `\(e=2.71828\)`. 
+where `\(x = 0, 1, 2, 3, \ldots\)` 
+
+`\(\lambda &gt; 0\)` is `the mean and variance of the distribution`, and 
+
+`\(e=2.71828\)`
 
 ---
 
-On average 10 complaints are filed per month with the City Clerk. If you pick a month at random, what would be the probability of seeing no complaint?; 1 complaint?; 2 complaints; `\(\ldots\)` 20 complaints? These turn out to be: 
+On average 15 complaints are filed per year with the City Clerk. If you pick a month at random, what would be the probability of seeing no complaint?; 1 complaint?; 2 complaints; `\(\ldots\)` 20 complaints? These turn out to be: 
 
 .pull-left[
 &lt;table class="table table-striped" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
@@ -1454,67 +1477,67 @@ On average 10 complaints are filed per month with the City Clerk. If you pick a 
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00673795 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.28650480 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03368973 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: white;background-color: #D7261E;"&gt; 0.35813100 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.08422434 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.22383187 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.14037390 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09326328 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.17546737 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.02914478 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.17546737 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00728619 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.14622281 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00151796 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.10444486 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00027106 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.06527804 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00004235 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.03626558 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000588 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.01813279 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000074 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00824218 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000008 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00343424 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000001 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00132086 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000000 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00047174 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000000 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.00015725 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00000000 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1657,9 +1680,6 @@ Given this multitude of Normal distributions it would be impossible to know whic
 One of the additional strengths of the Standard Normal Distribution is the fact that we can safely assume: 
 
 * about 68% of the data values fall within `\(\pm\)` 1 standard deviation
-* about 95% of the data values fall within `\(\pm\)` 2 standard deviation
-* about 99% of the data values fall within `\(\pm\)` 3 standard deviation
-* z-scores greater/smaller than `\(\pm{3}\)` are indicative of `outliers` 
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="module02_files/figure-html/1sd-1.png" alt="Area of the Standard Normal Distribution within 1 Standard Deviation" width="60%" /&gt;
@@ -1668,12 +1688,17 @@ One of the additional strengths of the Standard Normal Distribution is the fact 
 
 ---
 
+* about 95% of the data values fall within `\(\pm\)` 2 standard deviation
+
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="module02_files/figure-html/2sd-1.png" alt="Area of the Standard Normal Distribution within 2 Standard Deviations" width="60%" /&gt;
 &lt;p class="caption"&gt;Area of the Standard Normal Distribution within 2 Standard Deviations&lt;/p&gt;
 &lt;/div&gt;
 
 ---
+
+* about 99% of the data values fall within `\(\pm\)` 3 standard deviation
+* z-scores greater/smaller than `\(\pm{3}\)` are indicative of `outliers` 
 
 &lt;div class="figure" style="text-align: center"&gt;
 &lt;img src="module02_files/figure-html/3sd-1.png" alt="Area of the Standard Normal Distribution within 3 Standard Deviations" width="60%" /&gt;
@@ -1682,7 +1707,7 @@ One of the additional strengths of the Standard Normal Distribution is the fact 
 
 ---
 
-The [standard normal table](http://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/standardnormaltable.pdf) shows you the `area below a specific z-score` 
+[This standard normal table](http://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/standardnormaltable.pdf) shows you the `area below a specific z-score` 
 
 For example, area below `\(z = -3.40\)` is 0.0003369, denoted as `\(P(z \leq -3.40) = 0.0003369\)`  
 
@@ -1700,7 +1725,7 @@ For example, area below `\(z = -3.40\)` is 0.0003369, denoted as `\(P(z \leq -3.
 &lt;p class="caption"&gt;Areas Under the Standard Normal Curve&lt;/p&gt;
 &lt;/div&gt;
 
-Online tables/calculators are available: [David M. Lane](http://davidmlane.com/hyperstat/z_table.html) or then [surfstat](https://surfstat.anu.edu.au/surfstat-home/tables/normal.php)
+Online tables/calculators are available: Use [David M. Lane](http://davidmlane.com/hyperstat/z_table.html) or  [surfstat](https://surfstat.anu.edu.au/surfstat-home/tables/normal.php)
 
 ---
 
@@ -1714,6 +1739,8 @@ P(z \geq 1.6) = 0.05480
 \end{aligned}\right.$$`
 
 and thus some 5.48% of schools in the state had dropout rates of 7% or worse (i.e., higher dropout rates). 
+
+---
 
 What if the school had a dropout rate of 9%? 
 
