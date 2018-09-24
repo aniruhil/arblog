@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Module 02
 ## MPA 6010
 ### Ani Ruhil
-### (updated: 2018-09-23)
+### (updated: 2018-09-24)
 
 ---
 
@@ -637,7 +637,7 @@ This would be `\(P(A \text{ and } B) = P(A) \times P(B) = 0.17 \times 0.22 = 0.0
 
 ---
 
-### Example: Powerball 
+### Example 1: Powerball 
 
 Powerball played twice per week in 23 states, VI, and DC. Player must buy $1 ticket and pick five numbers from `\(1 \ldots 53\)` and one Powerball number from `\(1 \ldots 42\)`.
 
@@ -653,6 +653,28 @@ Odds of winning Powerball jackpot? `\(P(A) \mbox{ and } P(B) = P(A) \times P(B) 
 
 .footnote[[1]  In Augusts 2001,  4 winners shared USD 295 million by matching `\(8, 17, 22, 42, 47\)` plus Powerball number `\(21\)`.]
 ---
+
+### Example 2: Serengeti Lions and Cape Buffalo 
+
+In the first hour of a hunting trip, the probability that a pride of Serengeti lions will encounter a Cape buffalo is 0.035. If it encounters a buffalo, the probability that the pride successfully captures the buffalo is 0.40. What is the probability that the next one-hour of a hunt the pride will successfully capture a Cape buffalo?       
+
+
+Let `\(A =\)` the probability of encountering a Cape Buffalo and `\(B\)` be the probability of capturing it if the pride encounters a buffalo. 
+
+We are given `\(P(A)=0.035\)` and  `\(P(B|A) = 0.40\)`. 
+
+`\(P(B|A)\)` is the conditional probability that the pride `both sees a Cape Buffalo AND kills it.` 
+
+We are dealing with dependent events (the pride cannot kill without encountering a Cape Buffalo)  and are being asked to find the probability of both events occurring. For two dependent events, we know that `\(P(A \text{ and } B) =\)`  `\(P(A) \times P(B|A)\)` 
+
+Using the respective values given to us for `\(P(A)\)` and `\(P(B|A)\)`, we have   
+
+`$$P(A \text{ and } B) = P(A) \times P(B|A) = 0.035 \times 0.40 = 0.014$$`
+
+The probability the pride will be successful is 0.014 or 1.4%. 
+
+---
+
 ## Conditional Probability
 
 The conditional probability of an event is the probability of that event occurring given that a condition is met (i.e., some other event is known to have occurred) 
@@ -799,6 +821,25 @@ If the two events are independent then we know that `\(P(A \text{ and } B) = P(A
 `\(P(\text{egg is female}) = \\ P(\text{host parasitized}) \times P(\text{egg is female } | \text{ host parasitized}) + P(\text{host not parasitized}) \times P(\text{egg is female } | \text{ host is not parasitized})\)` 
 
 `\(\therefore P(\text{egg is female}) = (0.20 \times 0.10) + (0.80 \times 0.95) = 0.78\)` 
+
+---
+
+### Another Example: Washrooms and Washing Hands 
+
+You are the health inspector for your city and tasked with improving airport washroom hygiene in the city's lone airport 
+
+You know that the probability of a man washing his hands after using the washroom is 0.74 and that of a woman is 0.83 
+
+Assume there are 40 men and 60 women waiting to use the washroom. What is the probability that the next person to use the washroom will wash his/her hands?   
+
+Total Probability is being asked for, i.e., it could be a man who washes his hands or a woman who washes her hand 
+
+We know `\(P(Man)=0.40\)` and `\(P(Woman)=0.60\)`. 
+
+We are also given `\(P(Washes|Man)=0.74\)` and `\(P(Washes|Woman)=0.83\)` 
+
+`$$P(Washes) = P(Washes|Man) \times P(Man) + P(Washes|Woman) \times P(Woman)$$`
+`$$=  (0.74 \times 0.40) + (0.83 \times 0.60) = 0.296 + 0.498 = 0.794$$` 
 
 ---
 
