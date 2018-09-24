@@ -369,7 +369,9 @@ Note that most projects seem to have taken three months for design and seven mon
 
 ### (c) The Subjective method 
 
-In most situations where hard data are lacking, we rely on theories or then on our `subjective beliefs` to assign probabilities to likely outcomes. Assume, for example, that a couple makes an offer on a house but each holds different probabilities of bid acceptance and rejection 
+In most situations where hard data are lacking, we rely on theories or then on our `subjective beliefs` to assign probabilities to likely outcomes. 
+
+Assume, for example, that a couple makes an offer on a house but each holds different probabilities of bid acceptance and rejection 
 
 
 &lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
@@ -420,7 +422,9 @@ If the total amount was $32.4 million, how much went to CO? ... Assume fund amou
 
 ### Example 2: Rolling Two Dice 
 
-Two dice are rolled and we are interested in the `sum of face values showing on the 2` dice. Possible outcomes are (1,1), (1,2), (1,3), (1,4), (1,5), (1,6) ... (6,1), (6,2), (6,3), (6,4), (6,5), (6,6). In other words, `\(C^{6}_{1} \times C^{6}_{1} =(6)(6)=36\)` outcomes 
+Two dice are rolled and we are interested in the `sum of face values showing on the 2 dice` 
+
+Possible outcomes are (1,1), (1,2), (1,3), (1,4), (1,5), (1,6) ... (6,1), (6,2), (6,3), (6,4), (6,5), (6,6). In other words, `\(C^{6}_{1} \times C^{6}_{1} =(6)(6)=36\)` outcomes 
 
 &lt;table class="table table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
 &lt;caption style="font-size: initial !important;"&gt;Sum of Two Dice&lt;/caption&gt;
@@ -651,14 +655,18 @@ Odds of winning Powerball jackpot? `\(P(A) \mbox{ and } P(B) = P(A) \times P(B) 
 ---
 ## Conditional Probability
 
-The conditional probability of an event is the probability of that event occurring given that a condition is met (i.e., some other event is known to have occurred). Conditional probabilities are denoted as `\(P(A | B)\)` (i.e., the probability of A `given that B has occurred`) and `\(P(A | B) = \dfrac{P(A \text{ and } B)}{P(B)}\)`. Similarly, we have `\(P(B | A) = \dfrac{P(A \text{ and } B)}{P(A)}\)`, (i.e., the probability of B `given that A has occurred`).  
+The conditional probability of an event is the probability of that event occurring given that a condition is met (i.e., some other event is known to have occurred) 
+
+Conditional probabilities are denoted as `\(P(A | B)\)` (i.e., the probability of A `given that B has occurred`) and `\(P(A | B) = \dfrac{P(A \text{ and } B)}{P(B)}\)` 
+
+Similarly, we have `\(P(B | A) = \dfrac{P(A \text{ and } B)}{P(A)}\)`, (i.e., the probability of B `given that A has occurred`).  
 
 For example, let B be an event of getting a perfect square when a dice is rolled. Let A be the event that the number on the dice is an odd number. What is `\(P(B|A)\)`? The Sample Space is `\(S=\{1,2,3,4,5,6\}\)`; `\(A =\{1,3,5\}\)`; `\(B=\{1,4\}\)`. Then, `\(P(A \text{ and } B)=\dfrac{1}{6}; P(A)=\dfrac{1}{2}; P(B)=\dfrac{1}{3}\)` and hence `\(P(B|A)=\dfrac{P(A \text{ and } B)}{P(A)}=\dfrac{\dfrac{1}{6}}{\dfrac{1}{2}}=\dfrac{1}{6} \times \dfrac{2}{1}=\dfrac{2}{6}=\dfrac{1}{3}\)`
 
 For dependent events, the `multiplication rule` that determines the probability that `both A and B occur` becomes: 
 
 `$$\begin{array}{l}
-P(A \text{ and } B) = P(A) \times P(B | A), \text{ and} \\ 
+P(A \text{ and } B) = P(A) \times P(B | A), \text{ and } 
 P(A \text{ and } B) = P(B) \times P(A | B)
 \end{array}$$`
 
@@ -746,7 +754,9 @@ Similarly, we might ask: What is the probability of being denied a promotion `gi
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-What would you conclude and report back to the city? Unfortunately, that female officers do not seem to be promoted at the same rate as are male officers. Notice how the `conditional probability` and `independent events` allowed you to tackle this question! 
+What would you conclude and report back to the city? Unfortunately, that female officers do not seem to be promoted at the same rate as are male officers
+
+Notice how `conditional probability` and `independent events` allowed you to tackle this question! 
 
 ---
 
@@ -1020,9 +1030,15 @@ A probability distribution is a list of the probabilities of all mutually exclus
 ---
 
 .pull-left[
+
+The frequencies 
+
 &lt;img src="module02_files/figure-html/unnamed-chunk-2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
+
+The relative frequencies as a percentage 
+
 &lt;img src="module02_files/figure-html/unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
@@ -1035,10 +1051,15 @@ A probability distribution is a list of the probabilities of all mutually exclus
 ---
 
 .pull-left[
+
+The frequencies of the sum of the numbers on the 2 dice 
+
 &lt;img src="module02_files/figure-html/sumdice-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
+
+The table of possible outcomes; one dice is in rows and the other in columns 
 
 &lt;table class="table table-striped" style="font-size: 20px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
 &lt;caption style="font-size: initial !important;"&gt;Sum of Two Dice&lt;/caption&gt;
@@ -1130,7 +1151,7 @@ A probability distribution is a list of the probabilities of all mutually exclus
 3. Only two mutually exclusive and mutually exhaustive outcomes likely to occur in any given trial, with one outcome defined as `success` and the other defined as `failure`  
 4. The probability of observing a success `\((p)\)` does not vary across trials. Because there are only two outcomes, this means the probability of observing a failure  `\((q)\)` also does not vary across trials. Further, `\(p = 1 - q\)` and `\(q = 1 - p\)`  
 
-Mathematically, `the probability of observing `\(x\)` successes in `\(n\)` trials of a binomial process is given by`  
+Mathematically, `the probability of observing` `\(x\)` `successes in` `\(n\)` `trials of a binomial process is given by`  
 
 `$$P\left[x \text{ successes}\right] = \binom{n}{x}p^{x}\left(1 - p\right)^{n-x} \\
 \text{where } \binom{n}{x} = \dfrac{n!}{x!(n-x)!} \text{ and } n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1$$`
@@ -1729,12 +1750,16 @@ Online tables/calculators are available: Use [David M. Lane](http://davidmlane.c
 
 ---
 
-Assume that for all traditional public schools in your state, the mean dropout rate in 2017 was `\(\mu = 5\)`, and the standard deviation was `\(\sigma = 1.25\)`. Given these parameters, if a school had a dropout rate of 7%, what percent of schools in the state did as badly or worse? The answer could be obtained as follows: 
+Assume that for all traditional public schools in your state, the mean dropout rate in 2017 was `\(\mu = 5\)`, and the standard deviation was `\(\sigma = 1.25\)` 
+
+Given these parameters, if a school had a dropout rate of 7%, what percent of schools in the state did as badly or worse? 
+
+The answer could be obtained as follows: 
 
 `$$\left.\begin{aligned}
-z = \dfrac{x - \mu}{\sigma} \\
-z = \dfrac{7 - 5}{1.25} = 1.6 \\ 
-\text{What is } P(z \geq 1.6)? \\
+z = \dfrac{x - \mu}{\sigma} \\ \\  
+z = \dfrac{7 - 5}{1.25} = 1.6 \\ \\ 
+\text{What is } P(z \geq 1.6)? \\ \\ 
 P(z \geq 1.6) = 0.05480
 \end{aligned}\right.$$`
 
@@ -1745,9 +1770,9 @@ and thus some 5.48% of schools in the state had dropout rates of 7% or worse (i.
 What if the school had a dropout rate of 9%? 
 
 `$$\left.\begin{aligned}
-z = \dfrac{x - \mu}{\sigma} \\
-z = \dfrac{9 - 5}{1.25} = 3.2 \\ 
-\text{What is } P(z \geq 3.2)? \\
+z = \dfrac{x - \mu}{\sigma} \\ \\ 
+z = \dfrac{9 - 5}{1.25} = 3.2 \\ \\ 
+\text{What is } P(z \geq 3.2)? \\ \\ 
 P(z \geq 3.2) = 0.00069
 \end{aligned}\right.$$`
 
@@ -1758,10 +1783,10 @@ i.e., 0.069% of schools in the states had dropout rates of 9% or worse
 What dropout rates demarcate the top 10 and the bottom 10 percent of schools, respectively?
 
 `$$\left.\begin{aligned} 
-z = \dfrac{x - \mu}{\sigma} \\ 
-x = \left(z \times \sigma \right) + \mu \\ 
-x = \mu + \left(z \times \sigma \right) \\  
-x_{top} = 5 + \left(1.28 \times 1.25 \right) = 5 + 1.6 = 6.6 \\  
+z = \dfrac{x - \mu}{\sigma} \\ \\ 
+x = \left(z \times \sigma \right) + \mu \\ \\ 
+x = \mu + \left(z \times \sigma \right) \\  \\ 
+x_{top} = 5 + \left(1.28 \times 1.25 \right) = 5 + 1.6 = 6.6 \\  \\ 
 x_{bottom} = 5 + \left(-1.28 \times 1.25 \right) = 5 - 1.6 = 3.4 
 \end{aligned}\right.$$`
 
