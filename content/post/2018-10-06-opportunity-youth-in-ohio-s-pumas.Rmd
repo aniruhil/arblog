@@ -165,7 +165,7 @@ oppyouth <- svyby( ~ disengaged , ~ state_name , acs_design , svymean, na.rm = T
 oppyouth[, c(2:5)] <- oppyouth[, c(2:5)] * 100 
 oppyouth[, c(2:5)] <- round(oppyouth[, c(2:5)], digits = 1)
 oppyouth$se2 <- NULL
-colnames(oppyouth) <- c("state", "disengaged", "notdisengaged", "stderror")
+colnames(oppyouth) <- c("State", "Disengaged (%)", "Not Disengaged  (%)", "Standard Error (%)")
 ```
 
 If all went well you should see `oppyouth` reflecting the following for 2016. 
@@ -176,7 +176,11 @@ oppyouth$disengaged <- sprintf("%0.1f", oppyouth$disengaged)
 oppyouth$notdisengaged <- sprintf("%0.1f", oppyouth$notdisengaged)
 oppyouth$stderror <- sprintf("%0.1f", oppyouth$stderror)
 
-DT::datatable(oppyouth, colnames = c("State", "Disengaged (%)", "Not Disengaged (%)", "Standard Error (%)"))
+library(dplyr)
+```
+
+```{r}
+knitr::kable(oppyouth, booktabs = TRUE, caption = "Percent Disengaged Youth (16-24 year-olds) by State") %>% kableExtra::kable_styling("striped", full_width = FALSE)
 ```
 
 If you want the breakouts by race, you will need to cross Hispanic status and the one race alone categories. 
