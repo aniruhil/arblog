@@ -14,6 +14,7 @@ header:
   image: ''
 ---
 
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <p>A client needed state-level estimates of the percent of opportunity youth (defined either as 16-19 or 16-24 year-old persons who are neither in school nor employed) in each state plus Washington DC. The end result would be three years of estimates that matched the numbers put out by <a href="http://www.measureofamerica.org/disconnected-youth/">Measure of America’s yearly reports on the subject.</a></p>
@@ -29,328 +30,754 @@ header:
 <p>I borrowed Anthony’s default code to label the states.</p>
 <p>Now the target measure of opportunity youth.</p>
 <p>If all went well you should see <code>oppyouth</code> reflecting the following for 2016.</p>
-<table>
-<caption><span id="tab:unnamed-chunk-12">Table 1: </span>Percent Disengaged Youth (16-24 year-olds) by State</caption>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-12">Table 1: </span>Percent Disengaged Youth (16-24 year-olds) by State
+</caption>
 <thead>
-<tr class="header">
-<th align="left">state</th>
-<th align="left">disengaged</th>
-<th align="left">notdisengaged</th>
-<th align="left">stderror</th>
+<tr>
+<th style="text-align:left;">
+State
+</th>
+<th style="text-align:left;">
+Disengaged (%)
+</th>
+<th style="text-align:left;">
+Not Disengaged (%)
+</th>
+<th style="text-align:left;">
+Standard Error (%)
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Alabama</td>
-<td align="left">14.1</td>
-<td align="left">85.9</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:left;">
+14.1
+</td>
+<td style="text-align:left;">
+85.9
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Alaska</td>
-<td align="left">17.9</td>
-<td align="left">82.1</td>
-<td align="left">1.9</td>
+<tr>
+<td style="text-align:left;">
+Alaska
+</td>
+<td style="text-align:left;">
+17.9
+</td>
+<td style="text-align:left;">
+82.1
+</td>
+<td style="text-align:left;">
+1.9
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Arizona</td>
-<td align="left">13.7</td>
-<td align="left">86.3</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:left;">
+13.7
+</td>
+<td style="text-align:left;">
+86.3
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Arkansas</td>
-<td align="left">15.0</td>
-<td align="left">85.0</td>
-<td align="left">0.7</td>
+<tr>
+<td style="text-align:left;">
+Arkansas
+</td>
+<td style="text-align:left;">
+15.0
+</td>
+<td style="text-align:left;">
+85.0
+</td>
+<td style="text-align:left;">
+0.7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">California</td>
-<td align="left">11.5</td>
-<td align="left">88.5</td>
-<td align="left">0.2</td>
+<tr>
+<td style="text-align:left;">
+California
+</td>
+<td style="text-align:left;">
+11.5
+</td>
+<td style="text-align:left;">
+88.5
+</td>
+<td style="text-align:left;">
+0.2
+</td>
 </tr>
-<tr class="even">
-<td align="left">Colorado</td>
-<td align="left">10.7</td>
-<td align="left">89.3</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Colorado
+</td>
+<td style="text-align:left;">
+10.7
+</td>
+<td style="text-align:left;">
+89.3
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Connecticut</td>
-<td align="left">8.5</td>
-<td align="left">91.5</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Connecticut
+</td>
+<td style="text-align:left;">
+8.5
+</td>
+<td style="text-align:left;">
+91.5
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Delaware</td>
-<td align="left">14.3</td>
-<td align="left">85.7</td>
-<td align="left">1.5</td>
+<tr>
+<td style="text-align:left;">
+Delaware
+</td>
+<td style="text-align:left;">
+14.3
+</td>
+<td style="text-align:left;">
+85.7
+</td>
+<td style="text-align:left;">
+1.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">District of Columbia</td>
-<td align="left">14.8</td>
-<td align="left">85.2</td>
-<td align="left">1.6</td>
+<tr>
+<td style="text-align:left;">
+District of Columbia
+</td>
+<td style="text-align:left;">
+14.8
+</td>
+<td style="text-align:left;">
+85.2
+</td>
+<td style="text-align:left;">
+1.6
+</td>
 </tr>
-<tr class="even">
-<td align="left">Florida</td>
-<td align="left">11.8</td>
-<td align="left">88.2</td>
-<td align="left">0.3</td>
+<tr>
+<td style="text-align:left;">
+Florida
+</td>
+<td style="text-align:left;">
+11.8
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+0.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Georgia</td>
-<td align="left">12.6</td>
-<td align="left">87.4</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Georgia
+</td>
+<td style="text-align:left;">
+12.6
+</td>
+<td style="text-align:left;">
+87.4
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Hawaii</td>
-<td align="left">11.1</td>
-<td align="left">88.9</td>
-<td align="left">1.1</td>
+<tr>
+<td style="text-align:left;">
+Hawaii
+</td>
+<td style="text-align:left;">
+11.1
+</td>
+<td style="text-align:left;">
+88.9
+</td>
+<td style="text-align:left;">
+1.1
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Idaho</td>
-<td align="left">10.9</td>
-<td align="left">89.1</td>
-<td align="left">1.1</td>
+<tr>
+<td style="text-align:left;">
+Idaho
+</td>
+<td style="text-align:left;">
+10.9
+</td>
+<td style="text-align:left;">
+89.1
+</td>
+<td style="text-align:left;">
+1.1
+</td>
 </tr>
-<tr class="even">
-<td align="left">Illinois</td>
-<td align="left">10.7</td>
-<td align="left">89.3</td>
-<td align="left">0.3</td>
+<tr>
+<td style="text-align:left;">
+Illinois
+</td>
+<td style="text-align:left;">
+10.7
+</td>
+<td style="text-align:left;">
+89.3
+</td>
+<td style="text-align:left;">
+0.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Indiana</td>
-<td align="left">10.7</td>
-<td align="left">89.3</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Indiana
+</td>
+<td style="text-align:left;">
+10.7
+</td>
+<td style="text-align:left;">
+89.3
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Iowa</td>
-<td align="left">7.4</td>
-<td align="left">92.6</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Iowa
+</td>
+<td style="text-align:left;">
+7.4
+</td>
+<td style="text-align:left;">
+92.6
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Kansas</td>
-<td align="left">10.0</td>
-<td align="left">90.0</td>
-<td align="left">0.6</td>
+<tr>
+<td style="text-align:left;">
+Kansas
+</td>
+<td style="text-align:left;">
+10.0
+</td>
+<td style="text-align:left;">
+90.0
+</td>
+<td style="text-align:left;">
+0.6
+</td>
 </tr>
-<tr class="even">
-<td align="left">Kentucky</td>
-<td align="left">14.3</td>
-<td align="left">85.7</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+Kentucky
+</td>
+<td style="text-align:left;">
+14.3
+</td>
+<td style="text-align:left;">
+85.7
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Louisiana</td>
-<td align="left">17.4</td>
-<td align="left">82.6</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+Louisiana
+</td>
+<td style="text-align:left;">
+17.4
+</td>
+<td style="text-align:left;">
+82.6
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="even">
-<td align="left">Maine</td>
-<td align="left">11.9</td>
-<td align="left">88.1</td>
-<td align="left">1.2</td>
+<tr>
+<td style="text-align:left;">
+Maine
+</td>
+<td style="text-align:left;">
+11.9
+</td>
+<td style="text-align:left;">
+88.1
+</td>
+<td style="text-align:left;">
+1.2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Maryland</td>
-<td align="left">11.1</td>
-<td align="left">88.9</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Maryland
+</td>
+<td style="text-align:left;">
+11.1
+</td>
+<td style="text-align:left;">
+88.9
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Massachusetts</td>
-<td align="left">7.4</td>
-<td align="left">92.6</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Massachusetts
+</td>
+<td style="text-align:left;">
+7.4
+</td>
+<td style="text-align:left;">
+92.6
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Michigan</td>
-<td align="left">11.6</td>
-<td align="left">88.4</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Michigan
+</td>
+<td style="text-align:left;">
+11.6
+</td>
+<td style="text-align:left;">
+88.4
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Minnesota</td>
-<td align="left">7.5</td>
-<td align="left">92.5</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Minnesota
+</td>
+<td style="text-align:left;">
+7.5
+</td>
+<td style="text-align:left;">
+92.5
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Mississippi</td>
-<td align="left">14.5</td>
-<td align="left">85.5</td>
-<td align="left">0.9</td>
+<tr>
+<td style="text-align:left;">
+Mississippi
+</td>
+<td style="text-align:left;">
+14.5
+</td>
+<td style="text-align:left;">
+85.5
+</td>
+<td style="text-align:left;">
+0.9
+</td>
 </tr>
-<tr class="even">
-<td align="left">Missouri</td>
-<td align="left">10.1</td>
-<td align="left">89.9</td>
-<td align="left">0.6</td>
+<tr>
+<td style="text-align:left;">
+Missouri
+</td>
+<td style="text-align:left;">
+10.1
+</td>
+<td style="text-align:left;">
+89.9
+</td>
+<td style="text-align:left;">
+0.6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Montana</td>
-<td align="left">11.8</td>
-<td align="left">88.2</td>
-<td align="left">1.3</td>
+<tr>
+<td style="text-align:left;">
+Montana
+</td>
+<td style="text-align:left;">
+11.8
+</td>
+<td style="text-align:left;">
+88.2
+</td>
+<td style="text-align:left;">
+1.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">Nebraska</td>
-<td align="left">9.2</td>
-<td align="left">90.8</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+Nebraska
+</td>
+<td style="text-align:left;">
+9.2
+</td>
+<td style="text-align:left;">
+90.8
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Nevada</td>
-<td align="left">14.3</td>
-<td align="left">85.7</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+Nevada
+</td>
+<td style="text-align:left;">
+14.3
+</td>
+<td style="text-align:left;">
+85.7
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="even">
-<td align="left">New Hampshire</td>
-<td align="left">8.5</td>
-<td align="left">91.5</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+New Hampshire
+</td>
+<td style="text-align:left;">
+8.5
+</td>
+<td style="text-align:left;">
+91.5
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="odd">
-<td align="left">New Jersey</td>
-<td align="left">10.1</td>
-<td align="left">89.9</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+New Jersey
+</td>
+<td style="text-align:left;">
+10.1
+</td>
+<td style="text-align:left;">
+89.9
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">New Mexico</td>
-<td align="left">16.4</td>
-<td align="left">83.6</td>
-<td align="left">1.3</td>
+<tr>
+<td style="text-align:left;">
+New Mexico
+</td>
+<td style="text-align:left;">
+16.4
+</td>
+<td style="text-align:left;">
+83.6
+</td>
+<td style="text-align:left;">
+1.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">New York</td>
-<td align="left">12.1</td>
-<td align="left">87.9</td>
-<td align="left">0.3</td>
+<tr>
+<td style="text-align:left;">
+New York
+</td>
+<td style="text-align:left;">
+12.1
+</td>
+<td style="text-align:left;">
+87.9
+</td>
+<td style="text-align:left;">
+0.3
+</td>
 </tr>
-<tr class="even">
-<td align="left">North Carolina</td>
-<td align="left">11.6</td>
-<td align="left">88.4</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+North Carolina
+</td>
+<td style="text-align:left;">
+11.6
+</td>
+<td style="text-align:left;">
+88.4
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">North Dakota</td>
-<td align="left">7.0</td>
-<td align="left">93.0</td>
-<td align="left">1.0</td>
+<tr>
+<td style="text-align:left;">
+North Dakota
+</td>
+<td style="text-align:left;">
+7.0
+</td>
+<td style="text-align:left;">
+93.0
+</td>
+<td style="text-align:left;">
+1.0
+</td>
 </tr>
-<tr class="even">
-<td align="left">Ohio</td>
-<td align="left">11.1</td>
-<td align="left">88.9</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Ohio
+</td>
+<td style="text-align:left;">
+11.1
+</td>
+<td style="text-align:left;">
+88.9
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Oklahoma</td>
-<td align="left">14.2</td>
-<td align="left">85.8</td>
-<td align="left">0.7</td>
+<tr>
+<td style="text-align:left;">
+Oklahoma
+</td>
+<td style="text-align:left;">
+14.2
+</td>
+<td style="text-align:left;">
+85.8
+</td>
+<td style="text-align:left;">
+0.7
+</td>
 </tr>
-<tr class="even">
-<td align="left">Oregon</td>
-<td align="left">11.9</td>
-<td align="left">88.1</td>
-<td align="left">0.7</td>
+<tr>
+<td style="text-align:left;">
+Oregon
+</td>
+<td style="text-align:left;">
+11.9
+</td>
+<td style="text-align:left;">
+88.1
+</td>
+<td style="text-align:left;">
+0.7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Pennsylvania</td>
-<td align="left">10.7</td>
-<td align="left">89.3</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Pennsylvania
+</td>
+<td style="text-align:left;">
+10.7
+</td>
+<td style="text-align:left;">
+89.3
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Rhode Island</td>
-<td align="left">7.5</td>
-<td align="left">92.5</td>
-<td align="left">0.8</td>
+<tr>
+<td style="text-align:left;">
+Rhode Island
+</td>
+<td style="text-align:left;">
+7.5
+</td>
+<td style="text-align:left;">
+92.5
+</td>
+<td style="text-align:left;">
+0.8
+</td>
 </tr>
-<tr class="odd">
-<td align="left">South Carolina</td>
-<td align="left">12.7</td>
-<td align="left">87.3</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+South Carolina
+</td>
+<td style="text-align:left;">
+12.7
+</td>
+<td style="text-align:left;">
+87.3
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">South Dakota</td>
-<td align="left">9.2</td>
-<td align="left">90.8</td>
-<td align="left">1.2</td>
+<tr>
+<td style="text-align:left;">
+South Dakota
+</td>
+<td style="text-align:left;">
+9.2
+</td>
+<td style="text-align:left;">
+90.8
+</td>
+<td style="text-align:left;">
+1.2
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Tennessee</td>
-<td align="left">13.1</td>
-<td align="left">86.9</td>
-<td align="left">0.6</td>
+<tr>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:left;">
+13.1
+</td>
+<td style="text-align:left;">
+86.9
+</td>
+<td style="text-align:left;">
+0.6
+</td>
 </tr>
-<tr class="even">
-<td align="left">Texas</td>
-<td align="left">13.4</td>
-<td align="left">86.6</td>
-<td align="left">0.3</td>
+<tr>
+<td style="text-align:left;">
+Texas
+</td>
+<td style="text-align:left;">
+13.4
+</td>
+<td style="text-align:left;">
+86.6
+</td>
+<td style="text-align:left;">
+0.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Utah</td>
-<td align="left">9.2</td>
-<td align="left">90.8</td>
-<td align="left">0.6</td>
+<tr>
+<td style="text-align:left;">
+Utah
+</td>
+<td style="text-align:left;">
+9.2
+</td>
+<td style="text-align:left;">
+90.8
+</td>
+<td style="text-align:left;">
+0.6
+</td>
 </tr>
-<tr class="even">
-<td align="left">Vermont</td>
-<td align="left">11.6</td>
-<td align="left">88.4</td>
-<td align="left">2.3</td>
+<tr>
+<td style="text-align:left;">
+Vermont
+</td>
+<td style="text-align:left;">
+11.6
+</td>
+<td style="text-align:left;">
+88.4
+</td>
+<td style="text-align:left;">
+2.3
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Virginia</td>
-<td align="left">9.8</td>
-<td align="left">90.2</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Virginia
+</td>
+<td style="text-align:left;">
+9.8
+</td>
+<td style="text-align:left;">
+90.2
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="even">
-<td align="left">Washington</td>
-<td align="left">12.3</td>
-<td align="left">87.7</td>
-<td align="left">0.4</td>
+<tr>
+<td style="text-align:left;">
+Washington
+</td>
+<td style="text-align:left;">
+12.3
+</td>
+<td style="text-align:left;">
+87.7
+</td>
+<td style="text-align:left;">
+0.4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">West Virginia</td>
-<td align="left">17.3</td>
-<td align="left">82.7</td>
-<td align="left">1.0</td>
+<tr>
+<td style="text-align:left;">
+West Virginia
+</td>
+<td style="text-align:left;">
+17.3
+</td>
+<td style="text-align:left;">
+82.7
+</td>
+<td style="text-align:left;">
+1.0
+</td>
 </tr>
-<tr class="even">
-<td align="left">Wisconsin</td>
-<td align="left">9.1</td>
-<td align="left">90.9</td>
-<td align="left">0.5</td>
+<tr>
+<td style="text-align:left;">
+Wisconsin
+</td>
+<td style="text-align:left;">
+9.1
+</td>
+<td style="text-align:left;">
+90.9
+</td>
+<td style="text-align:left;">
+0.5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Wyoming</td>
-<td align="left">10.3</td>
-<td align="left">89.7</td>
-<td align="left">1.5</td>
+<tr>
+<td style="text-align:left;">
+Wyoming
+</td>
+<td style="text-align:left;">
+10.3
+</td>
+<td style="text-align:left;">
+89.7
+</td>
+<td style="text-align:left;">
+1.5
+</td>
 </tr>
-<tr class="even">
-<td align="left">Puerto Rico</td>
-<td align="left">21.6</td>
-<td align="left">78.4</td>
-<td align="left">0.7</td>
+<tr>
+<td style="text-align:left;">
+Puerto Rico
+</td>
+<td style="text-align:left;">
+21.6
+</td>
+<td style="text-align:left;">
+78.4
+</td>
+<td style="text-align:left;">
+0.7
+</td>
 </tr>
 </tbody>
 </table>

@@ -184,7 +184,8 @@ library(dplyr)
 ```
 
 ```{r}
-knitr::kable(oppyouth, booktabs = TRUE, caption = "Percent Disengaged Youth (16-24 year-olds) by State") %>% kableExtra::kable_styling("striped", full_width = FALSE)
+knitr::kable(oppyouth, booktabs = TRUE, caption = "Percent Disengaged Youth (16-24 year-olds) by State", col.names = c("State", "Disengaged (%)", "Not Disengaged  (%)", "Standard Error (%)"), "html") %>% 
+  kableExtra::kable_styling("striped", full_width = FALSE)
 ```
 
 If you want the breakouts by race, you will need to cross Hispanic status and the one race alone categories. 
