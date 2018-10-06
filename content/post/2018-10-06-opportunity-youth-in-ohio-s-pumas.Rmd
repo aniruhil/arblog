@@ -1,0 +1,191 @@
+---
+title: Opportunity Youth in Ohio's PUMAs
+author: Ani Ruhil
+date: '2018-10-06'
+slug: opportunity-youth-in-ohio-s-pumas
+categories:
+  - R
+tags:
+  - Ohio
+  - lodown
+  - ACS
+header:
+  caption: 'Experiments with lowdown and ACS PUMS data'
+  image: ''
+---
+
+A client needed state-level estimates of the percent of opportunity youth (defined either as 16-19 or 16-24 year-old persons who are neither in school nor employed) in each state plus Washington DC. The end result would be three years of estimates that matched the numbers put out by [Measure of America's yearly reports on the subject.](http://www.measureofamerica.org/disconnected-youth/)  
+
+I had used [Anthony Damico's](http://ajdamico.com/) fantastic repository [Analyze Survey Data for Free](http://asdfree.com) for BRFSS, DHS, and other data but never with PUMS data. This was a golden chance to remedy that limitation, and in this short post I am documenting my experience. 
+
+Getting the data is easy enough with the `lodown` package, but bear in mind that you need some computing horsepower and a fast internet connection.  For example, even with half a terabyte of free disk space on a flash drive, a Macbook Pro (2016) running Sierra with 16GB of RAM and 2.9 GHz Intel core i7 I had many failed attempts at downloading all fifty states, DC, and Puerto Rico. In brief, the 2016 American Community Survey 1-year files would download for each geography but then the individual data-sets would not merge because the vector memory was being exhausted (RStudio 3.5+ has a new system of vector memory allocation "to avoid having the R process killed when macOS over-commits memory."). My solution was to work  outside of RStudio with each yearly data download split into two calls, one for each of 26 geographies. The basic code follows, starting with constructing a folder caled `ACS` to store the data.  
+
+```{r, eval = FALSE}
+library(lodown)
+acs_cat <-
+    get_catalog( "acs" ,
+        output_dir = file.path( path.expand( "~" ) , "ACS" ) )
+```
+
+and then generating the catalogs of interest. 
+
+```{r, eval = FALSE}
+acs_cat1 <- subset(acs_cat, year == 2016 & 
+                    time_period == '1-Year' & 
+                    stateab %in% c("ak", "al", "ar", "az", "ca", "co", "ct", "dc", "de", "fl", "ga", "hi", "ia", "id", "il", "in", "ks", "ky", "la", "ma", "md", "me", "mi", "mn", "mo", "ms"))
+
+acs_cat2 <- subset(acs_cat, year == 2016 & 
+                    time_period == '1-Year' & 
+                    stateab %in% c("mt", "nc", "nd", "ne", "nh", "nj", "nm", "nv", "ny", "oh", "ok", "or", "pa", "pr", "ri", "sc", "sd", "tn", "tx", "ut", "va", "vt", "wa", "wi", "wv", "wy"))
+```
+
+Now we can download the microdata to the ACS folder. 
+
+```{r, eval = FALSE}
+acs_cat1 <- lodown( "acs" , acs_cat1)
+```
+
+Your should end up with a file called `acs2016_1yr.rds` in the ACS folder. This is just the first batch of geographies so we'll repeat this step again for the second batch. But before we do that, let us generate a few indicators we need, filter the data-frame to just the 16-24 year-olds, and save this file with a unique name. 
+
+```{r, eval = FALSE}
+library(dplyr)
+acs_df1 <- acs_df %>% 
+  filter(agep %in% seq(16, 24, by = 1)) %>% 
+  mutate(agep_1624 = sum(agep %in% c(16, 17, 18, 19, 20, 21,  22, 23, 24)), 
+         noteduc = factor(sch, 
+                          levels = c(1, 2, 3), 
+                          labels = c("Has not attended in the last 3 months", "Public School/College", "Private School/College or Homeschool")),
+         notwork = factor(esr, 
+                          levels = c(1:6), 
+                          labels = c("Civilian employed, at work", "Civilian employed, with a job but not at work", "Unemployed", "Armed forces, at work", "Armed forces, with a job but not at work", "Not in labor force")), 
+         notworking = ifelse(notwork == "Unemployed", "Yes", 
+                             ifelse(notwork == "Not in labor force", "Yes", "No")),
+         notinschool = ifelse(noteduc == "Has not attended in the last 3 months", "Yes", "No"), 
+         disengaged = ifelse(notinschool == "Yes" & notworking == "Yes", "Disengaged", "Not Disengaged"))
+
+saveRDS( acs_df1, file.path( path.expand( "~" ), "ACS", "acs2016_1yrA.rds") )
+```
+
+We can then rinse and repeat for the second batch of geographies, as shown below. 
+
+```{r, eval = FALSE}
+acs_cat2 <- lodown( "acs" , acs_cat2)
+acs_df2 <- acs_df %>% 
+  filter(agep %in% seq(16, 24, by = 1)) %>% 
+  mutate(agep_1624 = sum(agep %in% c(16, 17, 18, 19, 20, 21,  22, 23, 24)), 
+         noteduc = factor(sch, 
+                          levels = c(1, 2, 3), 
+                          labels = c("Has not attended in the last 3 months", "Public School/College", "Private School/College or Homeschool")),
+         notwork = factor(esr, 
+                          levels = c(1:6), 
+                          labels = c("Civilian employed, at work", "Civilian employed, with a job but not at work", "Unemployed", "Armed forces, at work", "Armed forces, with a job but not at work", "Not in labor force")), 
+         notworking = ifelse(notwork == "Unemployed", "Yes", 
+                             ifelse(notwork == "Not in labor force", "Yes", "No")),
+         notinschool = ifelse(noteduc == "Has not attended in the last 3 months", "Yes", "No"), 
+         disengaged = ifelse(notinschool == "Yes" & notworking == "Yes", "Disengaged", "Not Disengaged"))
+
+saveRDS( acs_df2, file.path( path.expand( "~" ), "ACS", "acs2016_1yrB.rds") )
+```
+
+Now we combine the geographies into a single data-frame. 
+
+```{r, eval = FALSE}
+acs_df <- rbind.data.frame(acs_df1, acs_df2) 
+saveRDS( acs_df, file.path( path.expand( "~" ), "ACS", "acs2016_1yrAB.rds") )
+```
+
+I cleared my RStudio Environment before loading the full 2016 data-frame, just to avoid any vector memory errors. 
+
+```{r, eval = FALSE}
+rm(list = ls())
+
+acs_df <- readRDS( file.path( path.expand( "~" ), "ACS", "acs2016_1yrAB.rds") )
+
+acs_df <- acs_df %>% 
+  mutate(hispanic = ifelse(hisp == 1, "Not Hispanic", "Hispanic"),
+        race = factor(rac1p, levels = 1:9, labels = c("White Alone", "Black or African American Alone", "American Indian Alone", "Alaska Native Alone", "American Indian and Alaska Native", "Asian Alone", "Native Hawaiian and Other Pacific Islander Alone", "Some Other Race Alone", "Two or More Races")),
+        youth = ifelse(agep >= 16 & agep <= 24, "Yes", "No"),
+        disengaged = factor(disengaged)
+        )
+```
+
+Now all that remained to be done was to specify the survey design and then run the weighted estimates I needed. 
+
+```{r, eval = FALSE}
+library(survey)
+acs_design <-
+    svrepdesign(
+        weight = ~pwgtp ,
+        repweights = 'pwgtp[0-9]+' ,
+        scale = 4 / 80 ,
+        rscales = rep( 1 , 80 ) ,
+        mse = TRUE ,
+        type = 'JK1' ,
+        data = acs_df
+    )
+``` 
+
+I borrowed Anthony's default code to label the states.
+
+```{r, eval = FALSE}
+acs_design <-
+    update(
+        acs_design ,
+        relp = as.numeric( relp ) ,
+        state_name =
+            factor(
+                as.numeric( st ) ,
+                levels = 
+                    c(1L, 2L, 4L, 5L, 6L, 8L, 9L, 10L, 
+                    11L, 12L, 13L, 15L, 16L, 17L, 18L, 
+                    19L, 20L, 21L, 22L, 23L, 24L, 25L, 
+                    26L, 27L, 28L, 29L, 30L, 31L, 32L, 
+                    33L, 34L, 35L, 36L, 37L, 38L, 39L, 
+                    40L, 41L, 42L, 44L, 45L, 46L, 47L, 
+                    48L, 49L, 50L, 51L, 53L, 54L, 55L, 
+                    56L, 72L) ,
+                labels =
+                    c("Alabama", "Alaska", "Arizona", "Arkansas", "California", 
+                    "Colorado", "Connecticut", "Delaware", "District of Columbia", 
+                    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", 
+                    "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", 
+                    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", 
+                    "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", 
+                    "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
+                    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", 
+                    "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", 
+                    "Washington", "West Virginia", "Wisconsin", "Wyoming", "Puerto Rico")
+            ))
+```
+
+Now the target measure of opportunity youth. 
+
+```{r, eval = FALSE}
+oppyouth <- svyby( ~ disengaged , ~ state_name , acs_design , svymean, na.rm = TRUE)
+oppyouth[, c(2:5)] <- oppyouth[, c(2:5)] * 100 
+oppyouth[, c(2:5)] <- round(oppyouth[, c(2:5)], digits = 1)
+oppyouth$se2 <- NULL
+colnames(oppyouth) <- c("state", "disengaged", "notdisengaged", "stderror")
+```
+
+If all went well you should see `oppyouth` reflecting the following for 2016. 
+
+```{r, echo = FALSE}
+oppyouth <- read.csv("~/Documents/Data Hub/ACS PUMS/oppyouth_2016.csv")
+oppyouth$disengaged <- sprintf("%0.1f", oppyouth$disengaged)
+oppyouth$notdisengaged <- sprintf("%0.1f", oppyouth$notdisengaged)
+oppyouth$stderror <- sprintf("%0.1f", oppyouth$stderror)
+
+DT::datatable(oppyouth, colnames = c("State", "Disengaged (%)", "Not Disengaged (%)", "Standard Error (%)"))
+```
+
+If you want the breakouts by race, you will need to cross Hispanic status and the one race alone categories. 
+```{r, eval = FALSE}
+blkyouth <- svyby( ~ disengaged, ~ state_name, subset(acs_design, rac1p == "2" & hisp == "01") , svymean, na.rm = TRUE)
+blkyouth[, c(2:5)] <- blkyouth[, c(2:5)] * 100 
+blkyouth[, c(2:5)] <- round(blkyouth[, c(2:5)], digits = 1)
+blkyouth$se2 <- NULL
+colnames(blkyouth) <- c("State", "Disengaged (%)", "Not Disengaged  (%)", "Standard Error (%)")
+
+
+```
