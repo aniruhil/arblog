@@ -171,7 +171,7 @@ colnames(oppyouth) <- c("state", "disengaged", "notdisengaged", "stderror")
 If all went well you should see `oppyouth` reflecting the following for 2016. 
 
 ```{r, echo = FALSE}
-oppyouth <- read.csv("data/oppyouth_2016.csv")
+oppyouth <- read.csv("/users/ruhil/Documents/Data Hub/ACS PUMS/oppyouth_2016.csv")
 oppyouth$disengaged <- sprintf("%0.1f", oppyouth$disengaged)
 oppyouth$notdisengaged <- sprintf("%0.1f", oppyouth$notdisengaged)
 oppyouth$stderror <- sprintf("%0.1f", oppyouth$stderror)
