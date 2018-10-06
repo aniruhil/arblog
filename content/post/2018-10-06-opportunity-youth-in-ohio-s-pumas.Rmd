@@ -15,7 +15,7 @@ header:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
 A client needed state-level estimates of the percent of opportunity youth (defined either as 16-19 or 16-24 year-old persons who are neither in school nor employed) in each state plus Washington DC. The end result would be three years of estimates that matched the numbers put out by [Measure of America's yearly reports on the subject.](http://www.measureofamerica.org/disconnected-youth/)  
@@ -174,7 +174,7 @@ colnames(oppyouth) <- c("State", "Disengaged (%)", "Not Disengaged  (%)", "Stand
 
 If all went well you should see `oppyouth` reflecting the following for 2016. 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = TRUE}
 oppyouth <- read.csv("/users/ruhil/Documents/Data Hub/ACS PUMS/oppyouth_2016.csv")
 oppyouth$disengaged <- sprintf("%0.1f", oppyouth$disengaged)
 oppyouth$notdisengaged <- sprintf("%0.1f", oppyouth$notdisengaged)
