@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module 04</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 04
+## MPA 6010
+### Ani Ruhil
+### (updated: 2018-10-11)
+
+---
+
+
+  &lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+      cancel: ["Extension","cancel"],
+      bcancel: ["Extension","cancel"],
+      xcancel: ["Extension","cancel"],
+      cancelto: ["Extension","cancel"]
+    });
+  });
+&lt;/script&gt;
+
+
+
+# Agenda 
+
+1. The Logic of Hypothesis Testing
+
+2. One-tailed versus Two-tailed hypotheses  
+
+3. One-Sample `t-tests` 
+
+4. Two-group `t-tests` 
+
+5. Paired `t-tests` 
+
+6. Assumptions of `t-tests` 
+
+---
+
+class: inverse, middle, center
+
+# The Logic of Hypothesis Testing
+
+---
+
+**`Hypothesis testing`** is an inferential procedure that uses sample data to evaluate the credibility of a hypothesis about a population parameter. The process involves ...
+
+1. Stating a **`hypothesis:`** an assumption that can neither be fully proven nor fully disproven. For example,  
+
+  * Not more than 5% of GM trucks breakdown in under 10,000 miles 
+
+  * Heights of North American adult males is distributed with `\(\mu = 72\)` inches  
+
+  * Mean year-round temperature in Athens (OH) is `\(&gt; 62\)` 
+
+  * 10% of Ohio teachers are Accomplished 
+
+  * Mean county unemployment rate is 12.1%
+
+2. Drawing a sample to test the hypothesis 
+
+3. Conducting the test itself to see if the hypothesis should be rejected
+
+---
+
+#### The **`Null`** and the **`Alternative`** Hypotheses 
+
+- Null Hypothesis:  `\((H_{0})\)` is the assumption believed to be true 
+
+- Alternative Hypothesis: `\((H_{a})\)` is the statement believed to be true if `\((H_{0})\)` is rejected
+
+    `\(H_{0}\)`: `\(\mu &gt; 72\)` inches; `\(H_{1}\)`: `\(\mu \leq 72\)` 
+        
+    `\(H_{0}\)`: `\(\mu &lt; 72\)` inches; `\(H_{1}\)`: `\(\mu \geq 72\)` 
+        
+    `\(H_{0}\)`: `\(\mu \leq 72\)` inches; `\(H_{1}\)`: `\(\mu &gt; 72\)` 
+        
+    `\(H_{0}\)`: `\(\mu \geq 72\)` inches; `\(H_{1}\)`: `\(\mu &lt; 72\)` 
+        
+    `\(H_{0}\)`: `\(\mu = 72\)` inches; `\(H_{1}\)`: `\(\mu \neq 72\)` 
+
+
+ `\(H_{0}\)` and `\(H_{1}\)` are `mutually exclusive` and `mutually exhaustive` 
+
+* Mutually Exclusive: Either `\(H_{0}\)` or `\(H_{1}\)` is True `\(\cdots\)` both cannot be true at the same time
+
+* Mutually Exhaustive: `\(H_{0}\)` and `\(H_{1}\)` exhaust the Sample Space `\(\cdots\)`; there are no other possibilities unknown to us 
+
+---
+
+### `Type I and Type II Errors`
+
+&lt;table class="table table-hover" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;"&gt;Decision based on Sample&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;"&gt;Null is true&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; font-weight: bold; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;"&gt;Null is false&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;  &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Reject the Null &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Type I error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No error &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Do not reject the Null &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No error &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Type II error &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+.pull-left[
+`Type I Error:` Rejecting the Null hypothesis `\(H_0\)` when `\(H_0\)` is true 
+
+i.e., we should not have rejected the Null
+
+]
+
+.pull-right[
+`Type II Error:` Failing to reject the Null hypothesis `\(H_0\)` when `\(H_0\)` is false 
+
+i.e., we should have rejected the Null
+
+]
+
+
+The probability of committing a Type I error `\(= \text{ Level of Significance }= \alpha\)` 
+
+We have to decide how often we want to make a Type I error (i.e., falsely Reject `\(H_0\)`). Conventionally we set this rate to one of the following `\(\alpha\)` values: 
+
+`$$\alpha=0.05 \text{ or } \alpha=0.01$$` 
+
+Note the very cautious language ... `Reject` `\(H_{0}\)` versus `Do Not Reject` `\(H_{0}\)` 
+
+---
+
+### The Process of Hypothesis Testing: One Example 
+Assume we want to know whether the roundabout on SR682 has had an impact on traffic accidents in Athens. We have historical data on the number of accidents in years past. Say the average per day used to be 6 (i.e., `\(\mu = 6\)`). To see if the roundabout has had an impact we could gather accident data for a random sample of 100 days `\((n=100)\)` from the period after the roundabout was built. 
+
+Before we do that though, we will need to specify our hypotheses. What do we think might be the impact? Let us say the City Engineer argues that the roundabout should have decreased accidents. 
+
+
+* If he is correct then the sample mean `\(\bar{x}\)` should be less than the population mean `\(\mu\)` i.e., `\(\bar{x} &lt; \mu\)` 
+
+* If he is wrong then the sample mean `\(\bar{x}\)` should be at least as much as the population mean `\(\mu\)` i.e., `\(\bar{x} \geq \mu\)`
+
+---
+
+### The Sampling Distribution of `\(\bar{x}\)` 
+
+We know from the theory of sampling distributions that the distribution of sample means, for all samples of size `\(n\)`, will be normally distributed (as shown below) 
+
+Most samples would be in the middle of the distribution but `by sheer chance` we could end up with a sample mean in the tails. This will happen with a very small probability  but `it could happen!!` 
+
+&lt;img src="hyp.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scenario 1: Engineer says `\(\bar{x} &lt; \mu\)` 
+
+If we believe the City Engineer, we would setup the hypotheses as follows: 
+
+- `\(H_0\)`: The roundabout does not reduce accidents, i.e., `\(\mu \geq \mu_0\)` 
+- `\(H_1\)`: The roundabout does reduce accidents, i.e., `\(\mu &lt; \mu_0\)` 
+- Next set `\(\alpha\)` (the probability of making a Type I error) 
+- We then calculate the sample mean `\((\bar{x})\)` and the sample standard deviation `\((s)\)` 
+- Next we calculate the standard error of the sample mean: `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)` 
+- Now we calculate `\(t = \dfrac{\bar{x} - \mu}{s_{\bar{x}}}\)` and this is what we call `\(t_{calculated}\)` 
+- Using `\(df=n-1\)`, find the area to the left of `\(t_{calculated}\)` 
+- If this area is very small we can conclude that the roundabout must have worked to reduce accidents 
+- How should we define `very small`? By setting `\(\alpha\)` either to 0.05 or to 0.01 
+
+We Reject `\(H_0\)` if `\(P(t_{calculated}) \leq \alpha\)`; the data provide sufficient evidence to conclude that the roundabout has reduced accidents 
+
+If `\(P(t_{calculated}) &gt; \alpha\)` then we Fail to reject `\(H_0\)`; the data provide insufficient evidence to conclude that the roundabout has reduced accidents
+
+---
+
+### Rejection rule 
+
+Reject `\(H_0\)` if calculated `\(t\)` falls in the green region (i.e., calculated `\(t \leq -1.6603\)`) 
+
+&lt;img src="hyp3.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Failure to reject rule 
+
+Do Not Reject `\(H_0\)` if calculated `\(t\)` falls in the grey region (i.e., `\(t_{calculated} &gt; -1.6603\)`)
+
+&lt;img src="hyp4.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Scenario 2: Engineer says `\(\bar{x} \neq \mu\)`
+
+If we believe the City Engineer, we would setup the hypotheses as follows: 
+
+- `\(H_0\)`: The roundabout has no impact on accidents, i.e., `\(\mu = \mu_0\)` 
+- `\(H_1\)`: The roundabout has an impact on accidents, i.e., `\(\mu \neq \mu_0\)` 
+- We then calculate the sample mean `\((\bar{x})\)` and the sample standard deviation `\((s)\)` 
+- Next we calculate the standard error of the sample mean: `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)` 
+- Now calculate `\(t_{calculated} = \dfrac{\bar{x} - \mu}{s_{\bar{x}}}\)` 
+- Using `\(df=n-1\)`, find the area to the left/right of `\(\pm t_{calculated}\)` 
+
+If this area is very small then we can conclude that the roundabout must have worked to reduce accidents 
+
+How should we define `very small`? By setting `\(\alpha\)` either to 0.05 or to 0.01 
+
+We can then Reject `\(H_0\)` if `\(P(\pm t_{calculated}) \leq \alpha\)` ; the data provide sufficient evidence to conclude that the roundabout has reduced accidents 
+
+If `\(P(\pm t_{calculated}) &gt; \alpha\)` then we will Fail to reject `\(H_0\)`; the data provide insufficient evidence to conclude that the roundabout has reduced accidents
+
+---
+
+### Rejection rule 
+
+Reject `\(H_0\)` if calculated `\(\lvert{t}\rvert\)` falls in the green region (i.e., calculated `\(t \leq -1.98\)` or calculated `\(t \geq 1.98\)`)
+
+&lt;img src="hyp5.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Failure to reject rule 
+
+Do Not Reject `\(H_0\)` if calculated `\(\lvert{t}\rvert\)` falls in the grey region (i.e., `\(-1.98 &lt; \text{calculated } t &lt; 1.98\)`)
+
+&lt;img src="hyp6.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The process revisited ...
+
+1. State the hypotheses
+  - If we want to test whether something has `changed` then `\(H_0\)` must specify that nothing has changed `\(\ldots H_0:\mu = \mu_{0}; H_1: \mu \neq \mu_{0} \ldots\)`  **two-tailed**  
+  - If we want to test whether something is `different` then `\(H_0\)` must specify that nothing is different `\(\ldots H_0:\mu = \mu_{0}; H_1: \mu \neq \mu_{0}\ldots\)` **two-tailed** 
+  - If we want to test whether something had an `impact` then `\(H_0\)` must specify that it had no impact `\(\ldots H_0:\mu = \mu_{0}; H_1: \mu \neq \mu_{0}\ldots\)` **two-tailed** 
+  - If we want to test whether something has `increased` then `\(H_0\)` must specify that it has not increased `\(\ldots H_0:\mu \leq \mu_{0}; H_1: \mu &gt; \mu_{0}\ldots\)` **one-tailed** 
+  - If we want to test whether something has `decreased` then `\(H_0\)` must specify that it has not decreased `\(\ldots H_0:\mu \geq \mu_{0}; H_1: \mu &lt; \mu_{0}\ldots\)` **one-tailed** 
+  
+2. Collect the sample and set `\(\alpha=0.05\)` or `\(\alpha=0.01\)` 
+3. Calculate `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)`, `\(\bar{x}\)`, `\(df=n-1\)`
+4. Calculate the `\(t\)` 
+
+5. Reject `\(H_0\)` if calculated `\(t\)` falls in the **critical region**; do not reject `\(H_0\)` otherwise
+
+---
+
+### Problem 1 
+Last year, Normal (IL) the city's motor pool maintained the city's fleet of vehicles at an average cost of $\$346$ per car.  This year Jack's Crash Shop is doing the maintenance. City notices that in a random sample of 36 cars fixed by Jack the mean repair cost is $\$330$ with a standard deviation of $\$120$. Is Jack saving the City money? 
+
+`\(H_0: \mu \geq 346\)` and `\(H_1: \mu &lt; 346\)`. Let us choose `\(\alpha = 0.05\)`. Note `\(df=n-1=36-1=35\)` 
+
+`\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}} = \dfrac{120}{\sqrt{36}} = 20\)`, and hence `\(t = \dfrac{\bar{x} - \mu_{0}}{s_{\bar{x}}} = \dfrac{330-346}{20} = \dfrac{-16}{20} = -0.80\)`
+
+.pull-left[
+&lt;img src="prob111.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="prob111b.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+Fail to reject `\(H_0\)`; the data suggest that Jack's Car Shop may not be cheaper
+
+---
+
+### Problem 2 
+Kramer's (TX) Police Chief learns that his staff clear 46.2% of all burglaries in the city. She wants to benchmark their performance and to do this she samples 10 other similar cities in Texas. She finds their numbers to be as follows:
+
+&lt;table class="table table-striped" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Rate &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Rate &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 44.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 40.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 36.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 49.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 46.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 51.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41.0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Is Kramer's clearance rate significantly different from those of other similar Texas cities? 
+
+`\(H_0: \mu = 46.2\)` and `\(H_1: \mu \neq 46.2\)`. Set `\(\alpha = 0.05\)` 
+
+Note `\(df=n-1=10-1=9\)`, `\(\bar{x}=40.34\)`, and `\(s_{\bar{x}} = 2.4279\)`  
+
+`\(t = \dfrac{ \bar{x} - \mu_{0} }{ s_{\bar{x}} } = \dfrac{40.34-46.2}{2.4279} = -2.414\)`
+
+---
+
+.pull-left[
+&lt;img src="prob151.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="prob151b.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+Reject `\(H_0\)`; the data suggest that Kramer's clearance rate may be significantly different from that of other similar Texas cities.
+
+---
+
+### Problem 3 
+The Director of Philanthropy at the Fleckman Institute of the Arts is curious to assess the impact of this year's changes in federal tax laws on donations. Last year the average donation was \$580. A random sample of 50 donors yields an average donation of \$625 with a standard deviation of \$97. Has the change in federal tax laws had an impact on donations? `\(\ldots\)` **solve this on your own** 
+
+---
+
+### Problem 4 
+Springdale University is concerned that student volunteer activity has decreased. Last year their students volunteered an average of 7.3 hours of community service per month. This year, a random sample of 75 student volunteers reveals an average of 6.8 hours per month with a standard deviation of 1.5 hours. Should the University be concerned? `\(\ldots\)` **solve this on your own** 
+
+
+---
+
+### Overlap Between Hypothesis Tests and Confidence Intervals
+
+- Calculate the 95% confidence interval for a sample mean `\(\bar{x}\)`
+
+- Note that in this confidence interval, `\(\alpha = 0.05\)`; `\(\alpha/2=0.025\)`
+
+- Use the Test Statistic with `\(\alpha = 0.05\)` to make a decision
+
+- Note the similarity?
+
+---
+
+class: inverse, middle, center 
+
+## Comparing Means  
+
+---
+
+### Comparisons of Means from Common Parent Population 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module04_files/figure-html/unnamed-chunk-10-1.png" alt="Common Parent Population" width="65%" /&gt;
+&lt;p class="caption"&gt;Common Parent Population&lt;/p&gt;
+&lt;/div&gt;
+---
+
+### Comparisons of Means from Different Parent Populations 
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="module04_files/figure-html/unnamed-chunk-11-1.png" alt="Separate Parent Populations" width="65%" /&gt;
+&lt;p class="caption"&gt;Separate Parent Populations&lt;/p&gt;
+&lt;/div&gt;
+
+--- 
+
+We often need to compare sample means across two groups. For example, are average earnings the same for men and women in a specific occupation? Perhaps we suspect (a) women are underpaid or (generally) that (b) their salaries differ from those of men. 
+
+Let the population and sample means be `\(\mu_m, \mu_w\)` and `\(\bar{x}_m, \bar{x}_w\)`, respectively 
+
+(a) `\(H_0: \mu_m \leq \mu_w\)` and `\(H_1: \mu_m &gt; \mu_w\)`, `\(\therefore H_0: \mu_m - \mu_w \leq 0\)` and `\(H_1: \mu_m - \mu_w  &gt; 0\)`
+
+(b) `\(H_0: \mu_m = \mu_w\)` and `\(H_1: \mu_m \neq \mu_w\)`, `\(\therefore H_0: \mu_m - \mu_w = 0\)` and `\(H_1: \mu_m - \mu_w \neq 0\)`
+
+Standard Error of the difference in means: `\(s_{\bar{x}_m - \bar{x}_w} = \sqrt{\dfrac{s^{2}_{m}}{n_m} + \dfrac{s^{2}_w}{n_w}}\)`
+
+Confidence Interval estimate: `\(\left(\bar{x}_m - \bar{x}_w\right) \pm t_{\alpha/2}\left(s_{\bar{x}_m - \bar{x}_w}\right)\)`
+
+The Test Statistic: `\(t = \dfrac{\left(\bar{x}_m - \bar{x}_w \right) - \left(\mu_m - \mu_w \right)}{\sqrt{\dfrac{s^{2}_{m}}{n_m} + \dfrac{s^{2}_w}{n_w}}} = \dfrac{\left(\bar{x}_m - \bar{x}_w \right) - D_0}{\sqrt{\dfrac{s^{2}_{m}}{n_m} + \dfrac{s^{2}_w}{n_w}}}\)` 
+
+---
+
+The degrees of freedom for this test: `\(df = \dfrac{\left(\dfrac{s^{2}_m}{n_m} + \dfrac{s^{2}_w}{n_w} \right)^2}{\dfrac{1}{(n_m -1)}\left(\dfrac{s^{2}_m}{n_m}\right)^2 + \dfrac{1}{(n_w -1)}\left(\dfrac{s^{2}_w}{n_w}\right)^2}\)`
+
+Note: We usually `round down` the `\(df\)` to the nearest integer 
+
+We have two ways of calculating the estimated standard error `\((s_{\bar{x}_1 - \bar{x}_2})\)` and the degrees of freedom `\(df\)` 
+
+(1) When the population variances are `assumed unequal`  
+(2) When the population variances are `assumed equal`  
+
+---
+
+### (1) Unequal Population Variances
+
+
+`Standard Error will be:` `\(\left(s_{\bar{x}_1 - \bar{x}_2}\right) = \sqrt{\dfrac{\sigma^{2}_{1}}{n_1} + \dfrac{\sigma^{2}_2}{n_2}}\)` 
+
+`Degrees of Freedom will be:` `\(df = \dfrac{\left(\dfrac{s^{2}_m}{n_m} + \dfrac{s^{2}_w}{n_w} \right)^2}{\dfrac{1}{(n_m -1)}\left(\dfrac{s^{2}_m}{n_m}\right)^2 + \dfrac{1}{(n_w -1)}\left(\dfrac{s^{2}_w}{n_w}\right)^2}\)` 
+
+
+- Use this when `\(n_1\)` or `\(n_2\)` are `\(&lt; 30\)` and
+
+- Either sample has a standard deviation at least twice that of the other sample 
+
+---
+
+### (2) Equal Population Variances 
+
+`Standard Error will be:` `\(\left(s_{\bar{x}_1 - \bar{x}_2}\right) = \sqrt{\dfrac{n_1 + n_2}{n1 \times n_2}}\sqrt{\dfrac{(n_1 -1)s^{2}_{x_{1}} + (n_2 -1)s^{2}_{x_2}}{\left(n_1 + n_2\right) -2}}\)` 
+
+`Degrees of Freedom will be:` `\(df = \left( n_1 + n_2\right) -2\)` 
+
+
+- Use when the standard deviations are roughly equal, and 
+
+- `\(n_1\)` and `\(n_2\)` $ \geq 30$
+
+---
+
+### Assumptions and Rules-of-thumb
+
+(1) Random samples  
+
+(2) Variables are drawn from normally distributed Populations 
+
+
+**Rules-of-thumb:** 
+
+  - Draw larger samples if you suspect the Population(s) may be skewed 
+  
+  - Go with assumption of `equal variances` if both the following are met:  
+      (a) Assumption theoretically justified, standard deviations fairly close, &amp;   
+      (b) `\(n_1 \geq 30\)` and `\(n_2 \geq 30\)` 
+      
+  - Go with assumption of `unequal variances` if both the following are met:  
+      (a) One standard deviation is at least twice the other standard deviation, &amp;   
+      (b) `\(n_1 &lt;  30\)` or `\(n_2 &lt; 30\)` 
+
+Of course, some statistical software packages (SPSS, for instance) will run the test under both assumptions so you can `choose` on the basis of the results (a bad idea in some eyes) 
+
+---
+
+### Testing Variances: Levene's Test for Homogeneity of Variances 
+
+- Assumes roughly symmetric frequency distributions within all groups 
+
+- Robust to violations of assumption 
+
+- Can be used with 2 or more groups 
+
+`\(H_0: \sigma^{2}_{1} = \sigma^{2}_{2} = \sigma^{2}_{3} = \cdots \sigma^{2}_{k}\)` and `\(H_A:\)` For at least one pair of `\((i,j)\)` we have `\(\sigma^{2}_{i} \neq \sigma^{2}_{j}\)` 
+
+Test Statistic: `\(W = \dfrac{ (N-k)\displaystyle\sum^{k}_{i=1}n_{i}\left( \bar{Z}_{i} - \bar{Z} \right)^{2}   }{(k-1)\displaystyle\sum^{k}_{i=1}\sum^{n_i}_{j=1}\left( Z_{ij} - \bar{Z}_{i}\right)^{2}}\)` 
+
+`\(Z_{ij} = |{Y_{ij} - \bar{Y}_i}|\)`; `\(\bar{Z}_i\)` is the mean for all `\(Y\)` in the `\(i^{th}\)` group; `\(\bar{Z}\)` is the mean for all `\(Y\)` in the study; `\(k\)` is the number of groups in the study; and `\(n_i\)` is the sample size for group `\(i\)`
+
+If you opt for the more robust version that uses the Median, then, `\(Z_{ij} = |Y_{ij} - \tilde{Y}_{i}|\)` where `\(\tilde{Y}_{i}\)` is median of `\(i^{th}\)` group
+
+`\(W \sim F_{\alpha, k-1, n-k}\)`
+
+---
+
+### Example 1 
+The Athens County Public Library is trying to keep its bookmobile alive since it reaches readers who otherwise may not use the library. One of the library employees decides to conduct an experiment, running advertisements in 50 areas served by the bookmobile and not running advertisements in 50 other areas also served by the bookmobile. After one month, circulation counts of books are calculated and mean circulation counts are found to be 526 books for the advertisement group with a standard deviation of 125 books and 475 books for the non-advertisement group with a standard deviation of 115 books. Is there a statistically significant difference in mean book circulation between the two groups? 
+
+Since we are being asked to test for a "difference" it is a two-tailed test, with hypotheses given by: 
+
+`$$\begin{array}{l}
+H_0: \text{ There is no difference in average circulation counts } (\mu_1 = \mu_2) \\
+H_1: \text{ There is a difference in average circulation counts } (\mu_1 \neq \mu_2)
+\end{array}$$`
+
+---
+
+Since both groups have sample sizes that exceed 30 we can proceed with the assumption of equal variances and calculate the standard error and the degrees of freedom. The degrees of freedom as easy: `\(df = n_1 + n_2 - 2 = 50 + 50 - 2 = 98\)`. The standard error is `\(s_{\bar{x}_1 - \bar{x}_2} = \sqrt{\dfrac{n_1 + n_2}{n_1n_2}}\sqrt{\dfrac{(n_1 -1)s^{2}_{x_{1}} + (n_2 -1)s^{2}_{x_2}}{\left(n_1 + n_2\right) -2}}\)` and plugging in the values we have 
+
+`$$s_{\bar{x}_1 - \bar{x}_2} = \sqrt{\dfrac{50 + 50}{2500}} \sqrt{\dfrac{(50 -1)(125^2) + (50 -1)(115^2)}{\left(50 + 50\right) -2}} = (0.2)(120.1041) = 24.02082$$` 
+
+The test statistic is 
+
+`$$t = \dfrac{\left( \bar{x}_1 - \bar{x}_2 \right) - \left( \mu_1 - \mu_2 \right) }{s_{\bar{x}_1 - \bar{x}_2}} = \dfrac{(526 - 475) - 0}{24.02082} = \dfrac{51}{24.02082} = 2.123158$$` 
+
+---
+
+Since no `\(\alpha\)` is given let us use the conventional starting point of `\(\alpha = 0.05\)` 
+
+With `\(df=98\)` and `\(\alpha = 0.05\)`, two-tailed, the critical `\(t\)` value would be `\(\pm 1.98446745\)` 
+
+Since our calculated `\(t = 2.1231\)` exceeds the critical `\(t = 1.9844\)`, we can easily reject the null hypothesis of no difference
+
+Conclusion: These data suggest there is a difference in average circulation counts between the advertisement and no advertisement groups
+
+We could have also used the the p-value approach, rejecting the null hypothesis of no difference if the p-value was `\(\leq \alpha\)` 
+
+The p-value of our calculate `\(t\)` turns out to be 0.0363 and so we can reject the null hypothesis 
+
+Note, in passing, that had we used `\(\alpha = 0.01\)` we would have been unable top reject the null hypothesis because `\(0.0363\)` is `\(&gt; 0.01\)` 
+
+---
+
+The 95% confidence interval is given by 
+
+`$$(\bar{x}_1 - \bar{x}_2) \pm t_{\alpha/2}(s_{\bar{x}_1 - \bar{x}_2}) = 51 \pm 1.9844(24.02082) = 51 \pm 47.66692 = 3.33308 \text{ and } 98.66692$$` 
+
+We can be about 95% confident that the true difference between the groups lies in this interval 
+
+Had we used the 99% interval for a test with `\(\alpha = 0.01\)` the interval would be 
+
+`$$51 \pm 2.627(24.02082) = -12.10269 \text{ and } 114.1027$$` 
+
+subsuming the null hypothesis difference of `\(0\)` and leaving us unable to reject the null hypothesis.  
+
+---
+
+
+### Example 2 
+Say we have a large data-set with a variety of information about several cars, gathered in 1974. One of the questions we have been tasked with testing is whether the miles per gallon yield of manual transmission cars in 1974 was greater than that of automatic transmission cars. Assume they want us to use `\(\alpha = 0.05\)`. 
+
+
+
+We have thirteen manual transmission cars and 19 automatic transmission cars, and the means and standard deviations are 24.3923 and 6.1665 for manual, and 17.1473 and 3.8339 for automatic cars, respectively. The hypotheses are:
+
+`$$\begin{array}{l}
+H_0: \text{Mean mpg of manual cars is at most that of the mean mpg of automatic cars } (\bar{x}_{manual} \leq  \bar{x}_{automatic}) \\
+H_1: \text{Mean mpg of manual cars is greater than mean mpg of automatic cars } (\bar{x}_{manual} &gt; \bar{x}_{automatic})
+\end{array}$$`
+
+---
+
+The calculated `\(t\)` is 4.1061 and the p-value is 0.0001425, allowing us to reject the null hypothesis 
+
+Conclusion: These data suggest that average mpg of automatic cars is not at most that of manual cars 
+
+Note a couple of things here: 
+
+(i) We have a one-tailed hypothesis test, and  
+(ii) we are assuming equal variances since both conditions are not met for assuming unequal variances 
+
+In addition, note that the confidence interval is found to be  `\((3.6415, 10.8483)\)`, indicating that we can be 95% confident that the average manual mpg is higher than average automatic mpg by anywhere between 3.64 mpg and 10.84 mpg   
+
+---
+
+### Matched (aka Dependent or Paired) Samples 
+
+Sometimes you may have two sets of measures on the same units. Now 
+
+- `\(H_0: \mu_d = 0; H_1: \mu_d \neq 0\)` or 
+- `\(H_0: \mu_d \geq 0; H_1: \mu_d &lt; 0\)` or  
+- `\(H_0: \mu_d \leq 0; H_1: \mu_d &gt; 0\)`
+
+`\(\bar{d} = \dfrac{\sum{d_i}}{n}\)` 
+
+`\(s_d = \sqrt{\dfrac{\sum(d_i - \bar{d})^2}{n-1}}\)` and `\(s_{\bar{d}} = \dfrac{s_{d}}{\sqrt{n}}\)` 
+
+Test Statistic: `\(t = \dfrac{\bar{d} - \mu_{d}}{ s_{\bar{d}} }\)` 
+
+With normally distributed population `\(df = n-1\)` 
+
+Interval estimate: `\(\bar{d} \pm t_{\alpha/2} \left( s_{\bar{d}} \right)\)` 
+
+---
+
+### The Testing Protocol 
+Let us see how the test is carried out with reference to a small data-set wherein we have six pre-school children's scores on a vocabulary test before a reading program is introduced into the pre-school `\((x_2)\)` and then again after the reading program has been in place for a few months `\((x_2)\)`.
+
+&lt;table class="table table-striped" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Vocabulary Scores pre- and post-intervention&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Child ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Pre-intervention score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Post-intervention score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Difference = Pre - Post &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.6 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Note the column `\(d_i\)` has the `difference of the scores` such that for Child 1, `\(6.0 - 5.4 = 0.6\)`, for Child 2, `\(5.0 - 5.2 = -0.2\)`, and so on. The mean, variance and standard deviation of `\(d\)` are calculated as follows: 
+
+`\begin{eqnarray*}
+d_{i} &amp;=&amp; x_{1} - x_{2} \\ 
+\bar{d} &amp;=&amp; \dfrac{\sum{d_i}}{n} \\
+s^{2}_{d} &amp;=&amp; \dfrac{\sum(d_i - \bar{d})^2}{n-1} \\
+s_d &amp;=&amp; \sqrt{\dfrac{\sum(d_i - \bar{d})^2}{n-1}} 
+\end{eqnarray*}`
+
+---
+
+Say we have no idea what to expect from the program. In that case, our hypotheses would be: 
+
+`$$\begin{array}{l}
+H_0: \mu_d = 0 \\
+H_1: \mu_d \neq 0
+\end{array}$$`
+
+The test statistic is given by `\(t = \dfrac{\bar{d} - \mu_d}{s_d/\sqrt{n}}; df=n-1\)` and the interval estimate calculated as `\(\bar{d} \pm t_{\alpha/2}\left(\dfrac{s_d}{\sqrt{n}}\right)\)`. 
+
+Once we have specified our hypotheses, selected `\(\alpha\)`, and calculated the test statistic, the usual decision rules apply: ... 
+
+- Reject the null hypothesis if the calculated `\(p-value \leq \alpha\)` 
+- Do not reject the null hypothesis if the calculated `\(p-value &gt; \alpha\)` 
+
+In this particular example, it turns out that `\(\bar{d}=0.30\)`; `\(s_d=0.335\)`; `\(t = 2.1958\)`, `\(df = 5\)`, `\(p-value = 0.07952\)` and 95% CI: `\(0.3 \pm 0.35 = (-0.0512,  0.6512)\)`. 
+
+Given the large `\(p-value\)` we fail to reject `\(H_0\)` and conclude that these data do not suggest a statistically significant impact of the reading program. 
+
+---
+
+### Example 1 
+Over the last decade, has poverty worsened in Ohio's public school districts? One way to test worsening poverty would be to compare the percent of children living below the poverty line in each school district across two time points. For the sake of convenience I will use two American Community Survey (ACS) data sets that measure `Children Characteristics (Table S0901)`, one the 2011-2015 ACS and the other the 2006-2010 ACS. While a small snippet of the data are shown below for the 35 school districts with data for both years, you can [download the full dataset from here](https://aniruhil.github.io/avsr/teaching/dataviz/sdpoverty.csv). 
+
+&lt;table class="table table-striped" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;Percent of Children in Poverty&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; District &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2006-2010 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; 2011-2015 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Akron City School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Brunswick City School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Canton City School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49.6 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Centerville City School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Cincinnati City School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 43.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Cleveland Municipal School District, Ohio &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53.3 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+`$$\begin{array}{l}
+H_0: \text{ Poverty has not worsened } (d \leq 0) \\
+H_1: \text{ Poverty has worsened } (d &gt; 0)
+\end{array}$$`
+
+Subtracting the 2006-2010 poverty rate from the 2011-2015 poverty rate for each district and then calculating the average difference `\((d)\)` yields `\(\bar{d} = 4.328571\)` and `\(s_{d} = 3.876746\)`
+
+With `\(n=35\)` we have a standard error `\(s_{\bar{d}} = \dfrac{s_d}{\sqrt{n}} = \dfrac{3.876746}{\sqrt{35}} = 0.6552897\)` 
+
+The test statistic is `\(t = \dfrac{\bar{d}}{s_{\bar{d}}} = \dfrac{4.328571}{0.6552897} = 6.605584\)` and has a `\(p-value = 0.0000001424\)`, allowing us to easily reject the null hypothesis
+
+... These data suggest that school district poverty has indeed worsened over the intervening time period. The 95% confidence interval is `\((2.9968 \text{ and } 5.6602)\)`  
+
+---
+
+### Example 2 
+A large urban school district in a Midwestern state implemented a reading intervention to boost the district's scores on the state's English Language Arts test. The intervention was motivated by poor performance of the district's `\(4^{th}\)` grade cohort. Three years had passed before that cohort was tested in the `\(8^{th}\)` grade. Did the intervention boost ELA scores, on average? 
+
+&lt;table class="table table-striped" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption style="font-size: initial !important;"&gt;English Language Arts: Scaled scores, grades Three and Eight&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Student ID &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Grade &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Scaled Score &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 583 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 583 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000003 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 583 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000004 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 668 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 627 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; AA0000006 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 617 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+`$$\begin{array}{l}
+H_0: \text{ Intervention did not boost ELA scores } (d \leq 0) \\
+H_1: \text{ Intervention did boost ELA scores } (d &gt; 0)
+\end{array}$$`
+
+We have `\(\bar{d} = 14.62594\)`, `\(s_d = 66.27296\)`, `\(df = 12955\)` and the standard error is `\(0.5822609\)` 
+
+The test statistic then is `\(t = \dfrac{\bar{d}}{s_{\bar{d}}} = \dfrac{14.62594}{0.5822609} = 25.11922\)` and has a `\(p-value\)` that is very close to `\(0\)` and obviously way smaller than `\(\alpha = 0.05\)` and `\(\alpha = 0.01\)` 
+
+Hence we can reject the null hypothesis; these data suggest that the reading intervention did indeed boost English Language Arts scores on average. 
+
+---
+
+### Testing Options and the Protocol
+
+- Data are coming from a `paired` design -- Use the two-sample `\(t-test\)` for paired samples 
+
+- Data are coming from two `unpaired` groups -- Use the two-sample `\(t-test\)` with 
+    - the assumption of equal variances if `\(n_1 \geq 30\)` and `\(n_2 \geq 30\)` and `\(s_1 \approx s_2\)` 
+    - the assumption of unequal variances if `\(n_1 &lt; 30\)` or `\(n_2 &lt; 30\)` and `\(s_i \geq 2\left(s_j\right)\)` 
+
+- Use `Levene's test for homogeneity of variances` if the assumption of normality is not supported 
+
+- Normality is not as big a deal since these tests are robust to small violations of normality
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
