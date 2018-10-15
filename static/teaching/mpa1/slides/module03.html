@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Module 03
 ## MPA 6010
 ### Ani Ruhil
-### (updated: 2018-09-30)
+### (updated: 2018-10-14)
 
 ---
 
@@ -259,6 +259,30 @@ Within `\(250\)` implies `\(P(4010 \leq \mu \leq 4510)\)`
 
 ---
 
+Average annual cost of automobile insurance is $\sim \mu=\$687; \sigma=\$230$ and `\(n= 45\)` 
+
+`\(\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}=\frac{230}{\sqrt{45}}= 34.29\)` 
+
+Hence the sampling distribution is `\(\mu = 687; \sigma_{\bar{x}} = 34.29\)` 
+
+What is `\(P(\bar{x})\)` within $\$100$? We need `\(P(587 \leq \mu \leq 787)\)` 
+
+* `\(z_{787}=\frac{787-687}{34.29}=2.92\)` 
+* `\(z_{587} = \frac{587-687}{34.29} = -2.92\)` 
+
+`\(\therefore P(587 \leq \mu \leq 787) = 0.9964\)` 
+
+What is `\(P(\bar{x})\)` within $\$25$? We need `\(P(662 \leq \mu \leq 712)\)` 
+
+* `\(z_{712}=\frac{712-687}{34.29}=0.73\)` 
+* `\(z_{662} = \frac{662-687}{34.29} = -0.73\)` 
+
+`\(\therefore P(662 \leq \mu \leq 712) = 0.5346\)` 
+
+If insurance agency wants to be within \$25, would you recommend a larger sample? Yes, since `\(n = 45\)` is unlikely to yield the desired result
+
+---
+
 ## `What about proportions?` 
 
 The theory of sampling distributions applies to proportions as well  
@@ -302,7 +326,6 @@ class: inverse, middle, center
 ---
 
 Statistics calculated for a population are `population parameters` (for e.g., `\(\mu\)`; `\(\sigma^{2}\)`; `\(\sigma\)`) 
-
 Statistics calculated for a sample are `sample statistics` (for e.g., `\({\bar{x}}\)`; `\(s^{2}\)`; `\(s\)`) 
 
 Desirable point estimators have the following properties:
@@ -319,21 +342,47 @@ The easiest way to understand bias and efficiency is via the following graphic [
 
 ##  Interval Estimates 
 
-While point estimators may be ideal, they are not foolproof 
+Although point estimates (for e.g., `\(\bar{x}\)`) tell us the expected value of a parameter based on a sample statistic, we know samples are not all the same even though they were drawn randomly, and have the same sample size. So we try to ask: How much confidence can we place in the point estimate? The `margin of error` helps us answer this question 
 
-`Interval Estimates` allow us to place more confidence in our estimates via the `margin of error` 
+* Interval Estimate of `\(\mu =  \bar{x} \pm \text{ Margin of error}\)` 
+* Interval Estimate of `\(p = \bar{p} \pm \text{ Margin of error}\)` 
+* Margin of Error `\(= \left( z \times \sigma \right)\)` 
 
-Formally, the interval estimate of `\(\mu\)` is 
+In any normal distribution of sample means with mean `\(\mu\)` and standard deviation `\(\sigma\)`, the following statement is true: 
 
-`$$\mu =  \bar{x} \pm \text{ Margin of error}$$` 
+* Over all samples of size `\(n\)`, the probability is `\(0.95\)` for the event in question 
+* That is, `\(-1.96\sigma \leq \bar{x}-\mu \leq +1.96\sigma\)` 
 
-and the interval estimate of `\(p\)` is 
+Rearranging the former identity yields: `\(\bar{x}-1.96\sigma \leq \mu \leq \bar{x} +1.96\sigma\)`
 
-`$$p = \bar{p} \pm \text{ Margin of error}$$` 
+This says that of all samples of identical size `\(n\)`, there is a 95% probability that `\(\mu\)` falls within `\(\bar{x} \pm 1.96\sigma\)` 
 
-where the margin of error is 
+The range of values within `\(\bar{x} \pm 1.96\sigma\)` yield the 95% \alert {confidence interval (CI)} of `\(\mu\)`, and the two boundaries are the 95% `confidence interval limits` 
 
-`$$\left(z \times \sigma \right)$$` 
+---
+
+Be careful! We aren't saying `\(\mu\)` falls within a known interval. Rather, that in repeated random sampling 95% of Confidence Intervals will include `\(\mu\)` 
+
+&lt;img src="fig81.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="fig82.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Interval Estimate with Known `\(\sigma\)` 
+
+`\(\bar{X} \pm z_{\alpha/2}\left(\dfrac{\sigma}{\sqrt{n}}\right)\)` 
+
+where `\(z_{\frac{\alpha}{2}}\)` is the `\(z\)` value yielding an area of `\(\dfrac{\alpha}{2}\)` in the upper tail of the standard normal distribution 
+
+| Confidence Level    |   `\(\alpha\)`    |   `\(\dfrac{\alpha}{2}\)`  |   `\(z_{\frac{\alpha}{2}}\)` | 
+| :--                 | :--           | :--           | :--              | 
+| 90%                 |   0.10        |    0.050    |   1.645 | 
+| 95%                 |   0.05        |    0.025    |   1.960 | 
+| 99%                 |   0.01        |    0.005    |   2.576 | 
+
 
 ---
 
@@ -549,13 +598,13 @@ which converts to
 &lt;/table&gt;
 ]
 .pull-right[
-Note happens when `\(\bar{p}=0\)` and `\(\bar{p}=1\)`: Your numerator in the formula `\(s_{\bar{p}} = \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}\)` is driven to `\(0\)` and hence so is the standard error 
+Note what happens when `\(\bar{p}=0\)` and `\(\bar{p}=1\)`: Your numerator in the formula `\(s_{\bar{p}} = \sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}\)` is driven to `\(0\)` and hence so is the standard error 
 
 Where the numerator `\(\bar{p}(1 - \bar{p})\)` is the widest is when `\(\bar{p}=0.50\)`; as `\(\bar{p}\)` moves away towards `\(0\)` or `\(1\)`, `\(\bar{p}(1 - \bar{p})\)` steadily decreases 
 
 At the extremes, the Wilson will do well but not so the Wald or Agresti-Coull 
 
-Use Wilson when `\(p\)` is close to `\(0\)` or `\(1\)` 
+Use Wilson when `\(p\)` is close to `\(0\)` or `\(1\)` or if the sample size is `small` and the Agresti-Coull method when the sample size is `large` and `\(p\)` is not close to `\(0\)` or `\(1\)`
 ]
 
 ---
@@ -631,7 +680,7 @@ Notice what happens here: Each sample yields a different value of `\(z\)` for th
 ---
 
 &lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="module03_files/figure-html/unnamed-chunk-3-1.png" alt="Student's t versus the Standard Normal z Distribution" width="55%" /&gt;
+&lt;img src="module03_files/figure-html/unnamed-chunk-5-1.png" alt="Student's t versus the Standard Normal z Distribution" width="55%" /&gt;
 &lt;p class="caption"&gt;Student's t versus the Standard Normal z Distribution&lt;/p&gt;
 &lt;/div&gt;
 
@@ -684,7 +733,131 @@ Simple random sample with `\(n=54\)` yielded `\(\bar{x} = 22.5\)` and `\(s=4.4\)
 
 (5) What happens to the margin of error and the width of the interval as we increase how "confident" we want to be?  
 
-Answer: The margin of error increases and the confidence interval widens
+Answer: The margin of error increases and the confidence interval widens 
+
+---
+
+Continental Airlines' pilots fly on average 49 hours per month. This is based on `\(n=100\)` with `\(s=8.5\)` 
+
+`\(\therefore s_{\bar{x}}=\dfrac{s}{\sqrt{n}}=\dfrac{8.5}{\sqrt{100}}=\dfrac{8.5}{10}=0.85\)` 
+
+What is the margin of error at `\(95\%\)` CI? 
+
+`\(t_{\alpha/2}(s_{\bar{x}})=1.984(0.85)=1.68\)` 
+
+What is the `\(95\%\)`CI? 
+
+`\(\bar{x}\pm t_{\alpha/2}(s_{\bar{x}})=49 \pm 1.984(0.85)=49 \pm 1.68=47.32; 50.58\)` 
+
+---
+
+### Determining Needed Sample Size 
+
+Margin of Error `\(=z_{\alpha/2}\left(\dfrac{\sigma}{\sqrt{n}}\right)\)` 
+
+(1) Select the desired confidence level `\((1-\alpha)\)` 
+
+(2) Select our best guess of `\(\sigma\)`; If you don't know `\(\sigma\)`, use `\(\sigma \approx \frac{Range}{4}\)` 
+
+(3) Solve for `\(n\)` in the formula for the Margin of Error 
+
+`\begin{eqnarray*}
+E=z_{\alpha/2}\left(\dfrac{\sigma}{\sqrt{n}}\right) \\
+\therefore \sqrt{n}(E)= (z_{\alpha/2})(\sigma) \\
+\therefore \sqrt{n}=\dfrac{(z_{\alpha/2})(\sigma)}{E} \\
+\therefore n = \dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}
+\end{eqnarray*}`
+
+---
+
+Range for a sample is `\(36\)`
+
+We don't have `\(\sigma\)` so we calculate `\(\sigma \approx \dfrac{Range}{4}=\dfrac{36}{4}=9\)` 
+
+At `\(95\%\)`CI, how large an `\(n\)` would give give margin of error of 3? 
+
+Given `\((1-\alpha)=0.95; \sigma^{2}=81; E=3; \therefore z=1.96\)` 
+
+`\(\therefore n=\dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}\)` `\(=\dfrac{(1.96)^{2}(81)}{9}\)` 
+
+`\(=(1.96)^{2}(9)=34.5744 \approx 35\)` ... `(Note: we are rounding up)` 
+
+At `\(95\%\)`CI, how large an `\(n\)` would give give margin of error of 2? 
+
+Given `\((1-\alpha)=0.95; \sigma^{2}=81; E=2; \therefore z=1.96\)` 
+
+`\(\therefore n=\dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}\)` `\(=\dfrac{(1.96)^{2}(81)}{4}\)` 
+
+`\(=\dfrac{311.1696}{4} = 77.7924 \approx 78\)` ... `(Note: we are rounding up)` 
+
+---
+
+The New York Times reports mean Bar Mitzvah costs in New York City to be `\(19,000\)` dollars. Let `\(\sigma = 9400\)`. They also want you to use a `\(95\%\)` CI.  
+
+(1) Recommend `\(n\)` if desired margin of error is `\(1000\)` 
+
+`\(n=\dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}\)` `\(=\dfrac{(1.96)^{2}(9400)^{2}}{(1000)^{2}}  =(1.96)^{2}(88.36)= 339.4437 \approx 340\)` 
+
+(2) What if the margin of error desired is `\(500\)`? 
+
+`\(n=\dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}\)` `\(=\dfrac{(1.96)^{2}(9400)^{2}}{(500)^{2}} = (1.96)^{2}(353.44)= 1357.7751 \approx 1358\)` 
+
+(3) What if it is `\(200\)`? 
+
+`\(n=\dfrac{(z_{\alpha/2})^{2}(\sigma)^{2}}{E^{2}}\)` `\(=\dfrac{(1.96)^{2}(9400)^{2}}{(200)^{2}} = (1.96)^{2}(2209)= 8486.0944 \approx 8487\)` 
+
+... `The closer we want to be to the true value, the larger the sample size needed` 
+
+
+---
+
+### Population Proportion &amp; Sample Size Determination
+
+Interval estimate of population proportion is `\(\bar{p}=\pm\)` Margin of Error 
+
+If `\(np \geq 5\)` and `\(n(1-p) \geq 5\)`, the sampling distribution of `\(\bar{p}\)` is approximately Normal 
+
+`\(\sigma_{\bar{p}}=\sqrt{\dfrac{{\bar{p}}(1-{\bar{p}})}{n}}\)` 
+
+Margin of error is `\(E = t_{\alpha/2}\sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}\)` 
+
+So the interval estimate for `\(p\)` `\(=\bar{p} \pm t_{\alpha/2}\sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}}\)` 
+
+`\(n=\dfrac{(z_{\alpha/2})^{2}(p^{*})(1-p^{*})}{E^{2}}; p^{*}=\)` best guess or `\(0.50\)` 
+
+---
+
+### An Example 
+
+A simple random sample of `\(n=800\)` generates `\(\bar{p} = 0.70\)` 
+
+Given `\(n=800; \bar{p}=0.70\)`, `\(\sigma_{\bar{p}}=\sqrt{\dfrac{p(1-p)}{n}} =\sqrt{\dfrac{0.7(0.3)}{800}}=0.0162\)` 
+
+What is `\(90\%\)`CI for `\(p\)`?  
+
+`\(t_{\alpha/2}=1.645\)`, therefore 90%CI `\(=0.7 \pm 1.645(0.0162) = 0.7 \pm 0.0266 = 0.6734; 0.7266\)` 
+
+What is `\(95\%\)`CI for `\(p\)`? 
+
+`\(t_{\alpha/2}=1.96\)`, therefore 95%CI `\(=0.7 \pm 1.96(0.0162) = 0.7 \pm 0.0317 = 0.6683; 0.7317\)`
+
+---
+
+### Another Example 
+
+Audience profile data for the ESPN SportsZone website show `\(26\%\)` of users to be women in a sample of `\(n=400\)`  users.  
+
+What is the margin of error at `\(95\%\)` CI? 
+
+`\(E = t_{\alpha/2}\sqrt{\dfrac{\bar{p}(1-\bar{p})}{n}} = 1.96\sqrt{\dfrac{0.26(74)}{400}} = 0.0429\)` 
+
+What is the `\(95\%\)` CI? 
+
+95%CI `\(=0.26 \pm 0.0429 = 0.2171; 0.3029\)` 
+
+How large a sample do we need if desired margin of error is `\(0.03\)`? 
+
+Given `\(E=0.03\)`, `\(n=\dfrac{(1.96)^{2}(0.26)(0.74)}{0.0009} = 821.2487 \approx 822\)`
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
