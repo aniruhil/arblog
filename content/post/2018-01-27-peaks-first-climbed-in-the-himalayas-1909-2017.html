@@ -12,6 +12,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <p>I’ve been itching to get back into the himal database and Elizabeth Hawley’s passing jolted me back into action. I wanted to start by looking at the peaks themselves, hoping this would give me a better understanding of the fields before I delve into the expedition data. We have data on 457 peaks, but only 377 are open and only 309 of these have been climbed. Information about the date of the summiting is missing for 3 peaks (we have the year and the month but not the day) so that drops the dataset down to 306 peaks.</p>
@@ -259,10 +260,10 @@ ggplot(cpeaks2, aes(x = HEIGHTM, y = REGION)) + geom_density_ridges(alpha = 0.2,
     labs(x = &quot;Peak Height (in meters)&quot;, y = &quot;Region&quot;, title = &quot;Peak Heights by Himalayan Region&quot;, 
         subtitle = &quot;(in meters)&quot;, caption = &quot;Source: The Himalayan Database (2017)&quot;)</code></pre>
 <p><img src="/post/2018-01-27-peaks-first-climbed-in-the-himalayas-1909-2017_files/figure-html/eight-1.svg" width="80%" /></p>
-<p>This has been an interesting exercise but it isn’t foolproof. I don’t have the dates when a peak was opened to climbers, and some of the notes in the database suggest that some claims of summiting may not necessarily be true. To make matters worse, in a handful of cases the same climber changes nationalities across peaks.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Finally, when the summit teams included more than one individual from the same country but the team included members from two or more countries, it is difficult to sort out nationalities with accuracy. This leads to an undercount for some nations. Some, if not all, of these issues will hopefully be resolved by employing the expedition database.</p>
+<p>This has been an interesting exercise but it isn’t foolproof. I don’t have the dates when a peak was opened to climbers, and some of the notes in the database suggest that some claims of summiting may not necessarily be true. To make matters worse, in a handful of cases the same climber changes nationalities across peaks.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Finally, when the summit teams included more than one individual from the same country but the team included members from two or more countries, it is difficult to sort out nationalities with accuracy. This leads to an undercount for some nations. Some, if not all, of these issues will hopefully be resolved by employing the expedition database.</p>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>For example, Pasang Dawa Lama is listed as Indian for the two 1953 ascents of Ghyuthumba Main and Dudh Kundali – both with Herbert Tichy – but as Nepalese for the famous Cho Oyu ascent of 1954 (again with Herbert Tichy). Similarly, Tenzing Norgay is listed as Indian but the Nepalese government claims him as their own. I suspect this Nepalese/Indian flip-flop occurs mostly with Sherpas and hence for breakouts by nationality the Indian and Nepalese tallies should be recognized as undercounts/overcounts.<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>For example, Pasang Dawa Lama is listed as Indian for the two 1953 ascents of Ghyuthumba Main and Dudh Kundali – both with Herbert Tichy – but as Nepalese for the famous Cho Oyu ascent of 1954 (again with Herbert Tichy). Similarly, Tenzing Norgay is listed as Indian but the Nepalese government claims him as their own. I suspect this Nepalese/Indian flip-flop occurs mostly with Sherpas and hence for breakouts by nationality the Indian and Nepalese tallies should be recognized as undercounts/overcounts.<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
