@@ -17,11 +17,10 @@ header:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE)
-```
 
-```{r klippy, echo=FALSE, include=TRUE}
 klippy::klippy(position = "right", color = "cornflowerblue")
 ```
+
 
 A client needed state-level estimates of the percent of opportunity youth (defined either as 16-19 or 16-24 year-old persons who are neither in school nor employed) in each state plus Washington DC. The end result would be three years of estimates that matched the numbers put out by [Measure of America's yearly reports on the subject.](http://www.measureofamerica.org/disconnected-youth/). I had used [Anthony Damico's](http://ajdamico.com/) fantastic repository [Analyze Survey Data for Free](http://asdfree.com) for BRFSS, DHS, and other data but never with the Census Bureau's Public Use Microdata Samples (PUMS) data. This was a golden chance to remedy that limitation, and in this short post I am documenting my experience. 
 

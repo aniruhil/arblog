@@ -1,0 +1,127 @@
+---
+title: "Opioid Encounters in Ohio COunties"
+author: "Ani Ruhil"
+date: '2018-10-17'
+header:
+  caption: ''
+  image: ''
+slug: opioid-encounters-in-ohio-counties
+tags:
+- Ohio
+- County
+- Opioids
+- gganimate
+categories:
+- R
+- Health
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE)
+```
+
+The opioid crisis is an issue in most parts of the country and Ohio is no exception, with some of the highest numbers of [Fentanyl encounters reported by law enforcement](https://www.cdc.gov/drugoverdose/data/fentanyl-le-reports.html). Although one could, I suppose, try to identify county-level deaths due to drug overdoses via CDC Wonder, this is a quick look at the data provided by the Ohio Hospital Association's [Overdose Data Sharing Program](https://www.ohiohospitals.org/Patient-Safety-Quality/Institute/Opioid-Data.aspx). 
+
+Note that the data reflect the number of visits and not the number of unique visitors, and county data are suppressed if the number of visits is less than 11 or if the county population size is under 20,000. The population size filter leads to no data for Harrison, Monroe, Morgan, Noble, Paulding, and Vinton counties.[^1] 
+
+[^1]: For 2008-2015 (third Quarter) the following ICD9 codes were used: 965.0, 965.00, 965.01, 965.02, 965.09. For all time periods since the following ICD-10-CM codes were used: T40.0X1A, T40.0X1D, T40.0X2A, T40.0X2D, T40.0X3A, T40.0X3D, T40.0X4A, T40.0X4D, T40.1X1A, T40.1X1D, T40.1X2A, T40.1X2D, T40.1X3A, T40.1X3D, T40.1X4A, T40.1X4D, T40.2X1A, T40.2X1D, T40.2X2A, T40.2X2D, T40.2X3A, T40.2X3D, T40.2X4A, T40.2X4D, T40.3X1A, T40.3X1D, T40.3X2A, T40.3X2D, T40.3X3A, T40.3X3D, T40.3X4A, T40.3X4D, T40.4X1A, T40.4X1D, T40.4X2A, T40.4X2D, T40.4X3A, T40.4X3D, T40.4X4A, T40.4X4D, T40.601A, T40.601D, T40.602A, T40.602D, T40.603A, T40.603D, T40.604A, T40.604D, T40.691A, T40.691D, T40.692A, T40.692D, T40.693A, T40.693D, T40.694A, T40.694D. 
+
+```{r dataread, echo=TRUE}
+library(readxl)
+mydf <- read_excel("data/opioids.xlsx")
+
+library(tidyr)
+opioids <- mydf %>% 
+  gather(Year, Rate, 3:12) %>% 
+  dplyr::mutate(Rate = as.numeric(Rate), 
+                Year = as.integer(Year)
+                )
+```
+
+```{r hchart, eval=FALSE, echo = FALSE}
+library(highcharter)
+hchart(opioids, "line", hcaes(x = Year, y = Rate, group = County)) %>% 
+  hc_legend(enabled = FALSE)
+```
+
+I'd like to see what visualization works best with these data. Animated maps, with `transition_time(Year)` is okay but not very helpful here. 
+
+```{r animated_map, echo=TRUE}
+library(ggplot2)
+counties <- map_data("county") 
+ohio <- counties %>% 
+  dplyr::filter(region == "ohio") %>% 
+  dplyr::mutate(County = stringr::str_to_title(subregion))
+
+ohio.counties <- merge(ohio, opioids, by = c("County"), all = TRUE)
+
+library(gganimate)
+p <- ggplot(ohio.counties, aes(x = long, y = lat, group = group)) + 
+  geom_polygon(aes(fill = Rate), color = "black") + 
+  coord_fixed(1.3) + 
+  ggthemes::theme_map() + 
+  theme(legend.position = "bottom") + 
+  viridis::scale_fill_viridis(option = "magma", direction = -1) + 
+  transition_time(Year) + 
+  ease_aes('quadratic-in-out') + 
+  labs(title = 'Year: {frame_time}', 
+       subtitle = "Opioid Overdose Encounters per 10,000 persons in Ohio Counties: 2008-2017 /n (by County and Year)", 
+       caption = "Author: @aruhil | Data Source: Ohio Hospital Association's Statewide Database")
+
+animate(p, nframes = 150, fps = 1, width = 600, height = 600, renderer = ffmpeg_renderer())  
+```
+
+How about a `gifski` product? 
+
+```{r, animation.hook = 'gifski', interval = 0.1, fig.width = 6, fig.height = 6, echo = TRUE, out.width="80%"} 
+ggplot(ohio.counties, aes(x = long, y = lat, group = group)) + 
+  geom_polygon(aes(fill = Rate), color = "black") + 
+  coord_fixed(1.3) + 
+  ggthemes::theme_map() + 
+  theme(legend.position = "bottom") + 
+  viridis::scale_fill_viridis(option = "magma", direction = -1) + 
+  transition_time(Year) + 
+  ease_aes('quadratic-in-out') + 
+  labs(title = 'Year: {frame_time}', 
+       subtitle = "Opioid Overdose Encounters per 10,000 persons in Ohio Counties: 2008-2017 /n (by County and Year)", 
+       caption = "Author: @aruhil | Data Source: Ohio Hospital Association's Statewide Database")
+```
+
+Other alternatives come to mind as well: (i) static maps by year, (ii) small multiples of line plots per county, and (iii) a heatmap (perhaps with `highcharter`). 
+
+
+```{r, echo = FALSE, fig.width=10, fig.height=10, fig.align='center', out.width="100%", eval=FALSE}
+## Small Multiples of Line Plots 
+
+opioids2 <- opioids %>% 
+  dplyr::filter(!County %in% c("Harrison", "Lawrence", "Monroe", "Morgan", "Noble", "Paulding", "Vinton")) %>% 
+  dplyr::mutate(Year = as.numeric(Year))
+
+ggplot(opioids2, aes(x = Year, y = Rate, group = County)) + 
+  geom_point(color = "red") + 
+  geom_line(color = "red") + 
+  scale_x_continuous(breaks = c(2008, 2011, 2014, 2017)) + 
+  facet_wrap(~ County, scales = "free_y", ncol = 6) + 
+  hrbrthemes::theme_ipsum_rc() + 
+  theme(axis.text.x = element_text(angle = 90, size = 7), axis.text.y = element_text(size = 7)) + 
+  labs(title = 'Opioid Overdose Encounters per 10,000 persons in Ohio Counties: 2008-2017', 
+       subtitle = "(by County and Year)", 
+       caption = "Author: @aruhil | Data Source: Ohio Hospital Association's Statewide Database")
+```
+
+And now the small multiples of maps showing encounter rates by year ...
+
+```{r, echo = TRUE, fig.width=8, fig.height=6, fig.align='center'}
+ggplot(ohio.counties, aes(x = long, y = lat, group = group)) + 
+  geom_polygon(aes(fill = Rate), color = "black") + 
+  coord_fixed(1.3) + 
+  ggthemes::theme_map() + 
+  theme(legend.position = "bottom", strip.background = element_blank(), strip.text = element_text(size = 10)) + 
+  viridis::scale_fill_viridis(option = "magma", direction = -1)  + 
+  facet_wrap(~ Year, ncol = 5) + 
+  labs(title = 'Opioid Overdose Encounters in Ohio Counties',
+       subtitle = '(2008-2017)', 
+       caption = "Author: @aruhil | Data Source: Ohio Hospital Association's Statewide Database", 
+       fill = "Encounters per 10,000 persons")
+```
+
