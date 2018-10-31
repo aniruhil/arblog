@@ -158,11 +158,11 @@ hc1 <- hchart(op.df, "heatmap", hcaes(x = Year, y = County, value = Rate)) %>%
            labels = list(style = list(fontSize = "8px"))) %>%
   hc_tooltip(formatter = fntltp) %>%
   hc_xAxis(plotLines = list(plotline)) %>%
-  hc_title(text = "Opioid encounters per 10,000 (by Year") %>%
+  hc_title(text = "Opioid encounters per 10,000 (by Year)") %>%
   hc_legend(layout = "vertical", verticalAlign = "top",
             align = "right", valueDecimals = 0) %>%
   hc_size(height = 800) %>% 
-  frameWidget(width = '800', height = '800')
+  frameWidget(width = '700', height = '800')
 
 hc1 
 ```
@@ -186,8 +186,8 @@ hc2 <- hcmap("countries/us/us-oh-all", data = op.map,
   hc_colorAxis(dataClasses = color_classes(c(seq(0, 110, by = 20), 110))) %>% 
   hc_legend(layout = "vertical", align = "right",
             floating = TRUE, valueDecimals = 0, valueSuffix = "%") %>% 
-  hc_title(text = "Opioid encounters per 10,000 (2017") %>% 
-  frameWidget(width = '800', height = '800')
+  hc_title(text = "Opioid encounters per 10,000 (2017)") %>% 
+  frameWidget(width = '650', height = '650')
 
 hc2
 ```
