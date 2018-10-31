@@ -11,6 +11,7 @@ tags:
 - County
 - Opioids
 - gganimate
+- highcharter
 categories:
 - R
 - Health
@@ -123,5 +124,68 @@ ggplot(ohio.counties, aes(x = long, y = lat, group = group)) +
        subtitle = '(2008-2017)', 
        caption = "Author: @aruhil | Data Source: Ohio Hospital Association's Statewide Database", 
        fill = "Encounters per 10,000 persons")
+```
+
+Now two `highcharter` visualizations, the first a `heatmap` and then a `hover map` of encounters in 2017. 
+
+```{r, echo = TRUE, fig.width=8, fig.height=8, fig.align='center'}
+library(viridis)
+library(highcharter)
+#library(htmlwidgets)
+library(widgetframe)
+
+fntltp <- JS("function(){
+  return this.point.x + ' ' +  this.series.yAxis.categories[this.point.y] + ':<br>' +
+  Highcharts.numberFormat(this.point.value, 2);
+}")
+
+plotline <- list(
+  color = "#fde725", value = 2013, width = 1, zIndex = 5,
+  label = list(
+    text = "Encounters Spike", verticalAlign = "top",
+    style = list(color = "#606060"), textAlign = "left",
+    rotation = 0, y = -5)
+)
+
+op.df <- opioids %>% 
+  dplyr::mutate(Rate = round(Rate, digits = 1))
+
+hchart(op.df, "heatmap", hcaes(x = Year, y = County, value = Rate)) %>%
+  hc_colorAxis(stops = color_stops(10, rev(inferno(10))),
+               type = "logarithmic") %>%
+  hc_yAxis(reversed = TRUE, offset = -20, tickLength = 0,
+           gridLineWidth = 0, minorGridLineWidth = 0,
+           labels = list(style = list(fontSize = "8px"))) %>%
+  hc_tooltip(formatter = fntltp) %>%
+  hc_xAxis(plotLines = list(plotline)) %>%
+  hc_title(text = "Opioid encounters per 10,000 (by Year") %>%
+  hc_legend(layout = "vertical", verticalAlign = "top",
+            align = "right", valueDecimals = 0) %>%
+  hc_size(height = 800)
+
+```
+
+```{r, echo = TRUE, fig.width=8, fig.height=8, fig.align='center'}
+data("unemployment")
+
+oh.counties <- unemployment %>% 
+  tidyr::separate(name, c("County", "stateabb"), sep = ", ") %>% 
+  dplyr::mutate(County = gsub(" County", "", County)) %>% 
+  dplyr::filter(stateabb == "OH")
+
+op.df2 <- merge(op.df, oh.counties, by = c("County"), all = TRUE)
+
+op.map <- op.df2 %>% 
+  dplyr::filter(Year == 2017)
+
+hcmap("countries/us/us-oh-all", data = op.map,
+      name = "Encounter rate", value = "Rate", joinBy = c("hc-key", "code"),
+      borderColor = "transparent") %>%
+  hc_colorAxis(dataClasses = color_classes(c(seq(0, 110, by = 20), 110))) %>% 
+  hc_legend(layout = "vertical", align = "right",
+            floating = TRUE, valueDecimals = 0, valueSuffix = "%") %>% 
+  hc_title(text = "Opioid encounters per 10,000 (2017") %>% 
+  frameWidget(width = '600', height = '600')
+
 ```
 
