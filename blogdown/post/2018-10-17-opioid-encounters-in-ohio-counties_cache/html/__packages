@@ -5,3 +5,9 @@ bindrcpp
 ggplot2
 maps
 gganimate
+highcharter
+viridisLite
+viridis
+htmltools
+htmlwidgets
+widgetframe

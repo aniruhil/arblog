@@ -129,9 +129,9 @@ ggplot(ohio.counties, aes(x = long, y = lat, group = group)) +
 Now two `highcharter` visualizations, the first a `heatmap` and then a `hover map` of encounters in 2017. 
 
 ```{r, echo = TRUE, fig.width=8, fig.height=8, fig.align='center'}
-library(viridis)
 library(highcharter)
-#library(htmlwidgets)
+library(viridis)
+library(htmltools)
 library(widgetframe)
 
 fntltp <- JS("function(){
@@ -150,7 +150,7 @@ plotline <- list(
 op.df <- opioids %>% 
   dplyr::mutate(Rate = round(Rate, digits = 1))
 
-hchart(op.df, "heatmap", hcaes(x = Year, y = County, value = Rate)) %>%
+hc1 <- hchart(op.df, "heatmap", hcaes(x = Year, y = County, value = Rate)) %>%
   hc_colorAxis(stops = color_stops(10, rev(inferno(10))),
                type = "logarithmic") %>%
   hc_yAxis(reversed = TRUE, offset = -20, tickLength = 0,
@@ -161,8 +161,10 @@ hchart(op.df, "heatmap", hcaes(x = Year, y = County, value = Rate)) %>%
   hc_title(text = "Opioid encounters per 10,000 (by Year") %>%
   hc_legend(layout = "vertical", verticalAlign = "top",
             align = "right", valueDecimals = 0) %>%
-  hc_size(height = 800)
+  hc_size(height = 800) %>% 
+  frameWidget(width = '600', height = '800')
 
+hc1 
 ```
 
 ```{r, echo = TRUE, fig.width=8, fig.height=8, fig.align='center'}
@@ -178,7 +180,7 @@ op.df2 <- merge(op.df, oh.counties, by = c("County"), all = TRUE)
 op.map <- op.df2 %>% 
   dplyr::filter(Year == 2017)
 
-hcmap("countries/us/us-oh-all", data = op.map,
+hc2 <- hcmap("countries/us/us-oh-all", data = op.map,
       name = "Encounter rate", value = "Rate", joinBy = c("hc-key", "code"),
       borderColor = "transparent") %>%
   hc_colorAxis(dataClasses = color_classes(c(seq(0, 110, by = 20), 110))) %>% 
@@ -187,5 +189,6 @@ hcmap("countries/us/us-oh-all", data = op.map,
   hc_title(text = "Opioid encounters per 10,000 (2017") %>% 
   frameWidget(width = '600', height = '600')
 
+hc2
 ```
 
