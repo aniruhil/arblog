@@ -10,10 +10,6 @@ tags:
   - Mountaineering
 ---
 
-{{ if not .Params.exclude_jquery}}
-<script src="path/to/jquery.js"></script>
-{{ end }}
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
@@ -49,7 +45,7 @@ tab.02 = peaexp %>%
 
 library(kableExtra)
 library(DT)
-d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 8, dom = 'tip')) 
+d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(columnDefs = list(list(className = 'dt-center')), pageLength = 8), fillContainer = T) 
 
 library(widgetframe)
 frameWidget(d1, height = 450, width = '95%')
