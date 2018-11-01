@@ -19,6 +19,8 @@ categories:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE)
+
+klippy::klippy(position = "right", color = "cornflowerblue")
 ```
 
 The opioid crisis is an issue in most parts of the country and Ohio is no exception, with some of the highest numbers of [Fentanyl encounters reported by law enforcement](https://www.cdc.gov/drugoverdose/data/fentanyl-le-reports.html). Although one could, I suppose, try to identify county-level deaths due to drug overdoses via CDC Wonder, this is a quick look at the data provided by the Ohio Hospital Association's [Overdose Data Sharing Program](https://www.ohiohospitals.org/Patient-Safety-Quality/Institute/Opioid-Data.aspx). 

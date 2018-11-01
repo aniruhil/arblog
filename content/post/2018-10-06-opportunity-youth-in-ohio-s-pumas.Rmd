@@ -50,6 +50,14 @@ acs_cat1 <- lodown("acs" , acs_cat1)
 Your should end up with a file called `acs2016_1yr.rds` in the ACS folder. This is just the first batch of geographies so we'll repeat this step again for the second batch. But before we do that, let us generate a few indicators we need, filter the data-frame to just the 16-24 year-olds, and save this file with a unique name. 
 
 ```{r, eval = FALSE, tidy=TRUE}
+library(survey)
+
+acs_df <- 
+    readRDS( 
+        file.path( path.expand( "~" ) , "ACS" , 
+            "acs2016_1yr.rds" ) 
+    )
+
 library(dplyr)
 acs_df1 <- acs_df %>% 
   filter(agep %in% seq(16, 24, by = 1)) %>% 
@@ -162,7 +170,7 @@ colnames(oppyouth) <- c("State", "Disengaged (%)", "Not Disengaged  (%)", "Stand
 If all went well you should see `oppyouth` reflecting the following for 2016. 
 
 ```{r, echo = FALSE, eval = TRUE}
-oppyouth <- read.csv("/users/ruhil/Documents/Data Hub/ACS PUMS/oppyouth_2016.csv")
+oppyouth <- read.csv("~/Documents/Data Hub/ACS PUMS/oppyouth_2016.csv")
 oppyouth$disengaged <- sprintf("%0.1f", oppyouth$disengaged)
 oppyouth$notdisengaged <- sprintf("%0.1f", oppyouth$notdisengaged)
 oppyouth$stderror <- sprintf("%0.1f", oppyouth$stderror)
