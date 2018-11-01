@@ -10,6 +10,10 @@ tags:
   - Mountaineering
 ---
 
+{{ if not .Params.exclude_jquery}}
+<script src="path/to/jquery.js"></script>
+{{ end }}
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```
@@ -44,8 +48,23 @@ tab.02 = peaexp %>%
   arrange(-Number)
 
 library(kableExtra)
-DT::datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 5, dom = 'tip')) 
+library(DT)
+d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 5, dom = 'tip')) 
+
+library(widgetframe)
+frameWidget(d1, height = 350, width = '95%')
 ```
+
+```{r, message=FALSE, warning=FALSE, include=FALSE}
+library(htmlwidgets)
+library(htmltools)
+
+htmlwidgets::saveWidget(d1, file = "d1.html", selfcontained = TRUE)
+
+#<iframe seamless src="../d1/index.html" width="100%" height="500"></iframe>
+```
+
+
 
 Of course, some peaks have received more attention at different points in time so the questions is how the distribution of expeditions varies by peak. For brevity, I only focus on some of the more popular 8-thousanders. 
 

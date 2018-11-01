@@ -1,0 +1,155 @@
+---
+title: The uninsured in U.S. Counties
+author: Ani Ruhil
+date: '2018-10-31'
+slug: the-uninsured-in-u-s-counties
+categories:
+  - Health
+  - R
+tags:
+  - American Community Survey (ACS)
+  - R Markdown
+header:
+  caption: ''
+  image: ''
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE)
+
+klippy::klippy(position = "right", color = "cornflowerblue")
+```
+
+We recently wrapped up a major analysis of Ohioans' access to and utilization of health care, unmet health needs, health behaviors and status, and health insurance coverage experiences. While I am working on a series of blog posts to share insights we gained from our analyses, in particular differences between the Medicaid and non-Medicaid populations in Appalachian Ohio (versus the rest of the state), a good starting point would be to look at the `county-level small-area estimates` (SAHIE) of the insured by age-group, and perhaps supplement that analysis with a look at the `small-area income and poverty estimates` (SAIPE). 
+
+I will skip the data acquisition part since that is pretty straightforward, either by manually downloading the data from the program's homepages [here](https://www.census.gov/data/datasets/time-series/demo/sahie/estimates-acs.html) and [here](https://www.census.gov/programs-surveys/saipe/data/datasets.html), respectively, or then via `Kyle Walker's` [tidycensus package](https://walkerke.github.io/tidycensus/). The latter is by far the easier way to work with the data, I think. 
+
+## State-level SAHIE data (2008-2016)
+
+```{r, echo=FALSE}
+load("~/Documents/Data Hub/SAHIE/sahie_national_states_0616.RData") 
+
+library(dplyr)
+
+df.all <- ssahie0616 %>% 
+  mutate(
+         Year = as.numeric(time), 
+         pctui = as.numeric(PCTUI_PT), 
+         pctui_lb = as.numeric(PCTUI_LB90), 
+         pctui_ub = as.numeric(PCTUI_UB90),
+         pctui_moe = as.numeric(PCTUI_MOE)
+         ) %>% 
+  filter(Year >= 2008)
+```
+
+Although the data go as far back as 2001, the pre-2008 data were CPS-based while the 2008 and onward are ACS-based. There is an important difference beyond the source: "The definitions of health insurance coverage differ between the two surveys. In the CPS ASEC, "insured" was defined as being covered SOME TIME during the past calendar year. The ACS health insurance question asks, "Is this person CURRENTLY covered by [specifically stated] health insurance or health coverage plans?" Due to these definitional differences, comparisons between 2008-2016 SAHIE estimates and earlier years are not recommended." The estimates cover five age-groups, both sexes combined plus separate estimates for males/females, six income groups, and four racial/ethnic groups (albeit only for state-level data). 
+
+One could of course ask a number of interesting questions with these data but my motivation is simple: To identify changes over time in the rates of uninsured and see which groups appear to have benefitted the most from the Affordable Care Act and Ohio's Medicaid expansion. 
+
+
+```{r}
+library(ggplot2)
+ggplot(subset(df.all, AGE_DESC == "Under 65 years" & RACE_DESC == "All Races" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = NAME )) + 
+  geom_line(color = "red") + 
+  geom_point(alpha = 0.2) + 
+  ylim(c(0,30)) + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ NAME, ncol = 5) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+```{r}
+library(ggplot2)
+ggplot(subset(df.all, AGE_DESC == "Under 65 years" & RACE_DESC == "Black alone, not Hispanic" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = NAME )) + 
+  geom_line(color = "red") + 
+  geom_point(alpha = 0.2) + 
+  ylim(c(0,30)) + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ NAME, ncol = 5) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+
+```{r}
+ggplot(subset(df.all, AGE_DESC == "Under 65 years" & RACE_DESC == "Hispanic (any race)" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = NAME )) + 
+  geom_line(color = "red") + 
+  geom_point(alpha = 0.2) + 
+  ylim(c(0,30)) + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ NAME, ncol = 5) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+```{r}
+ggplot(subset(df.all, AGE_DESC == "Under 65 years" & RACE_DESC == "White alone, not Hispanic" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = NAME )) + 
+  geom_line(color = "red") + 
+  geom_point(alpha = 0.2) + 
+  ylim(c(0,30)) + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ NAME, ncol = 5) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+
+```{r}
+library(fiftystater)
+fifty_states$NAME <- stringr::str_to_title(fifty_states$id)
+
+df.maps <- merge(df.all, fifty_states[, c(1:5, 7:8)], by = c("NAME"), all = TRUE) 
+
+df.maps.all <- df.maps %>% 
+  filter(AGE_DESC == "Under 65 years" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes" & RACE_DESC == "All Races") %>% 
+  arrange(NAME, order)
+
+ggplot(df.maps.all, aes(x = long, y = lat, group = group)) + 
+  geom_polygon(aes(fill = pctui)) + 
+  facet_wrap(~ Year) + 
+  
+
+```
+
+
+## Ohio's SAHIE data (2008-2016)
+
+```{r, echo=FALSE}
+load("~/Documents/Data Hub/SAHIE/sahie_national_0616.RData") 
+
+library(tidyr)
+library(dplyr)
+
+df.oh <- sahie0616 %>% 
+  separate(NAME, c("County", "Stateabb"), sep = ", ") %>% 
+  mutate(County = gsub(" County", "", County), 
+         Year = as.numeric(time), 
+         pctui = as.numeric(PCTUI_PT), 
+         pctui_lb = as.numeric(PCTUI_LB90), 
+         pctui_ub = as.numeric(PCTUI_UB90)) %>% 
+  filter(Stateabb == "OH" & Year >= 2008)
+```
+
+
+
+```{r}
+library(ggplot2)
+ggplot(subset(df.oh, AGE_DESC == "Under 65 years" & RACE_DESC == "All Races" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = County)) + 
+  geom_line(color = "red") + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ County, ncol = 8) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+```
+
+```{r}
+ggplot(subset(df.oh, AGE_DESC == "Under 65 years" & RACE_DESC == "All Races" & SEX_DESC == "Both Sexes" & IPR_DESC == "All Incomes"), aes( y = pctui, x = Year, group = County)) + 
+  geom_line(color = "red") + 
+  geom_ribbon(aes(ymin = pctui_lb, ymax = pctui_ub, alpha = 0.2), color = "cornflowerblue") + 
+  facet_wrap(~ County, ncol = 8) + 
+  theme_minimal() + 
+  theme(legend.position = "none", axis.text.x = element_text(angle = 90)) 
+
+```
+
