@@ -52,10 +52,10 @@ library(DT)
 d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 8, dom = 'tip')) 
 
 library(widgetframe)
-frameWidget(d1, height = 350, width = '95%')
+frameWidget(d1, height = 450, width = '95%')
 ```
 
-```{r, message=FALSE, warning=FALSE, include=FALSE}
+```{r, message=FALSE, warning=FALSE, include=FALSE, eval = FALSE, echo = FALSE}
 library(htmlwidgets)
 library(htmltools)
 
