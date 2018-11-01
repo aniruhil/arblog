@@ -49,7 +49,7 @@ tab.02 = peaexp %>%
 
 library(kableExtra)
 library(DT)
-d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 5, dom = 'tip')) 
+d1 <- datatable(tab.02, colnames = c("Peak", "Height (in meters)", "Expeditions"), options = list(pageLength = 8, dom = 'tip')) 
 
 library(widgetframe)
 frameWidget(d1, height = 350, width = '95%')
