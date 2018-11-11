@@ -3,8 +3,10 @@ title: Everest lost its true Base Camp
 author: Ani Ruhil
 date: '2018-01-26'
 slug: everest-lost-its-true-base-camp
-categories: [Himalayas]
-tags: [Mountaineering]
+categories: 
+- Himalayas
+tags: 
+- Mountaineering
 header:
   caption: ''
   image: ''
