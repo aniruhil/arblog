@@ -20,17 +20,17 @@ weight = 5
 # List your qualifications (such as academic degrees).
 [[education.courses]]
   course = "PhD in Political Science"
-  institution = "Ohio University"
+  institution = "SUNY at Stony Brook, Stony Brook (NY)"
   year = 1999
 
 [[education.courses]]
   course = "MA in Economics"
-  institution = "University of New Hampshire"
+  institution = "University of New Hampshire, Durham (NH)"
   year = 1993
 
 [[education.courses]]
   course = "BA in Economics"
-  institution = "University of Mumbai"
+  institution = "University of Mumbai, Mumbai (India)"
   year = 1989
  
 +++
