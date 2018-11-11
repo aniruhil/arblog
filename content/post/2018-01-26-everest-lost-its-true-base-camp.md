@@ -4,9 +4,9 @@ author: Ani Ruhil
 date: '2018-01-26'
 slug: everest-lost-its-true-base-camp
 categories:
-  - Himalayas
+- Himalayas
 tags:
-  - Mountaineering
+- Mountaineering
 header:
   caption: ''
   image: ''
