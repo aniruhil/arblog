@@ -52,10 +52,10 @@ frameWidget(d1, height = 450, width = '95%')
 ```
 
 ```{r, message=FALSE, warning=FALSE, include=FALSE, eval = FALSE, echo = FALSE}
-library(htmlwidgets)
-library(htmltools)
+#library(htmlwidgets)
+#library(htmltools)
 
-htmlwidgets::saveWidget(d1, file = "d1.html", selfcontained = TRUE)
+#htmlwidgets::saveWidget(d1, file = "d1.html", selfcontained = TRUE)
 
 #<iframe seamless src="../d1/index.html" width="100%" height="500"></iframe>
 ```
