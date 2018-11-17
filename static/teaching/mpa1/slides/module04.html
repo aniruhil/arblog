@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # Module 04
 ## MPA 6010
 ### Ani Ruhil
-### (updated: 2018-10-23)
+### (updated: 2018-11-17)
 
 ---
 
@@ -155,14 +155,14 @@ Note the very cautious language ... `Reject` `\(H_{0}\)` versus `Do Not Reject` 
 ---
 
 ### The Process of Hypothesis Testing: One Example 
-Assume we want to know whether the roundabout on SR682 has had an impact on traffic accidents in Athens. We have historical data on the number of accidents in years past. Say the average per day used to be 6 (i.e., `\(\mu = 6\)`). To see if the roundabout has had an impact we could gather accident data for a random sample of 100 days `\((n=100)\)` from the period after the roundabout was built. 
+Assume we want to know whether the roundabout on SR682 has had an impact on traffic accidents in Athens. We have historical data on the number of accidents in years past. Say the average per day used to be 6 (i.e., `\(\mu_0 = 6\)`). To see if the roundabout has had an impact we could gather accident data for a random sample of 100 days `\((n=100)\)` from the period after the roundabout was built. 
 
 Before we do that though, we will need to specify our hypotheses. What do we think might be the impact? Let us say the City Engineer argues that the roundabout should have decreased accidents. 
 
 
-* If he is correct then the sample mean `\(\bar{x}\)` should be less than the population mean `\(\mu\)` i.e., `\(\bar{x} &lt; \mu\)` 
+* If he is correct then the sample mean `\(\bar{x}\)` should be less than the population mean `\(\mu_0\)` i.e., `\(\bar{x} &lt; \mu_0\)` 
 
-* If he is wrong then the sample mean `\(\bar{x}\)` should be at least as much as the population mean `\(\mu\)` i.e., `\(\bar{x} \geq \mu\)`
+* If he is wrong then the sample mean `\(\bar{x}\)` should be at least as much as the population mean `\(\mu_0\)` i.e., `\(\bar{x} \geq \mu_0\)`
 
 ---
 
@@ -185,7 +185,7 @@ If we believe the City Engineer, we would setup the hypotheses as follows:
 - Next set `\(\alpha\)` (the probability of making a Type I error) 
 - We then calculate the sample mean `\((\bar{x})\)` and the sample standard deviation `\((s)\)` 
 - Next we calculate the standard error of the sample mean: `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)` 
-- Now we calculate `\(t = \dfrac{\bar{x} - \mu}{s_{\bar{x}}}\)` and this is what we call `\(t_{calculated}\)` 
+- Now we calculate `\(t = \dfrac{\bar{x} - \mu_0}{s_{\bar{x}}}\)` and this is what we call `\(t_{calculated}\)` 
 - Using `\(df=n-1\)`, find the area to the left of `\(t_{calculated}\)` 
 - If this area is very small we can conclude that the roundabout must have worked to reduce accidents 
 - How should we define `very small`? By setting `\(\alpha\)` either to 0.05 or to 0.01 
@@ -220,7 +220,7 @@ If we believe the City Engineer, we would setup the hypotheses as follows:
 - `\(H_1\)`: The roundabout has an impact on accidents, i.e., `\(\mu \neq \mu_0\)` 
 - We then calculate the sample mean `\((\bar{x})\)` and the sample standard deviation `\((s)\)` 
 - Next we calculate the standard error of the sample mean: `\(s_{\bar{x}} = \dfrac{s}{\sqrt{n}}\)` 
-- Now calculate `\(t_{calculated} = \dfrac{\bar{x} - \mu}{s_{\bar{x}}}\)` 
+- Now calculate `\(t_{calculated} = \dfrac{\bar{x} - \mu_0}{s_{\bar{x}}}\)` 
 - Using `\(df=n-1\)`, find the area to the left/right of `\(\pm t_{calculated}\)` 
 
 If this area is very small then we can conclude that the roundabout must have worked to reduce accidents 
@@ -435,7 +435,7 @@ We have two ways of calculating the estimated standard error `\((s_{\bar{x}_1 - 
 
 - Use when the standard deviations are roughly equal, and 
 
-- `\(n_1\)` and `\(n_2\)` $ \geq 30$
+- `\(n_1\)` and `\(n_2\)` `\(\geq 30\)`
 
 ---
 
