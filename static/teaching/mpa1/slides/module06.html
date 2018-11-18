@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Module 06</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Ani Ruhil" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/rladies-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Module 06
+## MPA 6010
+### Ani Ruhil
+### (updated: 2018-11-18)
+
+---
+
+
+  &lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+    MathJax.Hub.Insert(MathJax.InputJax.TeX.Definitions.macros,{
+      cancel: ["Extension","cancel"],
+      bcancel: ["Extension","cancel"],
+      xcancel: ["Extension","cancel"],
+      cancelto: ["Extension","cancel"]
+    });
+  });
+&lt;/script&gt;
+
+
+
+# Agenda 
+
+- Covariance  
+- Correlation  
+- Simple linear regression  
+- Multiple linear regression  
+
+---
+
+class: inverse, middle, center 
+
+# Covariance
+---
+
+## Covariance
+
+The covariance of two variables `\(x\)` and `\(y\)` measures how the two are `linearly related` 
+
+- Positive covariance = positive linear relationship 
+- Negative covariance = negative linear relationship 
+
+
+### Population versus Sample Covariance 
+
+(1) Population covariance: `\(\sigma_{xy} = \dfrac{1}{N}\sum^{N}_{i=1} \left(x_i - \bar{x} \right) \left(y_i - \bar{y} \right)\)` 
+
+
+(2) Sample covariance: `\(s_{xy} = \dfrac{1}{n-1}\sum^{n}_{i=1} \left(x_i - \bar{x} \right) \left(y_i - \bar{y} \right)\)`
+
+
+**Note:** 
+
+- The numerical magnitude of the covariance is not easy to interpret because it depends on the values of the variables 
+- If two variables are `independent`, their covariance is `\(0\)` 
+- Variables must be, if related, `linearly related`
+
+---
+## The hsb2 data
+
+&lt;img src="hsb2_covariances.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, middle, center 
+
+# Correlations
+---
+
+## The Correlation Coefficient `\(r\)` 
+
+The correlation coefficient `\((r)\)` estimates the association between two continuous  variables `\(x\)` and `\(y\)` 
+
+`$$r = \dfrac{\sum \left( x - \bar{x} \right) \left(y - \bar{y} \right)}{\sqrt{ \sum \left( x - \bar{x} \right)^2} \sqrt{ \sum \left( y - \bar{y} \right)^2 }}$$` 
+
+- `\(-1 \leq r \leq +1\)` 
+- `\(r = +1\)` indicates  `perfect positive linear relationship` 
+- `\(r = -1\)` indicates  `perfect negative linear relationship` 
+- `\(r \approx 0\)` indicates  `absence of a linear relationship` 
+
+
+The Correlation Coefficient is based on the assumption of `bivariate normality` 
+- `\(x\)` and `\(y\)` are each normally distributed 
+- `\(x\)` and `\(y\)` are linearly related 
+- The cloud of points has a circular or elliptical shape 
+
+If these are violated we can try various transformations but if these fail we can then rely on a nonparametric approach ... more on this in the next course, if anyone is interested 
+
+---
+
+## Some Correlations 
+
+&lt;img src="corrsplot1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="corrsplot2.png" width="50%" style="display: block; margin: auto;" /&gt;
+---
+
+&lt;img src="corrsplot3.png" width="50%" style="display: block; margin: auto;" /&gt;
+---
+
+## Stylized Examples of Violations
+
+.pull-left[
+&lt;img src="whit1631.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="whit1632.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+
+## 
+Beware Attenuation and Measurement Error 
+
+.pull-left[
+&lt;img src="whit1641.png" width="60%" style="display: block; margin: auto;" /&gt;
+]
+.pull-right[
+&lt;img src="whit1661.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Hypothesis Testing for Correlations 
+
+Given that the `Sample Pearson Correlation Coefficient` `\((r)\)` is based on a sample, we know it is estimating the true correlation between `\(x\)` and `\(y\)` in the population ... denoted by `\(\rho\)` 
+
+One then needs to conduct a statistical test that will tell us whether in the population `\(\rho=0\)` or `\(\rho \neq 0\)` 
+
+`\(H_0\)`: `\(\rho=0\)`; `\(H_1\)`: `\(\rho \neq 0\)` 
+
+The test statistic is: `\(t = \dfrac{r}{SE_r}\)`; where `\(SE_r = \sqrt{\dfrac{1-r^2}{n-2}}\)` 
+
+Reject `\(H_0\)` if `\(P-value\)` of the calculated `\(t\)` is `\(\leq \alpha\)`; Do not reject `\(H_0\)` otherwise 
+
+`Advanced material follows` 
+
+We can also calculate asymptotic approximate confidence intervals for `\(\rho\)` as 
+`\(z - 1.96\sigma_z &lt; \zeta &lt; z + 1.96\sigma_z\)` where `\(z=0.5ln\left( \dfrac{1+r}{1-r} \right)\)`; `\(\sigma_z = \sqrt{\dfrac{1}{n-3}}\)`; and `\(\zeta\)` is the population analogue of the `\(z\)` used to calculate confidence intervals.  Because the `\(z\)` involves the natural logarithm we back-transform via taking the antilog of the lower and upper bounds of the confidence interval
+
+---
+
+### STAR Data: Are Reading Scores Correlated?
+
+&lt;img src="corr1.png" width="50%" style="display: block; margin: auto;" /&gt;
+---
+
+### hsb2 Data: Are Subject Scores Correlated? 
+
+&lt;img src="hsb2corrs.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Spearman's Rank Correlation
+
+Measures strength and association between the `ranks` of two variables assumed to be 
+
+(i) randomly sampled, and  
+(ii) with linearly related ranks  
+
+- Rank the scores of each variable separately, from low to high 
+- Average the ranks in the presence of ties 
+- Calculate `\(r_s=\dfrac{\sum \left(R - \bar{R} \right)\left( S - \bar{S}\right) }{\sum \left(R - \bar{R} \right)^2 \sum \left(S - \bar{S} \right)^2}\)` 
+- `\(H_0\)`: `\(\rho_s = 0\)`; `\(H_A\)`: `\(\rho_s \neq 0\)` 
+- Set `\(\alpha\)` 
+- Reject `\(H_0\)` if `\(P-value \leq \alpha\)`; Do not reject `\(H_0\)` otherwise 
+
+---
+
+### Example: County Health Rankings
+
+&lt;img src="spearman.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, middle, center
+
+# Regression Analysis
+
+---
+
+## Introduction to Regression Analysis
+
+Regression analysis seeks to both describe and predict relationships between one `dependent variable` and `one or more quantitative (continuous and/or discrete) and/or one or more categorical (nominal and/or ordinal) independent variables` 
+
+It allows us to model complex relationships between the dependent variable and the independent variables. We can thus ask: How do `\(x_1, x_2, \ldots, x_k\)` influence `\(y\)`? 
+
+It also enables us to make predictions about outcomes. If `\(x_i\)` assumes a particular value, what will be the value of `\(y_i\)` predicted from the linear regression? 
+
+`Regression analysis does not in itself allow us to make causal claims` 
+
+Conventionally the dependent variable is denoted as `\(y\)` and the independent variables are denoted as `\(x\)`
+
+**Note:** Dependent variable may be (a) quantitative or (b) categorical but `in this course we will only work with continuous variables` 
+
+---
+
+## Simple Bivariate Linear Regression
+
+The simple linear&lt;sup&gt;1&lt;/sup&gt; regression describes an outcome `\((y)\)` as a `linear function` of an independent variable `\((x)\)` 
+
+.footnote[[1] Linear means variables can be `\(x^2\)`, `\(1/x\)`, etc. but the slope must have a power of 1; `\(y = a + b^2(x)\)` is not linear.]
+
+`\(y = a + bx\)` is an example of a linear function. Recall that this is also the equation for a straight line where `\(a=\)` the intercept, and `\(b=\)` the slope of the line
+
+Given two sets of coordinates `\((x_1,y_1), (x_2,y_2)\)`, say `\((-1,-1)\)` and `\((5, 1)\)` respectively, we can calculate the slope of the straight line connecting these two points as 
+
+`$$b = \dfrac{y_2 - y_1}{x_2 - x_1} = \dfrac{1 - (-1)}{5 - (-1)} = \dfrac{2}{6}=0.333$$`
+
+**Note:** The Slope tells us the change in `\(y\)` for a unit change in `\(x\)` ... i.e., how much does `\(y\)` change by when `\(x\)` increases by 1? Typically slopes are interpreted in terms of a unit increase in `\(x\)`
+
+| x   | -1      | 0       | 1       | 2       | 3     | 4     | 5       |
+| --: | --:     | --:     | --:     | --:     | --:   | --:   | --:     |
+| y   | -1.000  | -0.667  | -0.333  | 0.000   | 0.333 | 0.667 | 1.000   |
+
+
+---
+
+We can calculate the intercept `\((a)\)` by finding the value of `\(y\)` when `\(x=0\)` 
+
+One set of coordinates we want are `\((0, y_0)\)`, and a second set picked arbitrarily could be `\((5,1)\)` 
+
+`\(b = \dfrac{1 - y_0}{5 - 0}=\dfrac{1-y_0}{5}\)` 
+
+We know the slope, `\(b = 0.333\)` since we just calculated it (see previous slide) 
+
+`\(\therefore b = \dfrac{1-y_0}{5}\)`, i.e., `\(0.333 = \dfrac{1-y_0}{5}\)` 
+
+`\(\therefore 0.333 \times 5 = 1 - y_0\)` and hence `\(y_0 = 1 - (0.333 \times 5) = 1 -  1.665 = -0.665\)`
+
+Now we can write the equation for the straight line `\(y = a + b(x)\)` as `\(y = -0.665 + 0.333(x)\)`
+
+When `\(x = 0\)`, `\(y = -0.665\)`, when `\(x = 1\)`, `\(y = -0.332\)`, when `\(x = 2\)`, `\(y = 0.001\)` and so on ...
+
+Given a value of `\(x\)` `you can predict the value of` `\(y\)` 
+
+But no regression line is perfect and so you will have prediction errors 
+---
+
+## The Residuals (Errors)
+
+Unless `\(x\)` and `\(y\)` are perfectly correlated all data points will not fall on the straight line
+
+We thus end up with some `errors` 
+
+Let us distinguish between the 
+
+- `population regression function` `\(y = a + b(x) + \epsilon\)` 
+- `sample regression function` `\(y = a + b(x) + e\)` 
+
+`\(\epsilon\)` is representing the population-level variation in `\(y\)` that remains unexplained by the model 
+
+`\(e\)` is is representing the sample-level variation in `\(y\)` that remains unexplained by the model 
+
+In theory, if we knew and could accurately measure everything that influences `\(y\)` we would have a perfect regression model and hence there would be no errors whatsoever 
+
+But that is a mirage given the complexity of almost all phenomena in the real world. Plus our knowledge and measurement abilities are imperfect 
+
+---
+
+Technically, when you estimate a linear regression you denote that fact by writing the regression equation as follows: `\(\hat{y} = \hat{a} + \hat{b}(x)\)` without the `\(+ e\)` term 
+
+`\(\hat{y}\)` is the predicted value of `\(y\)`, and we can then calculate the prediction error for each observed value of `\(y\)` by calculating 
+
+`$$\hat{e_i} = y_i - \hat{y_i}$$` 
+
+`$$\text{actual value of each } y - \text{ predicted value of each } y$$`
+
+Note that `\(\hat{e_i}\)` are also called the residuals because they are showing the residual variation in `\(y_i\)` that remains unexplained by the regression model 
+
+If the residuals are large and many, then we have an ill-fitting regression model (i.e., our model captures the linear relationship between the dependent variable and the independent variables very poorly) 
+---
+
+### An Example 
+
+| `\(y\)`   | `\(x\)` | `\(\hat{y} = -0.1 + 0.7(x)\)`   | `\(\hat{e} = y - \hat{y}\)` |
+| --:   | --: | --:                         | --:               |
+| 1     | 1   | 0.6                         | 0.4               |
+| 1     | 2   | 1.3                         | -0.3              |
+| 2     | 3   | 2.0                         | 0.0               |
+| 2     | 4   | 2.7                         | -0.7              |
+| 4     | 5   | 3.4                         | 0.6               |
+
+When `\(x = 1, \hat{y} = -0.1 + 0.7(1) = 0.6\)`  
+When `\(x = 2, \hat{y} = -0.1 + 0.7(2) = 1.3\)`  
+When `\(x = 3, \hat{y} = -0.1 + 0.7(3) = 2.0\)`  
+When `\(x = 4, \hat{y} = -0.1 + 0.7(4) = 2.7\)`  
+When `\(x = 5, \hat{y} = -0.1 + 0.7(5) = 3.4\)`  
+
+---
+
+### The Regression Line
+
+&lt;img src="lm1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+**Note:** The prediction `\((\hat{y} = 2)\)` is perfect when `\(x\)` is at its mean: i.e., `\(\bar{x} = 3\)`
+---
+
+## The Pizza Example 
+
+Student population size `\((x)\)` and pizza sales `\((y)\)` ... both in 1,000 units 
+
+| Observation No. |   `\(x_{i}\)` |   `\(y_{i}\)` | `\(x_{i}-\bar{x}\)` | `\(y_{i}-\bar{y}\)` | `\((x_{i}-\bar{x})(y_{i}-\bar{y})\)` | `\((x_{i}-\bar{x})^{2}\)`|
+| --: | --: | --: | --: | --: | --: | --: | --: |
+|          1 |          2 |         58 |        -12 |        -72 |        864 |        144|
+|          2 |          6 |        105 |         -8 |        -25 |        200 |         64|
+|          3 |          8 |         88 |         -6 |        -42 |        252 |         36|
+|          4 |          8 |        118 |         -6 |        -12 |         72 |         36|
+|          5 |         12 |        117 |         -2 |        -13 |         26 |          4|
+|          6 |         16 |        137 |          2 |          7 |         14 |          4|
+|          7 |         20 |        157 |          6 |         27 |        162 |         36|
+|          8 |         20 |        169 |          6 |         39 |        234 |         36|
+|          9 |         22 |        149 |          8 |         19 |        152 |         64|
+|         10 |         26 |        202 |         12 |         72 |        864 |        144|
+|            | `\(\bar{x}=14\)` | `\(\bar{y}=130\)` |      `\(0\)`      |   `\(0\)`         |       `\(2840\)` |        `\(568\)`|
+
+
+---
+
+`\(SS_{xy} = (x_{i}-\bar{x})(y_{i}-\bar{y})\)`  
+
+`\(SS_{x} = (x_{i}-\bar{x})^{2}\)`  
+
+Technically, `\(\hat{b} = \dfrac{SS_{xy}}{SS_{x}} = \dfrac{2840}{568} = 5\)` 
+
+and hence `\(\hat{a} = \bar{y} - \hat{b}(\bar{x}) = 130 - 5(14) = 130 - 70 = 60\)` 
+
+The regression equation thus is `\(\hat{y} = 60 + 5(x)\)`  
+
+What is `\(\hat{y}\)` when `\(x=2\)` ? `\(60 + 5(2) = 70\)`  
+
+What is `\(\hat{y}\)` when `\(x=6\)` ? `\(60 + 5(6) = 90\)`  
+
+What is `\(\hat{y}\)` when `\(x=8\)` ? `\(60 + 5(8) = 140\)`  
+
+What is `\(\hat{y}\)` when `\(x=0\)` ? ... `\(y = 60,000 \text{ dollars } \ldots\)` `interpreting the intercept is tricky`  
+
+---
+
+### The predictions 
+| Observation No.| Sales| Revenue| Predicted Revenues| Prediction Errors|
+| --: | --: | --: | --: | --: |
+| 1| 2.00| 58.00| 70.00| -12.00|
+|   2| 6.00| 105.00| 90.00| 15.00|
+|   3| 8.00| 88.00| 100.00| -12.00|
+|   4| 8.00| 118.00| 100.00| 18.00|
+|   5| 12.00| 117.00| 120.00| -3.00|
+|   6| 16.00| 137.00| 140.00| -3.00|
+|   7| 20.00| 157.00| 160.00| -3.00|
+|   8| 20.00| 169.00| 160.00| 9.00|
+|   9| 22.00| 149.00| 170.00| -21.00|
+|   10| 26.00| 202.00| 190.00| 12.00|
+
+---
+
+### The Pizza Regression Line and Data
+
+&lt;img src="pizzaregressionline.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Fitting the Regression Model in SPSS
+
+&lt;img src="pizzaregression.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Interpreting the Regression Output
+
+Correlation is 0.950 
+
+... the two variables are very highly, positively correlated 
+
+R-squared is 0.903 
+
+...  90.3% of the variation in revenue is explained by this regression model (i.e., by the independent variable(s) included in this particular regression model) 
+
+Average prediction error `(Standard error of the estimate)` is 13.829 
+
+... That is, if we use this model to make predictions, average prediction error will be `\(\pm 13,829\)` dollars than the actual value of revenues (the dependent variable `\(y\)`) 
+
+The slope `\(\left( \hat{b} \right)\)` is 5, and this is statistically significant (the p-value is 0.000) 
+
+... as population increases by 1 unit (which here means 1,000 persons) revenues increase by 5 (i.e., 5,000 dollars since everything is measured in 1,000 units) 
+
+
+---
+
+### SPSS' Regression Line and Data Plot
+
+&lt;img src="olsline.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+class: inverse, middle, center 
+
+# Population vs. Sample Regression Function
+---
+
+## Galton's Parent-Child Height Data
+
+These data are from Francis Galton's 1885 exploration of the relationship between the heights of children and the height of their parents. The variables are the height of the adult child and the midparent height, defined as the average of the height of the father and 1.08 times the height of the mother. The units are inches. The number of cases is 928, representing 928 children and their 205 parents.
+
+&lt;img src="galton1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### The Population Regression Function
+
+&lt;img src="galtonreg.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+`\({child} = Intercept + slope(parent) = 23.942 + 0.646(parent)\)` 
+
+`\({child_{parent = 60}} = 23.942 + 0.646(60) = 23.942 + 38.76 = 62.702\)` 
+
+**Note:** Intercept (aka Constant) a mathematical necessity but estimate may not be readily interpretable or make intuitive sense in all contexts
+
+---
+
+### The Population Regression Function (continued)
+
+&lt;img src="galtonreg2.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+`\(\text{R } = 0.459\)` is the correlation between child and parent heights 
+
+`\(\text{R Square }  = 0.210\)` indicates that we can predict 21% of the variation in a child's height with parent heights 
+
+Standard Error of the Estimate `\(= 2.23855\)` indicates that on average, any predicted height based on this regression equation will have an error of `\(\pm 2.23855\)` inches. Note: The smaller this estimate, the more accurate is the regression equation
+
+
+---
+
+## OLS via Population Regression Function
+
+.pull-left[
+&lt;img src="galton2.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+Every value of parents' average height `\((x_i)\)` has more than one value of children's heights `\((y_i)\)`  
+
+For a given value of `\(x\)`, the regression line typically runs through the mean of the `\(y\)` values 
+
+... `(see the data-set after generating predicted values)` 
+]
+
+
+---
+
+### Four sample regressions 
+
+.pull-left[
+
+#### Sample 1
+  ```
+               Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)     33.8416    12.7259   2.659   0.0114 *
+sample1$parent   0.5005     0.1848   2.708   0.0101 *
+---
+Residual standard error: 1.876 on 38 degrees of freedom
+Multiple R-squared:  0.1618,	Adjusted R-squared:  0.1398 
+F-statistic: 7.336 on 1 and 38 DF,  p-value: 0.01008
+  ```  
+
+#### Sample 2
+  ```
+               Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)     22.6125    13.8820   1.629  0.11160   
+sample2$parent   0.6655     0.2027   3.283  0.00221 **
+---
+Residual standard error: 2.434 on 38 degrees of freedom
+Multiple R-squared:  0.221,	Adjusted R-squared:  0.2005 
+F-statistic: 10.78 on 1 and 38 DF,  p-value: 0.002207
+  ```
+]
+
+.pull-right[
+
+#### Sample 3
+  ```
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       8.890     12.051   0.738    0.465    
+sample3$parent    0.867      0.176   4.928 1.66e-05 ***
+---
+Residual standard error: 2.178 on 38 degrees of freedom
+Multiple R-squared:  0.3899,	Adjusted R-squared:  0.3738 
+F-statistic: 24.28 on 1 and 38 DF,  p-value: 1.664e-05
+  ```
+
+#### Sample 4
+  ```
+               Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)     23.2672    14.6289    1.59  0.12001   
+sample4$parent   0.6620     0.2142    3.09  0.00373 **
+---
+Residual standard error: 2.104 on 38 degrees of freedom
+Multiple R-squared:  0.2008,	Adjusted R-squared:  0.1798 
+F-statistic:  9.55 on 1 and 38 DF,  p-value: 0.003732
+  ```
+]
+
+---
+
+### Four sample regressions (continued)
+
+.pull-left[
+&lt;img src="galtonsampling2.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+### So ...
+Since we never know the population regression function, how do we know which regression line better fits the data? 
+
+We don't. In fact we never do 
+
+What we can do, however, is to have faith in the theory of sampling distributions because then, so long as certain assumptions are met, a sample regression line is likely to be `similar` to the population regression line (if not identical)
+
+]
+
+---
+
+class: inverse, middle, center
+
+# Confidence and Prediction Intervals 
+---
+
+
+## Estimation and Prediction
+
+`\(\hat{y}_{i}\)` is a point estimate for `\(x_{i}\)` .. the predicted value for a single observation with a given value of `\(x\)` 
+
+But point estimates of predicted values tell us nothing about their precision 
+
+However, `Confidence intervals` and `Prediction intervals` do 
+
+Confidence interval: Interval estimate of mean value of `\(y\)` for specific value of `\(x\)`
+Prediction interval: Interval estimate of predicted value of `\(y\)` for specific value of `\(x\)`
+
+.pull-left[
+`\(x_{p} =\)` specific value of `\(x\)`  
+`\(y_{p} =\)` specific value of `\(y\)` for `\(x = x_{p}\)`  
+`\(E(y_{p}) =\)` expected value of `\(y\)` given `\(x_{p}\)`  
+`\(\hat{y}_{p} = a + b(x_{p}) =\)` point estimate of `\(E(y_{p})\)` when `\(x=x_{p}\)`  
+]
+.pull-right[
+For e.g., if `\(x_{p}=14\)`, `\(\hat{y}_{p} = 60 + 5(14)=130\)`  
+For e.g., if `\(x_{p}=2\)`, `\(\hat{y}_{p} = 60 + 5(2)=70\)`  
+For e.g., if `\(x_{p}=8\)`, `\(\hat{y}_{p} = 60 + 5(8)=100\)`  
+For e.g., if `\(x_{p}=20\)`, `\(\hat{y}_{p} = 60 + 5(20)=160\)`  
+For e.g., if `\(x_{p}=26\)`, `\(\hat{y}_{p} = 60 + 5(26)=190\)` 
+]
+
+---
+
+### Confidence Interval Estimation for `\(y\)`
+
+`\(E(y_{p}) = \hat{y}_{p}\)`  
+
+Variance of `\(\hat{y}_{p} = s^{2}_{\hat{y}_{p}} = s^{2}\left[\dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}}\right]\)`  
+
+Standard Deviation of `\(\hat{y}_{p} = s_{\hat{y}_{p}}=s\sqrt{\left[\dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}} \right]}\)`  
+
+For Armand's Pizza data, with `\(x_{p}=8\)`, 
+
+`$$s_{\hat{y}_{p}}=13.829\sqrt{\left[\dfrac{1}{10} + \dfrac{(8 - 14)^{2}}{568}\right]} = 5.67$$`  
+
+---
+
+`\(\hat{y}_{p} \pm t_{\alpha/2}s_{\hat{y}_{p}} = 110 \pm 2.306(5.67) = 110 \pm 13.07 = 96,930; 123,070\)`  
+
+When `\(x_{p}=2\)`, `\(s_{\hat{y}_{p}}=13.829\sqrt{[\frac{1}{10} + \frac{(2 - 14)^{2}}{568}]}   = 13.829\sqrt{0.3667}=8.42\)`  
+
+When `\(x_{p}=8\)`, `\(s_{\hat{y}_{p}}=13.829\sqrt{[\frac{1}{10} + \frac{(8 - 14)^{2}}{568}]}   = 13.829\sqrt{0.1669}=5.67\)`  
+
+When `\(x_{p}=14\)`, `\(s_{\hat{y}_{p}}=13.829\sqrt{[\frac{1}{10} + \frac{(14 - 14)^{2}}{568}]} = 13.829\sqrt{0.1000}=4.39\)`  
+
+When `\(x_{p}=20\)`, `\(s_{\hat{y}_{p}}=13.829\sqrt{[\frac{1}{10} + \frac{(20 - 14)^{2}}{568}]} = 13.829\sqrt{0.1669}=5.67\)`  
+
+When `\(x_{p}=26\)`, `\(s_{\hat{y}_{p}}=13.829\sqrt{[\frac{1}{10} + \frac{(26 - 14)^{2}}{568}]} = 13.829\sqrt{0.3667}=8.42\)`  
+
+---
+
+### Prediction Interval for `\(y\)` 
+
+In Confidence Intervals, we could be wrong on two counts -- `\(a; b\)`  
+
+But, if we want to predict `\(y\)` for some `\(x\)` value not in the sample, we could be wrong on three counts -- `\(a; b; \epsilon\)`  
+
+So we adjust Variance as `\(s^{2}_{ind} = s^{2} + s^{2}_{\hat{y}_{p}}\)`  
+
+`$$s^{2}_{ind} = s^{2} + s^{2}\left[\dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}}\right] = s^{2} \left[1 + \dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}}\right]$$`  
+
+`$$s_{ind} = s\sqrt{\left[1 + \dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}}\right]}$$`  
+
+---
+
+Prediction Interval: `\(\hat{y}_{p} \pm t_{\alpha/2}s_{ind}\)` 
+
+`$$s_{x_{p}} = s\sqrt{\left[1 + \dfrac{1}{n} + \dfrac{(x_{p} - \bar{x})^{2}}{\sum(x_{i} - \bar{x})^{2}}\right]}$$`  
+
+
+`$$s_{x_{p} = 10} = 13.829\sqrt{\left[1 + \dfrac{1}{10} + \dfrac{(10 - 14)^{2}}{568}\right]}$$`
+`$$= 13.829\sqrt{1.1282}=14.69$$`  
+
+`$$\hat{y}_{p} \pm t_{\alpha/2}s_{ind}$$`  
+
+`$$110 \pm 2.306(14.69) = 110 \pm 33.8751 = 76,125; 143,875$$`  
+
+---
+
+### Confidence &amp; Prediction Intervals for Galton's Data
+
+&lt;img src="conf_pred.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+Note that the Confidence Intervals are `narrower` than the Prediction Intervals 
+
+Note also that the Confidence Intervals are narrowest when `\(x \approx \bar{x}\)` and `\(y \approx \bar{y}\)` 
+
+---
+
+class: inverse, middle, center
+
+# Dummy Independent Variable
+
+---
+
+## Regression Models with Dummy Variables
+
+At times our regression models include categorical variables that are nominal or ordinal variables (for e.g., gender, whether the subject attended a training or not, income group, ethnicity, marital status, union membership, and so on) 
+
+In the regression setting variables that assume `\(0\)` and `\(1\)` values are referred to as `dummy variables` 
+
+For e.g., female `\(=1\)` if the individual is a female and female `\(=0\)` if the individual is a male. This is an example of a `binary variable` 
+
+For e.g., we have a variable that indicates classroom type -- regular; regular with an aide, and; small. A variable such as this can be dissected into the following dummy variables
+
+- regular `\(=1\)` if the student was in a regular classroom; regular `\(=0\)` otherwise (i.e., if the student was in a small classroom or a regular+aide classroom)  
+- aide `\(=1\)` if the student was in a regular classroom with an aide; aide `\(=0\)` otherwise  
+- small `\(=1\)` if the student was in a small classroom; small `\(=0\)` otherwise  
+
+---
+### A Binary Variable (female)
+
+The Model is: `\(math3 = a + b_1(female) + \epsilon\)` 
+
+- when female student, female `\(= 1\)`, `\(\widehat{math3} = \hat{a} + \hat{b}_1(1)  =  = 617.751 - 0.446 = 617.305\)`  
+- when male student, female `\(= 0\)`, `\(\widehat{math3} = \hat{a} + \hat{b}_1(0)  = \hat{a} = 617.751\)`  
+
+so in this particular model the intercept is the predicted value of math3 for male students 
+
+Implication? Male students scored about 0.446 points more, on average, than female students 
+
+&lt;img src="dummyols.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Plotting this regression model}
+
+&lt;img src="star_female.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### School Location
+
+We have four sites -- Rural, Suburban, Urban, and Inner-city 
+
+The Model is: `\(math3 = a + b_1(Rural) + b_2(Urban) + b_3(Inner-city) + \epsilon\)` 
+
+Rule-of-thumb: When the categorical variable has `\(m\)` categories, we `can only include `\(m-1\)` dummy variables created from it as independent variables` 
+
+The excluded group is then the `reference group` absorbed by the Constant
+
+&lt;img src="star_schools.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="star_schools.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+`\(\widehat{math3} = \hat{a} + \hat{b}_1(InnerCity) + \hat{b}_2(Suburban) + b_3(Urban) + e\)` 
+
+- Student in Inner-city School: `\(\widehat{math3} = \hat{a} + \hat{b}_1  = 624.866 - 24.151(1) =  600.715\)`  
+- Student in Suburban School: `\(\widehat{math3} = \hat{a} + \hat{b}_2  = 624.866 - 7.034(1) =   617.832\)`  
+- Student in Urban School: `\(\widehat{math3} = \hat{a} + \hat{b}_3  = 624.866 - 4.882(1) =   619.984\)` 
+- Student in Rural School: `\(\widehat{math3} = \hat{a}   = 624.866\)`  
+
+Check the mean of math3 for each school-type and compare the means against these estimates 
+
+---
+
+class: inverse, middle, center 
+
+# The Multiple Regression Model
+
+---
+
+## A Model with Two Independent Variables: `\(x_1\)` and `\(x_2\)` 
+
+Population Regression Function: `\(y = a + b_1(x_1) + b_2(x_2) + \epsilon\)` 
+
+Sample Regression Function: `\(y = \hat{a} + \hat{b}_1(x_1) + \hat{b}_2(x_2) + \hat{e}\)` 
+
+Note: `\(\hat{b}_1\)` and `\(\hat{b}_2\)` are the `partial regression coefficients` or `the partial slope coefficients` 
+
+Why are they `partial`? They are partial in the sense that ... 
+
+- `\(\hat{b}_1 =\)` the impact of a unit change in `\(x_1\)` on the mean of `\(y\)` `holding` `\(x_2\)` constant 
+- `\(\hat{b}_2 =\)` the impact of a unit change in `\(x_2\)` on the mean of `\(y\)` `holding` `\(x_1\)` constant 
+
+`\(R^2 = \dfrac{SSTR}{SST}\)`, with `\(0 \leq R^2 \leq 1\)`  
+
+Note: `\(R^2\)` is for multiple regression; `\(r^2\)` is for bivariate regression
+
+---
+### State of the World's Children 
+
+U5MR -- No. of deaths of children 0--5 years old, per 1,000 live births  
+Births -- Annual no. of births (thousands)  
+Income -- Per--capita gross national income  
+AdultLR -- Percent adults literate  
+MaleYouthLR -- Percent of males 15--24 literate  
+FemaleYouthLR -- Percent of females 15--24 literate  
+Mobiles -- No. of mobile phones per 100  
+Internet -- No. of internet users per 100  
+Population -- Total population (thousands)  
+PopulationU5 -- Total population 0--5 years old  
+Life  –- Number of years newborn children expected to live  
+Fertility -- No. of children who would be born per woman if she lived to the end of her  childbearing years and bore children at each age in accordance with prevailing age-specific fertility rates  
+Urban -- Percent of population living in urban areas  
+
+---
+
+| Statistic | N | Mean | Std. Dev. | Min | Max|
+| :-- | --: | --: | --: | --: | --: |
+| U5MR | 194 | 35.665 | 37.452 | 2 | 182|
+| Births | 183 | 754.959 | 2,458.266 | 1.479 | 25,642.210|
+| Income | 177 | 12,351.810 | 17,867.930 | 220 | 98,860|
+| AdultLR | 144 | 82.123 | 19.310 | 25.308 | 99.998|
+| MaleYouthLR | 142 | 90.684 | 12.860 | 37.567 | 100.000|
+| FemaleYouthLR | 142 | 87.654 | 18.325 | 21.797 | 100.000|
+| Mobiles | 191 | 98.913 | 42.961 | 5.470 | 198.618|
+| Internet | 189 | 40.350 | 29.197 | 0.800 | 96.000|
+| Population | 196 | 35,898.960 | 136,432.100 | 0 | 1,377,064|
+| PopulationU5 | 196 | 3,323.143 | 11,269.960 | 0 | 120,580|
+| Life | 183 | 69.934 | 9.052 | 45.338 | 83.418|
+| Fertility | 183 | 2.906 | 1.450 | 1.268 | 7.574|
+| Urban | 196 | 56.709 | 23.669 | 11.193 | 100.000|
+
+---
+
+## Fitting Regression Models to these Data
+
+U5MR is the dependent variable (aka the outcome of interest)  
+
+- with 1 independent variable (say, Income)  
+- with 2 independent variables (say, Income and Fertility)  
+- with 1 continuous independent variable (Income) and 1 categorical variable (Urban\_Country)  
+- with an interaction between these two independent variables (Income * Urban\_Country)  
+
+Some cautions ... Regression models are built on several features 
+
+- Your independent variables cannot be `very highly correlated`  
+- The dependent variable should have equal variance for every value of the independent variable  
+- Your sample size should be large (say, at least 30 observations for every independent variable you wish to use)  
+
+---
+
+### SPSS Output
+
+`$$U5MR = Constant + b_{1}(Income) + b_2(AdultLR)$$` 
+
+&lt;img src="u5mr1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+`$$U5MR = 159.170 - 0.001(Income) - 1.407(AdultLR)$$` 
+
+- Holding all else constant, as Income rises by 1, U5MR is predicted to fall by 0.001  
+- Holding all else constant, as Income rises by 1000, U5MR is predicted to fall by 1  
+- Income = 1000 and AdultLR = 40? Predicted U5MR will  be: `\(159.170 - 0.001(1000) - 1.407(40)  = 101.89\)`  
+- Income = 10000 and AdultLR = 80? Predicted U5MR will  be: `\(159.170 - 0.001(10000) - 1.407(80)  = 36.61\)`  
+- Holding all else constant, as AdultLR increases by 1, U5MR falls by 1.407  
+
+---
+
+### Hypotheses 
+
+`\(H_0:\)` Income has no impact on child mortality, i.e., `\(H_0: b_1 = 0\)`  
+`\(H_A:\)` Income has an impact on child mortality, i.e., `\(H_A: b_1 \neq 0\)`  
+
+`\(H_0:\)` Adult Literacy has no impact on child mortality, i.e., `\(H_0: b_2 = 0\)`  
+`\(H_A:\)` Adult Literacy  has an impact on child mortality, i.e., `\(H_A: b_2 \neq 0\)`  
+
+`\(H_0:\)` As Income increases child mortality stays the same or increases, i.e., `\(H_0: b_1 \geq 0\)`  
+`\(H_A:\)` As Income increases child mortality decreases (i.e., `\(H_A: b_1 &lt; 0\)`  
+
+`\(H_0:\)` As Adult Literacy increases child mortality stays the same or increases, i.e., `\(H_0: b_2 \geq 0\)`  
+`\(H_A:\)` As Adult Literacy increases child mortality decreases, i.e., `\(H_A: b_2 &lt; 0\)`  
+
+**Note:** Two-tailed when we don't know what to expect but one-tailed when we have very specific impacts we expect to see 
+---
+
+### R-squared and more 
+
+&lt;img src="u5mr2.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+Adjusted R Squared `\(= 0.604\)` indicates that we can explain about 60.4% of the variation in U5MR with Income and Adult Literacy  
+
+Std. Error of the Estimate `\(= 24.51773\)` indicates that on average, predictions generated by this regression model would have an error of `\(\pm 24.51773\)` ... about 25 fewer/more deaths per 1000 live births than would actually occur  
+
+How could we do better? ... by fitting more variables 
+
+Let us keep Income but replace AdultLR with FemaleYouthLR + Fertility + Urban 
+---
+
+
+
+&lt;img src="u5mr3.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+Note that the Adjusted R Squared has gone up to 0.762 so now we are explaining about 76.2% of the variation in U5MR ... an improvement over the previous model  
+
+Average prediction error has dropped to 18.99929 as well  
+
+Income is no longer `statistically significant`  
+
+Urban is not statistically significant but FemaleYouthLR &amp; Fertility are statistically significant  
+---
+
+### Trimmed version of the Previous Regression
+
+&lt;img src="u5mr4.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Interpreting a Dummy Variable 
+
+&lt;img src="u5mr5.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+
+U5MR = `\(57.124 - 0.573(FemaleYouthLR) + 15.119(Fertility) - 8.498(UrbanRural)\)`  
+
+UrbanRural = 1 implies an urbanized country. So the finite difference between an urban and a rural country?  
+
+Urban Country: `\(57.124 - 0.573(FemaleYouthLR) + 15.119(Fertility) - 8.498(1)\)`  
+
+Rural Country: `\(57.124 - 0.573(FemaleYouthLR) + 15.119(Fertility) - 8.498(0)\)`  
+`\(= 57.124 - 0.573(FemaleYouthLR) + 15.119(Fertility)\)`  
+
+`Holding all else constant`, urban countries have 8.498 fewer deaths per 1000 live births than do rural countries.
+
+---
+
+class: inverse, middle, center
+
+# Interaction Effects
+
+---
+
+## Interaction Effects?
+
+At times it may be that the effect of an independent variable is not constant across the values of the other independent variable. For example, maybe at low levels of education there is no difference in hourly wages of men and women. However, a gap is seen only for those with more than a high school degree  
+
+This may be a suspicion, a hypothesis that we would like to test. if we wish to do so then we need to modify the regression model 
+
+Interactions are not easy to deal with here but we will look at three common types of interactions
+
+- An interaction between two categorical variables  
+- An interaction between one categorical variable and one continuous variable  
+- An interaction between two continuous variables  
+
+Interactions ought to be specified on the basis of theory (preferred). However, do not hesitate to test for them if initial exploratory analysis (descriptive) of the data suggests interesting patterns
+
+`Interactions best understood and described via suitable graphs`  
+
+---
+
+### An Interaction Between Two Categorical Variables
+
+Let `\(y = a + b_1(x_1) + b_2(x_2) + b_3(x_3) + \epsilon\)` `\(\ldots\)` where `\(y\)` is a continuous variable (wage); `\(x_1\)` is a dummy variable (female) that assumes two values; `\(x_2\)` is a dummy variable (single) that assumes two values; and `\(x_3 = (x_1) \times (x_2)\)`  
+
+`$$wage = a + b_1(female) + b_2(single) + b_3(single \times female) + \epsilon$$` 
+
+&lt;img src="dummy2cat.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+Single Female: `\(= 10.876 - 3.192 - 2.521 + 3.097 = 8.260\)`  
+Married Female: `\(= 10.876 - 3.192 =\)`  
+Single Male: `\(=  10.876 - 2.521 = 8.355\)`  
+(Constant) `\(=?\)` Married Male ... so average hourly wage is 10.876 for Married Male  
+
+---
+
+### One Categorical and One Continuous Variable 
+`$$wage = a + b_1(female) + b_2(age) + b_3(female \times age) + \epsilon$$` 
+
+&lt;img src="female_age.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+No main effect of Female (p-value = 0.384)  
+
+Main effect of age (p-value = 0.000)  
+
+Interaction effect of Female and age (p-value = 0.009) `... as age increases, the wage-gap worsens for females`  
+
+---
+
+&lt;img src="female_age_int.png" width="60%" style="display: block; margin: auto;" /&gt;
+---
+
+`$$wage = 5.282 + 1.231(female) + 0.131(age) - 0.095(female \times age)$$` 
+
+Calculate Minimum `\((18)\)`, Median `\((35)\)`, Maximum `\((64)\)` of age 
+
+Set age at Minimum  and calculate predicted hourly wage for Men versus Women 
+
+Set age at Median and calculate predicted hourly wage for Men versus Women 
+
+ Set age at Maximum and calculate predicted hourly wage for Men versus Women 
+
+You could also calculate the first `\((28)\)` and third quartiles `\((44)\)` of age, `\(\pm 1\)` standard deviation `\((\pm 11.72657)\)` of age, `\(\pm 2\)` standard deviations `\((23.45315)\)` of age, and then generate predicted wage for Men versus Women 
+
+|  | age | age  | age | age | age |
+| :-- | --: | --: | --: | --: | --: |
+| Sex | 18 | 28 | 35 | 44 | 64|
+| Female | 7.162694 | 7.523649 | 7.776317 | 8.101176 | 8.823084|
+| Male | 7.639764  | 8.949691 |  9.866640 | 11.045575 | 13.665429|
+| Difference | 0.4770696 | 1.4260426 | 2.0903237 | 2.9443994 | 4.8423453|
+
+Note the increasing wage-gap as age increases
+
+---
+### Two Continuous Variables 
+`\(y = a + b_1(x_1) + b_2(x_2) + b_3(x_3) + \epsilon\)` where `\(x_3 = (x_1) \times (x_2)\)` 
+
+Now if `\(b_3 &gt;0\)`, the higher is `\(x_1\)`, the more the effect of `\(x_2\)` on `\(y\)` and likewise, the higher is `\(x_2\)`, the more the effect of `\(x_1\)` on `\(y\)`  
+
+If `\(b_3 &lt; 0\)` then effects are reversed (i.e., the higher is `\(x_i\)` the less the effect of `\(x_j\)` on `\(y\)`) 
+
+Note also that `\(b_1\)` and `\(b_2\)` now reflect `conditional relationships`: `\(b_1\)` is the effect of `\(x_1\)` on `\(y\)` when `\(x_2 = 0\)`; `\(b_2\)` is the effect of `\(x_2\)` on `\(y\)` when `\(x_1 = 0\)` 
+
+When interpreting our regression coefficients, we are forced to say that the effect of a unit change in one variable depends upon the value of the other variable   
+
+As a rule, if you have an interaction effect in your model, you will want to include the `\(x_1\)` and `\(x_2\)` as well `even if they are not statistically significant` 
+
+Calculating impacts of variables ...
+- Hold `\(x_i\)` at its mean and tweak `\(x_j\)` by `\(\pm 1\)`, `\(\pm 2\)` standard deviations, or 
+- Hold `\(x_i\)` at its mean and change the other by discrete units (for e.g., for variable that ranges from `\(0\%\)` to `\(100\%\)` you tweak from MIN to MAX by `\(10\%\)`) 
+
+`Do not tweak` `\(x_i\)` `or` `\(x_j\)` `to values that are not in the sample`  
+
+---
+
+&lt;img src="mols8.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+Calculate `Minimum, Median, Maximum` for **age** and for **exper**, respectively 
+
+Now hold age at Minimum and tweak exper 
+
+Now hold exper at Minimum and tweak age 
+
+Repeat by setting each, in turn, at Median, then at Maximum 
+
+With missing data, all descriptive statistics must be calculated for the `estimation sample` and not the full sample since if you have missing data, the descriptive statistics of the estimation sample can differ from those of the full sample 
+
+---
+
+`$$wage = -12.193 + 0.957(age) - 0.610(exper) - 0.004(age \times exper)$$`
+
+|   | age | age | age  |  age | age |
+| :-- | --: | --: | --: | --: | --: |
+| exper | 18 | 28 | 35 | 44 | 64 |
+| 0 | 5.033918 | 14.604271 | 21.303518 | 29.916835 | 49.057541 |
+| 8 | -0.4178636  | 8.8359545 | 15.3136271 | 23.6420634 | 42.1496995 |
+| 15 | -5.188172  | 3.788678 | 10.072473 | 18.151638 | 36.105338 |
+| 26 | -12.684372  | -4.142757  |  1.836373  |  9.523827 |  26.607057 |
+| 55 | -32.447081 | -25.052904 | -19.876980 | -13.222221  | 1.566133 |
+
+
+### What seems odd about this picture??
+---
+
+### Feasible in-sample values
+
+- age = 18, exper = 0  
+
+- age = 28, exper = (Min = 5, Max = 15)  
+
+- age = 35, exper = (Min = 11, Max = 21)  
+
+- age = 44, exper = (Min = 22, Max = 29)  
+
+- age = 64, exper = (Min = 40, Max = 65)  
+
+
+Important to scan the data to avoid impossible predictions being generated. Better yet, generate predicted values' plots such as the one that follows.  
+---
+
+&lt;img src="age_exper_int.png" width="60%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
