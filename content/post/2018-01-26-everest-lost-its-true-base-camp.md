@@ -5,8 +5,7 @@ date: '2018-01-26'
 slug: everest-lost-its-true-base-camp
 categories: 
 - Himalayas
-tags: 
-- Mountaineering
+tags: ["Himalayas", "Mountaineering"]
 header:
   caption: ''
   image: ''
