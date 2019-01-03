@@ -1,0 +1,73 @@
+---
+title: 'Appalachia: A Profile in Numbers'
+author: "Ani Ruhil"
+date: '2018-12-23'
+header:
+  caption: ''
+  image: ''
+slug: appalachia-a-profile-in-numbers
+tags: ['Appalachian Series']
+categories:
+- R
+- Health
+- Demographics
+- Socioeconomics
+---
+
+
+
+<p>The founding report of the <a href="https://www.arc.gov/about/arcappalachiaareportbythepresidentsappalachianregionalcommission1964.asp">Appalachian Regional Commission</a> does a wonderful job of highlighting the state of affairs in Appalachia circa 1950 and 1960. The prose is not too shabby even if it careens every now and then into the romantic: “Graphs and tables can hardly relate the acutely personal story of a child in a remote valley, his horizon of opportunity limited to the enclosing hills; nor the despair of his father, who, idled by forces beyond his control and seeing no prospect of future employment, must live month in and month out with the vision of that child repeating his own history. This report can only present statistical evidence, the inanimate pictures, and hope they are as convincing as the visitor to Appalachia finds the realities.”</p>
+<p>The data, though, are what I want to focus on here because they allow us to see if and how relative conditions have changed not only for the Appalachian region as a whole but also individually for the Appalachian portions of the states. First, the region then and now, with Appalachia defined as the aggregation of all of West Virginia and designated counties in 12 other states: Alabama, Georgia, Kentucky, Maryland, Mississippi, New York, North Carolina, Ohio, Pennsylvania, South Carolina, Tennessee, and Virginia. The 1960 estimate is from the ARC report of 1964 referenced above, and the current estimates are from the 2013-2017 American Community Survey (5-year).</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Measure</th>
+<th align="left">1960</th>
+<th align="left">1960</th>
+<th align="left">2013-17 ACS</th>
+<th align="left">2013-17 ACS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Appalachia</td>
+<td align="left">Non-Appalachia</td>
+<td align="left">Appalachia</td>
+<td align="left">Non-Appalachia</td>
+</tr>
+<tr class="even">
+<td align="left">Families in poverty</td>
+<td align="left">30.7%</td>
+<td align="left">20.5%</td>
+<td align="left">11.8%</td>
+<td align="left">10.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">Unemployment rate</td>
+<td align="left">7.1%</td>
+<td align="left">4.9%</td>
+<td align="left">6.8%</td>
+<td align="left">6.7%</td>
+</tr>
+<tr class="even">
+<td align="left">High school or more</td>
+<td align="left">32.3%</td>
+<td align="left">41.8%</td>
+<td align="left">86.3%</td>
+<td align="left">87.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">4-year college or more</td>
+<td align="left">5.2%</td>
+<td align="left">7.9%</td>
+<td align="left">23.8%</td>
+<td align="left">31.6%</td>
+</tr>
+</tbody>
+</table>
+<p>In the aggregate the gap has narrowed considerably except for the percent of adults 25-years old or older with at least a college degree. But aggregate profiles mask significant variance that becomes readily apparent if you focus on the counties per se. Take, for example,</p>
+<p><img src="/post/2018-12-23-appalachia-a-profile-in-numbers_files/figure-html/unnamed-chunk-1-1.svg" width="768" /></p>
+<p>This plot is instructive for several reasons. First, except in WV where all counties are Appalachian, in other states the Appalachian counties (the dark colored points) are not necessarily worse off than their non-Appalachian peers. In fact, AL, GA, and SC Appalachian counties seem to be doing better than many non-Appalachian counties. KY, OH, TN, and VA have Appalachian counties doing much worse than non-Appalachian counties. Second, although a county’s unemployment rate may be low, that does not necessarily imply low poverty rates per se, most likely because of the prevalence of low-wage jobs. This possibility can be explored via the average weekly wage</p>
+<p><img src="/post/2018-12-23-appalachia-a-profile-in-numbers_files/figure-html/unnamed-chunk-2-1.svg" width="768" /></p>
+<p>Some states (see NC, KY, PA, VA, MS) exhibit clearer patterns than other states. Now, the average wage explored here is just the average for all jobs, but I am now curious to see what the patterns look like if we look at (a) what sectors lead employment in each county and how that has changed over time, and (b) how much of a difference there is in sector specific average wages over time. I am also curious about looking at small-area income and poverty estimates over time, health insurance estimates, and then of course more data streams from the Bureau of Labor, the Bureau of Economic Analysis, and of course from the American Community Survey and the Decennial censuses.</p>

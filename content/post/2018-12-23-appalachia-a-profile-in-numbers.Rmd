@@ -1,0 +1,88 @@
+---
+title: 'Appalachia: A Profile in Numbers'
+author: "Ani Ruhil"
+date: '2018-12-23'
+header:
+  caption: ''
+  image: ''
+slug: appalachia-a-profile-in-numbers
+tags: ['Appalachian Series']
+categories:
+- R
+- Health
+- Demographics
+- Socioeconomics
+---
+
+The founding report of the [Appalachian Regional Commission](https://www.arc.gov/about/arcappalachiaareportbythepresidentsappalachianregionalcommission1964.asp) does a wonderful job of highlighting the state of affairs in Appalachia circa 1950 and 1960. The prose is not too shabby even if it careens every now and then into the romantic: "Graphs and tables can hardly relate the acutely personal story of a child in a remote valley, his horizon of opportunity limited to the enclosing hills; nor the despair of his father, who, idled by forces beyond his control and seeing no prospect of future employment, must live month in and month out with the vision of that child repeating his own history. This report can only present statistical evidence, the inanimate pictures, and hope they are as convincing as the visitor to Appalachia finds the realities." 
+
+The data, though, are what I want to focus on here because they allow us to see if and how relative conditions have changed not only for the Appalachian region as a whole but also individually for the Appalachian portions of the states. First, the region then and now, with Appalachia defined as the aggregation of all of West Virginia and designated counties in 12 other states: Alabama, Georgia, Kentucky, Maryland, Mississippi, New York, North Carolina, Ohio, Pennsylvania, South Carolina, Tennessee, and Virginia. The 1960 estimate is from the ARC report of 1964 referenced above, and the current estimates are from the 2013-2017 American Community Survey (5-year). 
+
+| Measure | 1960        | 1960            | 2013-17 ACS   | 2013-17 ACS     |
+| :--     | :-          | :-              | :-            | :-              |
+|         | Appalachia  | Non-Appalachia  | Appalachia    | Non-Appalachia  |
+| Families in poverty | 30.7% | 20.5% | 11.8% | 10.4% |
+| Unemployment rate | 7.1% | 4.9% | 6.8% | 6.7% |
+| High school or more | 32.3% | 41.8% | 86.3% | 87.4% |
+| 4-year college or more | 5.2% | 7.9% | 23.8% | 31.6% |
+
+In the aggregate the gap has narrowed considerably except for the percent of adults 25-years old or older with at least a college degree. But aggregate profiles mask significant variance that becomes readily apparent if you focus on the counties per se. Take, for example, 
+
+```{r, message=FALSE, warning=FALSE, fig.width=8, fig.height=8, dev='svg', echo=FALSE}
+library(readxl)
+cesfy19 <- read_excel("~/Documents/Data Hub/ARC Data/Economic Status/County-Economic-Status_FY2019_Data.xls", sheet = 3, skip = 4) 
+
+cesfy19 <- janitor::clean_names(cesfy19)
+
+library(tidyverse)
+cesfy19 <- cesfy19 %>%
+  filter(!is.na(fips)) %>%
+  mutate(arc = case_when(
+    arc_county == "ARC" ~ "Appalachian",
+    is.na(arc_county) ~  "Not Appalachian"
+    ), 
+    appstates = ifelse(state %in% c("Alabama", "Georgia", "Kentucky", "Maryland", "Mississippi", "New York", "North Carolina", "Ohio", "Pennsylvania", "South Carolina", "Tennessee", "Virginia", "West Virginia"), "Appalachian State", NA)
+    )
+
+cesfy19.fg <- cesfy19 %>%
+  filter(!is.na(appstates))
+
+ggplot(data = cesfy19.fg, aes(x = three_year_average_unemployment_rate_2014_2016, y = poverty_rate_2012_2016, colour = arc)) +
+  geom_point(alpha = .5) +
+  facet_wrap(~ state) +
+  hrbrthemes::theme_ipsum_rc() +
+  theme(legend.position = "none") +
+  labs(colour = "",
+       x = "3-year Average Unemployment Rate (2014-16)",
+       y = "Poverty Rate (2012-16)",
+       caption = "Data: Appalachian Regional Commission FY2019 | Author: @aruhil") +
+  viridis::scale_colour_viridis(discrete = TRUE)
+```
+
+This plot is instructive for several reasons. First, except in WV where all counties are Appalachian, in other states the Appalachian counties (the dark colored points) are not necessarily worse off than their non-Appalachian peers. In fact, AL, GA, and SC Appalachian counties seem to be doing better than many non-Appalachian counties. KY, OH, TN, and VA have Appalachian counties doing much worse than non-Appalachian counties. Second, although a county's unemployment rate may be low, that does not necessarily imply low poverty rates per se, most likely because of the prevalence of low-wage jobs. This possibility can be explored via the average weekly wage 
+
+
+```{r, message=FALSE, warning=FALSE, fig.width=8, fig.height=8, dev='svg', echo=FALSE}
+load("~/Documents/Data Hub/QCEW Data/wage18.df.RData")
+wages <- merge(cesfy19.fg, wage.df, by = c("fips"), all.y = TRUE) %>%
+  filter(average_weekly_wage < 3000 & average_weekly_wage > 0 & !is.na(appstates)) %>%
+  mutate(wage = average_weekly_wage/100)
+
+ggplot(data = wages, aes(x = wage, y = poverty_rate_2012_2016, colour = arc, group = state)) +
+  geom_point(alpha = .5) + 
+  geom_smooth(method = "lm", se = FALSE, color = "red", size = 0.5) +
+  facet_wrap(~ state) +
+  hrbrthemes::theme_ipsum_rc() +
+  theme(legend.position = "none") +
+  labs(colour = "",
+       x = "Average Weekly Wage in $100 (2018:Q1)",
+       y = "Poverty Rate (2012-16)",
+       caption = "Data: Appalachian Regional Commission FY2019; Bureau of Economic Analysis | Author: @aruhil") +
+  viridis::scale_colour_viridis(discrete = TRUE)
+```
+
+Some states (see NC, KY, PA, VA, MS) exhibit clearer patterns than other states. Now, the average wage explored here is just the average for all jobs, but I am now curious to see what the patterns look like if we look at (a) what sectors lead employment in each county and how that has changed over time, and (b) how much of a difference there is in sector specific average wages over time. I am also curious about looking at small-area income and poverty estimates over time, health insurance estimates, and then of course more data streams from the Bureau of Labor, the Bureau of Economic Analysis, and of course from the American Community Survey and the Decennial censuses. 
+
+
+
+
