@@ -15,7 +15,7 @@ header:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE)
 ```
 
-```{r klippy1, echo = FALSE, include = TRUE}
+```{r klippy1, echo = FALSE, include = FALSE}
 klippy::klippy(tooltip_message = 'Click to copy', tooltip_success = 'Done', color = 'cornflowerblue', position = c('top', 'right'))
 ```
 
