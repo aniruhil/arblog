@@ -10,7 +10,7 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "data analytics and visualization",
+    "Data analytics and visualization",
     "Program evaluation",
     "Public health",
     "Education",
