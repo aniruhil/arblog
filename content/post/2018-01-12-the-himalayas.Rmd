@@ -3,18 +3,16 @@ title: The Himalayas
 author: Ani Ruhil
 date: '2018-01-12'
 slug: the-himalayas
-categories:
-  - R
+categories: 
   - Himalayas
 tags: ["Himalayas", "Mountaineering"]
-output: 
-  html_document: 
-    css: ~/Documents/github/arblog/static/css/blue.css
-fontsize: 12pt    
+header:
+  caption: ''
+  image: ''
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, echo = TRUE, tidy = TRUE, tidy.opts = list(width.cutoff = 60, keep.blank.line = FALSE), fig.align = "center")
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache = TRUE)
 ```
 
 <div align = "center">

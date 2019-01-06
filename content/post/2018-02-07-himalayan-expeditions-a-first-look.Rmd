@@ -4,8 +4,9 @@ author: Ani Ruhil
 date: '2018-02-07'
 slug: himalayan-expeditions-a-first-look
 categories:
-  - R
-tags: ["Himalayas", "Mountaineering"]---
+  - Himalayas
+tags: ["Himalayas", "Mountaineering"]
+---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)

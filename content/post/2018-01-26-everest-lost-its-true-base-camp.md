@@ -4,11 +4,8 @@ author: Ani Ruhil
 date: '2018-01-26'
 slug: everest-lost-its-true-base-camp
 categories: 
-- Himalayas
+  - Himalayas
 tags: ["Himalayas", "Mountaineering"]
-header:
-  caption: ''
-  image: ''
 ---
 
 Elizabeth Hawley, the quintessential chronicler of mountaineering expeditions in the Himalayas passed away today in Kathmandu, Nepal. One quote stands above the rest. In [an interview](http://adventureblog.nationalgeographic.com/2016/03/11/i-frighten-a-lot-of-people-everest-chronicler-elizabeth-hawley-92-tells-it-like-it-is/) she said, when asked: 
