@@ -163,9 +163,9 @@ defaultContentLanguageInSubdir = false
   highlight_languages = ["r", "yaml"]
   # highlight_style = "github"
 #  highlight_style = "atelier-cave-light" #Ani's original
-#  highlight_style = "monokai-sublime"
-#  highlight_style = "hybrid"
-#  highlight_style = "ir-black"
+#  highlight_style = "monokai-sublime" # not bad
+#  highlight_style = "hybrid" # not bad
+#  highlight_style = "ir-black" # not bad
   highlight_style = "tomorrow-night-bright"
   highlight_version = "9.13.1"
   # Enable native social sharing buttons?
